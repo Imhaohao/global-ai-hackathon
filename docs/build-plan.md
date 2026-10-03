@@ -2,7 +2,7 @@
 
 Written Sat 3 Oct 2026, 15:30 PDT. Submission closes at the end of Sun 4 Oct 2026 (Hack-Nation Global AI Hackathon, "Small AI for Development", agriculture track). Confirm the exact cut-off time on the Hack-Nation event page.
 
-This file is the whole brief for a build agent. Read it top to bottom before touching code. You are one of three agents working at the same time on different folders. Do not edit files outside your part's "Owns" list. If you need something from another part, use the stub from Step 0 and write down the need in your final report.
+This file is the whole brief for a build agent. Read it top to bottom before touching code. You are one of three agents working at the same time on different folders. Do not edit files outside your part's "Owns" list. If you need something from another part, use the stub from Step 0 and write down the need in your final report. A fourth person owns the leaf model and works from `docs/model-plan.md`; nobody else edits `training/`, `mobile/assets/model/`, `classifyLeaf.ts` or `modelDecision.ts`. The model is frozen at Sun 4 Oct 12:00.
 
 ## The product in one paragraph
 
@@ -247,11 +247,13 @@ Recommended agent: the strongest model available. Preprocessing and evaluation m
 
 ### Owns
 
-`mobile/src/diagnosis/` (except `pickLeafPhoto.ts`, which nobody needs to change), `mobile/assets/model/`, `training/`, `evals/` (new), `docs/data-card.md` (new), `docs/evidence.md` (new), and appending rows to `docs/research-sources.md`.
+`mobile/src/diagnosis/diagnosePlant.ts`, `shared/src/plantVote.ts` and its test, `evals/` (new), `docs/evidence.md` (new), and appending rows to `docs/research-sources.md`.
+
+The model owner works from `docs/model-plan.md` and owns `training/`, `mobile/assets/model/`, `mobile/src/diagnosis/classifyLeaf.ts`, `modelDecision.ts`, `docs/data-card.md` and `docs/model-speed.md`. Do not edit those. The model owner adds `qualityPassed` to `classifyLeaf`'s result first; if it has not landed on `main` when you need it, write `diagnosePlant` against the field anyway and note it in your report.
 
 ### Tasks, in priority order
 
-**1.1 Plant vote.** Replace the stub in `mobile/src/diagnosis/diagnosePlant.ts`. Call `classifyLeaf` on each photo in order (at most `MAX_LEAVES_PER_PLANT`). Extend `classifyLeaf` so it also reports whether the quality gate passed, then build one `LeafReading` per photo. Put the voting rule in a pure function, `voteOnPlant(readings: LeafReading[]): PlantVerdict`, in its own file, so it can be tested without the model:
+**1.1 Plant vote.** Replace the stub in `mobile/src/diagnosis/diagnosePlant.ts`. Call `classifyLeaf` on each photo in order (at most `MAX_LEAVES_PER_PLANT`). Its result includes `qualityPassed` (added by the model owner). Build one `LeafReading` per photo. Put the voting rule in a pure function, `voteOnPlant(readings: LeafReading[]): PlantVerdict`, in `shared/src/plantVote.ts`, so it can be tested without the model:
 
 - A reading is usable when `qualityPassed` is true and `confidence` is not `unclear`.
 - If fewer than `MIN_AGREEING_LEAVES` (3) readings are usable: return `retake` while fewer than 6 photos were taken, otherwise `needsPerson` with reason `tooFewClearLeaves`.
@@ -259,15 +261,9 @@ Recommended agent: the strongest model available. Preprocessing and evaluation m
 - Ties go to `needsPerson`.
 - `modelVersion` comes from `model-config.json` (`calibration.version` plus the first 12 characters of `calibration.artifact_sha256`).
 
-Write tests for `voteOnPlant` covering every branch, using Node's test runner. If the mobile folder has no test runner, put the pure function under `shared/src/plantVote.ts` instead. You may create that one file in `shared/`; tell Part 2 in your report. Its tests go in `shared/src/plantVote.test.ts`, which `npm test` already picks up.
+Write tests for `voteOnPlant` covering every branch in `shared/src/plantVote.test.ts`, which `npm test` already picks up. Part 2 adds the export to `shared/src/index.ts`.
 
-**1.2 Data card, `docs/data-card.md`.** One page for judges. The brief scores "what your data does not cover". Include:
-
-- Datasets used to build, from `training/sources.json`: name, source link, licence, how many images were used. Say which are studio-style and which are field photos.
-- The training, validation, test and external splits, and the leakage check (6,174 groups, none crossing partitions).
-- The model numbers listed above, with the weak results given equal space.
-- What the data does not cover: coffee berry disease, berry borer, coffee wilt, nutrient deficiency, red spider mite (disabled), phone-camera photos from Kenya, any Kenyan farm.
-- Which numbers are dataset results and which would need a field trial.
+The data card and the emulator speed test belong to the model owner (`docs/model-plan.md`), because their numbers change with every retrain.
 
 **1.3 Kikuyu and Swahili test with FLORES-200, in `evals/flores/`.** The brief says judges will ask how the tool would do in a less-supported language. Goal: a measured answer.
 
@@ -285,11 +281,9 @@ Write tests for `voteOnPlant` covering every branch, using Node's test runner. I
 - WorldPop: population within 10 km of the same two points, from the Kenya 2020 constrained 100 m raster. Use it to give a "farmers one cooperative hub could reach" order of magnitude, clearly labelled as total population, not farmers. Skip it if the download is too large for the time left, and say so.
 - LSMS-ISA, Uganda National Panel Survey (World Bank Microdata Library): needs a free registration, which is a human step. If you have no access, list it under next steps.
 
-**1.5 Emulator latency.** If an Android emulator is available, run the app and time `classifyLeaf` over 6 photos. Record the emulator model, its RAM and the median time in `docs/evidence.md`, labelled "emulator, not a phone". If no emulator runs, write "not measured".
-
 ### Done when
 
-`voteOnPlant` tests pass. `mobile` typecheck and lint pass. `node training/check_mobile_contract.cjs` passes or is reported as unrunnable with the reason. The three documents exist with every number sourced. `evals/flores/results.json` exists, or the task is listed under "Needs a human".
+`voteOnPlant` tests pass. `npm test` and `mobile` typecheck and lint pass. `docs/evidence.md` exists with every number sourced. `evals/flores/results.json` exists, or the task is listed under "Needs a human".
 
 ## Part 2: rules, rain and SMS
 
@@ -397,7 +391,7 @@ Mobile typecheck and lint pass with complexity at most 15. The three journeys ru
 
 ## Step 4: integration and submission (one person, after all three parts)
 
-1. Merge `part-2-rules` first (it owns the shared implementations), then `part-1-evidence`, then `part-3-app` into `main`. Run every command in the table above. Fix any failures before moving on.
+1. Confirm the model owner has pushed the frozen model, `docs/data-card.md` and `docs/model-speed.md`. Then merge `part-2-rules` first (it owns the shared implementations), then `part-1-evidence`, then `part-3-app` into `main`. Run every command in the table above. Fix any failures before moving on.
 2. Run the three journeys again on the merged app, and run one SMS through the hub offline.
 3. Write the video script (2 to 5 minutes) in the brief's five parts:
    1. Problem statement, in the brief's template: "Because of this tool, [user] will [action] by [when] that they would otherwise [not do / do late / do worse]; we know because [evidence]."
