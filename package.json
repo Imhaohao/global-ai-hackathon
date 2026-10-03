@@ -1,0 +1,17 @@
+{
+  "name": "leaf-doctor-tooling",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint shared backend/src",
+    "typecheck": "tsc -p shared && tsc -p backend",
+    "test": "tsx --test shared/src/*.test.ts backend/src/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "eslint": "^10.12.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.0"
+  }
+}

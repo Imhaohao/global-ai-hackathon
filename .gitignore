@@ -1,0 +1,4 @@
+training/data/
+training/.venv/
+node_modules/
+.env
