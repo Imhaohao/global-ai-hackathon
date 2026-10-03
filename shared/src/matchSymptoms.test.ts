@@ -49,3 +49,18 @@ test("disease key order matches the image model's output order", async () => {
   const { DISEASE_KEYS } = await import("./types.ts");
   assert.deepEqual([...DISEASE_KEYS], ["cercospora", "healthy", "miner", "phoma", "rust"]);
 });
+
+test("Latin-script languages drop accents to stay on cheap GSM SMS", async () => {
+  const { fitToSms } = await import("./smsReply.ts");
+  const reply = fitToSms("Es la roya del café. Aplique cobre según su técnico.");
+  assert.equal(reply, "Es la roya del cafe. Aplique cobre segun su tecnico.");
+});
+
+test("non-Latin scripts are kept and capped at the unicode SMS limit", async () => {
+  const { fitToSms, SMS_MAX_UNICODE_CHARS } = await import("./smsReply.ts");
+  const amharic = "ይህ የቡና ቅጠል ዝገት ነው። ";
+  assert.equal(fitToSms(amharic), amharic.trim());
+  const long = fitToSms(amharic.repeat(20));
+  assert.ok([...long].length <= SMS_MAX_UNICODE_CHARS);
+  assert.ok(long.endsWith("።"), "cut at a sentence end");
+});
