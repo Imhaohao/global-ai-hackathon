@@ -24,7 +24,7 @@ const handleWithApp = httpAction(async (ctx, request) => {
   return app.fetch(request);
 });
 
-for (const path of ["/health", "/privacy", "/terms", "/text-us"]) {
+for (const path of ["/health", "/privacy", "/terms", "/text-us", "/rain"]) {
   http.route({ path, method: "GET", handler: handleWithApp });
 }
 http.route({ path: "/sms", method: "POST", handler: handleWithApp });

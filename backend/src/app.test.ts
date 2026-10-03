@@ -173,3 +173,45 @@ test("compliance pages carry the statements Twilio reviewers check for", async (
   assert.equal(textUs.status, 200);
   assert.match(await textUs.text(), /Reply STOP to opt out/);
 });
+
+type RainFetch = NonNullable<AppDependencies["rainFetch"]>;
+
+function powerFetch(body: unknown, ok = true) {
+  const urls: string[] = [];
+  const rainFetch: RainFetch = async (url) => {
+    urls.push(url);
+    return { ok, status: ok ? 200 : 500, json: async () => body } as Awaited<ReturnType<RainFetch>>;
+  };
+  return { rainFetch, urls };
+}
+
+test("GET /rain returns wet days from the rainfall source for a rounded point", async () => {
+  const series = Object.fromEntries(Array.from({ length: 14 }, (_, index) => [`202609${17 + index}`, index % 2 === 0 ? 2 : 0]));
+  const { rainFetch, urls } = powerFetch({ properties: { parameter: { PRECTOTCORR: series } } });
+  const { app } = buildApp({ rainFetch });
+  const response = await app.fetch(new Request(`${BASE_URL}/rain?lat=-1.146&lon=36.961`));
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("Cache-Control") ?? "", /max-age=3600/);
+  const body = (await response.json()) as { wetDaysLast7: number; source: string; asOf: string };
+  assert.equal(body.source, "NASA POWER");
+  assert.equal(body.wetDaysLast7, 3);
+  assert.equal(body.asOf, "2026-09-30");
+  assert.match(urls[0], /latitude=-1\.1&longitude=37/);
+});
+
+test("GET /rain rejects missing or out-of-range coordinates without calling the source", async () => {
+  const { rainFetch, urls } = powerFetch({});
+  const { app } = buildApp({ rainFetch });
+  for (const query of ["", "?lat=1", "?lat=abc&lon=1", "?lat=91&lon=0", "?lat=0&lon=181"]) {
+    const response = await app.fetch(new Request(`${BASE_URL}/rain${query}`));
+    assert.equal(response.status, 400, query);
+  }
+  assert.equal(urls.length, 0);
+});
+
+test("GET /rain answers 503 when the rainfall source fails", async () => {
+  const { rainFetch } = powerFetch({}, false);
+  const { app } = buildApp({ rainFetch });
+  const response = await app.fetch(new Request(`${BASE_URL}/rain?lat=-1.1&lon=36.9`));
+  assert.equal(response.status, 503);
+});

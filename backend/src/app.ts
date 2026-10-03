@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import type { Advisor } from "./advisor.ts";
 import { isCarrierKeyword } from "../../shared/src/index.ts";
+import { lookupWetDays } from "../../shared/src/rainSource.ts";
+import type { FetchLike } from "../../shared/src/rainSource.ts";
 import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
 import { constantTimeEqual, isValidTwilioSignature } from "./twilio.ts";
 
@@ -15,6 +17,7 @@ export interface AppDependencies {
   twilioAuthToken: string;
   publicBaseUrl: string;
   hubToken: string;
+  rainFetch?: FetchLike;
 }
 
 const EMPTY_TWIML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response></Response>";
@@ -28,6 +31,12 @@ function stringParams(body: Record<string, unknown>): Record<string, string> {
 
 export function maskPhone(phone: string): string {
   return `...${phone.slice(-4)}`;
+}
+
+function parseCoordinate(raw: string | undefined, limit: number): number | null {
+  if (raw === undefined || raw.trim() === "") return null;
+  const value = Number(raw);
+  return Number.isFinite(value) && Math.abs(value) <= limit ? value : null;
 }
 
 function parseAskBody(body: unknown): { from: string; text: string } | null {
@@ -47,6 +56,16 @@ export function createApp(deps: AppDependencies): Hono {
   app.get("/privacy", (c) => c.html(privacyPolicyPage));
   app.get("/terms", (c) => c.html(termsPage));
   app.get("/text-us", (c) => c.html(textUsPage));
+
+  app.get("/rain", async (c) => {
+    const latitude = parseCoordinate(c.req.query("lat"), 90);
+    const longitude = parseCoordinate(c.req.query("lon"), 180);
+    if (latitude === null || longitude === null) return c.json({ error: "Send lat (-90 to 90) and lon (-180 to 180)" }, 400);
+    const wetDays = await lookupWetDays(deps.rainFetch ?? fetch, latitude, longitude);
+    if (!wetDays) return c.json({ error: "Rainfall data is not available right now" }, 503);
+    c.header("Cache-Control", "public, max-age=3600");
+    return c.json(wetDays);
+  });
 
   app.post("/sms", async (c) => {
     if (!deps.twilioAuthToken) return c.text("SMS is not configured: TWILIO_AUTH_TOKEN is missing", 503);
