@@ -47,7 +47,7 @@ test("smart punctuation is converted instead of forcing unicode SMS", () => {
 
 test("disease key order matches the image model's output order", async () => {
   const { DISEASE_KEYS } = await import("./types.ts");
-  assert.deepEqual([...DISEASE_KEYS], ["cercospora", "healthy", "miner", "phoma", "rust"]);
+  assert.deepEqual([...DISEASE_KEYS], ["cercospora", "healthy", "miner", "phoma", "rust", "mites", "weevil"]);
 });
 
 test("Latin-script languages drop accents to stay on cheap GSM SMS", async () => {

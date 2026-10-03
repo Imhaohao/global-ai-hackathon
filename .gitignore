@@ -2,3 +2,9 @@ training/data/
 training/.venv/
 node_modules/
 .env
+
+training/models/
+training/runs/
+training/.cache/
+training/__pycache__/
+*.onnx.data

@@ -1,0 +1,595 @@
+{
+  "sources": [
+    {
+      "id": "agml",
+      "url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "revision": "d7fc77a53d876ab33af0d1dd6f3107999a00b7d6",
+      "license": "CC BY 4.0",
+      "status": "used",
+      "purpose": "training and source-exposed checks",
+      "notes": "58549 rows;3756 published byteunique representatives; preserve authorholdout membership and close additionalnearhash groups; never claim new independent test"
+    },
+    {
+      "id": "bracol",
+      "url": "https://data.mendeley.com/datasets/yy2k5y8mxg/1",
+      "mirror": "https://github.com/esgario/lara2018",
+      "revision": "a6c38b693094c2c4da4b82029fc8be7058506a16",
+      "license": "CC BY 4.0 data; MIT code",
+      "status": "used",
+      "notes": "Author mirror; exclude inconclusive/mixed whole leaves and nonnumeric Embrapa symptom files because source/licence not inferred; group leafandnumericcropstem; published card2147 vs mirror2129 selectednumeric crops recorded honestly"
+    },
+    {
+      "id": "rocole",
+      "url": "https://data.mendeley.com/datasets/c5yvn32dzg/2",
+      "mirror": "https://huggingface.co/datasets/Project-AgML/RoCoLe_disease_detection",
+      "revision": "c33f4617504d1b2ed75b7037dc4860ddc6e4b1f8",
+      "license": "CC BY 4.0",
+      "status": "used",
+      "notes": "1560 annotated RGB leaf crops; group CxPy plant IDs; rust severity collapsed to rust; redspider mite leafsymptoms added"
+    },
+    {
+      "id": "coffeeleaf_co",
+      "url": "https://zenodo.org/records/22756170",
+      "version": "v2",
+      "license": "CC BY 4.0",
+      "archive_md5": "2ba46bd8f7a23708d982ff578760f1fa",
+      "status": "used",
+      "notes": "2315 sourceimages,12794 boxes;12595 crops at least16pixels;1113 emptylabels not assignedhealthy; preserve officialsplit then mostrestrictive parent/nearhash closure; parent leaf/plant IDs incomplete"
+    },
+    {
+      "id": "silva",
+      "url": "https://data.mendeley.com/datasets/vfxf4trtcg/5",
+      "version": "5",
+      "license": "CC BY 4.0",
+      "status": "used via CoffeeLeaf-CO",
+      "notes": "610derived sourceimages already in Colombiandataset; not redownloaded/countedas additionalindependent source"
+    },
+    {
+      "id": "beans",
+      "url": "https://huggingface.co/datasets/AI-Lab-Makerere/beans",
+      "revision": "27aa014ce09b193e1a6f58112d4a66e0eddb69c5",
+      "license": "MIT per datasetcard",
+      "status": "used",
+      "purpose": "noncoffee unsupported class; not coffee pathology labels",
+      "notes": "1295images; officialtrain/validation/test split; limitednoncoffee coverage"
+    },
+    {
+      "id": "multispec",
+      "url": "https://huggingface.co/datasets/Project-AgML/coffee_rust_multispec_classification",
+      "revision": "d3ad329b4be26eea968e6c8e10adf252b960aeb6",
+      "license": "CC0 1.0 per card",
+      "status": "used development stress evaluation only; never training",
+      "notes": "1120RGBimages;847rust plus273 NoRust for binaryscreening; no multispectralinputs; NoRust nevercalledhealthy"
+    },
+    {
+      "id": "CoLeaf",
+      "url": "https://data.mendeley.com/datasets/brfgw46wzb/2",
+      "version": "2",
+      "license": "CC BY 4.0",
+      "status": "deferred",
+      "reason": "Nutritional visualproxy labels are a separatetask; sixhealthyexamples insufficient for reliablehealthy discriminator"
+    },
+    {
+      "id": "Uganda disease",
+      "url": "https://data.mendeley.com/datasets/k36wnd6knb/1",
+      "license": "CC BY 4.0",
+      "status": "deferred",
+      "reason": "Augmented derivatives need source-group provenance; additionaldirect Mendeley access not confirmed"
+    },
+    {
+      "id": "BRACOT",
+      "url": "https://data.mendeley.com/datasets/pmkbyjpf6k/1",
+      "license": "CC BY 4.0",
+      "status": "deferred",
+      "reason": "Leafsegmentation task; no validatedcondition labels"
+    },
+    {
+      "id": "Croppie Uganda",
+      "url": "https://huggingface.co/datasets/rgautroncgiar/croppie_coffee_ug",
+      "license": "CC BY-SA 4.0",
+      "status": "excluded fromleaf classifier",
+      "reason": "Fruit maturity/counting labels; incompatible with leafsymptomclasses"
+    },
+    {
+      "id": "Makerere fruit",
+      "url": "https://data.mendeley.com/datasets/r46c6bpfpf/1",
+      "license": "CC BY 4.0",
+      "status": "deferred",
+      "reason": "Fruit/tree task, not pairedleafconditiondata"
+    },
+    {
+      "id": "berry-borer",
+      "url": "https://universe.roboflow.com/thesiscv/berry-borer",
+      "license": "CC BY 4.0 advertised",
+      "status": "deferred",
+      "reason": "Export/provenance/species validation not established; do not silentlyadd borer class"
+    },
+    {
+      "id": "coffee-berry-borer",
+      "url": "https://universe.roboflow.com/ralph-matthew-r-aquino/coffee-berry-borer",
+      "license": "CC BY 4.0 advertised",
+      "status": "deferred",
+      "reason": "Segmentation/export/provenance needs audit; separate fruitdamage task"
+    },
+    {
+      "id": "pg26038",
+      "url": "https://huggingface.co/datasets/cchery2001/pg26038-coffee-leaf-samples",
+      "revision": "5272a2ab0a7de6c247fe2530ddb0c7f0c74e66f9",
+      "license": "CC BY 4.0",
+      "status": "used untouched external evaluation only",
+      "reason": "100 flatbed scans of 50 paired leaves; fixed final model only; Mycena citricolor evaluated as unsupported, never cercospora"
+    },
+    {
+      "id": "PlantVillage",
+      "url": "https://github.com/spMohanty/PlantVillage-Dataset",
+      "status": "excluded",
+      "reason": "Othercrop diseases are not coffee disease labels; beans already provides explicitnoncoffeechallenge"
+    },
+    {
+      "id": "PlantDoc",
+      "url": "https://github.com/pratikkayal/PlantDoc-Dataset",
+      "status": "deferred",
+      "reason": "Internet-collected mixedcrop photos need additional licence/provenance audit; no coffee label mapping"
+    },
+    {
+      "id": "cassava",
+      "url": "https://www.kaggle.com/competitions/cassava-leaf-disease-classification",
+      "status": "excluded",
+      "reason": "Crop differs; no coffeeconditiongroundtruth"
+    },
+    {
+      "id": "environmental-context",
+      "sources": [
+        "CHIRPS",
+        "SoilGrids",
+        "NASA POWER",
+        "satellite",
+        "LSMS",
+        "WFP",
+        "FAOSTAT"
+      ],
+      "status": "excluded fromimage training",
+      "reason": "No pairedphoto diagnosislabels"
+    }
+  ],
+  "actual_image_counts": [
+    {
+      "source": "agml",
+      "label": "cercospora",
+      "split": "test",
+      "n": 157
+    },
+    {
+      "source": "agml",
+      "label": "cercospora",
+      "split": "train",
+      "n": 69
+    },
+    {
+      "source": "agml",
+      "label": "cercospora",
+      "split": "val",
+      "n": 96
+    },
+    {
+      "source": "agml",
+      "label": "healthy",
+      "split": "test",
+      "n": 16
+    },
+    {
+      "source": "agml",
+      "label": "healthy",
+      "split": "train",
+      "n": 25
+    },
+    {
+      "source": "agml",
+      "label": "healthy",
+      "split": "val",
+      "n": 21
+    },
+    {
+      "source": "agml",
+      "label": "miner",
+      "split": "test",
+      "n": 640
+    },
+    {
+      "source": "agml",
+      "label": "miner",
+      "split": "train",
+      "n": 561
+    },
+    {
+      "source": "agml",
+      "label": "miner",
+      "split": "val",
+      "n": 438
+    },
+    {
+      "source": "agml",
+      "label": "phoma",
+      "split": "test",
+      "n": 324
+    },
+    {
+      "source": "agml",
+      "label": "phoma",
+      "split": "train",
+      "n": 159
+    },
+    {
+      "source": "agml",
+      "label": "phoma",
+      "split": "val",
+      "n": 208
+    },
+    {
+      "source": "agml",
+      "label": "rust",
+      "split": "test",
+      "n": 320
+    },
+    {
+      "source": "agml",
+      "label": "rust",
+      "split": "train",
+      "n": 464
+    },
+    {
+      "source": "agml",
+      "label": "rust",
+      "split": "val",
+      "n": 258
+    },
+    {
+      "source": "beans",
+      "label": "unsupported",
+      "split": "test",
+      "n": 128
+    },
+    {
+      "source": "beans",
+      "label": "unsupported",
+      "split": "train",
+      "n": 1034
+    },
+    {
+      "source": "beans",
+      "label": "unsupported",
+      "split": "val",
+      "n": 133
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "cercospora",
+      "split": "test",
+      "n": 9
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "cercospora",
+      "split": "train",
+      "n": 65
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "cercospora",
+      "split": "val",
+      "n": 13
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "healthy",
+      "split": "test",
+      "n": 39
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "healthy",
+      "split": "train",
+      "n": 188
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "healthy",
+      "split": "val",
+      "n": 45
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "miner",
+      "split": "test",
+      "n": 46
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "miner",
+      "split": "train",
+      "n": 229
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "miner",
+      "split": "val",
+      "n": 47
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "phoma",
+      "split": "test",
+      "n": 52
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "phoma",
+      "split": "train",
+      "n": 239
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "phoma",
+      "split": "val",
+      "n": 50
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "rust",
+      "split": "test",
+      "n": 53
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "rust",
+      "split": "train",
+      "n": 243
+    },
+    {
+      "source": "bracol_leaf",
+      "label": "rust",
+      "split": "val",
+      "n": 52
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "cercospora",
+      "split": "test",
+      "n": 44
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "cercospora",
+      "split": "train",
+      "n": 174
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "cercospora",
+      "split": "val",
+      "n": 58
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "healthy",
+      "split": "test",
+      "n": 37
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "healthy",
+      "split": "train",
+      "n": 187
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "healthy",
+      "split": "val",
+      "n": 32
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "miner",
+      "split": "test",
+      "n": 93
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "miner",
+      "split": "train",
+      "n": 365
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "miner",
+      "split": "val",
+      "n": 79
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "phoma",
+      "split": "test",
+      "n": 77
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "phoma",
+      "split": "train",
+      "n": 321
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "phoma",
+      "split": "val",
+      "n": 54
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "rust",
+      "split": "test",
+      "n": 92
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "rust",
+      "split": "train",
+      "n": 415
+    },
+    {
+      "source": "bracol_symptom",
+      "label": "rust",
+      "split": "val",
+      "n": 101
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "rust",
+      "split": "external",
+      "n": 4
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "rust",
+      "split": "test",
+      "n": 424
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "rust",
+      "split": "train",
+      "n": 1967
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "rust",
+      "split": "val",
+      "n": 456
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "weevil_damage",
+      "split": "external",
+      "n": 79
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "weevil_damage",
+      "split": "test",
+      "n": 894
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "weevil_damage",
+      "split": "train",
+      "n": 3481
+    },
+    {
+      "source": "coffeeleaf_own_field",
+      "label": "weevil_damage",
+      "split": "val",
+      "n": 924
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "miner",
+      "split": "external",
+      "n": 11
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "miner",
+      "split": "test",
+      "n": 418
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "miner",
+      "split": "train",
+      "n": 1603
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "miner",
+      "split": "val",
+      "n": 353
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "rust",
+      "split": "test",
+      "n": 448
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "rust",
+      "split": "train",
+      "n": 1258
+    },
+    {
+      "source": "coffeeleaf_rust_and_leaf_miner",
+      "label": "rust",
+      "split": "val",
+      "n": 275
+    },
+    {
+      "source": "multispec_external",
+      "label": "rust",
+      "split": "external",
+      "n": 847
+    },
+    {
+      "source": "rocole",
+      "label": "healthy",
+      "split": "test",
+      "n": 138
+    },
+    {
+      "source": "rocole",
+      "label": "healthy",
+      "split": "train",
+      "n": 541
+    },
+    {
+      "source": "rocole",
+      "label": "healthy",
+      "split": "val",
+      "n": 112
+    },
+    {
+      "source": "rocole",
+      "label": "red_spider_mite",
+      "split": "test",
+      "n": 26
+    },
+    {
+      "source": "rocole",
+      "label": "red_spider_mite",
+      "split": "train",
+      "n": 116
+    },
+    {
+      "source": "rocole",
+      "label": "red_spider_mite",
+      "split": "val",
+      "n": 25
+    },
+    {
+      "source": "rocole",
+      "label": "rust",
+      "split": "test",
+      "n": 96
+    },
+    {
+      "source": "rocole",
+      "label": "rust",
+      "split": "train",
+      "n": 415
+    },
+    {
+      "source": "rocole",
+      "label": "rust",
+      "split": "val",
+      "n": 91
+    }
+  ]
+}

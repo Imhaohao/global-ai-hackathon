@@ -4,6 +4,16 @@ import type { DiseaseCatalog, DiseaseInfo, DiseaseKey } from "./types.ts";
 export type DiseaseText = Pick<DiseaseInfo, "name" | "look" | "tellApart" | "actions" | "urgencyReason">;
 
 export const DISEASES_SW: Record<DiseaseKey, DiseaseText> = {
+  mites: {
+    name: "Dalili zinazoweza kuwa za utitiri",
+    look: "Picha inafanana na majani ya kahawa yenye uharibifu wa utitiri. Alama zinazofanana zinaweza kuwa na sababu nyingine, hivyo hakuna uhakika kamili.",
+    actions: ["Muulize afisa ugani akague pande zote mbili za jani na athibitishe sababu kabla ya kuchagua matibabu."],
+  },
+  weevil: {
+    name: "Uharibifu unaoweza kuwa wa wadudu wanaotafuna majani",
+    look: "Jani linafanana na picha zilizoainishwa kuwa na uharibifu wa coco au weevil. Picha hii haiwezi kutambua aina ya mdudu.",
+    actions: ["Muulize afisa ugani akague jani lililoharibika na wadudu walio kwenye mmea kabla ya kuchagua matibabu."],
+  },
   rust: {
     name: "Kutu ya majani ya kahawa",
     look: "Madoa madogo ya manjano hafifu huonekana juu ya jani. Chini ya jani, kila doa lina unga wa manjano hadi machungwa iliyokolea unaotoka ukiugusa kwa kidole. Madoa ya zamani hubadilika kuwa kahawia katikati na majani hupukutika mapema. Kwa kawaida huanzia kwenye majani ya chini ya mti.",

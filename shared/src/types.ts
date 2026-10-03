@@ -1,4 +1,4 @@
-export const DISEASE_KEYS = ["cercospora", "healthy", "miner", "phoma", "rust"] as const;
+export const DISEASE_KEYS = ["cercospora", "healthy", "miner", "phoma", "rust", "mites", "weevil"] as const;
 
 export type DiseaseKey = (typeof DISEASE_KEYS)[number];
 

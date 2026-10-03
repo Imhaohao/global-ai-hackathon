@@ -1,6 +1,24 @@
 import type { DiseaseCatalog } from "./types.ts";
 
 export const DISEASES: DiseaseCatalog = {
+  mites: {
+    key: "mites",
+    name: "Possible mite damage",
+    look: "The image resembles coffee leaves labelled with mite damage. Similar marks can have other causes, so this is a possible match.",
+    symptomWords: [],
+    actions: ["Ask an extension officer to inspect both sides of the leaf and confirm the cause before choosing a treatment."],
+    urgency: "low",
+    sources: ["https://data.mendeley.com/datasets/c5yvn32dzg/2"],
+  },
+  weevil: {
+    key: "weevil",
+    name: "Possible leaf-chewing pest damage",
+    look: "The leaf resembles images labelled as coco or weevil damage. This photo cannot identify the insect species.",
+    symptomWords: [],
+    actions: ["Ask an extension officer to inspect the damaged leaf and any insects on the plant before choosing a treatment."],
+    urgency: "low",
+    sources: ["https://zenodo.org/records/22756170"],
+  },
   rust: {
     key: "rust",
     name: "Coffee leaf rust",
