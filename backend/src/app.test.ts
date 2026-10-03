@@ -161,13 +161,13 @@ test("compliance pages carry the statements Twilio reviewers check for", async (
   const privacy = await (await app.fetch(new Request(`${BASE_URL}/privacy`))).text();
   assert.match(privacy, /<title>Privacy Policy/);
   assert.match(privacy, /We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes\./);
-  assert.match(privacy, /Leaf Doctor/);
+  assert.match(privacy, /Leaf Doctor is operated by David/);
 
   const terms = await (await app.fetch(new Request(`${BASE_URL}/terms`))).text();
   assert.match(terms, /<title>Terms &amp; Conditions|<title>Terms & Conditions/);
   assert.match(terms, /SMS Terms/);
   assert.match(terms, /[Mm]essage and data rates may apply/);
-  assert.match(terms, /Leaf Doctor/);
+  assert.match(terms, /Leaf Doctor is operated by David/);
 
   const textUs = await (await app.fetch(new Request(`${BASE_URL}/text-us`)));
   assert.equal(textUs.status, 200);

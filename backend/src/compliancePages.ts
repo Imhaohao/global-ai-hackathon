@@ -1,8 +1,9 @@
-import { BRAND_NAME, OPT_OUT_FOOTER } from "../../shared/src/index.ts";
+import { BRAND_NAME, OPT_OUT_FOOTER, REGISTERED_BRAND, SENDER_NAME } from "../../shared/src/index.ts";
 
 export const SMS_NUMBER_DISPLAY = "+1 650-644-4731";
 const CONTACT_EMAIL = "imzihaoi@gmail.com";
 const LAST_UPDATED = "October 3, 2026";
+const OPERATED_BY = `${BRAND_NAME} is operated by ${REGISTERED_BRAND} ("we", "us").`;
 
 const STYLES = `
   :root { --surface: #f6f3ec; --text: #1f2a24; --muted: #55625a; --accent: #1f5136; --panel: #ffffff; }
@@ -25,8 +26,8 @@ function page(title: string, body: string): string {
 export const privacyPolicyPage = page(
   "Privacy Policy",
   `<h1>Privacy Policy</h1>
-<p class="updated">${BRAND_NAME}, last updated ${LAST_UPDATED}</p>
-<p>${BRAND_NAME} is a free advice line that helps coffee farmers identify and manage coffee leaf diseases by SMS and phone. This policy explains what we collect and how we use it.</p>
+<p class="updated">${BRAND_NAME} by ${REGISTERED_BRAND}, last updated ${LAST_UPDATED}</p>
+<p>${OPERATED_BY} ${BRAND_NAME} is a free advice line that helps coffee farmers identify and manage coffee leaf diseases by SMS and phone. This policy explains what ${REGISTERED_BRAND} collects and how it is used.</p>
 <h2>What we collect</h2>
 <p>When you text ${BRAND_NAME}, we receive your phone number, the text of your messages, and the time they were sent.</p>
 <h2>How we use it</h2>
@@ -41,10 +42,10 @@ export const privacyPolicyPage = page(
 export const termsPage = page(
   "Terms & Conditions",
   `<h1>Terms &amp; Conditions</h1>
-<p class="updated">${BRAND_NAME}, last updated ${LAST_UPDATED}</p>
-<p>These terms cover the ${BRAND_NAME} coffee plant advice line.</p>
+<p class="updated">${BRAND_NAME} by ${REGISTERED_BRAND}, last updated ${LAST_UPDATED}</p>
+<p>${OPERATED_BY} These terms cover the ${BRAND_NAME} coffee plant advice line provided by ${REGISTERED_BRAND}.</p>
 <h2>SMS Terms</h2>
-<p><strong>Program:</strong> ${BRAND_NAME} answers questions about coffee leaf diseases. You start every conversation by texting ${SMS_NUMBER_DISPLAY}. We only reply to messages you send and never send marketing messages.</p>
+<p><strong>Program:</strong> ${SENDER_NAME} answers questions about coffee leaf diseases. You start every conversation by texting ${SMS_NUMBER_DISPLAY}. We only reply to messages you send and never send marketing messages.</p>
 <p><strong>Message frequency:</strong> one reply per message you send, at most 5 replies every 10 minutes.</p>
 <p><strong>Cost:</strong> ${BRAND_NAME} is free. Message and data rates may apply from your mobile carrier.</p>
 <p><strong>Opt out:</strong> reply STOP to stop all messages. Reply START to resume.</p>
@@ -60,11 +61,11 @@ export const textUsPage = page(
   `<h1>Sick coffee leaves? Text us.</h1>
 <p>Describe what you see on your coffee leaves and text it to</p>
 <p class="number">${SMS_NUMBER_DISPLAY}</p>
-<p>${BRAND_NAME} replies with what the problem probably is and what to do, in your language. It is free; message and data rates may apply. Reply STOP to opt out at any time, HELP for help. See our <a href="/terms">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.</p>
+<p>${SENDER_NAME} replies with what the problem probably is and what to do, in your language. It is free; message and data rates may apply. Reply STOP to opt out at any time, HELP for help. See our <a href="/terms">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.</p>
 <h2>Example conversation</h2>
 <div class="exchange">
 <p><span class="who">You send:</span> orange powder under my coffee leaves</p>
-<p><span class="who">You receive:</span> ${BRAND_NAME}: This sounds like Coffee leaf rust. Act soon. What to do: 1) Check the underside of lower leaves often. 2) Pick off and burn or bury leaves and branches with orange spots. 3) Prune and thin shade and weeds so air moves and leaves dry faster.<br>${OPT_OUT_FOOTER}</p>
+<p><span class="who">You receive:</span> ${SENDER_NAME}: This sounds like Coffee leaf rust. Act soon. What to do: 1) Check the underside of lower leaves often. 2) Pick off and burn or bury leaves and branches with orange spots. 3) Prune and thin shade and weeds so air moves and leaves dry faster.<br>${OPT_OUT_FOOTER}</p>
 <p><span class="who">You send:</span> STOP</p>
 <p><span class="who">You receive:</span> You have successfully been unsubscribed. You will not receive any more messages from this number. Reply START to resubscribe.</p>
 </div>`,

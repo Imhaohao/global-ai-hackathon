@@ -76,8 +76,8 @@ test("every reply starts with the brand; the first also ends with the opt-out fo
   const { formatOutgoingSms, OPT_OUT_FOOTER } = await import("./smsCompliance.ts");
   const { SMS_MAX_CHARS } = await import("./smsReply.ts");
   const first = formatOutgoingSms("Rust spreads fast. ".repeat(40), true);
-  assert.ok(first.startsWith("Leaf Doctor: "));
+  assert.ok(first.startsWith("Leaf Doctor by David: "));
   assert.ok(first.endsWith(OPT_OUT_FOOTER));
   assert.ok(first.length <= SMS_MAX_CHARS, `${first.length} chars`);
-  assert.equal(formatOutgoingSms("Is there orange powder?", false), "Leaf Doctor: Is there orange powder?");
+  assert.equal(formatOutgoingSms("Is there orange powder?", false), "Leaf Doctor by David: Is there orange powder?");
 });
