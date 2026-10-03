@@ -1,0 +1,6 @@
+huggingface_hub==2.1.1
+keras==3.15.1
+numpy==2.5.3
+pillow==12.3.0
+pyarrow==25.0.1
+tensorflow==2.21.0

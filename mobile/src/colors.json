@@ -1,0 +1,16 @@
+{
+  "paper": "#F6F3EC",
+  "surface": "#FFFFFF",
+  "ink": "#1C1A17",
+  "ink-muted": "#5B554C",
+  "hairline": "#E4DED2",
+  "accent": "#1F5135",
+  "accent-pressed": "#163C27",
+  "on-accent": "#FFFFFF",
+  "healthy": "#1F7A3F",
+  "healthy-soft": "#E3F1E7",
+  "watch": "#8A5200",
+  "watch-soft": "#FBEFD9",
+  "sick": "#A3271B",
+  "sick-soft": "#F8E2DF"
+}
