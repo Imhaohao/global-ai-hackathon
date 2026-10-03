@@ -3,7 +3,7 @@ import { v } from "convex/values";
 import { createClaudeAdvisor, type Advisor } from "../src/advisor.ts";
 import { maskPhone } from "../src/app.ts";
 import { sendTwilioSms } from "../src/twilio.ts";
-import { withOptOutFooter } from "../../shared/src/index.ts";
+import { formatOutgoingSms } from "../../shared/src/index.ts";
 import { internal } from "./_generated/api";
 import { internalAction, type ActionCtx } from "./_generated/server";
 
@@ -34,7 +34,7 @@ export const replyBySms = internalAction({
   handler: async (ctx, { from, question }) => {
     const isFirstReply = (await ctx.runQuery(internal.phoneSessions.history, { phone: from })).length === 0;
     const answer = await advisorFor(ctx).advise(from, question);
-    const reply = isFirstReply ? withOptOutFooter(answer) : answer;
+    const reply = formatOutgoingSms(answer, isFirstReply);
     const credentials = {
       accountSid: requireEnv("TWILIO_ACCOUNT_SID"),
       authToken: requireEnv("TWILIO_AUTH_TOKEN"),

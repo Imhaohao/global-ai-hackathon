@@ -63,9 +63,9 @@ export const textUsPage = page(
 <p>${BRAND_NAME} replies with what the problem probably is and what to do, in your language. It is free; message and data rates may apply. Reply STOP to opt out at any time, HELP for help. See our <a href="/terms">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.</p>
 <h2>Example conversation</h2>
 <div class="exchange">
-<p><span class="who">You:</span> orange powder under my coffee leaves</p>
-<p><span class="who">${BRAND_NAME}:</span> This sounds like Coffee leaf rust. Act soon. What to do: 1) Check the underside of lower leaves often. 2) Pick off and burn or bury leaves and branches with orange spots. 3) Prune and thin shade and weeds so air moves and leaves dry faster.<br>${OPT_OUT_FOOTER}</p>
-<p><span class="who">You:</span> STOP</p>
-<p><span class="who">${BRAND_NAME}:</span> You have successfully been unsubscribed. You will not receive any more messages from this number. Reply START to resubscribe.</p>
+<p><span class="who">You send:</span> orange powder under my coffee leaves</p>
+<p><span class="who">You receive:</span> ${BRAND_NAME}: This sounds like Coffee leaf rust. Act soon. What to do: 1) Check the underside of lower leaves often. 2) Pick off and burn or bury leaves and branches with orange spots. 3) Prune and thin shade and weeds so air moves and leaves dry faster.<br>${OPT_OUT_FOOTER}</p>
+<p><span class="who">You send:</span> STOP</p>
+<p><span class="who">You receive:</span> You have successfully been unsubscribed. You will not receive any more messages from this number. Reply START to resubscribe.</p>
 </div>`,
 );
