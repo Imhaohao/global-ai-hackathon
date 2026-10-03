@@ -67,9 +67,9 @@ function lastSentenceEndIndex(text: string): number {
   return [...text.matchAll(SENTENCE_END)].reduce((last, match) => match.index ?? last, -1);
 }
 
-export function fitToSms(text: string): string {
+export function fitToSms(text: string, reservedChars = 0): string {
   const safe = toSmsSafeText(text);
-  const limit = smsCharLimit(safe);
+  const limit = smsCharLimit(safe) - reservedChars;
   const characters = [...safe];
   if (characters.length <= limit) return safe;
   const cut = characters.slice(0, limit).join("");

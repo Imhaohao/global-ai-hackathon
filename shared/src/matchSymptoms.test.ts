@@ -71,3 +71,13 @@ test("Spanish inverted punctuation does not force a unicode SMS", async () => {
   assert.equal(reply, "Ve polvo naranja debajo de la hoja? Actue pronto!");
   assert.equal(smsCharLimit(reply), SMS_MAX_CHARS);
 });
+
+test("first reply always ends with the opt-out footer and still fits three SMS", async () => {
+  const { withOptOutFooter, OPT_OUT_FOOTER } = await import("./smsCompliance.ts");
+  const { SMS_MAX_CHARS } = await import("./smsReply.ts");
+  const long = "Rust spreads fast. ".repeat(40);
+  const reply = withOptOutFooter(long);
+  assert.ok(reply.endsWith(OPT_OUT_FOOTER));
+  assert.ok(reply.length <= SMS_MAX_CHARS, `${reply.length} chars`);
+  assert.ok(withOptOutFooter("Short answer.").startsWith("Short answer."));
+});
