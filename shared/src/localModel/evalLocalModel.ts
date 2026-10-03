@@ -8,23 +8,28 @@ import { FARMER_MESSAGE_CASES, VERDICT_CASES } from "./evalCases.ts";
 import type { FarmerMessageCase } from "./evalCases.ts";
 import { createLlamaServerModel } from "./llamaServerModel.ts";
 import type { LocalModel } from "./localModel.ts";
-import { activeLocalModel, llamaServerCommand } from "./modelCatalog.ts";
-import { parseFarmerMessage, textForSymptomMatcher } from "./parseFarmerMessage.ts";
+import { activeLocalModel, isLocalModelId, llamaServerCommand, LOCAL_MODELS } from "./modelCatalog.ts";
+import type { LocalModelSpec } from "./modelCatalog.ts";
+import { matchWithModelHelp } from "./assistedMatch.ts";
+import type { AssistedMatch } from "./assistedMatch.ts";
+import { parseFarmerMessage } from "./parseFarmerMessage.ts";
 import { phraseVerdictInSwahili } from "./phraseVerdict.ts";
 import { readProductLabel } from "./readProductLabel.ts";
 
-type DiseaseOutcome = "right" | "unsure" | "wrong";
+const DISEASE_OUTCOMES = ["right", "confirm_right", "unsure", "confirm_wrong", "wrong"] as const;
+type DiseaseOutcome = (typeof DISEASE_OUTCOMES)[number];
+type OutcomeCounts = Record<DiseaseOutcome, number>;
 
 interface Tally {
   fieldsRight: number;
   fieldsTotal: number;
   unsureParses: number;
-  baseline: Record<DiseaseOutcome, number>;
-  withModel: Record<DiseaseOutcome, number>;
+  baseline: OutcomeCounts;
+  withModel: OutcomeCounts;
 }
 
-function diseaseOutcome(text: string, expected: DiseaseKey): DiseaseOutcome {
-  const match = matchSymptoms(text, DISEASES);
+function diseaseOutcome(match: AssistedMatch, expected: DiseaseKey): DiseaseOutcome {
+  if (match.kind === "confirmFirst") return match.best.key === expected ? "confirm_right" : "confirm_wrong";
   if (match.kind !== "confident") return "unsure";
   return match.best.key === expected ? "right" : "wrong";
 }
@@ -37,12 +42,15 @@ async function scoreCase(model: LocalModel, testCase: FarmerMessageCase, tally: 
   const actual = report.status === "ok" ? (report.value as unknown as Record<string, unknown>) : {};
   const misses = expectedFields.filter(([field, value]) => actual[field] !== value).map(([field]) => field);
   tally.fieldsRight += expectedFields.length - misses.length;
+  let diagnosis = "";
   if (testCase.disease) {
-    tally.baseline[diseaseOutcome(testCase.message, testCase.disease)] += 1;
-    tally.withModel[diseaseOutcome(textForSymptomMatcher(testCase.message, report), testCase.disease)] += 1;
+    const withModel = diseaseOutcome(matchWithModelHelp(testCase.message, report, DISEASES), testCase.disease);
+    tally.baseline[diseaseOutcome(matchSymptoms(testCase.message, DISEASES), testCase.disease)] += 1;
+    tally.withModel[withModel] += 1;
+    diagnosis = ` [${testCase.disease}: ${withModel}]`;
   }
   const translation = report.status === "ok" ? report.value.symptomsInEnglish : report.reason;
-  console.log(`${misses.length ? "MISS " + misses.join(",") : "ok  "} | ${testCase.message} -> ${translation}`);
+  console.log(`${misses.length ? "MISS " + misses.join(",") : "ok  "} | ${testCase.message} -> ${translation}${diagnosis}`);
 }
 
 function percent(part: number, whole: number): string {
@@ -50,7 +58,7 @@ function percent(part: number, whole: number): string {
 }
 
 async function evalMessages(model: LocalModel): Promise<void> {
-  const empty = () => ({ right: 0, unsure: 0, wrong: 0 });
+  const empty = () => Object.fromEntries(DISEASE_OUTCOMES.map((outcome) => [outcome, 0])) as OutcomeCounts;
   const tally: Tally = { fieldsRight: 0, fieldsTotal: 0, unsureParses: 0, baseline: empty(), withModel: empty() };
   for (const testCase of FARMER_MESSAGE_CASES) await scoreCase(model, testCase, tally);
   console.log(`\nFields right: ${tally.fieldsRight}/${tally.fieldsTotal} (${percent(tally.fieldsRight, tally.fieldsTotal)}), unsure parses: ${tally.unsureParses}`);
@@ -77,8 +85,15 @@ async function evalLabels(model: LocalModel, photoDir: string): Promise<void> {
   }
 }
 
+function chosenModel(): LocalModelSpec {
+  const requested = process.env.LOCAL_MODEL_ID;
+  if (!requested) return activeLocalModel();
+  if (!isLocalModelId(requested)) throw new Error(`Unknown LOCAL_MODEL_ID ${requested}; see modelCatalog.ts`);
+  return LOCAL_MODELS[requested];
+}
+
 async function main(): Promise<void> {
-  const spec = activeLocalModel();
+  const spec = chosenModel();
   const baseUrl = process.env.LOCAL_MODEL_URL ?? "http://127.0.0.1:8089";
   const health = await fetch(`${baseUrl}/health`).catch(() => null);
   if (!health?.ok) {

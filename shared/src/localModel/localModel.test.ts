@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { DISEASES } from "../diseases.ts";
+import { matchWithModelHelp } from "./assistedMatch.ts";
 import { checkProductLabel } from "./checkProductLabel.ts";
 import { buildChatBody, createLlamaServerModel } from "./llamaServerModel.ts";
 import type { LocalModel, LocalModelRequest } from "./localModel.ts";
-import { activeLocalModel, llamaServerCommand, totalDownloadBytes } from "./modelCatalog.ts";
+import { activeLocalModel, llamaServerCommand, LOCAL_MODELS, totalDownloadBytes } from "./modelCatalog.ts";
 import { parseFarmerMessage, textForSymptomMatcher } from "./parseFarmerMessage.ts";
 import type { FarmerReport } from "./parseFarmerMessage.ts";
 import { phraseVerdictInSwahili, phrasingProblem } from "./phraseVerdict.ts";
@@ -54,6 +56,14 @@ test("the symptom matcher keeps the farmer's own words next to the translation",
   const report = { status: "ok" as const, value: { ...sprayReport, symptomsInEnglish: "orange powder underneath" } };
   assert.equal(textForSymptomMatcher("unga chini", report), "unga chini orange powder underneath");
   assert.equal(textForSymptomMatcher("unga chini", { status: "unsure", reason: "x" }), "unga chini");
+});
+
+test("the model can never override or finalize a diagnosis on its own", () => {
+  const misleading = { status: "ok" as const, value: { ...sprayReport, symptomsInEnglish: "brown spots with a grey center and yellow halo" } };
+  const farmerSaidRust = matchWithModelHelp("orange powder under my leaves", misleading, DISEASES);
+  assert.equal(farmerSaidRust.kind === "confident" && farmerSaidRust.best.key, "rust");
+  const onlyModelKnows = matchWithModelHelp("mabaka ya kahawia", misleading, DISEASES);
+  assert.equal(onlyModelKnows.kind, "confirmFirst");
 });
 
 const label: ProductLabel = {
@@ -115,8 +125,9 @@ test("llama-server adapter sends the catalog's template options and an image", a
   assert.equal(await model.complete({ system: "s", prompt: "p", maxTokens: 10 }), "{}");
 });
 
-test("catalog knows the download size and how to serve the active model", () => {
-  const spec = activeLocalModel();
+test("catalog knows each model's download size and how to serve it", () => {
+  const spec = LOCAL_MODELS["qwen3.5-0.8b"];
   assert.equal(totalDownloadBytes(spec), 737_504_352);
-  assert.match(llamaServerCommand(spec, "/m", 8089), /--mmproj \/m\/mmproj-F16\.gguf --port 8089/);
+  assert.equal(totalDownloadBytes(LOCAL_MODELS["qwen3.5-2b"]), 1_949_063_104);
+  assert.match(llamaServerCommand(spec, "/m", 8089), /--mmproj \/m\/qwen3\.5-0\.8b\/mmproj-F16\.gguf --port 8089/);
 });
