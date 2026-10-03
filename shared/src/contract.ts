@@ -81,4 +81,5 @@ export interface ActionCard {
 export interface CaseSummaryInput {
   observation: Observation;
   card: ActionCard;
+  wetDays?: WetDays;
 }
