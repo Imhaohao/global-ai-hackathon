@@ -7,6 +7,7 @@ import { Chip } from '../components/Chip';
 import { PillButton } from '../components/PillButton';
 import { TextField } from '../components/TextField';
 import { Body, Muted, SectionHeading, Title } from '../components/Typography';
+import { useKeyboardHeight } from '../components/useKeyboardHeight';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { locationAllowed, type AppSettings } from '../storage/appSettings';
 import { colors } from '../theme';
@@ -27,7 +28,15 @@ type SettingsScreenProps = {
   onBack: () => void;
 };
 
-function LocationSwitch({ strings, enabled, onToggle }: { strings: Strings; enabled: boolean; onToggle: (enabled: boolean) => void }) {
+function LocationSwitch({
+  strings,
+  enabled,
+  onToggle,
+}: {
+  strings: Strings;
+  enabled: boolean;
+  onToggle: (enabled: boolean) => void;
+}) {
   return (
     <View className="min-h-14 flex-row items-center gap-3 rounded-control bg-surface px-4 py-2 shadow-sm">
       <MapPin size={26} weight="duotone" color={colors.accent} />
@@ -43,7 +52,15 @@ function LocationSwitch({ strings, enabled, onToggle }: { strings: Strings; enab
   );
 }
 
-function OfficerNumberField({ strings, savedPhone, onSave }: { strings: Strings; savedPhone?: string; onSave: (phone?: string) => void }) {
+function OfficerNumberField({
+  strings,
+  savedPhone,
+  onSave,
+}: {
+  strings: Strings;
+  savedPhone?: string;
+  onSave: (phone?: string) => void;
+}) {
   const [typed, setTyped] = useState(savedPhone ?? '');
   const commit = () => {
     if (typed.trim() === '') return onSave(undefined);
@@ -64,7 +81,15 @@ function OfficerNumberField({ strings, savedPhone, onSave }: { strings: Strings;
   );
 }
 
-function FarmSectionsEditor({ strings, sections, onChange }: { strings: Strings; sections: string[]; onChange: (sections: string[]) => void }) {
+function FarmSectionsEditor({
+  strings,
+  sections,
+  onChange,
+}: {
+  strings: Strings;
+  sections: string[];
+  onChange: (sections: string[]) => void;
+}) {
   return (
     <View className="gap-3">
       <SectionHeading>{strings.farmSectionsLabel}</SectionHeading>
@@ -86,7 +111,15 @@ function FarmSectionsEditor({ strings, sections, onChange }: { strings: Strings;
   );
 }
 
-function DevScenarioPicker({ strings, selected, onSelect }: { strings: Strings; selected: DevScenario; onSelect: (scenario: DevScenario) => void }) {
+function DevScenarioPicker({
+  strings,
+  selected,
+  onSelect,
+}: {
+  strings: Strings;
+  selected: DevScenario;
+  onSelect: (scenario: DevScenario) => void;
+}) {
   return (
     <View className="gap-3">
       <SectionHeading>{strings.devVerdictTitle}</SectionHeading>
@@ -106,7 +139,12 @@ function confirmDeleteAll(strings: Strings, onConfirm: () => void) {
   ]);
 }
 
-function DataControls({ strings, savedCheckCount, onExport, onDeleteAll }: Pick<SettingsScreenProps, 'strings' | 'savedCheckCount' | 'onExport' | 'onDeleteAll'>) {
+function DataControls({
+  strings,
+  savedCheckCount,
+  onExport,
+  onDeleteAll,
+}: Pick<SettingsScreenProps, 'strings' | 'savedCheckCount' | 'onExport' | 'onDeleteAll'>) {
   const [exportFailed, setExportFailed] = useState(false);
   const exportData = async () => setExportFailed(!(await onExport()));
   return (
@@ -114,15 +152,25 @@ function DataControls({ strings, savedCheckCount, onExport, onDeleteAll }: Pick<
       <Muted>{fillTemplate(strings.savedChecks, { count: savedCheckCount })}</Muted>
       {exportFailed && <Body className="text-sick">{strings.exportFailed}</Body>}
       <Button label={strings.exportData} icon={DownloadSimple} variant="secondary" onPress={exportData} />
-      <Button label={strings.deleteAll} icon={Trash} variant="secondary" onPress={() => confirmDeleteAll(strings, onDeleteAll)} />
+      <Button
+        label={strings.deleteAll}
+        icon={Trash}
+        variant="secondary"
+        onPress={() => confirmDeleteAll(strings, onDeleteAll)}
+      />
     </View>
   );
 }
 
 export function SettingsScreen(props: SettingsScreenProps) {
   const { strings, settings, onUpdateSettings } = props;
+  const keyboardHeight = useKeyboardHeight();
   return (
-    <ScrollView contentContainerClassName="gap-6 px-5 pb-8 pt-2" keyboardShouldPersistTaps="handled">
+    <ScrollView
+      contentContainerClassName="gap-6 px-5 pt-2"
+      contentContainerStyle={{ paddingBottom: 32 + keyboardHeight }}
+      keyboardShouldPersistTaps="handled"
+    >
       <View className="items-start">
         <PillButton label={strings.back} icon={ArrowLeft} onPress={props.onBack} />
       </View>
@@ -144,7 +192,9 @@ export function SettingsScreen(props: SettingsScreenProps) {
         onExport={props.onExport}
         onDeleteAll={props.onDeleteAll}
       />
-      {__DEV__ && <DevScenarioPicker strings={strings} selected={props.devScenario} onSelect={props.onChangeDevScenario} />}
+      {__DEV__ && (
+        <DevScenarioPicker strings={strings} selected={props.devScenario} onSelect={props.onChangeDevScenario} />
+      )}
     </ScrollView>
   );
 }

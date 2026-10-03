@@ -1,4 +1,5 @@
 import { CalendarCheck, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
+import { useEffect, useRef } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import type { ActionCard, AppLanguage, Observation } from '../../../shared/src/contract.ts';
@@ -7,6 +8,7 @@ import { Disclosure } from '../components/Disclosure';
 import { LeafSlots } from '../components/LeafSlots';
 import { PillButton } from '../components/PillButton';
 import { Body, SectionHeading } from '../components/Typography';
+import { useKeyboardHeight } from '../components/useKeyboardHeight';
 import { useReadAloud } from '../components/useReadAloud';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
@@ -84,8 +86,18 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
   const recheckText = fillTemplate(strings.recheckOn, {
     date: formatRecheckDate(observation.capturedAt, card.recheckInDays, language),
   });
+  const scrollRef = useRef<ScrollView>(null);
+  const keyboardHeight = useKeyboardHeight();
+  useEffect(() => {
+    if (keyboardHeight > 0) scrollRef.current?.scrollToEnd({ animated: true });
+  }, [keyboardHeight]);
   return (
-    <ScrollView contentContainerClassName="gap-6 px-5 pb-8 pt-4">
+    <ScrollView
+      ref={scrollRef}
+      contentContainerClassName="gap-6 px-5 pt-4"
+      contentContainerStyle={{ paddingBottom: 32 + keyboardHeight }}
+      keyboardShouldPersistTaps="handled"
+    >
       <DecisionHeader decision={card.decision} urgency={card.urgency} headline={card.headline} />
       <ReadAloudButton strings={strings} card={card} />
       {card.doNow.length > 0 && (

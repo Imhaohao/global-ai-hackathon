@@ -22,7 +22,9 @@ const MARK_STYLE: Record<LeafMark, { container: string; color: string }> = {
 export function LeafMarkBadge({ mark }: { mark: LeafMark }) {
   const IconComponent = MARK_ICON[mark];
   return (
-    <View className={`absolute bottom-1 right-1 h-6 w-6 items-center justify-center rounded-full ${MARK_STYLE[mark].container}`}>
+    <View
+      className={`absolute bottom-1 right-1 h-6 w-6 items-center justify-center rounded-full ${MARK_STYLE[mark].container}`}
+    >
       <IconComponent size={16} weight="bold" color={MARK_STYLE[mark].color} />
     </View>
   );
@@ -44,7 +46,10 @@ export function LeafSlots({ photoUris, readings, verdict, slotCount, accessibili
         const photoUri = photoUris[index];
         const reading = readings[index];
         return (
-          <View key={index} className="aspect-square flex-1 items-center justify-center overflow-hidden rounded-control bg-hairline">
+          <View
+            key={index}
+            className="aspect-square flex-1 items-center justify-center overflow-hidden rounded-control bg-hairline"
+          >
             {photoUri ? (
               <Image source={{ uri: photoUri }} className="h-full w-full" accessibilityIgnoresInvertColors />
             ) : (

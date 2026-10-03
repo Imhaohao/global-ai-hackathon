@@ -1,4 +1,14 @@
-import { ArrowCounterClockwise, ArrowRight, Camera, CheckCircle, Gear, ImageSquare, Translate, Warning, WifiSlash } from 'phosphor-react-native';
+import {
+  ArrowCounterClockwise,
+  ArrowRight,
+  Camera,
+  CheckCircle,
+  Gear,
+  ImageSquare,
+  Translate,
+  Warning,
+  WifiSlash,
+} from 'phosphor-react-native';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
@@ -45,7 +55,12 @@ function ProblemNotice({ strings, problem }: { strings: Strings; problem: Captur
 type VerdictTone = { container: string; text: string; color: string; icon: typeof Warning };
 
 const WATCH_TONE: VerdictTone = { container: 'bg-watch-soft', text: 'text-watch', color: colors.watch, icon: Warning };
-const HEALTHY_TONE: VerdictTone = { container: 'bg-healthy-soft', text: 'text-healthy', color: colors.healthy, icon: CheckCircle };
+const HEALTHY_TONE: VerdictTone = {
+  container: 'bg-healthy-soft',
+  text: 'text-healthy',
+  color: colors.healthy,
+  icon: CheckCircle,
+};
 
 function verdictTitle(strings: Strings, verdict: PlantVerdict): string {
   if (verdict.kind === 'answer') {
@@ -80,7 +95,11 @@ function ProblemLeafRow({ strings, photo, reading, onRetake }: ProblemLeafRowPro
   const reason = leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
   return (
     <View className="flex-row items-center gap-4 rounded-control bg-surface p-3 shadow-sm">
-      <Image source={{ uri: photo.uri }} className="h-16 w-16 rounded-control bg-hairline" accessibilityIgnoresInvertColors />
+      <Image
+        source={{ uri: photo.uri }}
+        className="h-16 w-16 rounded-control bg-hairline"
+        accessibilityIgnoresInvertColors
+      />
       <View className="flex-1 gap-2">
         <Muted className="text-ink">{reason}</Muted>
         <Pressable
@@ -104,7 +123,9 @@ type ProblemLeavesProps = {
 };
 
 function ProblemLeaves({ strings, photos, readings, onRetake }: ProblemLeavesProps) {
-  const problemIndexes = readings.map((reading, index) => (leafProblemOf(reading) ? index : -1)).filter((index) => index >= 0);
+  const problemIndexes = readings
+    .map((reading, index) => (leafProblemOf(reading) ? index : -1))
+    .filter((index) => index >= 0);
   if (problemIndexes.length === 0) return null;
   return (
     <View className="gap-3">
@@ -123,14 +144,20 @@ function ProblemLeaves({ strings, photos, readings, onRetake }: ProblemLeavesPro
 
 function CheckingNotice({ strings }: { strings: Strings }) {
   return (
-    <View accessibilityLiveRegion="polite" className="flex-row items-center gap-3 rounded-control bg-surface p-4 shadow-sm">
+    <View
+      accessibilityLiveRegion="polite"
+      className="flex-row items-center gap-3 rounded-control bg-surface p-4 shadow-sm"
+    >
       <ActivityIndicator color={colors.accent} />
       <Body>{strings.checking}</Body>
     </View>
   );
 }
 
-type ActionsProps = Pick<CaptureScreenProps, 'strings' | 'photos' | 'check' | 'isChecking' | 'canCheck' | 'onTakeLeaf' | 'onFinish'>;
+type ActionsProps = Pick<
+  CaptureScreenProps,
+  'strings' | 'photos' | 'check' | 'isChecking' | 'canCheck' | 'onTakeLeaf' | 'onFinish'
+>;
 
 function CaptureActions({ strings, photos, check, isChecking, canCheck, onTakeLeaf, onFinish }: ActionsProps) {
   const canAddLeaf = canCheck && !isChecking && photos.length < MAX_LEAVES_PER_PLANT;
@@ -142,8 +169,20 @@ function CaptureActions({ strings, photos, check, isChecking, canCheck, onTakeLe
       {canFinish && <Button label={strings.seeAdvice} icon={ArrowRight} onPress={onFinish} />}
       {photos.length < MAX_LEAVES_PER_PLANT && (
         <>
-          <Button label={cameraLabel} icon={Camera} variant={cameraVariant} onPress={() => onTakeLeaf('camera')} disabled={!canAddLeaf} />
-          <Button label={strings.choosePhoto} icon={ImageSquare} variant="quiet" onPress={() => onTakeLeaf('library')} disabled={!canAddLeaf} />
+          <Button
+            label={cameraLabel}
+            icon={Camera}
+            variant={cameraVariant}
+            onPress={() => onTakeLeaf('camera')}
+            disabled={!canAddLeaf}
+          />
+          <Button
+            label={strings.choosePhoto}
+            icon={ImageSquare}
+            variant="quiet"
+            onPress={() => onTakeLeaf('library')}
+            disabled={!canAddLeaf}
+          />
         </>
       )}
       {photos.length === 0 && (

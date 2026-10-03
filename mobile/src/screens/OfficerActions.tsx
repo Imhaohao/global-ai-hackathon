@@ -19,7 +19,15 @@ type OfficerActionsProps = {
   onCheckAnother: () => void;
 };
 
-function OfficerPhonePrompt({ strings, onSubmit, onCancel }: { strings: Strings; onSubmit: (phone: string) => void; onCancel: () => void }) {
+function OfficerPhonePrompt({
+  strings,
+  onSubmit,
+  onCancel,
+}: {
+  strings: Strings;
+  onSubmit: (phone: string) => void;
+  onCancel: () => void;
+}) {
   const [typed, setTyped] = useState('');
   return (
     <View className="gap-3 rounded-control bg-surface p-4 shadow-sm">
