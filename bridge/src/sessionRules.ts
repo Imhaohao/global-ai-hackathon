@@ -1,6 +1,7 @@
 export const KEYWORD = "LEAF";
 export const SESSION_MS = 30 * 60 * 1000;
 export const REPLY_PREFIX = "Leaf Doctor: ";
+export const PENDING_PHOTO_MS = 2 * 60 * 1000;
 
 export type BridgeDecision =
   | { kind: "welcome" }
@@ -27,4 +28,16 @@ export function decideIncoming(text: string, lastActiveAt: number | undefined, n
   }
   if (inSession && trimmed) return { kind: "answer", question: trimmed };
   return { kind: "ignore" };
+}
+
+export type PhotoDecision = { kind: "answerPhoto"; caption: string } | { kind: "hold" };
+
+export function decidePhoto(caption: string, lastActiveAt: number | undefined, now: number): PhotoDecision {
+  const trimmed = caption.trim();
+  if (KEYWORD_PREFIX.test(trimmed)) return { kind: "answerPhoto", caption: trimmed.replace(KEYWORD_PREFIX, "").trim() };
+  return isInSession(lastActiveAt, now) ? { kind: "answerPhoto", caption: trimmed } : { kind: "hold" };
+}
+
+export function isPendingPhotoFresh(heldAt: number | undefined, now: number): boolean {
+  return heldAt !== undefined && now - heldAt < PENDING_PHOTO_MS;
 }

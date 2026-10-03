@@ -7,12 +7,18 @@ export const MESSAGES_DB_PATH = join(homedir(), "Library", "Messages", "chat.db"
 const GROUP_CHAT_STYLE = 43;
 const BATCH_SIZE = 50;
 
+export interface MessageAttachment {
+  path: string;
+  mimeType: string;
+}
+
 export interface IncomingMessage {
   rowId: number;
   sender: string;
   service: string;
   text: string | null;
   isGroupChat: boolean;
+  attachments: MessageAttachment[];
 }
 
 interface MessageRow {
@@ -35,6 +41,19 @@ const NEW_MESSAGES_SQL = `
   ORDER BY m.ROWID
   LIMIT ${BATCH_SIZE}`;
 
+const ATTACHMENTS_SQL = `
+  SELECT a.filename AS path, a.mime_type AS mimeType
+  FROM attachment a
+  JOIN message_attachment_join maj ON maj.attachment_id = a.ROWID
+  WHERE maj.message_id = ? AND a.filename IS NOT NULL`;
+
+const OBJECT_REPLACEMENT = /\uFFFC/g;
+
+function cleanText(text: string | null): string | null {
+  const cleaned = text?.replace(OBJECT_REPLACEMENT, "").trim();
+  return cleaned ? cleaned : null;
+}
+
 export class MessagesDb {
   private readonly db: DatabaseSync;
 
@@ -53,9 +72,17 @@ export class MessagesDb {
       rowId: row.rowId,
       sender: row.sender,
       service: row.service ?? "SMS",
-      text: row.text ?? textFromAttributedBody(row.body),
+      text: cleanText(row.text ?? textFromAttributedBody(row.body)),
       isGroupChat: row.style === GROUP_CHAT_STYLE,
+      attachments: this.imageAttachments(row.rowId),
     }));
+  }
+
+  private imageAttachments(messageRowId: number): MessageAttachment[] {
+    const rows = this.db.prepare(ATTACHMENTS_SQL).all(messageRowId) as unknown as { path: string; mimeType: string | null }[];
+    return rows
+      .filter((row) => (row.mimeType ?? "").startsWith("image/"))
+      .map((row) => ({ path: row.path, mimeType: row.mimeType ?? "image/jpeg" }));
   }
 
   close(): void {

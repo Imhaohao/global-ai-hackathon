@@ -29,10 +29,10 @@ export const privacyPolicyPage = page(
 <p class="updated">${BRAND_NAME} by ${REGISTERED_BRAND}, last updated ${LAST_UPDATED}</p>
 <p>${OPERATED_BY} ${BRAND_NAME} is a free advice line that helps coffee farmers identify and manage coffee leaf diseases by SMS and phone. This policy explains what ${REGISTERED_BRAND} collects and how it is used.</p>
 <h2>What we collect</h2>
-<p>When you text ${BRAND_NAME}, we receive your phone number, the text of your messages, and the time they were sent.</p>
+<p>When you text ${BRAND_NAME}, we receive your phone number, the text of your messages, the time they were sent, and any photo of a leaf you send.</p>
 <h2>How we use it</h2>
 <p>We use your messages only to answer your coffee plant questions. We keep up to the last eight messages of a conversation for 24 hours so that follow-up answers make sense, and we record when we last replied to your number so we can limit replies to 5 every 10 minutes.</p>
-<p>To write answers, the text of your messages is processed by our AI provider (Anthropic), and messages are delivered through our SMS provider (Twilio). They process this data only to provide the service to us.</p>
+<p>To write answers, the text of your messages and any leaf photos are processed by our AI provider (Anthropic), and messages are delivered through our SMS provider (Twilio). They process this data only to provide the service to us. We do not keep your photos after answering; we only note that a photo was sent.</p>
 <h2>Sharing</h2>
 <p>We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes.</p>
 <h2>Your choices</h2>

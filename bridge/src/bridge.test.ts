@@ -7,7 +7,11 @@ import { test } from "node:test";
 import { askLeafDoctor } from "./askLeafDoctor.ts";
 import { textFromAttributedBody } from "./attributedBody.ts";
 import { MessagesDb } from "./messagesDb.ts";
-import { decideIncoming, SESSION_MS } from "./sessionRules.ts";
+import { mergeCaptions } from "./mergeCaptions.ts";
+import { preparePhoto } from "./preparePhoto.ts";
+import { decideIncoming, decidePhoto, isPendingPhotoFresh, PENDING_PHOTO_MS, SESSION_MS } from "./sessionRules.ts";
+import { execFileSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
 
 function typedstreamBlob(text: string): Uint8Array {
   const utf8 = Buffer.from(text, "utf8");
@@ -57,6 +61,9 @@ test("reads only new incoming one-to-one messages from a Messages-shaped databas
     CREATE TABLE message (ROWID INTEGER PRIMARY KEY, text TEXT, attributedBody BLOB, handle_id INTEGER,
       is_from_me INTEGER, service TEXT, associated_message_type INTEGER DEFAULT 0, item_type INTEGER DEFAULT 0);
     CREATE TABLE chat_message_join (chat_id INTEGER, message_id INTEGER);
+    CREATE TABLE attachment (ROWID INTEGER PRIMARY KEY, filename TEXT, mime_type TEXT);
+    CREATE TABLE message_attachment_join (message_id INTEGER, attachment_id INTEGER);
+    INSERT INTO attachment VALUES (100, '~/Library/Messages/Attachments/ab/IMG_1.heic', 'image/heic'), (101, '~/x/card.vcf', 'text/vcard');
     INSERT INTO handle VALUES (1, '+15550001111', 'SMS'), (2, 'friend@example.com', 'iMessage');
     INSERT INTO chat VALUES (10, 45, 'SMS'), (20, 43, 'iMessage');
   `);
@@ -67,17 +74,22 @@ test("reads only new incoming one-to-one messages from a Messages-shaped databas
   insert.run(3, "my own reply", null, 1, 1, "SMS", 0); join_.run(10, 3);
   insert.run(4, "Loved a message", null, 1, 0, "SMS", 2000); join_.run(10, 4);
   insert.run(5, "LEAF in a group", null, 2, 0, "iMessage", 0); join_.run(20, 5);
+  insert.run(6, "\uFFFC", null, 1, 0, "SMS", 0); join_.run(10, 6);
+  db.prepare("INSERT INTO message_attachment_join VALUES (?, ?)").run(6, 100);
+  db.prepare("INSERT INTO message_attachment_join VALUES (?, ?)").run(6, 101);
   db.close();
 
   const messages = new MessagesDb(path);
-  assert.equal(messages.latestRowId(), 5);
+  assert.equal(messages.latestRowId(), 6);
   const fresh = messages.messagesAfter(1);
   messages.close();
 
-  assert.deepEqual(fresh.map((m) => [m.rowId, m.text, m.isGroupChat, m.service]), [
-    [2, "LEAF orange powder", false, "SMS"],
-    [5, "LEAF in a group", true, "iMessage"],
+  assert.deepEqual(fresh.map((m) => [m.rowId, m.text, m.isGroupChat, m.service, m.attachments.length]), [
+    [2, "LEAF orange powder", false, "SMS", 0],
+    [5, "LEAF in a group", true, "iMessage", 0],
+    [6, null, false, "SMS", 1],
   ]);
+  assert.deepEqual(fresh[2].attachments, [{ path: "~/Library/Messages/Attachments/ab/IMG_1.heic", mimeType: "image/heic" }]);
 });
 
 test("askLeafDoctor answers offline with no token and never calls the network", async () => {
@@ -112,4 +124,49 @@ test("the bridge never answers its own replies, even mid-conversation (self-chat
   const start = 1_000_000;
   assert.deepEqual(decideIncoming("Leaf Doctor: This sounds like Coffee leaf rust.", start, start + 5_000), { kind: "ignore" });
   assert.deepEqual(decideIncoming("Leaf Doctor: Hi! Tell me what you see", undefined, start), { kind: "ignore" });
+});
+
+const photoMessage = (rowId: number, sender: string) => ({
+  rowId, sender, service: "iMessage", text: null, isGroupChat: false,
+  attachments: [{ path: "/tmp/leaf.heic", mimeType: "image/heic" }],
+});
+const textMessage = (rowId: number, sender: string, text: string) => ({
+  rowId, sender, service: "iMessage", text, isGroupChat: false, attachments: [],
+});
+
+test("a photo row followed by its caption row becomes one photo question", () => {
+  const merged = mergeCaptions([photoMessage(1, "+1"), textMessage(2, "+1", "LEAF is this rust?"), textMessage(3, "+2", "hi")]);
+  assert.equal(merged.length, 2);
+  assert.equal(merged[0].text, "LEAF is this rust?");
+  assert.equal(merged[0].attachments.length, 1);
+  assert.equal(merged[0].rowId, 2);
+  assert.equal(mergeCaptions([photoMessage(1, "+1"), textMessage(2, "+2", "LEAF")]).length, 2);
+});
+
+test("photos follow the same LEAF rules as text, and wait briefly for a LEAF that follows", () => {
+  const now = 5_000_000;
+  assert.deepEqual(decidePhoto("LEAF is this bad?", undefined, now), { kind: "answerPhoto", caption: "is this bad?" });
+  assert.deepEqual(decidePhoto("", undefined, now), { kind: "hold" });
+  assert.deepEqual(decidePhoto("", now - 60_000, now), { kind: "answerPhoto", caption: "" });
+  assert.equal(isPendingPhotoFresh(now - 30_000, now), true);
+  assert.equal(isPendingPhotoFresh(now - PENDING_PHOTO_MS - 1, now), false);
+});
+
+test("an iPhone HEIC photo is converted to a JPEG no wider than 1024 px with macOS sips", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "leaf-heic-"));
+  const source = join(dir, "source.png");
+  const heic = join(dir, "leaf.heic");
+  const appIcon = new URL("../../mobile/assets/icon.png", import.meta.url).pathname;
+  execFileSync("sips", ["-z", "1200", "1600", appIcon, "--out", source], { stdio: "ignore" });
+  execFileSync("sips", ["-s", "format", "heic", source, "--out", heic], { stdio: "ignore" });
+
+  const photo = await preparePhoto(heic);
+  const converted = join(dir, "converted.jpg");
+  writeFileSync(converted, Buffer.from(photo.base64, "base64"));
+  const info = execFileSync("sips", ["-g", "format", "-g", "pixelWidth", "-g", "pixelHeight", converted]).toString();
+
+  assert.equal(photo.mediaType, "image/jpeg");
+  assert.match(info, /format: jpeg/);
+  assert.match(info, /pixelWidth: 1024/);
+  assert.match(info, /pixelHeight: 768/);
 });
