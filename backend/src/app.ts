@@ -1,5 +1,7 @@
 import { Hono } from "hono";
 import type { Advisor } from "./advisor.ts";
+import { isCarrierKeyword } from "../../shared/src/index.ts";
+import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
 import { constantTimeEqual, isValidTwilioSignature } from "./twilio.ts";
 
 export interface ReplyRateLimit {
@@ -42,6 +44,9 @@ export function createApp(deps: AppDependencies): Hono {
   const smsWebhookUrl = `${deps.publicBaseUrl.replace(/\/$/, "")}/sms`;
 
   app.get("/health", (c) => c.json({ ok: true }));
+  app.get("/privacy", (c) => c.html(privacyPolicyPage));
+  app.get("/terms", (c) => c.html(termsPage));
+  app.get("/text-us", (c) => c.html(textUsPage));
 
   app.post("/sms", async (c) => {
     if (!deps.twilioAuthToken) return c.text("SMS is not configured: TWILIO_AUTH_TOKEN is missing", 503);
@@ -53,7 +58,8 @@ export function createApp(deps: AppDependencies): Hono {
 
     const from = params.From ?? "";
     const question = (params.Body ?? "").trim().slice(0, MAX_QUESTION_CHARS);
-    if (from && question && (await deps.rateLimit.allow(from))) {
+    const isQuestion = question.length > 0 && !isCarrierKeyword(question);
+    if (from && isQuestion && (await deps.rateLimit.allow(from))) {
       await deps.queueSmsReply(from, question);
     }
     return c.body(EMPTY_TWIML, 200, { "Content-Type": "text/xml" });

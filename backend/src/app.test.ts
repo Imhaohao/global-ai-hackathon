@@ -146,3 +146,30 @@ test("advisor falls back to the offline matcher when Claude is unreachable", asy
     console.error = originalError;
   }
 });
+
+test("carrier keywords like STOP and HELP get no bot reply", async () => {
+  const { app, queued } = buildApp();
+  for (const keyword of ["STOP", "stop.", "Help", "START"]) {
+    const response = await app.fetch(twilioRequest({ From: "+15550004444", Body: keyword }));
+    assert.equal(response.status, 200);
+  }
+  assert.equal(queued.length, 0);
+});
+
+test("compliance pages carry the statements Twilio reviewers check for", async () => {
+  const { app } = buildApp();
+  const privacy = await (await app.fetch(new Request(`${BASE_URL}/privacy`))).text();
+  assert.match(privacy, /<title>Privacy Policy/);
+  assert.match(privacy, /We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes\./);
+  assert.match(privacy, /Leaf Doctor is operated by David/);
+
+  const terms = await (await app.fetch(new Request(`${BASE_URL}/terms`))).text();
+  assert.match(terms, /<title>Terms &amp; Conditions|<title>Terms & Conditions/);
+  assert.match(terms, /SMS Terms/);
+  assert.match(terms, /[Mm]essage and data rates may apply/);
+  assert.match(terms, /Leaf Doctor is operated by David/);
+
+  const textUs = await (await app.fetch(new Request(`${BASE_URL}/text-us`)));
+  assert.equal(textUs.status, 200);
+  assert.match(await textUs.text(), /Reply STOP to opt out/);
+});
