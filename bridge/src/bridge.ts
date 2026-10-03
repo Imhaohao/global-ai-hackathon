@@ -1,4 +1,4 @@
-import { evaluateReply } from "../../shared/src/index.ts";
+import { checkHubToken, CONVERSATION_REPLIES_PER_WINDOW, DEFAULT_BACKEND_URL, evaluateReply } from "../../shared/src/index.ts";
 import { askLeafDoctor } from "./askLeafDoctor.ts";
 import { MESSAGES_DB_PATH, MessagesDb, type IncomingMessage } from "./messagesDb.ts";
 import { sendWithMessagesApp } from "./sendMessage.ts";
@@ -10,7 +10,7 @@ const WELCOME_REPLY = `${REPLY_PREFIX}Hi! Tell me what you see on your coffee le
 const GOODBYE_REPLY = `${REPLY_PREFIX}Okay, I'll stop. Text ${KEYWORD} with your question any time.`;
 
 const dryRun = process.argv.includes("--dry-run");
-const token = process.env.LEAF_BRIDGE_TOKEN?.trim() || undefined;
+let token = process.env.LEAF_BRIDGE_TOKEN?.trim() || undefined;
 const lastActiveBySender = new Map<string, number>();
 const replyTimesBySender = new Map<string, number[]>();
 
@@ -19,7 +19,7 @@ function mask(handle: string): string {
 }
 
 function claimReplySlot(sender: string, now: number): boolean {
-  const decision = evaluateReply(replyTimesBySender.get(sender) ?? [], now);
+  const decision = evaluateReply(replyTimesBySender.get(sender) ?? [], now, CONVERSATION_REPLIES_PER_WINDOW);
   replyTimesBySender.set(sender, decision.recentReplyTimes);
   return decision.allowed;
 }
@@ -57,6 +57,22 @@ async function handle(message: IncomingMessage): Promise<void> {
   await deliver(message, text);
 }
 
+const CONNECTION_MESSAGES = {
+  valid: "Connected: answers come from the Leaf Doctor server (Claude), with offline rules as backup.",
+  rejected: "The server REJECTED LEAF_BRIDGE_TOKEN in bridge/.env, so answers will use the offline rules only. Copy it again with: cd backend && npx convex env get HUB_TOKEN",
+  unreachable: "Couldn't reach the Leaf Doctor server right now. Answering offline until it's back.",
+} as const;
+
+async function reportServerConnection(): Promise<void> {
+  if (!token) {
+    console.log("No LEAF_BRIDGE_TOKEN in bridge/.env: answering with offline rules only.");
+    return;
+  }
+  const result = await checkHubToken(DEFAULT_BACKEND_URL, token);
+  console.log(CONNECTION_MESSAGES[result]);
+  if (result === "rejected") token = undefined;
+}
+
 function openDatabase(): MessagesDb {
   try {
     return new MessagesDb();
@@ -71,7 +87,7 @@ async function main(): Promise<void> {
   const db = openDatabase();
   let lastRowId = db.latestRowId();
   console.log(`Leaf Doctor bridge ${dryRun ? "(dry run, nothing is sent) " : ""}is listening for texts that start with "${KEYWORD}".`);
-  console.log(token ? "Answers come from the Leaf Doctor server, with offline rules as backup." : "No LEAF_BRIDGE_TOKEN set: answering with offline rules only.");
+  await reportServerConnection();
 
   for (;;) {
     for (const message of db.messagesAfter(lastRowId)) {

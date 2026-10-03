@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import type { Advisor } from "./advisor.ts";
-import { isCarrierKeyword } from "../../shared/src/index.ts";
+import { CONVERSATION_REPLIES_PER_WINDOW, isCarrierKeyword, MAX_REPLIES_PER_WINDOW } from "../../shared/src/index.ts";
 import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
 import { constantTimeEqual, isValidTwilioSignature } from "./twilio.ts";
 
 export interface ReplyRateLimit {
-  allow(sender: string): Promise<boolean>;
+  allow(sender: string, maxReplies: number): Promise<boolean>;
 }
 
 export interface AppDependencies {
@@ -59,7 +59,7 @@ export function createApp(deps: AppDependencies): Hono {
     const from = params.From ?? "";
     const question = (params.Body ?? "").trim().slice(0, MAX_QUESTION_CHARS);
     const isQuestion = question.length > 0 && !isCarrierKeyword(question);
-    if (from && isQuestion && (await deps.rateLimit.allow(from))) {
+    if (from && isQuestion && (await deps.rateLimit.allow(from, MAX_REPLIES_PER_WINDOW))) {
       await deps.queueSmsReply(from, question);
     }
     return c.body(EMPTY_TWIML, 200, { "Content-Type": "text/xml" });
@@ -82,7 +82,7 @@ export function createApp(deps: AppDependencies): Hono {
 
     const ask = parseAskBody(await c.req.json().catch(() => null));
     if (!ask) return c.json({ error: "Send JSON with non-empty from and text" }, 400);
-    if (!(await deps.rateLimit.allow(ask.from))) return c.json({ error: "Too many questions from this sender" }, 429);
+    if (!(await deps.rateLimit.allow(ask.from, CONVERSATION_REPLIES_PER_WINDOW))) return c.json({ error: "Too many questions from this sender" }, 429);
 
     return c.json({ reply: await deps.advisor.advise(ask.from, ask.text) });
   });

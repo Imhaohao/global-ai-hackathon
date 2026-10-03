@@ -15,7 +15,7 @@ const handleWithApp = httpAction(async (ctx, request) => {
       await ctx.scheduler.runAfter(0, internal.sms.replyBySms, { from, question });
     },
     rateLimit: {
-      allow: (sender) => ctx.runMutation(internal.phoneSessions.claimReplySlot, { phone: sender }),
+      allow: (sender, maxReplies) => ctx.runMutation(internal.phoneSessions.claimReplySlot, { phone: sender, maxReplies }),
     },
     twilioAuthToken: process.env.TWILIO_AUTH_TOKEN ?? "",
     publicBaseUrl: requireEnv("CONVEX_SITE_URL"),

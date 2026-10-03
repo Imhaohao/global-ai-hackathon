@@ -15,8 +15,8 @@ const BASE_URL = "https://leaf.example.test";
 function inMemoryRateLimit(): ReplyRateLimit {
   const timesBySender = new Map<string, number[]>();
   return {
-    async allow(sender) {
-      const decision = evaluateReply(timesBySender.get(sender) ?? [], Date.now());
+    async allow(sender, maxReplies) {
+      const decision = evaluateReply(timesBySender.get(sender) ?? [], Date.now(), maxReplies);
       timesBySender.set(sender, decision.recentReplyTimes);
       return decision.allowed;
     },
@@ -191,4 +191,14 @@ test("/hub/check confirms the hub token without calling Claude or using the rate
   const { app: unconfigured } = buildApp({ hubToken: "" });
   const response = await unconfigured.fetch(new Request(`${BASE_URL}/hub/check`, { method: "POST", headers: { Authorization: "Bearer " } }));
   assert.equal(response.status, 503);
+});
+
+test("hub and bridge conversations get a higher reply limit than the Twilio number", async () => {
+  const { app } = buildApp();
+  const statuses: number[] = [];
+  for (let index = 0; index < 16; index++) {
+    statuses.push((await app.fetch(askRequest({ from: "+15550005555", text: `follow-up ${index}` }))).status);
+  }
+  assert.equal(statuses.filter((status) => status === 200).length, 15);
+  assert.equal(statuses.at(-1), 429);
 });

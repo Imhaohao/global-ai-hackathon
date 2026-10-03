@@ -6,3 +6,4 @@ export * from "./replyWindow.ts";
 export * from "./diseases.sw.ts";
 export * from "./smsCompliance.ts";
 export * from "./backendUrl.ts";
+export * from "./hubToken.ts";
