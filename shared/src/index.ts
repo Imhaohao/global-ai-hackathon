@@ -12,3 +12,5 @@ export * from "./contacts.ts";
 export * from "./rain.ts";
 export * from "./plantVote.ts";
 export * from "./languageGuard.ts";
+export * from "./backendUrl.ts";
+export * from "./hubToken.ts";

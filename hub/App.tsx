@@ -9,12 +9,15 @@ import { ExchangeCard } from "./src/components/ExchangeCard";
 import { ListeningControl } from "./src/components/ListeningControl";
 import { ModelCard } from "./src/components/ModelCard";
 import { ProblemBanner } from "./src/components/ProblemBanner";
+import { ServerConnectionCard } from "./src/components/ServerConnectionCard";
 import { useLocalModel } from "./src/localModel/useLocalModel";
+import { useHubConnection } from "./src/useHubConnection";
 import { useSmsHub } from "./src/useSmsHub";
 
 export default function App() {
   const localModel = useLocalModel();
-  const { listening, exchanges, problem, start, stop } = useSmsHub(localModel.modelRef);
+  const connection = useHubConnection();
+  const { listening, exchanges, problem, start, stop } = useSmsHub(localModel.modelRef, connection.tokenRef);
 
   return (
     <SafeAreaProvider>
@@ -32,6 +35,14 @@ export default function App() {
               <Text className="text-3xl font-bold text-ink">Leaf Doctor Hub</Text>
               <ListeningControl listening={listening} onStart={() => void start()} onStop={stop} />
               <ProblemBanner problem={problem} />
+              <ServerConnectionCard
+                status={connection.status}
+                checking={connection.checking}
+                formProblem={connection.formProblem}
+                onConnect={(token) => void connection.connect(token)}
+                onDisconnect={() => void connection.disconnect()}
+                onRecheck={() => void connection.recheck()}
+              />
               <ModelCard
                 spec={localModel.spec}
                 state={localModel.state}

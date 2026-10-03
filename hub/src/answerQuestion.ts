@@ -1,3 +1,4 @@
+import { resolveBackendUrl } from "./backendUrl.ts";
 import { answerWithLocalModel } from "../../shared/src/localModel/index.ts";
 import type { FarmerReport, LocalModel } from "../../shared/src/localModel/index.ts";
 
@@ -17,7 +18,7 @@ function isReplyPayload(value: unknown): value is { reply: string } {
   return typeof reply === "string" && reply.trim().length > 0;
 }
 
-async function askBackend(backendUrl: string, from: string, text: string): Promise<string> {
+async function askBackend(backendUrl: string, token: string, from: string, text: string): Promise<string> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ONLINE_TIMEOUT_MS);
   try {
@@ -25,7 +26,7 @@ async function askBackend(backendUrl: string, from: string, text: string): Promi
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.EXPO_PUBLIC_HUB_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ from, text }),
       signal: controller.signal,
@@ -44,11 +45,16 @@ async function answerOffline(text: string, localModel: LocalModel | null): Promi
   return { reply, source: "offline", modelReading: report.status === "ok" ? report.value : null };
 }
 
-export async function answerQuestion(from: string, text: string, localModel: LocalModel | null): Promise<Answer> {
-  const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
-  if (!backendUrl) return answerOffline(text, localModel);
+export async function answerQuestion(
+  from: string,
+  text: string,
+  localModel: LocalModel | null,
+  hubToken: string | null,
+): Promise<Answer> {
+  if (!hubToken) return answerOffline(text, localModel);
+  const backendUrl = resolveBackendUrl();
   try {
-    return { reply: await askBackend(backendUrl, from, text), source: "online", modelReading: null };
+    return { reply: await askBackend(backendUrl, hubToken, from, text), source: "online", modelReading: null };
   } catch {
     return answerOffline(text, localModel);
   }

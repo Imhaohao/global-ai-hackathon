@@ -1,4 +1,5 @@
 export const MAX_REPLIES_PER_WINDOW = 5;
+export const CONVERSATION_REPLIES_PER_WINDOW = 15;
 export const WINDOW_MS = 10 * 60 * 1000;
 
 export interface GuardDecision {
