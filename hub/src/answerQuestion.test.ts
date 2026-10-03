@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
 
 import type { LocalModel } from "../../shared/src/localModel/index.ts";
-import { answerQuestion, DEFAULT_BACKEND_URL } from "./answerQuestion.ts";
+import { answerQuestion } from "./answerQuestion.ts";
+import { DEFAULT_BACKEND_URL } from "./backendUrl.ts";
 
 const swahiliRust: LocalModel = {
   modelId: "fake",

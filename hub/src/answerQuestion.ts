@@ -1,3 +1,4 @@
+import { resolveBackendUrl } from "./backendUrl.ts";
 import { answerWithLocalModel } from "../../shared/src/localModel/index.ts";
 import type { FarmerReport, LocalModel } from "../../shared/src/localModel/index.ts";
 
@@ -10,7 +11,6 @@ export interface Answer {
 }
 
 const ONLINE_TIMEOUT_MS = 8000;
-export const DEFAULT_BACKEND_URL = "https://ideal-civet-53.convex.site";
 
 function isReplyPayload(value: unknown): value is { reply: string } {
   if (typeof value !== "object" || value === null) return false;
@@ -52,7 +52,7 @@ export async function answerQuestion(
   hubToken: string | null,
 ): Promise<Answer> {
   if (!hubToken) return answerOffline(text, localModel);
-  const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL || DEFAULT_BACKEND_URL;
+  const backendUrl = resolveBackendUrl();
   try {
     return { reply: await askBackend(backendUrl, hubToken, from, text), source: "online", modelReading: null };
   } catch {

@@ -36,9 +36,12 @@ export default function App() {
               <ListeningControl listening={listening} onStart={() => void start()} onStop={stop} />
               <ProblemBanner problem={problem} />
               <ServerConnectionCard
-                connected={connection.connected}
+                status={connection.status}
+                checking={connection.checking}
+                formProblem={connection.formProblem}
                 onConnect={(token) => void connection.connect(token)}
                 onDisconnect={() => void connection.disconnect()}
+                onRecheck={() => void connection.recheck()}
               />
               <ModelCard
                 spec={localModel.spec}
