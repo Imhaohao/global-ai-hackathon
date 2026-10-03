@@ -7,7 +7,7 @@ export interface Advisor {
   advise(phone: string, question: string): Promise<string>;
 }
 
-const MODEL = "claude-sonnet-5-5";
+export const MODEL = "claude-sonnet-5-5";
 
 export function describeDisease(disease: DiseaseInfo): string {
   return [
@@ -22,27 +22,31 @@ export function describeDisease(disease: DiseaseInfo): string {
     .join("\n");
 }
 
+export const STYLE_RULES = `- Reply in the language the farmer wrote in, using everyday words a farmer there would use. If you cannot tell the language, reply in English. The condition notes below are in English; translate them. Describe the disease by what it looks like and keep its English name in brackets. Do not add local or regional disease names: the same local name can mean a different disease in another country.
+- Plain, short sentences a farmer can act on today. No jargon, no markdown, no emojis, no lists with symbols; number steps like "1)".
+- Your whole reply must fit in 400 characters. If you write in a non-Latin script such as Amharic, Hindi, Arabic, or Thai, it must fit in 190 characters, because those texts cost three times as much per SMS.
+- Only recommend actions from the lists below. For any chemical, tell them to ask their local extension officer. Never invent product names or doses.`;
+
+export const CONDITION_NOTES = `Conditions you know:
+
+${Object.values(DISEASES).map(describeDisease).join("\n\n")}`;
+
 export const SYSTEM_PROMPT = `You are Leaf Doctor, a coffee plant advisor that smallholder farmers reach by SMS or phone from basic phones. Many have little schooling and have never used AI.
 
 Reply rules:
-- Reply in the language the farmer wrote in, using everyday words a farmer there would use. If you cannot tell the language, reply in English. The condition notes below are in English; translate them. Describe the disease by what it looks like and keep its English name in brackets. Do not add local or regional disease names: the same local name can mean a different disease in another country.
-- Plain, short sentences a farmer can act on today. No jargon, no markdown, no emojis, no lists with symbols; number steps like "1)".
-- Your whole reply must fit in 400 characters. If you write in a non-Latin script such as Amharic, Hindi, Arabic, or Thai, it must fit in 190 characters, because those texts cost three times as much per SMS.
+${STYLE_RULES}
 - If the description fits one condition below, name it and give the two or three most useful steps from its list.
 - If it could be two conditions, ask ONE simple question that tells them apart (use the "How to tell apart" line).
 - If it does not match any condition, say you are not sure and ask what colour the spots are, whether they are on top or underneath, and whether there is powder, rings, or tunnels.
-- Only recommend actions from the lists below. For any chemical, tell them to ask their local extension officer. Never invent product names or doses.
 - If the question is not about coffee plants, say you can only help with coffee leaves.
 
-Conditions you know:
-
-${Object.values(DISEASES).map(describeDisease).join("\n\n")}`;
+${CONDITION_NOTES}`;
 
 function offlineAnswer(question: string): string {
   return buildOfflineReply(matchSymptoms(question, DISEASES), DISEASES);
 }
 
-function replyText(response: Anthropic.Beta.Messages.BetaMessage): string | null {
+export function replyText(response: Anthropic.Beta.Messages.BetaMessage): string | null {
   if (response.stop_reason === "refusal") return null;
   const text = response.content
     .flatMap((block) => (block.type === "text" ? [block.text] : []))

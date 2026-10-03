@@ -1,16 +1,23 @@
 import { Hono } from "hono";
 import type { Advisor } from "./advisor.ts";
-import { isCarrierKeyword } from "../../shared/src/index.ts";
+import { MAX_IMAGE_BASE64_CHARS, SUPPORTED_IMAGE_TYPES, type LeafPhoto, type PhotoAdvisor, type SupportedImageType } from "./photoAdvisor.ts";
+import { CONVERSATION_REPLIES_PER_WINDOW, isCarrierKeyword, MAX_REPLIES_PER_WINDOW } from "../../shared/src/index.ts";
 import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
 import { constantTimeEqual, isValidTwilioSignature } from "./twilio.ts";
 
 export interface ReplyRateLimit {
-  allow(sender: string): Promise<boolean>;
+  allow(sender: string, maxReplies: number): Promise<boolean>;
+}
+
+export interface InboundMedia {
+  url: string;
+  contentType: string;
 }
 
 export interface AppDependencies {
   advisor: Advisor;
-  queueSmsReply: (from: string, question: string) => Promise<void>;
+  photoAdvisor: PhotoAdvisor;
+  queueSmsReply: (from: string, question: string, media: InboundMedia | null) => Promise<void>;
   rateLimit: ReplyRateLimit;
   twilioAuthToken: string;
   publicBaseUrl: string;
@@ -28,6 +35,26 @@ function stringParams(body: Record<string, unknown>): Record<string, string> {
 
 export function maskPhone(phone: string): string {
   return `...${phone.slice(-4)}`;
+}
+
+export function isSupportedImageType(value: unknown): value is SupportedImageType {
+  return SUPPORTED_IMAGE_TYPES.includes(value as SupportedImageType);
+}
+
+function inboundMedia(params: Record<string, string>): InboundMedia | null {
+  const url = params.MediaUrl0;
+  const contentType = params.MediaContentType0 ?? "";
+  return Number(params.NumMedia ?? 0) > 0 && url && contentType.startsWith("image/") ? { url, contentType } : null;
+}
+
+function parseAskImageBody(body: unknown): { from: string; photo: LeafPhoto } | null {
+  if (typeof body !== "object" || body === null) return null;
+  const { from, caption, image } = body as Record<string, unknown>;
+  const { base64, mediaType } = (image ?? {}) as Record<string, unknown>;
+  if (typeof from !== "string" || typeof base64 !== "string" || !isSupportedImageType(mediaType)) return null;
+  if (base64.length === 0 || base64.length > MAX_IMAGE_BASE64_CHARS) return null;
+  const captionText = typeof caption === "string" ? caption.trim().slice(0, MAX_QUESTION_CHARS) : "";
+  return { from, photo: { base64, mediaType, caption: captionText } };
 }
 
 function parseAskBody(body: unknown): { from: string; text: string } | null {
@@ -58,21 +85,44 @@ export function createApp(deps: AppDependencies): Hono {
 
     const from = params.From ?? "";
     const question = (params.Body ?? "").trim().slice(0, MAX_QUESTION_CHARS);
-    const isQuestion = question.length > 0 && !isCarrierKeyword(question);
-    if (from && isQuestion && (await deps.rateLimit.allow(from))) {
-      await deps.queueSmsReply(from, question);
+    const media = inboundMedia(params);
+    const isQuestion = media !== null || (question.length > 0 && !isCarrierKeyword(question));
+    if (from && isQuestion && (await deps.rateLimit.allow(from, MAX_REPLIES_PER_WINDOW))) {
+      await deps.queueSmsReply(from, question, media);
     }
     return c.body(EMPTY_TWIML, 200, { "Content-Type": "text/xml" });
   });
 
+  const hubAuthFailure = (authorization: string | undefined) => {
+    if (!deps.hubToken) return { error: "Hub access is not configured: HUB_TOKEN is missing", status: 503 as const };
+    const bearer = (authorization ?? "").replace(/^Bearer /, "");
+    return constantTimeEqual(bearer, deps.hubToken) ? null : { error: "Unauthorized", status: 401 as const };
+  };
+
+  app.post("/hub/check", (c) => {
+    const failure = hubAuthFailure(c.req.header("Authorization"));
+    return failure ? c.json({ error: failure.error }, failure.status) : c.body(null, 204);
+  });
+
+  app.post("/ask-image", async (c) => {
+    const failure = hubAuthFailure(c.req.header("Authorization"));
+    if (failure) return c.json({ error: failure.error }, failure.status);
+
+    const ask = parseAskImageBody(await c.req.json().catch(() => null));
+    if (!ask) return c.json({ error: "Send JSON with from and image { base64, mediaType: jpeg, png, webp or gif }" }, 400);
+    if (!(await deps.rateLimit.allow(ask.from, CONVERSATION_REPLIES_PER_WINDOW))) {
+      return c.json({ error: "Too many questions from this sender" }, 429);
+    }
+    return c.json({ reply: await deps.photoAdvisor.advisePhoto(ask.from, ask.photo) });
+  });
+
   app.post("/ask", async (c) => {
-    if (!deps.hubToken) return c.json({ error: "Hub access is not configured: HUB_TOKEN is missing" }, 503);
-    const bearer = (c.req.header("Authorization") ?? "").replace(/^Bearer /, "");
-    if (!constantTimeEqual(bearer, deps.hubToken)) return c.json({ error: "Unauthorized" }, 401);
+    const failure = hubAuthFailure(c.req.header("Authorization"));
+    if (failure) return c.json({ error: failure.error }, failure.status);
 
     const ask = parseAskBody(await c.req.json().catch(() => null));
     if (!ask) return c.json({ error: "Send JSON with non-empty from and text" }, 400);
-    if (!(await deps.rateLimit.allow(ask.from))) return c.json({ error: "Too many questions from this sender" }, 429);
+    if (!(await deps.rateLimit.allow(ask.from, CONVERSATION_REPLIES_PER_WINDOW))) return c.json({ error: "Too many questions from this sender" }, 429);
 
     return c.json({ reply: await deps.advisor.advise(ask.from, ask.text) });
   });

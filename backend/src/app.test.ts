@@ -6,6 +6,7 @@ import { evaluateReply } from "../../shared/src/index.ts";
 import { createClaudeAdvisor, type Advisor } from "./advisor.ts";
 import { createApp, type AppDependencies, type ReplyRateLimit } from "./app.ts";
 import { InMemoryConversationHistory } from "./conversationStore.ts";
+import { createPhotoAdvisor, parsePhotoReading, PHOTO_UNAVAILABLE_REPLY } from "./photoAdvisor.ts";
 import { expectedTwilioSignature } from "./twilio.ts";
 
 const AUTH_TOKEN = "test-twilio-auth-token";
@@ -15,8 +16,8 @@ const BASE_URL = "https://leaf.example.test";
 function inMemoryRateLimit(): ReplyRateLimit {
   const timesBySender = new Map<string, number[]>();
   return {
-    async allow(sender) {
-      const decision = evaluateReply(timesBySender.get(sender) ?? [], Date.now());
+    async allow(sender, maxReplies) {
+      const decision = evaluateReply(timesBySender.get(sender) ?? [], Date.now(), maxReplies);
       timesBySender.set(sender, decision.recentReplyTimes);
       return decision.allowed;
     },
@@ -24,12 +25,19 @@ function inMemoryRateLimit(): ReplyRateLimit {
 }
 
 function buildApp(overrides: Partial<AppDependencies> = {}) {
-  const queued: { from: string; question: string }[] = [];
+  const queued: { from: string; question: string; media?: { url: string; contentType: string } }[] = [];
+  const photos: { phone: string; caption: string; mediaType: string }[] = [];
   const advisor: Advisor = { advise: async () => "Rust. Spray copper." };
   const app = createApp({
     advisor,
-    queueSmsReply: async (from, question) => {
-      queued.push({ from, question });
+    photoAdvisor: {
+      advisePhoto: async (phone, photo) => {
+        photos.push({ phone, caption: photo.caption, mediaType: photo.mediaType });
+        return "Looks like rust.";
+      },
+    },
+    queueSmsReply: async (from, question, media) => {
+      queued.push(media ? { from, question, media } : { from, question });
     },
     rateLimit: inMemoryRateLimit(),
     twilioAuthToken: AUTH_TOKEN,
@@ -37,7 +45,7 @@ function buildApp(overrides: Partial<AppDependencies> = {}) {
     hubToken: HUB_TOKEN,
     ...overrides,
   });
-  return { app, queued };
+  return { app, queued, photos };
 }
 
 function twilioRequest(params: Record<string, string>, signature?: string): Request {
@@ -172,4 +180,91 @@ test("compliance pages carry the statements Twilio reviewers check for", async (
   const textUs = await (await app.fetch(new Request(`${BASE_URL}/text-us`)));
   assert.equal(textUs.status, 200);
   assert.match(await textUs.text(), /Reply STOP to opt out/);
+});
+
+test("/hub/check confirms the hub token without calling Claude or using the rate limit", async () => {
+  let advised = 0;
+  let rateChecks = 0;
+  const { app } = buildApp({
+    advisor: { advise: async () => { advised++; return "x"; } },
+    rateLimit: { allow: async () => { rateChecks++; return true; } },
+  });
+  const check = (token: string) =>
+    app.fetch(new Request(`${BASE_URL}/hub/check`, { method: "POST", headers: { Authorization: `Bearer ${token}` } }));
+  assert.equal((await check(HUB_TOKEN)).status, 204);
+  assert.equal((await check("wrong")).status, 401);
+  assert.equal(advised, 0);
+  assert.equal(rateChecks, 0);
+
+  const { app: unconfigured } = buildApp({ hubToken: "" });
+  const response = await unconfigured.fetch(new Request(`${BASE_URL}/hub/check`, { method: "POST", headers: { Authorization: "Bearer " } }));
+  assert.equal(response.status, 503);
+});
+
+test("hub and bridge conversations get a higher reply limit than the Twilio number", async () => {
+  const { app } = buildApp();
+  const statuses: number[] = [];
+  for (let index = 0; index < 16; index++) {
+    statuses.push((await app.fetch(askRequest({ from: "+15550005555", text: `follow-up ${index}` }))).status);
+  }
+  assert.equal(statuses.filter((status) => status === 200).length, 15);
+  assert.equal(statuses.at(-1), 429);
+});
+
+function askImageRequest(body: unknown, token = HUB_TOKEN): Request {
+  return new Request(`${BASE_URL}/ask-image`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
+  });
+}
+
+test("/ask-image answers a leaf photo for the hub and bridge", async () => {
+  const { app, photos } = buildApp();
+  const image = { base64: "aGVsbG8=", mediaType: "image/jpeg" };
+  const response = await app.fetch(askImageRequest({ from: "+15550006666", caption: "LEAF  is this bad?", image }));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { reply: "Looks like rust." });
+  assert.deepEqual(photos, [{ phone: "+15550006666", caption: "LEAF  is this bad?", mediaType: "image/jpeg" }]);
+
+  assert.equal((await app.fetch(askImageRequest({ from: "+1", image }, "wrong"))).status, 401);
+  assert.equal((await app.fetch(askImageRequest({ from: "+1", image: { base64: "x", mediaType: "image/heic" } }))).status, 400);
+  assert.equal((await app.fetch(askImageRequest({ from: "+1", image: { base64: "", mediaType: "image/png" } }))).status, 400);
+});
+
+test("a Twilio MMS photo with no text is queued with its media, like the app's photo flow", async () => {
+  const { app, queued } = buildApp();
+  const params = { From: "+15550007777", Body: "", NumMedia: "1", MediaUrl0: "https://api.twilio.com/media/ME1", MediaContentType0: "image/jpeg" };
+  assert.equal((await app.fetch(twilioRequest(params))).status, 200);
+  assert.deepEqual(queued, [{ from: "+15550007777", question: "", media: { url: "https://api.twilio.com/media/ME1", contentType: "image/jpeg" } }]);
+
+  const { app: noImage, queued: none } = buildApp();
+  await noImage.fetch(twilioRequest({ From: "+1", Body: "", NumMedia: "1", MediaUrl0: "https://x/v.vcf", MediaContentType0: "text/vcard" }));
+  assert.equal(none.length, 0);
+});
+
+test("photo readings are validated before a reply is trusted", () => {
+  assert.deepEqual(parsePhotoReading('{"condition":"rust","confidence":"confident","reply":"Rust. Act soon."}'), {
+    condition: "rust",
+    confidence: "confident",
+    reply: "Rust. Act soon.",
+  });
+  assert.equal(parsePhotoReading('{"condition":"mildew","confidence":"confident","reply":"x"}'), null);
+  assert.equal(parsePhotoReading('{"condition":"rust","confidence":"sure","reply":"x"}'), null);
+  assert.equal(parsePhotoReading('{"condition":"rust","confidence":"possible","reply":"  "}'), null);
+  assert.equal(parsePhotoReading("not json"), null);
+});
+
+test("photo advisor tells the farmer to describe the leaf when Claude is unreachable", async () => {
+  const originalError = console.error;
+  console.error = () => {};
+  try {
+    const advisor = createPhotoAdvisor(() => {
+      throw new Error("ANTHROPIC_API_KEY is missing");
+    }, new InMemoryConversationHistory());
+    const reply = await advisor.advisePhoto("+1", { base64: "aGVsbG8=", mediaType: "image/jpeg", caption: "" });
+    assert.equal(reply, PHOTO_UNAVAILABLE_REPLY);
+  } finally {
+    console.error = originalError;
+  }
 });

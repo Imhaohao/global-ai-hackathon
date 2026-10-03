@@ -32,7 +32,7 @@ async function requestSmsPermissions(): Promise<boolean> {
   return Object.values(results).every((result) => result === PermissionsAndroid.RESULTS.GRANTED);
 }
 
-export function useSmsHub(localModelRef: RefObject<LocalModel | null>) {
+export function useSmsHub(localModelRef: RefObject<LocalModel | null>, hubTokenRef: RefObject<string | null>) {
   const [listening, setListening] = useState(false);
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const [problem, setProblem] = useState<HubProblem>(null);
@@ -41,7 +41,7 @@ export function useSmsHub(localModelRef: RefObject<LocalModel | null>) {
 
   const handleSms = useCallback(async (sms: IncomingSms) => {
     if (!shouldReplyRef.current(sms.from, sms.body, sms.receivedAt)) return;
-    const answer = await answerQuestion(sms.from, sms.body, localModelRef.current);
+    const answer = await answerQuestion(sms.from, sms.body, localModelRef.current, hubTokenRef.current);
     try {
       await sendSms(sms.from, answer.reply);
       setProblem(null);
@@ -58,7 +58,7 @@ export function useSmsHub(localModelRef: RefObject<LocalModel | null>) {
       receivedAt: sms.receivedAt,
     };
     setExchanges((previous) => [exchange, ...previous].slice(0, MAX_EXCHANGES_SHOWN));
-  }, [localModelRef]);
+  }, [localModelRef, hubTokenRef]);
 
   const stop = useCallback(() => {
     subscriptionRef.current?.remove();

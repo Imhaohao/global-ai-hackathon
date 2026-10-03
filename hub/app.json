@@ -17,7 +17,8 @@
       ]
     },
     "plugins": [
-      "llama.rn"
+      "llama.rn",
+      "expo-secure-store"
     ]
   }
 }

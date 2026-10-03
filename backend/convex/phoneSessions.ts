@@ -38,12 +38,12 @@ export const recordExchange = internalMutation({
 });
 
 export const claimReplySlot = internalMutation({
-  args: { phone: v.string() },
+  args: { phone: v.string(), maxReplies: v.number() },
   returns: v.boolean(),
-  handler: async (ctx, { phone }) => {
+  handler: async (ctx, { phone, maxReplies }) => {
     const now = Date.now();
     const session = await sessionFor(ctx, phone);
-    const decision = evaluateReply(session?.recentReplyTimes ?? [], now);
+    const decision = evaluateReply(session?.recentReplyTimes ?? [], now, maxReplies);
     if (session) {
       await ctx.db.patch(session._id, { recentReplyTimes: decision.recentReplyTimes });
     } else {
