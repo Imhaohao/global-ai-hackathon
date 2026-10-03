@@ -4,7 +4,7 @@ import type { Severity } from '../diagnosis/conditions';
 
 export type Language = 'en' | 'sw';
 
-export type Strings = {
+type BaseStrings = {
   speechLanguage: string;
   switchLanguage: string;
   homeTitle: string;
@@ -30,7 +30,7 @@ export type Strings = {
   diseases: Record<DiseaseKey, DiseaseText>;
 };
 
-const english: Strings = {
+const english: BaseStrings = {
   speechLanguage: 'en',
   switchLanguage: 'Badili kwa Kiswahili',
   homeTitle: 'Check a coffee leaf',
@@ -60,7 +60,7 @@ const english: Strings = {
   diseases: DISEASES,
 };
 
-const swahili: Strings = {
+const swahili: BaseStrings = {
   speechLanguage: 'sw',
   switchLanguage: 'Switch to English',
   homeTitle: 'Kagua jani la kahawa',
@@ -90,4 +90,110 @@ const swahili: Strings = {
   diseases: DISEASES_SW,
 };
 
-export const STRINGS: Record<Language, Strings> = { en: english, sw: swahili };
+
+type Line = { en: string; sw: string; reviewed: boolean };
+
+const draftLine = (en: string, sw: string): Line => ({ en, sw, reviewed: false });
+
+const NEW_LINES = {
+  consentTitle: draftLine('Before you start', 'Kabla ya kuanza'),
+  consentPhotos: draftLine('Your photos stay on this phone.', 'Picha zako zinabaki kwenye simu hii.'),
+  consentLocation: draftLine(
+    'Each check saves where you were, so the officer knows which part of the farm.',
+    'Kila ukaguzi huhifadhi mahali ulipokuwa, ili afisa ajue sehemu gani ya shamba.',
+  ),
+  consentNothingLeaves: draftLine(
+    'Your photos and cases leave this phone only if you choose to send a case to your field officer by text message.',
+    'Picha na kesi zako hutoka kwenye simu hii tu ukichagua kutuma kesi kwa afisa wako wa shamba kwa ujumbe mfupi.',
+  ),
+  consentRain: draftLine(
+    'When you are online and allow location, the app sends a location rounded to about 10 km to our server, which asks NASA POWER for recent rainfall. No photos or names are sent.',
+    'Ukiwa mtandaoni na umeruhusu eneo, programu hutuma eneo lililokadiriwa hadi kilomita 10 kwa seva yetu, inayouliza NASA POWER kuhusu mvua ya hivi karibuni. Hakuna picha wala majina yanayotumwa.',
+  ),
+  consentDelete: draftLine('You can delete everything in Settings.', 'Unaweza kufuta kila kitu kwenye Mipangilio.'),
+  consentAgree: draftLine('Agree and continue', 'Kubali na uendelee'),
+  consentWithoutLocation: draftLine('Continue without location', 'Endelea bila eneo'),
+  captureTitle: draftLine('Check one coffee tree', 'Kagua mti mmoja wa kahawa'),
+  captureTip: draftLine(
+    'Photograph up to six leaves from the same tree. Hold each leaf flat in daylight and fill the screen.',
+    'Piga picha hadi majani sita ya mti mmoja. Shika kila jani wazi kwenye mwanga na ulijaze skrini.',
+  ),
+  leavesTaken: draftLine('{count} of {max} leaves taken', 'Majani {count} kati ya {max} yamepigwa'),
+  addAnotherLeaf: draftLine('Add another leaf', 'Ongeza jani jingine'),
+  seeAdvice: draftLine('See advice', 'Angalia ushauri'),
+  retakeLeaf: draftLine('Retake this leaf', 'Piga upya jani hili'),
+  leafTooDark: draftLine(
+    'Too dark or blurry. Move into daylight and hold steady.',
+    'Giza sana au halionekani vizuri. Nenda kwenye mwanga na ushike imara.',
+  ),
+  leafNotClear: draftLine('Could not tell. Fill the frame with one leaf.', 'Haijaweza kujua. Jaza skrini na jani moja.'),
+  retakeTitle: draftLine('Need more clear leaves', 'Tunahitaji majani zaidi yanayoonekana vizuri'),
+  retakeBody: draftLine(
+    'Three clear leaves that agree give an answer. Add another leaf or retake the marked ones.',
+    'Majani matatu yanayoonekana vizuri na kukubaliana hutoa jibu. Ongeza jani jingine au piga upya yaliyowekewa alama.',
+  ),
+  leavesAgreeTitle: draftLine('{agreeing} of {usable} clear leaves agree', 'Majani {agreeing} kati ya {usable} yanakubaliana'),
+  leavesDisagreeTitle: draftLine('The leaves do not agree', 'Majani hayakubaliani'),
+  recheckOn: draftLine('Check again on {date}', 'Kagua tena {date}'),
+  whatElse: draftLine('What else could it be', 'Inaweza kuwa nini kingine'),
+  sendToOfficer: draftLine('Send to field officer', 'Tuma kwa afisa wa shamba'),
+  callOfficer: draftLine('Call {name}', 'Piga simu {name}'),
+  officerPhoneTitle: draftLine("Your field officer's phone number", 'Namba ya simu ya afisa wako wa shamba'),
+  officerPhoneHelp: draftLine(
+    'Saved on this phone and used only to open a text message.',
+    'Inahifadhiwa kwenye simu hii na hutumika kufungua ujumbe mfupi tu.',
+  ),
+  officerPhonePlaceholder: draftLine('Phone number', 'Namba ya simu'),
+  saveAndSend: draftLine('Save and send', 'Hifadhi na utume'),
+  cancel: draftLine('Cancel', 'Ghairi'),
+  smsUnavailable: draftLine('This phone cannot send text messages.', 'Simu hii haiwezi kutuma ujumbe mfupi.'),
+  sentToOfficer: draftLine('Case opened in your messages app', 'Kesi imefunguliwa kwenye programu yako ya ujumbe'),
+  farmSectionTitle: draftLine('Which part of the farm?', 'Sehemu gani ya shamba?'),
+  addFarmSection: draftLine('Add a part of the farm', 'Ongeza sehemu ya shamba'),
+  farmSectionPlaceholder: draftLine('For example, upper slope', 'Kwa mfano, mteremko wa juu'),
+  checkAnotherTree: draftLine('Check another tree', 'Kagua mti mwingine'),
+  leafAgrees: draftLine('Leaf {number}: matches the answer', 'Jani {number}: linalingana na jibu'),
+  leafClear: draftLine('Leaf {number}: clear photo', 'Jani {number}: picha inaonekana vizuri'),
+  leafDiffers: draftLine('Leaf {number}: shows something different', 'Jani {number}: linaonyesha kitu tofauti'),
+  leafUnusable: draftLine('Leaf {number}: not clear enough', 'Jani {number}: halionekani vizuri'),
+  settingsTitle: draftLine('Settings', 'Mipangilio'),
+  openSettingsScreen: draftLine('Open settings', 'Fungua mipangilio'),
+  back: draftLine('Back', 'Rudi'),
+  saveLocation: draftLine('Save location with each check', 'Hifadhi eneo kwa kila ukaguzi'),
+  officerNumberLabel: draftLine("Field officer's phone number", 'Namba ya simu ya afisa wa shamba'),
+  farmSectionsLabel: draftLine('Parts of your farm', 'Sehemu za shamba lako'),
+  removeFarmSection: draftLine('Remove {name}', 'Ondoa {name}'),
+  exportData: draftLine('Export my data', 'Hamisha data yangu'),
+  exportFailed: draftLine('Could not export. Try again.', 'Imeshindwa kuhamisha. Jaribu tena.'),
+  deleteAll: draftLine('Delete everything on this phone', 'Futa kila kitu kwenye simu hii'),
+  deleteConfirmTitle: draftLine('Delete everything?', 'Futa kila kitu?'),
+  deleteConfirmBody: draftLine(
+    'This removes saved checks, photos, your officer number and your choices. It cannot be undone.',
+    'Hii huondoa ukaguzi uliohifadhiwa, picha, namba ya afisa wako na chaguo zako. Haiwezi kurudishwa.',
+  ),
+  deleteConfirm: draftLine('Delete', 'Futa'),
+  savedChecks: draftLine('{count} saved checks', 'Ukaguzi {count} umehifadhiwa'),
+  devVerdictTitle: draftLine('Test answer (development only)', 'Jibu la majaribio (maendeleo tu)'),
+};
+
+export type LineKey = keyof typeof NEW_LINES;
+
+export type Strings = BaseStrings & Record<LineKey, string>;
+
+function lineText(line: Line, language: Language): string {
+  return language === 'sw' && line.reviewed ? line.sw : line.en;
+}
+
+function resolveLines(language: Language): Record<LineKey, string> {
+  const entries = Object.entries(NEW_LINES).map(([key, line]) => [key, lineText(line, language)]);
+  return Object.fromEntries(entries) as Record<LineKey, string>;
+}
+
+export function fillTemplate(template: string, values: Record<string, string | number>): string {
+  return Object.entries(values).reduce((text, [key, value]) => text.replaceAll(`{${key}}`, String(value)), template);
+}
+
+export const STRINGS: Record<Language, Strings> = {
+  en: { ...english, ...resolveLines('en') },
+  sw: { ...swahili, ...resolveLines('sw') },
+};

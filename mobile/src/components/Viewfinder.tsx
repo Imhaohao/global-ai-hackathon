@@ -10,11 +10,11 @@ const CORNER_POSITIONS = [
   'bottom-0 right-0 border-b-4 border-r-4',
 ];
 
-type ViewfinderProps = { photoUri?: string; isChecking?: boolean };
+type ViewfinderProps = { photoUri?: string; isChecking?: boolean; compact?: boolean };
 
-export function Viewfinder({ photoUri, isChecking = false }: ViewfinderProps) {
+export function Viewfinder({ photoUri, isChecking = false, compact = false }: ViewfinderProps) {
   return (
-    <View className="aspect-square w-full max-w-sm items-center justify-center self-center p-5">
+    <View className={`aspect-square items-center justify-center self-center p-5 ${compact ? 'w-52' : 'w-full max-w-sm'}`}>
       {CORNER_POSITIONS.map((position) => (
         <View key={position} className={`absolute h-12 w-12 border-accent ${position}`} />
       ))}
@@ -22,7 +22,7 @@ export function Viewfinder({ photoUri, isChecking = false }: ViewfinderProps) {
         {photoUri ? (
           <Image source={{ uri: photoUri }} className="h-full w-full" accessibilityIgnoresInvertColors />
         ) : (
-          <Leaf size={200} weight="duotone" color={colors.accent} />
+          <Leaf size={compact ? 96 : 200} weight="duotone" color={colors.accent} />
         )}
         {isChecking && (
           <View className="absolute inset-0 items-center justify-center bg-ink/40">
