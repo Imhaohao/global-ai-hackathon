@@ -29,5 +29,6 @@ for (const path of ["/health", "/privacy", "/terms", "/text-us"]) {
 }
 http.route({ path: "/sms", method: "POST", handler: handleWithApp });
 http.route({ path: "/ask", method: "POST", handler: handleWithApp });
+http.route({ path: "/hub/check", method: "POST", handler: handleWithApp });
 
 export default http;

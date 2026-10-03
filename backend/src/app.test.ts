@@ -173,3 +173,22 @@ test("compliance pages carry the statements Twilio reviewers check for", async (
   assert.equal(textUs.status, 200);
   assert.match(await textUs.text(), /Reply STOP to opt out/);
 });
+
+test("/hub/check confirms the hub token without calling Claude or using the rate limit", async () => {
+  let advised = 0;
+  let rateChecks = 0;
+  const { app } = buildApp({
+    advisor: { advise: async () => { advised++; return "x"; } },
+    rateLimit: { allow: async () => { rateChecks++; return true; } },
+  });
+  const check = (token: string) =>
+    app.fetch(new Request(`${BASE_URL}/hub/check`, { method: "POST", headers: { Authorization: `Bearer ${token}` } }));
+  assert.equal((await check(HUB_TOKEN)).status, 204);
+  assert.equal((await check("wrong")).status, 401);
+  assert.equal(advised, 0);
+  assert.equal(rateChecks, 0);
+
+  const { app: unconfigured } = buildApp({ hubToken: "" });
+  const response = await unconfigured.fetch(new Request(`${BASE_URL}/hub/check`, { method: "POST", headers: { Authorization: "Bearer " } }));
+  assert.equal(response.status, 503);
+});

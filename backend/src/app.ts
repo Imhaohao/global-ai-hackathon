@@ -65,10 +65,20 @@ export function createApp(deps: AppDependencies): Hono {
     return c.body(EMPTY_TWIML, 200, { "Content-Type": "text/xml" });
   });
 
+  const hubAuthFailure = (authorization: string | undefined) => {
+    if (!deps.hubToken) return { error: "Hub access is not configured: HUB_TOKEN is missing", status: 503 as const };
+    const bearer = (authorization ?? "").replace(/^Bearer /, "");
+    return constantTimeEqual(bearer, deps.hubToken) ? null : { error: "Unauthorized", status: 401 as const };
+  };
+
+  app.post("/hub/check", (c) => {
+    const failure = hubAuthFailure(c.req.header("Authorization"));
+    return failure ? c.json({ error: failure.error }, failure.status) : c.body(null, 204);
+  });
+
   app.post("/ask", async (c) => {
-    if (!deps.hubToken) return c.json({ error: "Hub access is not configured: HUB_TOKEN is missing" }, 503);
-    const bearer = (c.req.header("Authorization") ?? "").replace(/^Bearer /, "");
-    if (!constantTimeEqual(bearer, deps.hubToken)) return c.json({ error: "Unauthorized" }, 401);
+    const failure = hubAuthFailure(c.req.header("Authorization"));
+    if (failure) return c.json({ error: failure.error }, failure.status);
 
     const ask = parseAskBody(await c.req.json().catch(() => null));
     if (!ask) return c.json({ error: "Send JSON with non-empty from and text" }, 400);
