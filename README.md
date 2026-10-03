@@ -1,0 +1,1 @@
+# global-ai-hackathon
