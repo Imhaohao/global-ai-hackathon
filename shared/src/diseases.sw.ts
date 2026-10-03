@@ -1,4 +1,5 @@
-import type { DiseaseInfo, DiseaseKey } from "./types.ts";
+import { DISEASES } from "./diseases.ts";
+import type { DiseaseCatalog, DiseaseInfo, DiseaseKey } from "./types.ts";
 
 export type DiseaseText = Pick<DiseaseInfo, "name" | "look" | "tellApart" | "actions" | "urgencyReason">;
 
@@ -64,3 +65,7 @@ export const DISEASES_SW: Record<DiseaseKey, DiseaseText> = {
     ],
   },
 };
+
+export const DISEASES_IN_SWAHILI: DiseaseCatalog = Object.fromEntries(
+  Object.values(DISEASES).map((disease) => [disease.key, { ...disease, ...DISEASES_SW[disease.key] }]),
+) as DiseaseCatalog;

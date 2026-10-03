@@ -1,11 +1,11 @@
 import { matchSymptoms } from "../matchSymptoms.ts";
-import type { DiseaseScore, SymptomMatch } from "../matchSymptoms.ts";
+import type { ReplyMatch } from "../smsReply.ts";
 import type { DiseaseCatalog } from "../types.ts";
 import type { TaskResult } from "./localModel.ts";
 import { textForSymptomMatcher } from "./parseFarmerMessage.ts";
 import type { FarmerReport } from "./parseFarmerMessage.ts";
 
-export type AssistedMatch = SymptomMatch | { kind: "confirmFirst"; best: DiseaseScore };
+export type AssistedMatch = ReplyMatch;
 
 export function matchWithModelHelp(
   message: string,

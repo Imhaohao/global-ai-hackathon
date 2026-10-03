@@ -6,3 +6,4 @@ export * from "./readProductLabel.ts";
 export * from "./checkProductLabel.ts";
 export * from "./phraseVerdict.ts";
 export * from "./assistedMatch.ts";
+export * from "./answerWithLocalModel.ts";

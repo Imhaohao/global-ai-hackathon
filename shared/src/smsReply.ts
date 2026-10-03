@@ -1,11 +1,37 @@
-import type { SymptomMatch } from "./matchSymptoms.ts";
+import type { DiseaseScore, SymptomMatch } from "./matchSymptoms.ts";
 import type { DiseaseCatalog, DiseaseInfo } from "./types.ts";
 
 export const SMS_MAX_CHARS = 459;
 export const SMS_MAX_UNICODE_CHARS = 201;
 
-const DESCRIBE_PROMPT =
-  "Tell me what the coffee leaf looks like: colour of the spots, top or underside, any powder, rings, or tunnels. Example: orange powder under the leaves.";
+export type ReplyMatch = SymptomMatch | { kind: "confirmFirst"; best: DiseaseScore };
+
+export interface ReplyWording {
+  describe: string;
+  healthy: (steps: string) => string;
+  diagnosis: (name: string, urgent: boolean, steps: string) => string;
+  twoCandidates: (first: string, second: string, hint: string) => string;
+  confirmFirst: (name: string, hint: string) => string;
+}
+
+export const ENGLISH_WORDING: ReplyWording = {
+  describe:
+    "Tell me what the coffee leaf looks like: colour of the spots, top or underside, any powder, rings, or tunnels. Example: orange powder under the leaves.",
+  healthy: (steps) => `Your leaves sound healthy. ${steps}`,
+  diagnosis: (name, urgent, steps) => `This sounds like ${name}.${urgent ? " Act soon." : ""} What to do: ${steps}`,
+  twoCandidates: (first, second, hint) => `It could be ${first} or ${second}. ${hint} Reply with what you see to narrow it down.`,
+  confirmFirst: (name, hint) => `This might be ${name}. ${hint} Reply with what you see so we can be sure.`,
+};
+
+// Written by the team; needs review by a native Swahili speaker before real use.
+export const SWAHILI_WORDING: ReplyWording = {
+  describe:
+    "Niambie jani la kahawa linavyoonekana: rangi ya madoa, juu au chini ya jani, kama kuna unga, duara au vichuguu. Mfano: unga wa machungwa chini ya majani.",
+  healthy: (steps) => `Majani yako yanaonekana mazima. ${steps}`,
+  diagnosis: (name, urgent, steps) => `Hii inaonekana kama ${name}.${urgent ? " Chukua hatua haraka." : ""} Cha kufanya: ${steps}`,
+  twoCandidates: (first, second, hint) => `Inaweza kuwa ${first} au ${second}. ${hint} Jibu ukieleza unachoona ili tujue zaidi.`,
+  confirmFirst: (name, hint) => `Huenda ni ${name}. ${hint} Jibu ukieleza unachoona ili tuhakikishe.`,
+};
 
 const ASCII_REPLACEMENTS: [RegExp, string][] = [
   [/[\u2018\u2019\u02bc]/g, "'"],
@@ -57,26 +83,33 @@ function numberedActions(disease: DiseaseInfo, count: number): string {
     .join(" ");
 }
 
-function diagnosisReply(disease: DiseaseInfo, actionCount: number): string {
+function diagnosisReply(disease: DiseaseInfo, actionCount: number, wording: ReplyWording): string {
   const steps = numberedActions(disease, actionCount);
-  if (disease.key === "healthy") return `Your leaves sound healthy. ${steps}`;
-  const urgencyNote = disease.urgency === "high" ? " Act soon." : "";
-  return `This sounds like ${disease.name}.${urgencyNote} What to do: ${steps}`;
+  if (disease.key === "healthy") return wording.healthy(steps);
+  return wording.diagnosis(disease.name, disease.urgency === "high", steps);
 }
 
-function shortestFittingReply(disease: DiseaseInfo): string {
+function shortestFittingReply(disease: DiseaseInfo, wording: ReplyWording): string {
   for (let actionCount = 3; actionCount >= 1; actionCount--) {
-    const reply = toSmsSafeText(diagnosisReply(disease, actionCount));
+    const reply = toSmsSafeText(diagnosisReply(disease, actionCount, wording));
     if (reply.length <= smsCharLimit(reply)) return reply;
   }
-  return fitToSms(diagnosisReply(disease, 1));
+  return fitToSms(diagnosisReply(disease, 1, wording));
 }
 
-export function buildOfflineReply(match: SymptomMatch, catalog: DiseaseCatalog): string {
-  if (match.kind === "noMatch") return toSmsSafeText(DESCRIBE_PROMPT);
-  if (match.kind === "confident") return shortestFittingReply(catalog[match.best.key]);
+export function buildOfflineReply(
+  match: ReplyMatch,
+  catalog: DiseaseCatalog,
+  wording: ReplyWording = ENGLISH_WORDING,
+): string {
+  if (match.kind === "noMatch") return toSmsSafeText(wording.describe);
+  if (match.kind === "confident") return shortestFittingReply(catalog[match.best.key], wording);
+  if (match.kind === "confirmFirst") {
+    const disease = catalog[match.best.key];
+    return fitToSms(wording.confirmFirst(disease.name, disease.tellApart ?? ""));
+  }
 
   const [first, second] = match.candidates.map((candidate) => catalog[candidate.key]);
   const hint = first.tellApart ?? second.tellApart ?? "";
-  return fitToSms(`It could be ${first.name} or ${second.name}. ${hint} Reply with what you see to narrow it down.`);
+  return fitToSms(wording.twoCandidates(first.name, second.name, hint));
 }

@@ -1,6 +1,9 @@
 export type JsonSchema = Record<string, unknown>;
 
+export type LocalTaskName = "parseFarmerMessage" | "readProductLabel" | "phraseVerdict";
+
 export interface LocalModelRequest {
+  task: LocalTaskName;
   system: string;
   prompt: string;
   imageJpegBase64?: string;

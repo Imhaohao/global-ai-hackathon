@@ -65,6 +65,7 @@ export function validateFarmerReport(value: unknown): TaskResult<FarmerReport> {
 
 export async function parseFarmerMessage(model: LocalModel, message: string): Promise<TaskResult<FarmerReport>> {
   const result = await completeJson(model, {
+    task: "parseFarmerMessage",
     system: PARSE_SYSTEM_PROMPT,
     prompt: message,
     outputSchema: FARMER_REPORT_SCHEMA,

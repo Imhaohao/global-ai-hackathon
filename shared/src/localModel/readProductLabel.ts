@@ -53,6 +53,7 @@ export function validateProductLabel(value: unknown): TaskResult<ProductLabel> {
 
 export async function readProductLabel(model: LocalModel, photoJpegBase64: string): Promise<TaskResult<ProductLabel>> {
   const result = await completeJson(model, {
+    task: "readProductLabel",
     system: LABEL_SYSTEM_PROMPT,
     prompt: "Read this label.",
     imageJpegBase64: photoJpegBase64,

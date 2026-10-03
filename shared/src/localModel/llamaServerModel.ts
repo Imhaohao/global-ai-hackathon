@@ -1,4 +1,5 @@
 import type { LocalModel, LocalModelRequest } from "./localModel.ts";
+import { systemPromptFor } from "./modelCatalog.ts";
 import type { LocalModelSpec } from "./modelCatalog.ts";
 
 type Fetch = typeof fetch;
@@ -14,7 +15,7 @@ function userContent(request: LocalModelRequest): unknown {
 export function buildChatBody(spec: LocalModelSpec, request: LocalModelRequest): Record<string, unknown> {
   return {
     messages: [
-      { role: "system", content: request.system },
+      { role: "system", content: systemPromptFor(spec, request) },
       { role: "user", content: userContent(request) },
     ],
     max_tokens: request.maxTokens,

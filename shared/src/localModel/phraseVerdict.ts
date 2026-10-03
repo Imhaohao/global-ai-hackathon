@@ -35,7 +35,12 @@ export function phrasingProblem(candidate: string, verdict: VerdictToPhrase): st
 export async function phraseVerdictInSwahili(model: LocalModel, verdict: VerdictToPhrase): Promise<PhrasedVerdict> {
   let candidate: string;
   try {
-    candidate = await model.complete({ system: PHRASE_SYSTEM_PROMPT, prompt: verdict.english, maxTokens: 160 });
+    candidate = await model.complete({
+      task: "phraseVerdict",
+      system: PHRASE_SYSTEM_PROMPT,
+      prompt: verdict.english,
+      maxTokens: 160,
+    });
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
     return { text: verdict.approvedSwahili, source: "approved_text", rejectedBecause: `model failed: ${reason}` };

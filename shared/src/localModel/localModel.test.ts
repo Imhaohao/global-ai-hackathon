@@ -1,11 +1,22 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { DISEASES } from "../diseases.ts";
+import { matchSymptoms } from "../matchSymptoms.ts";
+import { buildOfflineReply } from "../smsReply.ts";
+import { answerWithLocalModel } from "./answerWithLocalModel.ts";
 import { matchWithModelHelp } from "./assistedMatch.ts";
 import { checkProductLabel } from "./checkProductLabel.ts";
 import { buildChatBody, createLlamaServerModel } from "./llamaServerModel.ts";
 import type { LocalModel, LocalModelRequest } from "./localModel.ts";
-import { activeLocalModel, llamaServerCommand, LOCAL_MODELS, totalDownloadBytes } from "./modelCatalog.ts";
+import {
+  activeLocalModel,
+  filesNeeded,
+  huggingFaceFile,
+  llamaServerCommand,
+  LOCAL_MODELS,
+  totalDownloadBytes,
+} from "./modelCatalog.ts";
+import type { LocalModelSpec } from "./modelCatalog.ts";
 import { parseFarmerMessage, textForSymptomMatcher } from "./parseFarmerMessage.ts";
 import type { FarmerReport } from "./parseFarmerMessage.ts";
 import { phraseVerdictInSwahili, phrasingProblem } from "./phraseVerdict.ts";
@@ -112,9 +123,11 @@ test("a rejected phrasing falls back to the approved Swahili text", async () => 
   assert.equal(phrased.text, verdict.approvedSwahili);
 });
 
+const parseRequest = { task: "parseFarmerMessage" as const, system: "default prompt", prompt: "p", maxTokens: 10 };
+
 test("llama-server adapter sends the catalog's template options and an image", async () => {
   const spec = activeLocalModel();
-  const body = buildChatBody(spec, { system: "s", prompt: "p", imageJpegBase64: "aGk=", maxTokens: 10 });
+  const body = buildChatBody(spec, { ...parseRequest, imageJpegBase64: "aGk=" });
   assert.deepEqual(body.chat_template_kwargs, { enable_thinking: false });
   const content = (body.messages as { content: unknown }[])[1].content as { type: string }[];
   assert.deepEqual(content.map((part) => part.type), ["image_url", "text"]);
@@ -122,12 +135,46 @@ test("llama-server adapter sends the catalog's template options and an image", a
   const fetchStub = (async () =>
     new Response(JSON.stringify({ choices: [{ message: { content: "{}" } }] }))) as typeof fetch;
   const model = createLlamaServerModel(spec, "http://localhost:1", fetchStub);
-  assert.equal(await model.complete({ system: "s", prompt: "p", maxTokens: 10 }), "{}");
+  assert.equal(await model.complete(parseRequest), "{}");
 });
 
 test("catalog knows each model's download size and how to serve it", () => {
   const spec = LOCAL_MODELS["qwen3.5-0.8b"];
-  assert.equal(totalDownloadBytes(spec), 737_504_352);
-  assert.equal(totalDownloadBytes(LOCAL_MODELS["qwen3.5-2b"]), 1_949_063_104);
+  assert.equal(totalDownloadBytes(spec.files), 737_504_352);
+  assert.equal(totalDownloadBytes(filesNeeded(LOCAL_MODELS["qwen3.5-2b"], { images: false })), 1_280_835_840);
   assert.match(llamaServerCommand(spec, "/m", 8089), /--mmproj \/m\/qwen3\.5-0\.8b\/mmproj-F16\.gguf --port 8089/);
+});
+
+const fineTuned: LocalModelSpec = {
+  id: "leaf-doctor-ft",
+  displayName: "Leaf Doctor fine-tune",
+  license: "Apache-2.0",
+  sourceRepo: "example/leaf-doctor-ft-GGUF",
+  files: [
+    huggingFaceFile("example/base-GGUF", "weights", "base.gguf", 10, "a".repeat(64)),
+    huggingFaceFile("example/leaf-doctor-ft-GGUF", "adapter", "leaf-doctor-lora.gguf", 5, "b".repeat(64)),
+  ],
+  supportsImages: false,
+  systemPromptOverrides: { parseFarmerMessage: "short prompt the fine-tune was trained with" },
+};
+
+test("a fine-tuned model can bring a LoRA adapter and its own training prompt", () => {
+  assert.match(llamaServerCommand(fineTuned, "/m", 8089), /-m \/m\/leaf-doctor-ft\/base\.gguf --lora \/m\/leaf-doctor-ft\/leaf-doctor-lora\.gguf/);
+  const messages = buildChatBody(fineTuned, parseRequest).messages as { content: unknown }[];
+  assert.equal(messages[0].content, "short prompt the fine-tune was trained with");
+  const labelMessages = buildChatBody(fineTuned, { ...parseRequest, task: "readProductLabel" }).messages as { content: unknown }[];
+  assert.equal(labelMessages[0].content, "default prompt");
+});
+
+test("a Swahili message the model translated gets a Swahili confirm-first question", async () => {
+  const translated = { ...sprayReport, topic: "leaf_symptoms" as const, symptomsInEnglish: "orange powder underneath, leaves falling" };
+  const answer = await answerWithLocalModel(fakeModel(JSON.stringify(translated)), "majani yana kitu chini");
+  assert.equal(answer.match.kind, "confirmFirst");
+  assert.match(answer.reply, /^Huenda ni Kutu ya majani ya kahawa\./);
+});
+
+test("without a model the hub answers exactly as before", async () => {
+  const answer = await answerWithLocalModel(null, "orange powder under my leaves");
+  assert.equal(answer.report.status, "unsure");
+  assert.equal(answer.reply, buildOfflineReply(matchSymptoms("orange powder under my leaves", DISEASES), DISEASES));
 });
