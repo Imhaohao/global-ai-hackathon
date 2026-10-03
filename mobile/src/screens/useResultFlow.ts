@@ -60,11 +60,11 @@ export function useResultFlow({ settings, updateSettings, language, wetDays }: R
   const sendCase = useCallback(
     async (phone: string): Promise<OfficerSendResult> => {
       if (!result) return 'unavailable';
-      const outcome = await sendCaseToOfficer(phone, result.observation, result.card);
+      const outcome = await sendCaseToOfficer(phone, result.observation, result.card, wetDays);
       if (outcome === 'opened') changeObservation((observation) => ({ ...observation, reviewStatus: 'sentToOfficer' }));
       return outcome;
     },
-    [changeObservation, result],
+    [changeObservation, result, wetDays],
   );
 
   const clearResult = useCallback(() => setResult(null), []);

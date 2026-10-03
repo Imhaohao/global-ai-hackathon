@@ -10,3 +10,4 @@ export * from "./actionCard.ts";
 export * from "./caseSummary.ts";
 export * from "./contacts.ts";
 export * from "./rain.ts";
+export * from "./plantVote.ts";
