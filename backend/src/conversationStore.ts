@@ -1,32 +1,38 @@
-import type Anthropic from "@anthropic-ai/sdk";
+export interface Turn {
+  role: "user" | "assistant";
+  content: string;
+}
 
-type Turn = Anthropic.Beta.Messages.BetaMessageParam;
-
-interface Conversation {
-  turns: Turn[];
-  lastActiveAt: number;
+export interface ConversationHistory {
+  history(phone: string): Promise<Turn[]>;
+  append(phone: string, question: string, answer: string): Promise<void>;
 }
 
 const MAX_TURNS = 8;
 const IDLE_RESET_MS = 24 * 60 * 60 * 1000;
 
-export class ConversationStore {
-  private readonly conversations = new Map<string, Conversation>();
+export function freshTurns(turns: Turn[], lastActiveAt: number, now: number): Turn[] {
+  return now - lastActiveAt > IDLE_RESET_MS ? [] : turns;
+}
+
+export function appendExchange(turns: Turn[], question: string, answer: string): Turn[] {
+  return [...turns, { role: "user" as const, content: question }, { role: "assistant" as const, content: answer }].slice(
+    -MAX_TURNS,
+  );
+}
+
+export class InMemoryConversationHistory implements ConversationHistory {
+  private readonly conversations = new Map<string, { turns: Turn[]; lastActiveAt: number }>();
 
   constructor(private readonly now: () => number = Date.now) {}
 
-  history(phone: string): Turn[] {
+  async history(phone: string): Promise<Turn[]> {
     const conversation = this.conversations.get(phone);
-    if (!conversation || this.now() - conversation.lastActiveAt > IDLE_RESET_MS) return [];
-    return conversation.turns;
+    return conversation ? freshTurns(conversation.turns, conversation.lastActiveAt, this.now()) : [];
   }
 
-  append(phone: string, question: string, answer: string): void {
-    const turns: Turn[] = [
-      ...this.history(phone),
-      { role: "user", content: question },
-      { role: "assistant", content: answer },
-    ];
-    this.conversations.set(phone, { turns: turns.slice(-MAX_TURNS), lastActiveAt: this.now() });
+  async append(phone: string, question: string, answer: string): Promise<void> {
+    const turns = appendExchange(await this.history(phone), question, answer);
+    this.conversations.set(phone, { turns, lastActiveAt: this.now() });
   }
 }

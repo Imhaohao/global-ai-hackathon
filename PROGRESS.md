@@ -3,7 +3,7 @@
 Goal: farmers with any phone (feature-phone Nokia included) reach Leaf Doctor by SMS or voice call.
 
 ```
-Farmer phone ──SMS──► Twilio number ──webhook──► backend/ (Claude) ──Twilio REST──► SMS reply
+Farmer phone ──SMS──► Twilio number ──webhook──► backend/ on Convex (Claude) ──Twilio REST──► SMS reply
 Farmer phone ──call─► Twilio number ──► ElevenLabs voice agent (knowledge from shared/)
 Farmer phone ──SMS──► Hub phone SIM (hub/ Android app)
                          ├─ online:  POST backend /ask ──► reply SMS
@@ -17,6 +17,8 @@ Farmer phone ──SMS──► Hub phone SIM (hub/ Android app)
 | backend/: Twilio webhook (signature check), /ask (bearer token), Claude advisor | Opus (inline) | done, 6 tests + live smoke |
 | hub/: Expo Android app + Kotlin sms-gateway module | Sonnet subagent | done, 6 tests + emulator SMS round trip |
 | ElevenLabs voice agent + phone number assignment | Opus (inline, MCP) | agent created (agent_8901m41g4zwvf5ksdccdaz3sqyv9); waiting on user to import Twilio number |
-| Twilio SMS webhook URL + tunnel | user (console) | todo |
+| Multilingual SMS + voice (language detection, 7 presets) | Opus (inline) | done |
+| Backend hosted on Convex: https://ideal-civet-53.convex.site, durable sessions + rate limit | Opus (inline) | done, live smoke |
+| Secrets via `npx convex env set`, Twilio webhook -> <site>/sms | user | todo |
 
 Coordination: mobile/ belongs to the "Leaf Doctor" session. It switches strings.ts to import shared/ once diseases.ts lands.

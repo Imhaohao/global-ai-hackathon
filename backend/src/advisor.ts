@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { buildOfflineReply, DISEASES, fitToSms, matchSymptoms } from "../../shared/src/index.ts";
 import type { DiseaseInfo } from "../../shared/src/index.ts";
-import { ConversationStore } from "./conversationStore.ts";
+import type { ConversationHistory } from "./conversationStore.ts";
 
 export interface Advisor {
   advise(phone: string, question: string): Promise<string>;
@@ -51,14 +51,11 @@ function replyText(response: Anthropic.Beta.Messages.BetaMessage): string | null
   return text.length > 0 ? text : null;
 }
 
-export function createClaudeAdvisor(
-  client: Anthropic = new Anthropic(),
-  store: ConversationStore = new ConversationStore(),
-): Advisor {
+export function createClaudeAdvisor(createClient: () => Anthropic, store: ConversationHistory): Advisor {
   return {
     async advise(phone, question) {
       try {
-        const response = await client.beta.messages.create({
+        const response = await createClient().beta.messages.create({
           model: MODEL,
           max_tokens: 4000,
           betas: ["server-side-fallback-2026-07-01"],
@@ -66,12 +63,12 @@ export function createClaudeAdvisor(
           output_config: { effort: "low" },
           cache_control: { type: "ephemeral" },
           system: SYSTEM_PROMPT,
-          messages: [...store.history(phone), { role: "user", content: question }],
+          messages: [...(await store.history(phone)), { role: "user", content: question }],
         });
         const answer = replyText(response);
         if (!answer) return offlineAnswer(question);
         const smsAnswer = fitToSms(answer);
-        store.append(phone, question, smsAnswer);
+        await store.append(phone, question, smsAnswer);
         return smsAnswer;
       } catch (error) {
         console.error("Claude request failed, using offline matcher:", error);

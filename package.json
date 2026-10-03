@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "eslint shared backend/src",
-    "typecheck": "tsc -p shared && tsc -p backend",
+    "lint": "eslint shared backend/src backend/convex",
+    "typecheck": "tsc -p shared && tsc -p backend && tsc -p backend/convex",
     "test": "tsx --test shared/src/*.test.ts backend/src/*.test.ts"
   },
   "devDependencies": {

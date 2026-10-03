@@ -1,23 +1,6 @@
-export const MAX_REPLIES_PER_WINDOW = 5;
-export const WINDOW_MS = 10 * 60 * 1000;
+import { evaluateReply, MAX_REPLIES_PER_WINDOW, WINDOW_MS } from "../../shared/src/index.ts";
 
-export interface GuardDecision {
-  allowed: boolean;
-  recentReplyTimes: number[];
-}
-
-export function evaluateReply(
-  previousReplyTimes: number[],
-  now: number,
-  maxReplies = MAX_REPLIES_PER_WINDOW,
-  windowMs = WINDOW_MS,
-): GuardDecision {
-  const recentReplyTimes = previousReplyTimes.filter((time) => now - time < windowMs);
-  if (recentReplyTimes.length >= maxReplies) {
-    return { allowed: false, recentReplyTimes };
-  }
-  return { allowed: true, recentReplyTimes: [...recentReplyTimes, now] };
-}
+export { evaluateReply, MAX_REPLIES_PER_WINDOW, WINDOW_MS };
 
 export function isBlank(body: string): boolean {
   return body.trim().length === 0;
