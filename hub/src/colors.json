@@ -1,0 +1,13 @@
+{
+  "paper": "#F6F3EC",
+  "surface": "#FFFFFF",
+  "sunken": "#ECE7DB",
+  "ink": "#1C1A17",
+  "ink-muted": "#5B554C",
+  "accent": "#1F5135",
+  "accent-pressed": "#163C27",
+  "on-accent": "#FFFFFF",
+  "on-accent-muted": "#C9DDD0",
+  "reply": "#E3F1E7",
+  "live": "#7FD39B"
+}

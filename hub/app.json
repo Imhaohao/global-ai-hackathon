@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Leaf Doctor Hub",
+    "slug": "leaf-doctor-hub",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["android"],
+    "android": {
+      "package": "org.hacknation.leafdoctor.hub",
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["android.permission.RECEIVE_SMS", "android.permission.SEND_SMS"]
+    }
+  }
+}
