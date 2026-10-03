@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { DISEASES } from "../diseases.ts";
 import { matchSymptoms } from "../matchSymptoms.ts";
+import { formatOutgoingSms } from "../smsCompliance.ts";
 import { buildOfflineReply } from "../smsReply.ts";
 import { answerWithLocalModel } from "./answerWithLocalModel.ts";
 import { matchWithModelHelp } from "./assistedMatch.ts";
@@ -174,10 +175,40 @@ test("a Swahili message the model translated gets a Swahili confirm-first questi
   assert.match(answer.reply, /^Huenda ni Kutu ya majani ya kahawa\./);
 });
 
-test("without a model the hub answers exactly as before", async () => {
+test("without a model the hub answers as before, plus one decision line from the action card", async () => {
   const answer = await answerWithLocalModel(null, "orange powder under my leaves");
   assert.equal(answer.report.status, "unsure");
-  assert.equal(answer.reply, buildOfflineReply(matchSymptoms("orange powder under my leaves", DISEASES), DISEASES));
+  const diagnosis = buildOfflineReply(matchSymptoms("orange powder under my leaves", DISEASES), DISEASES);
+  assert.equal(answer.reply, `${diagnosis} Decision: prune and clean up. Check again in 7 days.`);
+});
+
+test("the decision line survives the brand prefix and opt-out footer for every confident match", async () => {
+  const messages = [
+    "orange powder under my leaves",
+    "brown spots with a grey center and yellow halo",
+    "there is a small worm inside the leaf, brown papery patches",
+    "tips of the shoots go black, very cold and windy here",
+    "leaves are shiny dark green, nothing wrong",
+  ];
+  for (const message of messages) {
+    const { reply } = await answerWithLocalModel(null, message);
+    const sent = formatOutgoingSms(reply, true);
+    assert.match(sent, /Decision: .*\n/s, message);
+    assert.ok(sent.length <= 459, `${message}: ${sent.length}`);
+  }
+});
+
+test("a Swahili reply keeps the unreviewed decision line in English", async () => {
+  const swahiliReport = { ...sprayReport, language: "sw" as const, topic: "leaf_symptoms" as const };
+  const answer = await answerWithLocalModel(fakeModel(JSON.stringify(swahiliReport)), "orange powder under my leaves");
+  assert.match(answer.reply, /^Hii inaonekana kama Kutu ya majani ya kahawa\./);
+  assert.match(answer.reply, /Decision: prune and clean up\. Check again in 7 days\.$/);
+});
+
+test("no decision line is added when the match is not confident", async () => {
+  const answer = await answerWithLocalModel(null, "something unrelated about the weather");
+  assert.equal(answer.match.kind, "noMatch");
+  assert.doesNotMatch(answer.reply, /Decision:/);
 });
 
 test("JSON wrapped in chat-template leftovers is still read", async () => {

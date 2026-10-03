@@ -28,4 +28,8 @@ export const ACTION_CARD_SW: Record<CopyKey, SwahiliLine> = {
   elseBerryBorer: draft("Kunguni wa matunda ya kahawa: angalia matundu madogo kwenye matunda."),
   elseWilt: draft("Kunyauka kwa kahawa: matawi mazima yananyauka na kufa."),
   elseNutrition: draft("Udongo duni au ukosefu wa virutubisho: manjano kote kwenye mti."),
+  smsDecisionSpray: draft("Uamuzi: linda majani mazima kwa dawa ya shaba kwa kipimo cha lebo na usafishe. Angalia tena baada ya siku {days}."),
+  smsDecisionPrune: draft("Uamuzi: pogoa na usafishe. Angalia tena baada ya siku {days}."),
+  smsDecisionMonitor: draft("Uamuzi: endelea kuangalia. Angalia tena baada ya siku {days}."),
+  smsDecisionCallOfficer: draft("Uamuzi: mwonyeshe afisa ugani."),
 };

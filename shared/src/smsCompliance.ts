@@ -5,6 +5,7 @@ export const REGISTERED_BRAND = "David";
 export const SENDER_NAME = `${BRAND_NAME} by ${REGISTERED_BRAND}`;
 export const OPT_OUT_FOOTER = "Reply STOP to opt out, HELP for help. Msg&data rates may apply.";
 const BRAND_PREFIX = `${SENDER_NAME}: `;
+export const COMPLIANCE_OVERHEAD_CHARS = BRAND_PREFIX.length + 1 + OPT_OUT_FOOTER.length;
 
 const CARRIER_KEYWORDS = new Set([
   "stop", "stopall", "unsubscribe", "cancel", "end", "quit", "revoke", "optout",

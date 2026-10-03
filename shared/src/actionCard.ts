@@ -5,6 +5,7 @@ import { COOPERATIVE_OFFICER } from "./contacts.ts";
 import type { ActionCard, ActionContext, ActionInput, AppLanguage, FarmDecision, PlantVerdict, WetDays } from "./contract.ts";
 import { DISEASES } from "./diseases.ts";
 import { DISEASES_SW } from "./diseases.sw.ts";
+import { toSmsSafeText } from "./smsReply.ts";
 import type { DiseaseKey } from "./types.ts";
 
 export const PLACEHOLDER_CONTACT = COOPERATIVE_OFFICER;
@@ -170,6 +171,17 @@ function diagnosedCard(condition: DiseaseKey, context: ActionContext): ActionCar
     needsPerson: rule.needsPerson,
     sourceUrls: DISEASES[condition].sources,
   };
+}
+
+const SMS_DECISION_KEYS: Record<FarmDecision, CopyKey> = {
+  spray: "smsDecisionSpray",
+  pruneAndClean: "smsDecisionPrune",
+  monitor: "smsDecisionMonitor",
+  callOfficer: "smsDecisionCallOfficer",
+};
+
+export function decisionLine(card: ActionCard): string {
+  return toSmsSafeText(copy(SMS_DECISION_KEYS[card.decision], card.language, { days: String(card.recheckInDays) }));
 }
 
 export function buildActionCard(input: ActionInput, context: ActionContext): ActionCard {

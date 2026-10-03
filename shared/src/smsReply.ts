@@ -90,21 +90,22 @@ function diagnosisReply(disease: DiseaseInfo, actionCount: number, wording: Repl
   return wording.diagnosis(disease.name, disease.urgency === "high", steps);
 }
 
-function shortestFittingReply(disease: DiseaseInfo, wording: ReplyWording): string {
+function shortestFittingReply(disease: DiseaseInfo, wording: ReplyWording, reservedChars: number): string {
   for (let actionCount = 3; actionCount >= 1; actionCount--) {
     const reply = toSmsSafeText(diagnosisReply(disease, actionCount, wording));
-    if (reply.length <= smsCharLimit(reply)) return reply;
+    if (reply.length + reservedChars <= smsCharLimit(reply)) return reply;
   }
-  return fitToSms(diagnosisReply(disease, 1, wording));
+  return fitToSms(diagnosisReply(disease, 1, wording), reservedChars);
 }
 
 export function buildOfflineReply(
   match: ReplyMatch,
   catalog: DiseaseCatalog,
   wording: ReplyWording = ENGLISH_WORDING,
+  reservedChars = 0,
 ): string {
   if (match.kind === "noMatch") return toSmsSafeText(wording.describe);
-  if (match.kind === "confident") return shortestFittingReply(catalog[match.best.key], wording);
+  if (match.kind === "confident") return shortestFittingReply(catalog[match.best.key], wording, reservedChars);
   if (match.kind === "confirmFirst") {
     const disease = catalog[match.best.key];
     return fitToSms(wording.confirmFirst(disease.name, disease.tellApart ?? ""));

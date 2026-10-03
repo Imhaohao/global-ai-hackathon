@@ -30,5 +30,6 @@ test("offline without a model: the keyword matcher answers as before", async () 
   delete process.env.EXPO_PUBLIC_BACKEND_URL;
   const answer = await answerQuestion("+254700000000", "orange powder under my leaves", null);
   assert.match(answer.reply, /^This sounds like Coffee leaf rust/);
+  assert.match(answer.reply, /Decision: prune and clean up\. Check again in 7 days\.$/);
   assert.equal(answer.modelReading, null);
 });

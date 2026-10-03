@@ -16,7 +16,11 @@ export type CopyKey =
   | "elseBerryDisease"
   | "elseBerryBorer"
   | "elseWilt"
-  | "elseNutrition";
+  | "elseNutrition"
+  | "smsDecisionSpray"
+  | "smsDecisionPrune"
+  | "smsDecisionMonitor"
+  | "smsDecisionCallOfficer";
 
 export const ENGLISH_COPY: Record<CopyKey, string> = {
   headlineHealthy: "Your leaves look healthy",
@@ -37,4 +41,8 @@ export const ENGLISH_COPY: Record<CopyKey, string> = {
   elseBerryBorer: "Coffee berry borer: look for small holes in the berries.",
   elseWilt: "Coffee wilt: whole branches wilting and dying.",
   elseNutrition: "Poor soil or nutrition: yellowing across the whole tree.",
+  smsDecisionSpray: "Decision: protect healthy leaves with copper at the label rate and clean up. Check again in {days} days.",
+  smsDecisionPrune: "Decision: prune and clean up. Check again in {days} days.",
+  smsDecisionMonitor: "Decision: keep watching. Check again in {days} days.",
+  smsDecisionCallOfficer: "Decision: show your field officer.",
 };
