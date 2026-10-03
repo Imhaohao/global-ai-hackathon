@@ -1,7 +1,7 @@
 import { Play, Stop } from "phosphor-react-native";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
-import { iconColors } from "../theme";
+import { ActionButton } from "./ActionButton";
 import { PulsingDot } from "./PulsingDot";
 
 interface ListeningControlProps {
@@ -11,7 +11,6 @@ interface ListeningControlProps {
 }
 
 export function ListeningControl({ listening, onStart, onStop }: ListeningControlProps) {
-  const Icon = listening ? Stop : Play;
   return (
     <View className={`rounded-card p-5 ${listening ? "bg-accent" : "bg-surface"}`}>
       <View className="mb-5 flex-row items-center gap-3">
@@ -25,18 +24,11 @@ export function ListeningControl({ listening, onStart, onStop }: ListeningContro
           Replies only go out while this app is open on screen.
         </Text>
       )}
-      <Pressable
-        accessibilityRole="button"
-        onPress={listening ? onStop : onStart}
-        className={`min-h-16 flex-row items-center justify-center gap-3 rounded-control active:scale-[0.96] ${
-          listening ? "bg-on-accent" : "bg-accent active:bg-accent-pressed"
-        }`}
-      >
-        <Icon size={28} weight="fill" color={listening ? iconColors.accent : iconColors.onAccent} />
-        <Text className={`text-xl font-semibold ${listening ? "text-accent" : "text-on-accent"}`}>
-          {listening ? "Stop listening" : "Start listening"}
-        </Text>
-      </Pressable>
+      {listening ? (
+        <ActionButton label="Stop listening" icon={Stop} tone="inverse" onPress={onStop} />
+      ) : (
+        <ActionButton label="Start listening" icon={Play} onPress={onStart} />
+      )}
     </View>
   );
 }

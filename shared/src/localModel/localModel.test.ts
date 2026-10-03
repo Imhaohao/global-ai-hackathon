@@ -155,6 +155,7 @@ const fineTuned: LocalModelSpec = {
     huggingFaceFile("example/leaf-doctor-ft-GGUF", "adapter", "leaf-doctor-lora.gguf", 5, "b".repeat(64)),
   ],
   supportsImages: false,
+  recommendedRamBytes: 2_000_000_000,
   systemPromptOverrides: { parseFarmerMessage: "short prompt the fine-tune was trained with" },
 };
 
@@ -177,4 +178,9 @@ test("without a model the hub answers exactly as before", async () => {
   const answer = await answerWithLocalModel(null, "orange powder under my leaves");
   assert.equal(answer.report.status, "unsure");
   assert.equal(answer.reply, buildOfflineReply(matchSymptoms("orange powder under my leaves", DISEASES), DISEASES));
+});
+
+test("JSON wrapped in chat-template leftovers is still read", async () => {
+  const wrapped = `<think>\n\n</think>\n\n<|im_start|>assistant\n${JSON.stringify(sprayReport)}`;
+  assert.deepEqual(await parseFarmerMessage(fakeModel(wrapped), "x"), { status: "ok", value: sprayReport });
 });

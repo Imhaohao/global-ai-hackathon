@@ -1,9 +1,11 @@
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
 import { PermissionsAndroid } from "react-native";
 
 import { addSmsListener, sendSms } from "../modules/sms-gateway";
 import type { IncomingSms } from "../modules/sms-gateway";
+import type { FarmerReport, LocalModel } from "../../shared/src/localModel/index.ts";
 import { answerQuestion, type AnswerSource } from "./answerQuestion";
 import { createReplyGuard } from "./replyGuard";
 
@@ -16,6 +18,7 @@ export interface Exchange {
   question: string;
   reply: string;
   source: AnswerSource;
+  modelReading: FarmerReport | null;
   receivedAt: number;
 }
 
@@ -29,7 +32,7 @@ async function requestSmsPermissions(): Promise<boolean> {
   return Object.values(results).every((result) => result === PermissionsAndroid.RESULTS.GRANTED);
 }
 
-export function useSmsHub() {
+export function useSmsHub(localModelRef: RefObject<LocalModel | null>) {
   const [listening, setListening] = useState(false);
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const [problem, setProblem] = useState<HubProblem>(null);
@@ -38,7 +41,7 @@ export function useSmsHub() {
 
   const handleSms = useCallback(async (sms: IncomingSms) => {
     if (!shouldReplyRef.current(sms.from, sms.body, sms.receivedAt)) return;
-    const answer = await answerQuestion(sms.from, sms.body);
+    const answer = await answerQuestion(sms.from, sms.body, localModelRef.current);
     try {
       await sendSms(sms.from, answer.reply);
       setProblem(null);
@@ -51,10 +54,11 @@ export function useSmsHub() {
       question: sms.body,
       reply: answer.reply,
       source: answer.source,
+      modelReading: answer.modelReading,
       receivedAt: sms.receivedAt,
     };
     setExchanges((previous) => [exchange, ...previous].slice(0, MAX_EXCHANGES_SHOWN));
-  }, []);
+  }, [localModelRef]);
 
   const stop = useCallback(() => {
     subscriptionRef.current?.remove();

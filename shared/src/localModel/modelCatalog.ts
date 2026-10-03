@@ -15,7 +15,8 @@ export interface LocalModelSpec {
   sourceRepo: string;
   files: ModelFile[];
   supportsImages: boolean;
-  chatTemplateOptions?: Record<string, unknown>;
+  recommendedRamBytes: number;
+  chatTemplateOptions?: Record<string, string | number | boolean>;
   systemPromptOverrides?: Partial<Record<LocalTaskName, string>>;
 }
 
@@ -45,6 +46,7 @@ export const LOCAL_MODELS = {
         "56e4c6cfe73b0c82e3e82bc518d7591997e61d81f723fc41a586f4fa69ea2453"),
     ],
     supportsImages: true,
+    recommendedRamBytes: 3_000_000_000,
     chatTemplateOptions: { enable_thinking: false },
   },
   "qwen3.5-2b": {
@@ -59,6 +61,7 @@ export const LOCAL_MODELS = {
         "7035e9cb8d7c6a9681d07eef9a364783e86ea4cd73faab2eabb4f43a101830c7"),
     ],
     supportsImages: true,
+    recommendedRamBytes: 4_000_000_000,
     chatTemplateOptions: { enable_thinking: false },
   },
 } satisfies Record<string, LocalModelSpec>;

@@ -1,10 +1,12 @@
-import { buildOfflineReply, DISEASES, matchSymptoms } from "../../shared/src/index.ts";
+import { answerWithLocalModel } from "../../shared/src/localModel/index.ts";
+import type { FarmerReport, LocalModel } from "../../shared/src/localModel/index.ts";
 
 export type AnswerSource = "online" | "offline";
 
 export interface Answer {
   reply: string;
   source: AnswerSource;
+  modelReading: FarmerReport | null;
 }
 
 const ONLINE_TIMEOUT_MS = 8000;
@@ -37,16 +39,17 @@ async function askBackend(backendUrl: string, from: string, text: string): Promi
   }
 }
 
-function answerOffline(text: string): Answer {
-  return { reply: buildOfflineReply(matchSymptoms(text, DISEASES), DISEASES), source: "offline" };
+async function answerOffline(text: string, localModel: LocalModel | null): Promise<Answer> {
+  const { reply, report } = await answerWithLocalModel(localModel, text);
+  return { reply, source: "offline", modelReading: report.status === "ok" ? report.value : null };
 }
 
-export async function answerQuestion(from: string, text: string): Promise<Answer> {
+export async function answerQuestion(from: string, text: string, localModel: LocalModel | null): Promise<Answer> {
   const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
-  if (!backendUrl) return answerOffline(text);
+  if (!backendUrl) return answerOffline(text, localModel);
   try {
-    return { reply: await askBackend(backendUrl, from, text), source: "online" };
+    return { reply: await askBackend(backendUrl, from, text), source: "online", modelReading: null };
   } catch {
-    return answerOffline(text);
+    return answerOffline(text, localModel);
   }
 }

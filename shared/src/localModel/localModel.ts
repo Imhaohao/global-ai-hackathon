@@ -29,11 +29,19 @@ export async function completeJson(model: LocalModel, request: LocalModelRequest
   } catch (error) {
     return unsure(`model failed: ${error instanceof Error ? error.message : String(error)}`);
   }
+  const json = firstJsonObject(raw);
+  if (json === null) return unsure("model did not return JSON");
   try {
-    return { status: "ok", value: JSON.parse(raw) };
+    return { status: "ok", value: JSON.parse(json) };
   } catch {
     return unsure("model did not return JSON");
   }
+}
+
+export function firstJsonObject(raw: string): string | null {
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
+  return start >= 0 && end > start ? raw.slice(start, end + 1) : null;
 }
 
 export function isOneOf<T extends string>(value: unknown, options: readonly T[]): value is T {

@@ -32,7 +32,8 @@ The model is swappable: callers use the `LocalModel` interface; model files and 
 | Synthetic Swahili/English eval + runner (`npm run eval:local-model`) | Opus (inline) | done, 24 messages + 3 verdicts |
 | Pick a model that passes the eval | Opus (inline) | done: Qwen3.5-2B active, see below |
 | Model may never finalize a diagnosis alone (`matchWithModelHelp` -> confirmFirst) | Opus (inline) | done |
-| On-device runtime adapter (llama.rn) in hub/ and mobile/ | Sonnet subagent | todo |
+| On-device runtime in hub/ (llama.rn, text-only, memory guard, download + sideload) | Opus (inline) | done: emulator SMS round trip, Swahili in, Swahili confirm-first out, about 5 s per text |
+| On-device runtime in mobile/ (label reading needs the vision file) | Sonnet subagent | todo |
 | Real label photos from the team for the label eval | user | todo |
 
 Probe findings (2026-10-03): JSON-schema output and `enable_thinking: false` work through llama-server; Swahili translation with a glossary prompt is partly right but invents details, so the matcher gets original text plus translation, never translation alone.
@@ -50,3 +51,13 @@ Eval with the confirm-first policy (same 24 synthetic messages, temperature 0, f
 Swahili phrasing failed on both models (garbled text passed the number guard once each), so replies use approved Swahili text only. Do not wire `phraseVerdictInSwahili` into a farmer-facing path until a native speaker signs off on a model.
 
 Coordination: mobile/ belongs to the "Leaf Doctor" session. It switches strings.ts to import shared/ once diseases.ts lands.
+
+### Switching to a fine-tuned model
+
+1. Export the fine-tune as GGUF: either a full merged model, or the base GGUF plus a LoRA adapter GGUF (llama.cpp `convert_lora_to_gguf.py`).
+2. Upload the files to Hugging Face and add an entry to `LOCAL_MODELS` in `shared/src/localModel/modelCatalog.ts` with `huggingFaceFile(...)` for each file (role `weights`, `adapter`, or `vision`), exact `bytes`, `sha256` (the LFS oid), and `recommendedRamBytes`.
+3. If the fine-tune was trained on its own short prompt, put it in `systemPromptOverrides` for that task; the JSON schemas and validators stay the same.
+4. Put the files in `~/.cache/leaf-doctor/models/<id>/`, run `LOCAL_MODEL_ID=<id> npm run eval:local-model`, and compare with the table above. Switch `ACTIVE_LOCAL_MODEL_ID` only if wrong final diagnoses stay at 0.
+5. Hub: rebuild or set `EXPO_PUBLIC_LOCAL_MODEL_ID`. On launch it offers the new download (or `npm run sideload-model` from hub/ over adb), and deletes the old model's folder once the new one loads.
+
+Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamBytes` the hub shows why and keeps using keyword rules (a 2 GB emulator was killed by Android's low-memory killer while loading). llama.rn returns the JSON wrapped in chat-template text (`<think></think><|im_start|>assistant`), so `completeJson` extracts the first JSON object; `jinja: true` made the model think out loud and run out of tokens, so it stays off.

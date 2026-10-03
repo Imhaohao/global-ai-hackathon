@@ -7,11 +7,14 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { EmptyState } from "./src/components/EmptyState";
 import { ExchangeCard } from "./src/components/ExchangeCard";
 import { ListeningControl } from "./src/components/ListeningControl";
+import { ModelCard } from "./src/components/ModelCard";
 import { ProblemBanner } from "./src/components/ProblemBanner";
+import { useLocalModel } from "./src/localModel/useLocalModel";
 import { useSmsHub } from "./src/useSmsHub";
 
 export default function App() {
-  const { listening, exchanges, problem, start, stop } = useSmsHub();
+  const localModel = useLocalModel();
+  const { listening, exchanges, problem, start, stop } = useSmsHub(localModel.modelRef);
 
   return (
     <SafeAreaProvider>
@@ -29,6 +32,13 @@ export default function App() {
               <Text className="text-3xl font-bold text-ink">Leaf Doctor Hub</Text>
               <ListeningControl listening={listening} onStart={() => void start()} onStop={stop} />
               <ProblemBanner problem={problem} />
+              <ModelCard
+                spec={localModel.spec}
+                state={localModel.state}
+                onDownload={() => void localModel.download()}
+                onCancel={localModel.cancelDownload}
+                onRetry={localModel.retry}
+              />
               {exchanges.length > 0 && <Text className="text-xl font-semibold text-ink">Recent texts</Text>}
             </View>
           }
