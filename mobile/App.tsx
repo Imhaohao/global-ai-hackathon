@@ -6,66 +6,133 @@ import { useState } from 'react';
 import { useTensorflowModel } from 'react-native-fast-tflite';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import { classifyLeaf, type Diagnosis, type LeafPhoto } from './src/diagnosis/classifyLeaf';
-import { pickLeafPhoto, type PhotoSource } from './src/diagnosis/pickLeafPhoto';
 import { STRINGS, type Language } from './src/i18n/strings';
+import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
-import { ResultScreen } from './src/screens/ResultScreen';
+import { ConsentScreen } from './src/screens/ConsentScreen';
+import type { DevScenario } from './src/screens/devVerdictOverride';
+import { SettingsScreen } from './src/screens/SettingsScreen';
+import { useCaptureFlow } from './src/screens/useCaptureFlow';
+import { useResultFlow } from './src/screens/useResultFlow';
+import { locationAllowed, type ConsentChoice } from './src/storage/appSettings';
+import { deleteAllData, exportAllData } from './src/storage/dataControls';
+import { askForLocationPermission } from './src/storage/deviceLocation';
+import { listObservations } from './src/storage/observations';
+import { useAppSettings } from './src/storage/useAppSettings';
+import { useWetDays } from './src/storage/useWetDays';
 
 const COFFEE_LEAF_MODEL = require('./assets/model/coffee-leaf.tflite');
-
-type AppState =
-  | { screen: 'capture'; problem?: CaptureProblem }
-  | { screen: 'checking'; photo: LeafPhoto }
-  | { screen: 'result'; photo: LeafPhoto; diagnosis: Diagnosis };
 
 function deviceLanguage(): Language {
   return getLocales()[0]?.languageCode === 'sw' ? 'sw' : 'en';
 }
 
 export default function App() {
-  const [language, setLanguage] = useState<Language>(deviceLanguage);
-  const [state, setState] = useState<AppState>({ screen: 'capture' });
+  const { settings, update: updateSettings, resetToDefaults } = useAppSettings();
+  const [language, setLanguage] = useState<Language>(settings.language ?? deviceLanguage());
+  const [isInSettings, setIsInSettings] = useState(false);
+  const [devScenario, setDevScenario] = useState<DevScenario>('off');
   const leafModel = useTensorflowModel(COFFEE_LEAF_MODEL, []);
+  const { wetDays, forgetWetDays } = useWetDays(locationAllowed(settings));
+  const capture = useCaptureFlow(leafModel.state === 'loaded' ? leafModel.model : undefined, devScenario);
+  const resultFlow = useResultFlow({ settings, updateSettings, language, wetDays });
   const strings = STRINGS[language];
 
-  const checkLeaf = async (source: PhotoSource) => {
-    if (leafModel.state !== 'loaded') return;
-    const picked = await pickLeafPhoto(source);
-    if (picked.kind === 'cameraBlocked') return setState({ screen: 'capture', problem: 'cameraBlocked' });
-    if (picked.kind === 'cancelled') return;
-    setState({ screen: 'checking', photo: picked.photo });
-    try {
-      const diagnosis = await classifyLeaf(leafModel.model, picked.photo);
-      setState({ screen: 'result', photo: picked.photo, diagnosis });
-    } catch {
-      setState({ screen: 'capture', problem: 'photoFailed' });
-    }
+  const switchLanguage = () => {
+    const next = language === 'en' ? 'sw' : 'en';
+    setLanguage(next);
+    updateSettings({ language: next });
+  };
+
+  const chooseConsent = async (choice: Exclude<ConsentChoice, 'pending'>) => {
+    updateSettings({ consent: choice });
+    if (choice === 'withLocation') await askForLocationPermission();
+  };
+
+  const toggleLocation = async (enabled: boolean) => {
+    updateSettings({ consent: enabled ? 'withLocation' : 'withoutLocation' });
+    if (enabled) await askForLocationPermission();
+  };
+
+  const deleteAll = () => {
+    deleteAllData();
+    resetToDefaults();
+    forgetWetDays();
+    capture.startOver();
+    resultFlow.clearResult();
+    setIsInSettings(false);
+  };
+
+  const finishAndShowAdvice = () => {
+    if (capture.check) resultFlow.finishCheck(capture.check, capture.photos);
+  };
+
+  const checkAnotherTree = () => {
+    resultFlow.clearResult();
+    capture.startOver();
   };
 
   const modelProblem: CaptureProblem | undefined = leafModel.state === 'error' ? 'modelFailed' : undefined;
+
+  const renderScreen = () => {
+    if (settings.consent === 'pending') {
+      return <ConsentScreen strings={strings} onChoose={chooseConsent} onSwitchLanguage={switchLanguage} />;
+    }
+    if (isInSettings) {
+      return (
+        <SettingsScreen
+          strings={strings}
+          settings={settings}
+          savedCheckCount={listObservations().length}
+          devScenario={devScenario}
+          onChangeDevScenario={setDevScenario}
+          onUpdateSettings={updateSettings}
+          onToggleLocation={toggleLocation}
+          onExport={() => exportAllData(settings)}
+          onDeleteAll={deleteAll}
+          onBack={() => setIsInSettings(false)}
+        />
+      );
+    }
+    if (resultFlow.result) {
+      return (
+        <ActionCardScreen
+          strings={strings}
+          language={language}
+          card={resultFlow.result.card}
+          observation={resultFlow.result.observation}
+          photoUris={resultFlow.result.photoUris}
+          farmSections={settings.farmSections}
+          savedOfficerPhone={settings.officerPhone}
+          onChooseFarmSection={resultFlow.chooseFarmSection}
+          onAddFarmSection={resultFlow.addFarmSection}
+          onSaveOfficerPhone={(officerPhone) => updateSettings({ officerPhone })}
+          onSendCase={resultFlow.sendCase}
+          onCheckAnother={checkAnotherTree}
+        />
+      );
+    }
+    return (
+      <CaptureScreen
+        strings={strings}
+        photos={capture.photos}
+        check={capture.check}
+        isChecking={capture.isChecking}
+        problem={modelProblem ?? capture.problem}
+        canCheck={leafModel.state === 'loaded'}
+        onTakeLeaf={capture.takeLeaf}
+        onFinish={finishAndShowAdvice}
+        onOpenSettings={() => setIsInSettings(true)}
+        onSwitchLanguage={switchLanguage}
+      />
+    );
+  };
 
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-paper">
         <StatusBar style="dark" />
-        {state.screen === 'result' ? (
-          <ResultScreen
-            strings={strings}
-            photoUri={state.photo.uri}
-            diagnosis={state.diagnosis}
-            onCheckAnother={() => setState({ screen: 'capture' })}
-          />
-        ) : (
-          <CaptureScreen
-            strings={strings}
-            checkingPhotoUri={state.screen === 'checking' ? state.photo.uri : undefined}
-            problem={modelProblem ?? (state.screen === 'capture' ? state.problem : undefined)}
-            canCheck={leafModel.state === 'loaded'}
-            onPick={checkLeaf}
-            onSwitchLanguage={() => setLanguage(language === 'en' ? 'sw' : 'en')}
-          />
-        )}
+        {renderScreen()}
       </SafeAreaView>
     </SafeAreaProvider>
   );
