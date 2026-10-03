@@ -64,3 +64,10 @@ test("non-Latin scripts are kept and capped at the unicode SMS limit", async () 
   assert.ok([...long].length <= SMS_MAX_UNICODE_CHARS);
   assert.ok(long.endsWith("።"), "cut at a sentence end");
 });
+
+test("Spanish inverted punctuation does not force a unicode SMS", async () => {
+  const { fitToSms, smsCharLimit, SMS_MAX_CHARS } = await import("./smsReply.ts");
+  const reply = fitToSms("\u00bfVe polvo naranja debajo de la hoja? \u00a1Act\u00fae pronto!");
+  assert.equal(reply, "Ve polvo naranja debajo de la hoja? Actue pronto!");
+  assert.equal(smsCharLimit(reply), SMS_MAX_CHARS);
+});

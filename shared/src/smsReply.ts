@@ -39,6 +39,7 @@ const ASCII_REPLACEMENTS: [RegExp, string][] = [
   [/[\u2013\u2014]/g, "-"],
   [/\u2026/g, "..."],
   [/\u00b0/g, " degrees "],
+  [/[\u00bf\u00a1]/g, ""],
 ];
 
 const PRINTABLE_ASCII = /^[\x20-\x7e\n]*$/;
