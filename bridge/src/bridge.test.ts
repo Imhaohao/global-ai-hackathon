@@ -107,3 +107,9 @@ test("askLeafDoctor falls back offline when the server rejects the token", async
     console.warn = originalWarn;
   }
 });
+
+test("the bridge never answers its own replies, even mid-conversation (self-chat loop)", () => {
+  const start = 1_000_000;
+  assert.deepEqual(decideIncoming("Leaf Doctor: This sounds like Coffee leaf rust.", start, start + 5_000), { kind: "ignore" });
+  assert.deepEqual(decideIncoming("Leaf Doctor: Hi! Tell me what you see", undefined, start), { kind: "ignore" });
+});

@@ -2,10 +2,9 @@ import { evaluateReply } from "../../shared/src/index.ts";
 import { askLeafDoctor } from "./askLeafDoctor.ts";
 import { MESSAGES_DB_PATH, MessagesDb, type IncomingMessage } from "./messagesDb.ts";
 import { sendWithMessagesApp } from "./sendMessage.ts";
-import { decideIncoming, isInSession, KEYWORD } from "./sessionRules.ts";
+import { decideIncoming, isInSession, KEYWORD, REPLY_PREFIX } from "./sessionRules.ts";
 
 const POLL_MS = 3000;
-const REPLY_PREFIX = "Leaf Doctor: ";
 const FIRST_REPLY_FOOTER = "\n(Automated coffee leaf advice. Text STOP to end.)";
 const WELCOME_REPLY = `${REPLY_PREFIX}Hi! Tell me what you see on your coffee leaves: the colour of the spots, top or underneath, and any powder, rings or tunnels.${FIRST_REPLY_FOOTER}`;
 const GOODBYE_REPLY = `${REPLY_PREFIX}Okay, I'll stop. Text ${KEYWORD} with your question any time.`;
