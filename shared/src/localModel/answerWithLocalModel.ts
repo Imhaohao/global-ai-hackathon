@@ -2,6 +2,7 @@ import { buildActionCard, decisionLine } from "../actionCard.ts";
 import type { AppLanguage } from "../contract.ts";
 import { DISEASES } from "../diseases.ts";
 import { DISEASES_IN_SWAHILI } from "../diseases.sw.ts";
+import { looksLikeKikuyu, UNSUPPORTED_LANGUAGE_REPLY } from "../languageGuard.ts";
 import { COMPLIANCE_OVERHEAD_CHARS } from "../smsCompliance.ts";
 import { buildOfflineReply, ENGLISH_WORDING, SWAHILI_WORDING } from "../smsReply.ts";
 import { matchWithModelHelp } from "./assistedMatch.ts";
@@ -32,6 +33,9 @@ function replyWithDecision(match: AssistedMatch, language: AppLanguage): string 
 }
 
 export async function answerWithLocalModel(model: LocalModel | null, message: string): Promise<LocalModelAnswer> {
+  if (looksLikeKikuyu(message)) {
+    return { reply: UNSUPPORTED_LANGUAGE_REPLY, report: unsure("message looks like Kikuyu"), match: { kind: "noMatch" } };
+  }
   const report = model ? await parseFarmerMessage(model, message) : unsure("no on-device model loaded");
   const match = matchWithModelHelp(message, report, DISEASES);
   const reply = replyWithDecision(match, repliesInSwahili(report) ? "sw" : "en");

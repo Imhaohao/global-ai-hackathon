@@ -87,3 +87,19 @@ What it means for Leaf Doctor: Kikuyu is a measured gap. A Kikuyu text to the hu
 
 - **OpenCelliD tower counts.** Skipped: the API needs a free key tied to an account, and no key was available. A person needs to sign up at opencellid.org and run the count for Ruiru (-1.146, 36.961) and Othaya (-0.548, 36.943).
 - **LSMS-ISA Uganda National Panel Survey.** Skipped: the World Bank Microdata Library needs a free registration and a data request. Next step for a person.
+
+## Kikuyu guard on the hub
+
+Because the hub model labelled 97 of 100 Kikuyu sentences as Swahili (above), the hub now checks every incoming text before the model sees it (`shared/src/languageGuard.ts`). A message counts as Kikuyu if it contains ĩ or ũ, or at least two words from a list taken from the FLORES-200 Kikuyu dev split that never appear in the Swahili dev split. Such a message gets a fixed reply asking for Swahili or English, or a visit to the field officer. The model is not called.
+
+Measured on the separate FLORES-200 devtest split (`evals/kikuyu/results.json`, run with `npx tsx evals/kikuyu/measureGuard.ts <flores200_dataset dir>`):
+
+| | Flagged as Kikuyu |
+|---|---|
+| Kikuyu sentences, as written | 1,010 of 1,012 (99.8%) |
+| Kikuyu sentences with ĩ and ũ replaced by i and u | 719 of 1,012 (71.1%) |
+| Swahili sentences | 0 of 1,012 |
+| English sentences | 0 of 1,012 |
+| Our 24 Swahili and English farmer test messages | 0 of 24 |
+
+These are news-style sentences. Farmer texts are shorter and often drop the special letters, so the real catch rate will be lower than 71%. Measuring it needs Kikuyu-speaking farmers' messages, which we do not have.

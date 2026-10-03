@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { DISEASES } from "../diseases.ts";
+import { UNSUPPORTED_LANGUAGE_REPLY } from "../languageGuard.ts";
 import { matchSymptoms } from "../matchSymptoms.ts";
 import { formatOutgoingSms } from "../smsCompliance.ts";
 import { buildOfflineReply } from "../smsReply.ts";
@@ -214,4 +215,16 @@ test("no decision line is added when the match is not confident", async () => {
 test("JSON wrapped in chat-template leftovers is still read", async () => {
   const wrapped = `<think>\n\n</think>\n\n<|im_start|>assistant\n${JSON.stringify(sprayReport)}`;
   assert.deepEqual(await parseFarmerMessage(fakeModel(wrapped), "x"), { status: "ok", value: sprayReport });
+});
+
+test("a Kikuyu message gets the unsupported-language reply without calling the model", async () => {
+  const model: LocalModel = {
+    modelId: "should-not-run",
+    complete: async () => {
+      throw new Error("the model must not be called for Kikuyu");
+    },
+  };
+  const answer = await answerWithLocalModel(model, "mahuti nĩ marũaru mũno");
+  assert.equal(answer.reply, UNSUPPORTED_LANGUAGE_REPLY);
+  assert.equal(answer.report.status, "unsure");
 });

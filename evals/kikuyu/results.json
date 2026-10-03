@@ -1,0 +1,26 @@
+{
+  "dataset": "https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz",
+  "licence": "CC-BY-SA 4.0 (facebookresearch/flores README)",
+  "split": "devtest; the word list was chosen from the separate dev split",
+  "note": "News-style sentences, not farmer SMS. Real SMS is shorter, so word-based catch rates on SMS will be lower.",
+  "kikuyuCaught": {
+    "flagged": 1010,
+    "total": 1012,
+    "rate": 0.998
+  },
+  "kikuyuCaughtWithoutSpecialLetters": {
+    "flagged": 719,
+    "total": 1012,
+    "rate": 0.7105
+  },
+  "swahiliWronglyFlagged": {
+    "flagged": 0,
+    "total": 1012,
+    "rate": 0
+  },
+  "englishWronglyFlagged": {
+    "flagged": 0,
+    "total": 1012,
+    "rate": 0
+  }
+}
