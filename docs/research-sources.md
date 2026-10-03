@@ -94,7 +94,7 @@ Do not quote "67,761 substandard bags reached 13,633 Kenyan farmers." No source 
 |---|---|---|
 | Kenya: 53.7% own a phone (48.6% rural); 93.8% of households have an owner | [Communications Authority of Kenya, 12 Aug 2025](https://www.ca.go.ke/urban-rural-digital-divide-hinders-ict-uptake-joint-ca-and-knbs-survey-shows) | Read |
 | Kenya: 48.7M smartphones and 29.6M feature phones on networks, Dec 2025 | [Techweez, 7 Apr 2026](https://techweez.com/2026/04/07/kenya-smartphones-penetration-feature-phone-decline/) | Read |
-| Kenya women's smartphone ownership 39% (2024) | [GSMA Mobile Gender Gap 2025](https://www.gsma.com/gender-gap-2025/) | Summary only |
+| Wrong: Kenya women's smartphone ownership 39% (2024). In the report, 32% to 39% is Nigeria; Kenya is 42% (see the Kenya baseline section) | [GSMA Mobile Gender Gap 2025](https://www.gsma.com/gender-gap-2025/) | Checked, corrected |
 | Uganda: 26.7M feature phone vs 18.2M smartphone subscriptions | [Daily Monitor](https://www.monitor.co.ug/uganda/business/prosper/30-years-later-feature-phones-still-outstrip-smartphones--5065896) | Read |
 | Neon Ray: 1GB RAM, 5MP, KES 3,999 | [Techish, 18 Apr 2019](https://tech-ish.com/2019/04/18/safaricom-4g-smartphones-launched-in-latest/) | Read |
 | Itel A60: 2GB RAM, about KSh 9,000 | [Techweez, 13 Mar 2023](https://techweez.com/2023/03/13/itel-a60-specs-price-kenya/) | Read |
@@ -122,6 +122,22 @@ Do not quote "67,761 substandard bags reached 13,633 Kenyan farmers." No source 
 | County audits 2023-24: 164 of 758 vehicles grounded; Sh73.4m of equipment unused in boxes | [Auditor-General, Feb 2025](https://www.oagkenya.go.ke/wp-content/uploads/2025/02/GREEN-BOOK-EXECUTIVES-2024-FINAL-5.3.2025-SIGNED.pdf) | Summary only |
 | Kajiado county agricultural machinery neglected and vandalised | [Nation](https://nation.africa/kenya/counties/kajiado/probe-reveals-neglect-of-kajiado-agricultural-machinery-5450988) | Summary only |
 | Kenya plans Sh2bn for pulping machines via cooperatives (plan, not delivery) | The Star, 19 May 2025 | Summary only |
+
+## Kenya baseline numbers (fetched 2026-10-03, details in `docs/evidence.md`)
+
+| Claim | Source | Status |
+|---|---|---|
+| Kenya rural population 67.8% of total (2025) | [World Bank WDI SP.RUR.TOTL.ZS](https://api.worldbank.org/v2/country/KEN/indicator/SP.RUR.TOTL.ZS?format=json&mrnev=1) | Checked |
+| Kenya 126.5 mobile subscriptions per 100 people (2024); counts SIMs, not people | [World Bank WDI IT.CEL.SETS.P2](https://api.worldbank.org/v2/country/KEN/indicator/IT.CEL.SETS.P2?format=json&mrnev=1) | Checked |
+| Kenya employment in agriculture 45.8% of total employment (2025, modelled ILO estimate) | [World Bank WDI SL.AGR.EMPL.ZS](https://api.worldbank.org/v2/country/KEN/indicator/SL.AGR.EMPL.ZS?format=json&mrnev=1) | Checked |
+| Kenya rural electricity access 67.1% (2024); replaces the 67.9% (2023) summary row above | [World Bank WDI EG.ELC.ACCS.RU.ZS](https://api.worldbank.org/v2/country/KEN/indicator/EG.ELC.ACCS.RU.ZS?format=json&mrnev=1) | Checked |
+| Kenya adults 15+ with a mobile money account (2024): 87.5% overall, 83.5% women, 91.7% men, 85.7% rural | [Global Findex 2025, mobileaccount.t.d](https://api.worldbank.org/v2/country/KEN/indicator/mobileaccount.t.d?format=json&source=28) | Checked |
+| Kenya adults 15+ owning a mobile phone (2024): 92.7% overall, 91.8% women, 93.7% men, 91.5% rural | [Global Findex 2025, con1](https://api.worldbank.org/v2/country/KEN/indicator/con1?format=json&source=28) | Checked |
+| Kenya adults 15+ whose main phone is a smartphone (2024): 54.9% overall, 48.8% women, 61.3% men, 52.8% rural | [Global Findex 2025, con9a](https://api.worldbank.org/v2/country/KEN/indicator/con9a?format=json&source=28) | Checked |
+| Kenya adults 15+ whose main phone is a basic text phone (2024): 37.6% overall, 43.0% women, 32.0% men, 38.4% rural | [Global Findex 2025, con9b](https://api.worldbank.org/v2/country/KEN/indicator/con9b?format=json&source=28) | Checked |
+| Kenya 2024, adults 18+: smartphone ownership 50% men, 42% women (gap 16%); mobile ownership 95% and 93%; mobile internet 55% and 43% | [GSMA Mobile Gender Gap Report 2025, Figure 2, printed p. 20](https://web.archive.org/web/20250515054435/https://www.gsma.com/r/wp-content/uploads/2025/05/The-Mobile-Gender-Gap-Report-2025.pdf) | Checked |
+| Population within 10 km (WorldPop 2020 constrained, 100 m): Ruiru 624,388; Othaya 206,191. Total population, not farmers | [WorldPop Kenya 2020 constrained](https://hub.worldpop.org/geodata/summary?id=49643), computed by `evals/worldpop/countPopulation.py` | Checked |
+| Hub model Qwen3.5 2B on 100 FLORES-200 devtest sentences: Kikuyu read as Swahili 97/100, as `other` 0/100; translation to English chrF 18.31 Kikuyu (below 21.64 for copying the source) vs 41.04 Swahili. News-style text, not farmer messages | `evals/flores/results.json`, data from [FLORES-200](https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz) | Checked (measured here) |
 
 ## Not found
 
