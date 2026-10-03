@@ -57,6 +57,14 @@
           }
         }
       ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Leaf Doctor saves where you are with each check so your field officer knows which part of the farm. The location stays on your phone unless you send a case by text message.",
+          "isAndroidBackgroundLocationEnabled": false,
+          "isIosBackgroundLocationEnabled": false
+        }
+      ],
       "react-native-fast-tflite"
     ]
   }
