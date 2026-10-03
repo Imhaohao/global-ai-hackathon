@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint shared backend/src backend/convex",
     "typecheck": "tsc -p shared && tsc -p backend && tsc -p backend/convex",
-    "test": "tsx --test shared/src/*.test.ts backend/src/*.test.ts"
+    "test": "tsx --test shared/src/*.test.ts shared/src/localModel/*.test.ts backend/src/*.test.ts",
+    "eval:local-model": "tsx shared/src/localModel/evalLocalModel.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
