@@ -104,6 +104,25 @@ Do not quote "67,761 substandard bags reached 13,633 Kenyan farmers." No source 
 | Sorwot Coffee Cooperative only recently connected to grid power | [Pulse Kenya, 26 Aug 2026](https://www.pulse.co.ke/story/sorwot-coffee-cooperative-electricity-kenya-2026082613054450447) | Read |
 | Kenya rural electricity access 67.9% (2023) | [World Bank](https://data.worldbank.org/indicator/EG.ELC.ACCS.RU.ZS?locations=KE) | Summary only |
 
+## Local government hardware
+
+| Claim | Source | Status |
+|---|---|---|
+| KALRO soil labs at Kabete, Kericho, Ruiru, Maguga, Alupe; NPK test Sh650, full test Sh1,000; about 3 weeks; 500 g from top 0-30 cm, sent by courier or matatu after requesting a sample sheet | [Farmbiz Africa, 13 Oct 2025](https://farmbizafrica.com/kalro-offers-all-farmers-low-cost-pathway-to-8x-yields-with-laboratory-soil-tests/) | Checked |
+| KALRO trialing field soil scanners and "lab in a box" for extension officers; results in 2-4 days claimed; ward agripreneurs collect samples | [Kenya News Agency](https://www.kenyanews.go.ke/farmers-to-get-their-soils-tested-at-farm-level/) | Summary only |
+| Uganda: 24,434 census tablets repurposed for the Parish Development Model (1,496 sub-county CDOs, 580 town council CDOs, 25 city division CDOs, 181 district IT officers, 181 statisticians); operating system not stated | [Uganda ICT Ministry, 21 Aug 2025](https://ict.go.ug/media/articles/digitization-driving-progress-in-ugandas-parish-development-model) | Checked |
+| Kenya: 100,000 smartphones issued to Community Health Promoters; MP Oron Joshua said over 60% do not work | [The Star, 13 May 2026](https://www.the-star.co.ke/news/2026-05-13-mps-raise-concerns-on-quality-of-smartphones-issued-to-community-health-workers) | Checked |
+| Uganda: 1,034 motorcycles and 109 vehicles to 69 districts for extension (UCSATP), Apr 2026 | [Nile Post](https://nilepost.co.ug/news/336544/) | Read |
+| KIAMIS / e-voucher app runs on extension officers' and agro-dealers' own phones; farmers get SMS | Standard FarmKenya, Kenya News Agency | Summary only |
+| Kenya Meteorological Department county forecasts and agro-advisories | [meteo.go.ke](https://meteo.go.ke/our-products/county-forecasts/) | Read |
+| KMD: 154 automatic weather stations in 24 counties | Kenya News Agency | Summary only |
+| Kenya plant clinics: over 150 in 2014-2018, declined with staff and funding shortages; no current count | CABI / AIR evaluation | Summary only |
+| Joint plant-livestock clinics in Kenya and Uganda; almost 1,400 farmers attended in 2023 (CABI's own reporting) | [CABI](https://www.cabi.org/stories-of-impact/joint-plant-livestock-clinics-reap-one-health-benefits-for-farmers-in-kenya-and-uganda/) | Read |
+| Kenya: over 300 constituency digital hubs operational with 20,000+ devices | [TechAfrica News, 8 Apr 2026](https://techafricanews.com/2026/04/08/over-300-digital-hubs-now-operational-as-kenya-pushes-digital-transformation-agenda/) | Read |
+| County audits 2023-24: 164 of 758 vehicles grounded; Sh73.4m of equipment unused in boxes | [Auditor-General, Feb 2025](https://www.oagkenya.go.ke/wp-content/uploads/2025/02/GREEN-BOOK-EXECUTIVES-2024-FINAL-5.3.2025-SIGNED.pdf) | Summary only |
+| Kajiado county agricultural machinery neglected and vandalised | [Nation](https://nation.africa/kenya/counties/kajiado/probe-reveals-neglect-of-kajiado-agricultural-machinery-5450988) | Summary only |
+| Kenya plans Sh2bn for pulping machines via cooperatives (plan, not delivery) | The Star, 19 May 2025 | Summary only |
+
 ## Not found
 
 - No speed test of a 1-3B language model on a 3-6 GB Android phone.
@@ -111,3 +130,6 @@ Do not quote "67,761 substandard bags reached 13,633 Kenyan farmers." No source 
 - No measured share of Kenyan subsidy fertilizer lost to theft.
 - No measured data on smallholders excluded by the EU deforestation rule.
 - No evaluation of a farmer-facing subsidy registration tool, or of farmer SMS fraud reporting.
+- No count of soil scanners or test kits given to Kenyan counties.
+- No current count of active plant clinics in Kenya, and no coffee-specific leaf diagnosis service at CRI or NaCORI.
+- No county-owned drones after the 2020 locust trials.
