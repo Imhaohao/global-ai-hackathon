@@ -61,3 +61,7 @@ Coordination: mobile/ belongs to the "Leaf Doctor" session. It switches strings.
 5. Hub: rebuild or set `EXPO_PUBLIC_LOCAL_MODEL_ID`. On launch it offers the new download (or `npm run sideload-model` from hub/ over adb), and deletes the old model's folder once the new one loads.
 
 Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamBytes` the hub shows why and keeps using keyword rules (a 2 GB emulator was killed by Android's low-memory killer while loading). llama.rn returns the JSON wrapped in chat-template text (`<think></think><|im_start|>assistant`), so `completeJson` extracts the first JSON object; `jinja: true` made the model think out loud and run out of tokens, so it stays off.
+
+## Build plan
+
+The current three-part build plan, written so an agent with no context can start, is [docs/build-plan.md](docs/build-plan.md). It supersedes the earlier plans in this file.
