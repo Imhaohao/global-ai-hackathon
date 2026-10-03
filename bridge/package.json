@@ -1,0 +1,9 @@
+{
+  "name": "@leaf-doctor/bridge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file-if-exists=.env src/bridge.ts",
+    "dry-run": "tsx --env-file-if-exists=.env src/bridge.ts --dry-run"
+  }
+}
