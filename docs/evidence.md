@@ -57,6 +57,32 @@ Source: WorldPop Kenya 2020 constrained population, 100 m grid ([dataset page, D
 
 These are **total population, not farmers**. Ruiru sits on the edge of Nairobi, so most of its 624,388 people live in towns. Othaya is rural highland, closer to Noor's setting. The honest way to say it: a cooperative hub phone in a place like Othaya sits among about 200,000 people within 10 km. How many of them grow coffee is not measured here; it would need county coffee registration data.
 
+## Kikuyu and Swahili
+
+Measured on 2026-10-03 with the hub's active language model, Qwen3.5 2B (Q4_K_M, weights SHA-256 `aaf42c8b...9223`), served by llama-server on a laptop at temperature 0. Data: 100 sentences from the FLORES-200 devtest set ([download](https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz), tarball SHA-256 `b8b0b767...11f6`; CC-BY-SA 4.0 per the [FLORES README](https://github.com/facebookresearch/flores/blob/main/README.md#licenses), since the tarball has no licence file). The sentences are numbers 1, 11, 21 and so on up to 991, the same sentences in each language. FLORES sentences come from Wikinews, Wikibooks and Wikivoyage, so they are news-style and general-interest text, not farmer messages. Script: `evals/flores/runFlores.ts` and `evals/flores/scoreChrf.py`; every sentence's output is in `evals/flores/results.json`.
+
+**Language routing.** `parseFarmerMessage` labels each message `sw`, `en`, `mixed` or `other`, and the hub would send `other` to a person.
+
+| Read as | Kikuyu (100) | Swahili (100) |
+|---|---|---|
+| `sw` | 97 | 95 |
+| `en` | 3 | 5 |
+| `mixed` | 0 | 0 |
+| `other` | 0 | 0 |
+
+The model read 0 of 100 Kikuyu sentences as `other`. It called 97 of them Swahili, so the hub would answer a Kikuyu speaker as if she had written Swahili instead of passing her to a person. Swahili was read as `sw` 95 times. The 5 `en` labels went to ordinary Swahili sentences, several of which mention foreign place names such as Johannesburg or Singapore. Routing on the model's language label alone does not protect Kikuyu speakers.
+
+**Understanding.** The same model translated each sentence to English, scored against the FLORES English reference with chrF (character n-gram overlap, 0 to 100; sacrebleu 2.6.0). "Copy the source" scores the untranslated sentence, which still gets credit for shared names and numbers.
+
+| | Kikuyu | Swahili |
+|---|---|---|
+| chrF of the model's translation | 18.31 | 41.04 |
+| chrF of copying the source unchanged | 21.64 | 18.13 |
+
+For Kikuyu the model's English scores below simply copying the Kikuyu sentence, so it understood close to nothing. In 32 of 100 Kikuyu outputs the "translation" still contains the Kikuyu letters ĩ or ũ, so the model left the sentence partly untranslated. Other outputs are fluent English that the source does not say: sentence 1 is about diabetic mice, and the model turned it into a list of body parts. Swahili is understood partly, at 41.04. That fits the earlier finding in `PROGRESS.md` that the model's Swahili translations are partly right but invent details.
+
+What it means for Leaf Doctor: Kikuyu is a measured gap. A Kikuyu text to the hub needs a rule-based check for Kikuyu words, or a default of sending unrecognised Swahili-looking text to a person, before the model's label can be trusted.
+
 ## Not done
 
 - **OpenCelliD tower counts.** Skipped: the API needs a free key tied to an account, and no key was available. A person needs to sign up at opencellid.org and run the count for Ruiru (-1.146, 36.961) and Othaya (-0.548, 36.943).

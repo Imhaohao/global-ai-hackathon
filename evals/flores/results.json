@@ -1,0 +1,1144 @@
+{
+  "runAt": "2026-10-03T22:54:06.836Z",
+  "dataset": {
+    "name": "FLORES-200 devtest",
+    "url": "https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz",
+    "license": "CC-BY-SA 4.0, stated in https://github.com/facebookresearch/flores/blob/main/README.md#licenses (the tarball itself has no licence file)",
+    "note": "FLORES sentences are news-style and general-interest text from Wikinews, Wikibooks and Wikivoyage, not farmer messages.",
+    "sentenceIdsOneBased": [
+      1,
+      11,
+      21,
+      31,
+      41,
+      51,
+      61,
+      71,
+      81,
+      91,
+      101,
+      111,
+      121,
+      131,
+      141,
+      151,
+      161,
+      171,
+      181,
+      191,
+      201,
+      211,
+      221,
+      231,
+      241,
+      251,
+      261,
+      271,
+      281,
+      291,
+      301,
+      311,
+      321,
+      331,
+      341,
+      351,
+      361,
+      371,
+      381,
+      391,
+      401,
+      411,
+      421,
+      431,
+      441,
+      451,
+      461,
+      471,
+      481,
+      491,
+      501,
+      511,
+      521,
+      531,
+      541,
+      551,
+      561,
+      571,
+      581,
+      591,
+      601,
+      611,
+      621,
+      631,
+      641,
+      651,
+      661,
+      671,
+      681,
+      691,
+      701,
+      711,
+      721,
+      731,
+      741,
+      751,
+      761,
+      771,
+      781,
+      791,
+      801,
+      811,
+      821,
+      831,
+      841,
+      851,
+      861,
+      871,
+      881,
+      891,
+      901,
+      911,
+      921,
+      931,
+      941,
+      951,
+      961,
+      971,
+      981,
+      991
+    ]
+  },
+  "model": {
+    "id": "qwen3.5-2b",
+    "displayName": "Qwen3.5 2B (Q4_K_M)",
+    "weightsFile": "Qwen3.5-2B-Q4_K_M.gguf",
+    "weightsSha256": "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223",
+    "catalogSha256": "aaf42c8b7c3cab2bf3d69c355048d4a0ee9973d48f16c731c0520ee914699223"
+  },
+  "kikuyu": {
+    "language": "Kikuyu",
+    "parsedLanguageCounts": {
+      "sw": 97,
+      "en": 3
+    },
+    "sentences": [
+      {
+        "id": 1,
+        "parsedLanguage": "sw",
+        "translation": "The man who has a mouth and a tongue and a nose and a hand and a foot and a leg and a belly and a heart and a brain and a body and a soul and a spirit and a mind and a will and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and a birth and a death and a life and a death and"
+      },
+      {
+        "id": 11,
+        "parsedLanguage": "sw",
+        "translation": "Onakoro njajo ikuũ ciĩtanĩtio na mũrimũ wa Ebola, nginyagia ihinda rĩrĩ gũtirĩ ndaawa njega biũ cia gũthondeka mĩrimũ ĩrĩa ĩkuo."
+      },
+      {
+        "id": 21,
+        "parsedLanguage": "sw",
+        "translation": "A movie about Ryan Gosling and Emma Stone that was made in Kenya."
+      },
+      {
+        "id": 31,
+        "parsedLanguage": "sw",
+        "translation": "The Tondũ mathagu (dinosaur) were created and the shaft ikũrĩte wega ĩrĩ  ĩtagwo rachis, no mathagu macio nĩ marĩ na mũmbĩre ũngĩ ta barbs and barbules, athuthuria nĩmahetũkirie atĩ rachis icio noanga ciakũrire ta maũmbĩre maria magĩire o ũrĩa mumbĩre wacio wacenjagia mũico-inĩ."
+      },
+      {
+        "id": 41,
+        "parsedLanguage": "sw",
+        "translation": "The pirates of the sea, the Tibetans, the Nepalese, and the Indians."
+      },
+      {
+        "id": 51,
+        "parsedLanguage": "sw",
+        "translation": "The Iraqi army launched an attack at 12:00 GMT today."
+      },
+      {
+        "id": 61,
+        "parsedLanguage": "sw",
+        "translation": "Andu arĩa mekinyĩtie marĩ aingĩ, nĩũguo gũkagĩa na ũritũ mũnene harĩ andũ othe arĩa mendaga gũkinya mathiko-inĩ St. Peter's Square."
+      },
+      {
+        "id": 71,
+        "parsedLanguage": "sw",
+        "translation": "Thutha wa kiumia kĩmwe kĩa hathara ithurano-inĩ cia midterm, Bush akĩra arĩa mathikĩrĩirie ũhoro wa gũtambia biacara Asia."
+      },
+      {
+        "id": 81,
+        "parsedLanguage": "sw",
+        "translation": "The camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken by the Atlantic, and the camera was taken"
+      },
+      {
+        "id": 91,
+        "parsedLanguage": "sw",
+        "translation": "Ota-ũria mweri ukoragwo na hinya wa kugucia kuri thi, uguo no taguo Milky Way ikoragwo na hinya kuri Sagittarius Galaxy."
+      },
+      {
+        "id": 101,
+        "parsedLanguage": "sw",
+        "translation": "In the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era, the first year of the new era"
+      },
+      {
+        "id": 111,
+        "parsedLanguage": "sw",
+        "translation": "No, Makĩona Mwĩrĩ wa Saroja Balasubramanian, wa mĩaka mĩrongo ĩtano na ithatũ, ũhumbĩrĩtwo na mũrĩngĩti waihũrĩte thakame."
+      },
+      {
+        "id": 121,
+        "parsedLanguage": "sw",
+        "translation": "In 2013, David Klocker Ehrenstrahl, a Swedish citizen, set a Guinness World Record for the longest continuous time spent in a single position while holding a pen and a pencil, which was recorded in the Guinness Book of World Records."
+      },
+      {
+        "id": 131,
+        "parsedLanguage": "sw",
+        "translation": "The man who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the people, who is a man of the"
+      },
+      {
+        "id": 141,
+        "parsedLanguage": "sw",
+        "translation": "She has a new machine that she bought, and she bought a new footboard for her feet, and she bought a new sofa for her sofa, and she bought a new bed for her bed, and she bought a new chair for her chair, and she bought a new table for her table, and she bought a new lamp for her lamp, and she bought a new window for her window, and she bought a new door for her door, and she bought a new wall for her wall, and she bought a new floor for her floor, and she bought a new roof for her roof, and she bought a new ceiling for her ceiling, and she bought a new wall for her wall, and she bought a new floor for her floor, and she bought a new roof for her roof, and she bought a new ceiling for her ceiling, and she bought a new wall for her wall, and she bought a new floor for her floor, and she bought a new roof for her roof, and she bought a new ceiling for her ceiling, and she bought a new wall for her wall, and she bought a new floor for her floor, and she bought a new roof for her roof, and she bought a new ceiling for her ceiling, and she bought a new wall"
+      },
+      {
+        "id": 151,
+        "parsedLanguage": "sw",
+        "translation": "Nacio ciama cia medical charity Mangora, Medecines Sans Frontieres na kĩama kĩa ugima wa mwĩrĩ thĩ yothe, World Health Organization, nĩciugĩte atĩ uyu nĩguo urarĩ mutumuko muru muno urĩa wanadĩkithio bururi-inĩ."
+      },
+      {
+        "id": 161,
+        "parsedLanguage": "sw",
+        "translation": "There is no one who can give me the power to make the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the"
+      },
+      {
+        "id": 171,
+        "parsedLanguage": "sw",
+        "translation": "The first time I used the internet, I was on TogiNet Radio, a site that was free to use."
+      },
+      {
+        "id": 181,
+        "parsedLanguage": "sw",
+        "translation": "The match between the Lions and the Springboks at Ellis Park in Johannesburg, scheduled for 10 March, will be broadcast on Kikuyu TV."
+      },
+      {
+        "id": 191,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the ancestors, who have not yet been born, and the children of the ancestors, who have not yet been born, are not yet born."
+      },
+      {
+        "id": 201,
+        "parsedLanguage": "sw",
+        "translation": "Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na Nao, na"
+      },
+      {
+        "id": 211,
+        "parsedLanguage": "sw",
+        "translation": "Nigeria has been hit by a new Ebola outbreak, killing a new person."
+      },
+      {
+        "id": 221,
+        "parsedLanguage": "sw",
+        "translation": "Mikana irĩa ikĩrĩtwo nĩ mabũrũri ma na njyanagia atĩ ndege njerũ itingĩgũrwo."
+      },
+      {
+        "id": 231,
+        "parsedLanguage": "sw",
+        "translation": "The sun is setting on the 15th of October at 15:00 UTC."
+      },
+      {
+        "id": 241,
+        "parsedLanguage": "sw",
+        "translation": "Fenarndo Alonso, the first person to have a mathematical degree in Kenya, has been awarded the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, and the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics, which includes the highest national award for his contributions to mathematics"
+      },
+      {
+        "id": 251,
+        "parsedLanguage": "sw",
+        "translation": "The Hokiriku Electric Power Company's Kambũni ya Thitima (Nuclear Power Plant) is currently under construction at the Shika Nuclear Power Plant, where the reactor number one is being built."
+      },
+      {
+        "id": 261,
+        "parsedLanguage": "sw",
+        "translation": "I am a Kikuyu speaker. I am a native speaker of the Kikuyu language. I am a native speaker of the Kikuyu language."
+      },
+      {
+        "id": 271,
+        "parsedLanguage": "sw",
+        "translation": "Edgar Veguilla, a Kikuyu speaker, is a master of the Kikuyu language and a renowned Kikuyu poet. He is also a Kikuyu speaker who is a master of the Kikuyu language and a renowned Kikuyu poet."
+      },
+      {
+        "id": 281,
+        "parsedLanguage": "sw",
+        "translation": "Superintendent Chandra Shekhar Solanki is in charge of the construction of a new school building, which is expected to be completed by the end of the year."
+      },
+      {
+        "id": 291,
+        "parsedLanguage": "sw",
+        "translation": "Athuthuria kuuma cukuru mũnene wa Princeton University na cukuru mũnene wa Uppsala University, kũũrĩa United States na Sweden, makĩruta riboti atĩ mĩthemba mĩerũ ĩcenjetie harĩ njiarwa igĩrĩ, onakorwo mũtaratara ũyũ wetĩkĩtio nĩ ũtũmĩrĩte kahinda karaihu gũkĩra ũguo, nĩ ũndũ wa ũciarithania gatagatĩ ka iria kaingĩ cionekaga kũndũ kũmwe ta Darwin Finch, Geospiza fortes, na immigrant cactus finch, geospiza conirostris."
+      },
+      {
+        "id": 301,
+        "parsedLanguage": "sw",
+        "translation": "The Kikuyu word \"Komiconi\" means \"the one who is the cause of the end of the world.\""
+      },
+      {
+        "id": 311,
+        "parsedLanguage": "sw",
+        "translation": "Rolando Mendoza, the M16's commander, is a man of the people."
+      },
+      {
+        "id": 321,
+        "parsedLanguage": "sw",
+        "translation": "Tommy Dreamer, Akigau, \"Luna, the first to use the Extreme's first weapon. The first to use it. Luna, she killed the enemy and the enemy's wife. She killed the enemy's wife and the enemy's daughter. She killed the enemy's wife and the enemy's daughter. She killed the enemy's wife and the enemy's daughter.\""
+      },
+      {
+        "id": 331,
+        "parsedLanguage": "sw",
+        "translation": "Comets are not the source of life; they are not the origin of life, nor are they the source of the universe's proteins and organic matter."
+      },
+      {
+        "id": 341,
+        "parsedLanguage": "sw",
+        "translation": "Athuthuria kuuma cukuru mũnene wa Princeton University na cukuru mũnene wa Uppsala University, kũũrĩa United States na Sweden, makĩruta riboti atĩ mĩthemba mĩerũ ĩcenjetie harĩ njiarwa igĩrĩ, onakorwo mũtaratara ũyũ wetĩkĩtio nĩ ũtũmĩrĩte kahinda karaihu gũkĩra ũguo, nĩ ũndũ wa ũciarithania gatagatĩ ka iria kaingĩ cionekaga kũndũ kũmwe ta Darwin Finch, Geospiza fortes, na immigrant cactus finch, geospiza conirostris."
+      },
+      {
+        "id": 351,
+        "parsedLanguage": "sw",
+        "translation": "Nacio cĩtĩ cia Harappa na Mohenjo-daro ciarĩ na cioro cia mbombo harĩ nyũmba hakuhĩ ciothe, inyitithanĩtio na mũtabarĩre mũritũ wa gũte gĩko kĩu."
+      },
+      {
+        "id": 361,
+        "parsedLanguage": "sw",
+        "translation": "Mũthia, what is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have the water and the fire that you have.) What is the name of the water and the fire that you have? (You have"
+      },
+      {
+        "id": 371,
+        "parsedLanguage": "sw",
+        "translation": "Scientists are studying the behavior of lions in the Serengeti and the plains of Kenya, observing how they hunt and eat."
+      },
+      {
+        "id": 381,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the"
+      },
+      {
+        "id": 391,
+        "parsedLanguage": "sw",
+        "translation": "Andũ nĩ mangĩarehire magongona kwĩ ngai na aruti igongona nĩ mangĩageririe kũhingia wendi wa ngai icio kũhĩtũkĩra thigũkũ na gĩathĩ."
+      },
+      {
+        "id": 401,
+        "parsedLanguage": "sw",
+        "translation": "Ona gũtuĩka o bũrũri warĩ na Scandinavian nĩ kwarĩ na ngũrani nyingĩ itiganĩte gatagatĩ ka andũ, athamaki, ũndũire na historia ya Denmark, Swedeni, Norway na Iceland."
+      },
+      {
+        "id": 411,
+        "parsedLanguage": "sw",
+        "translation": "Civilization is a new and great age, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great age of the people, a new and great"
+      },
+      {
+        "id": 421,
+        "parsedLanguage": "sw",
+        "translation": "Mathaka ma hĩndĩ ya heho makoragwo moĩkaine mũno mĩena ya rũgongo, na andũ a Italy nĩ macindanaga macindano-inĩ ma kĩ mabũrũri na mĩthako ya Olympics."
+      },
+      {
+        "id": 431,
+        "parsedLanguage": "sw",
+        "translation": "For the purpose of the 35mm camera lens, the focal length is 35mm, and the aperture is also 35mm."
+      },
+      {
+        "id": 441,
+        "parsedLanguage": "sw",
+        "translation": "A man of the Christian church, who is a member of the church of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the people of the"
+      },
+      {
+        "id": 451,
+        "parsedLanguage": "en",
+        "translation": "China has a long history of trade with India, and the Indian dynasty of the Mauryas and the Gupta dynasty were significant partners in this exchange."
+      },
+      {
+        "id": 461,
+        "parsedLanguage": "sw",
+        "translation": "The city of Mecca, the holy city of Islam, is the capital of the Islamic world, and it is the city of the Prophet Muhammad, the city of the Quran, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of the Prophet Muhammad, the city of the Holy Quran, the city of"
+      },
+      {
+        "id": 471,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the Kikuyu, the people of the land of the Kĩrĩ, the people of the land of the Kĩrĩtwo, the people of the land of the Kĩringaine, and the people of the land of the Kĩgambo, the people of the land of the Kĩgĩo, are the people of the land of the Kĩgĩo."
+      },
+      {
+        "id": 481,
+        "parsedLanguage": "sw",
+        "translation": "The High Middle Ages, the Early Middle Ages, and the Late Middle Ages, from 1500."
+      },
+      {
+        "id": 491,
+        "parsedLanguage": "sw",
+        "translation": "Hello, wayo, nĩwaikũrũkĩte century ya ikũmi na igĩrĩ mũno nĩundũ wa Crusader arĩa macokete mena iheo ta mĩtumo na irio iria ciarĩ cia goro gũkĩra indo iria ciendagio thokoinĩ cia Byzantine."
+      },
+      {
+        "id": 501,
+        "parsedLanguage": "sw",
+        "translation": "Subcultures in Kenya include Kabir, Kĩrathi, Kũndũ, and Kũthuuri, as well as Kũtumia."
+      },
+      {
+        "id": 511,
+        "parsedLanguage": "sw",
+        "translation": "The scaffold has no cikorwo (wooden supports) or a virtual, numerical, or physical support system. It is a single, unconnected paper clip attached to the Microsoft Office logo."
+      },
+      {
+        "id": 521,
+        "parsedLanguage": "sw",
+        "translation": "\"Kũingĩrio kwa mũingi\" and \"njoho cia wendo\" are the names of two websites. Eighmey and McCord (1998) describe these websites as the names of the two websites."
+      },
+      {
+        "id": 531,
+        "parsedLanguage": "sw",
+        "translation": "Kĩrĩa kĩngĩoneka na ihenya nĩ mĩmera ya proteins iria cionekaga mathangũ-inĩ na legumes, no ici nĩ nditũ harĩ nyamũ gũthia tiga cirugĩtwo."
+      },
+      {
+        "id": 541,
+        "parsedLanguage": "sw",
+        "translation": "Buddhism in Tibet is a branch of the Buddha's teachings, and it is a path of the Mahayana and a way to unite with the Indian Yoga."
+      },
+      {
+        "id": 551,
+        "parsedLanguage": "sw",
+        "translation": "The people of the village of the navy, who are the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to make the people of the village of the navy, the ones who have the power to"
+      },
+      {
+        "id": 561,
+        "parsedLanguage": "sw",
+        "translation": "The people of Kikuyu are not only the builders of the world, but also the iron workers who forge the wheels of the wagons, the horses, and the carts that carry the goods of the world."
+      },
+      {
+        "id": 571,
+        "parsedLanguage": "sw",
+        "translation": "The first person to visit Independence Hall was John Nixon in the year of the Independence."
+      },
+      {
+        "id": 581,
+        "parsedLanguage": "sw",
+        "translation": "The use of the chemical agent on the ground to kill the insects is a waste of time and money."
+      },
+      {
+        "id": 591,
+        "parsedLanguage": "sw",
+        "translation": "Mũbango-inĩ ũcio wa kũgĩa na kũrera mwana kĩ watho, aciari a mwana nĩ matiganagĩria ihoto ciao ta aciari nĩ getha andũ angĩ mendaine marere mwana ucio."
+      },
+      {
+        "id": 601,
+        "parsedLanguage": "sw",
+        "translation": "Hershey and Chase used radioactive phosphorus to label DNA and radioactive sulfur to label proteins, to determine which molecule enters the bacterium during phage infection."
+      },
+      {
+        "id": 611,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the ancestors are the ones who have the right to the land of the ancestors, and they are the ones who have the right to the land of the ancestors."
+      },
+      {
+        "id": 621,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the land of the people of the"
+      },
+      {
+        "id": 631,
+        "parsedLanguage": "sw",
+        "translation": "The people of Egypt, who are the descendants of the ancient Egyptians, are the ones who have been the guardians of the Nile, the source of life, and the source of wisdom. They are the ones who have been the guardians of the Nile, the source of life, and the source of wisdom."
+      },
+      {
+        "id": 641,
+        "parsedLanguage": "sw",
+        "translation": "No ũkorwo na alloys ikoragwo na non-metallic elements nini ta carbon."
+      },
+      {
+        "id": 651,
+        "parsedLanguage": "sw",
+        "translation": "The people of Mweri are united in love, peace, and harmony. The children of Mweri are happy and safe."
+      },
+      {
+        "id": 661,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the land of the ancestors, the people of the"
+      },
+      {
+        "id": 671,
+        "parsedLanguage": "sw",
+        "translation": "The people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩrĩrĩ, the people of the village of Kĩr"
+      },
+      {
+        "id": 681,
+        "parsedLanguage": "sw",
+        "translation": "A man and a woman, a child and a mother, a wife and a daughter, a mother-in-law and a daughter-in-law, a mother and a son, a father and a daughter, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law, a father and a daughter-in-law, a mother and a son-in-law,"
+      },
+      {
+        "id": 691,
+        "parsedLanguage": "sw",
+        "translation": "The relationship between the harvest and the people is the foundation of the community, and the people are the foundation of the harvest."
+      },
+      {
+        "id": 701,
+        "parsedLanguage": "sw",
+        "translation": "The people of Comoros and Mayotte are not a single nation, but rather a collection of distinct communities."
+      },
+      {
+        "id": 711,
+        "parsedLanguage": "sw",
+        "translation": "Casablanca is a city of great importance to the people of Morocco, the capital of the country."
+      },
+      {
+        "id": 721,
+        "parsedLanguage": "sw",
+        "translation": "I am a Kenyan citizen of African descent, born in Kenya, and I am a member of the African American community."
+      },
+      {
+        "id": 731,
+        "parsedLanguage": "sw",
+        "translation": "The United Nations Security Council has adopted a resolution on the matter of Hong Kong, which includes provisions for the protection of the rights of the people of Hong Kong and the promotion of the rule of law."
+      },
+      {
+        "id": 741,
+        "parsedLanguage": "sw",
+        "translation": "Tegithi cia kũnyitanĩra nĩ cia narua na nĩ njĩra ya kũiganĩria ya gũthiĩ rũgendo nginya kũndũ kũrĩa gũkuhĩrĩirie, ta Paro (Nu igana rĩa mĩrongo ĩtano) na Punakha (Nu magana meerĩ)."
+      },
+      {
+        "id": 751,
+        "parsedLanguage": "sw",
+        "translation": "Argentina is a country of great beauty and rich history, home to the world's most famous football team, the Argentine national football team, and its national anthem."
+      },
+      {
+        "id": 761,
+        "parsedLanguage": "en",
+        "translation": "Montevideo is a city of 1.3 million people, with a population of 1.3 million. The temperature is 30 degrees Celsius, and the humidity is 80%."
+      },
+      {
+        "id": 771,
+        "parsedLanguage": "sw",
+        "translation": "Gĩcukĩro-inĩ kĩu nĩho haarĩ ndũgamano yũĩkaine ya maaĩ-inĩ mwaka-inĩ wa ngiri ĩmwe na magana manana ma mĩrongo ĩnana na keenda hĩndĩ ĩrĩa meeri nene mũgwanja cia Germany, US, na Britain ciaregire kwehera kuuma gĩcukĩro-inĩ kĩu."
+      },
+      {
+        "id": 781,
+        "parsedLanguage": "sw",
+        "translation": "I am a man who has been blessed with a great mind and a great heart, and I have been given the ability to speak and to write, and I have been given the ability to understand and to teach."
+      },
+      {
+        "id": 791,
+        "parsedLanguage": "sw",
+        "translation": "Aramati, a rĩgendo nĩ marĩ mũtugo wa kũheana imanjĩka iria ikoragwo na irio cia rũci-inĩ, mĩbango ya ũkuui wa gũthiĩ/kuuma kĩhaaro kĩa ndege kana o na ningĩ imanjĩka cia hamwe cia rũgendo rwa ndege na mũkawa."
+      },
+      {
+        "id": 801,
+        "parsedLanguage": "sw",
+        "translation": "Kai, nĩkoragwo na irio cia mwanya, gĩa kũnyua na ndekithia ma kũheana maũndũ ma gũkenania, nĩgeetha maige ageni marĩ akenu, na mamaige kũndũ kũu."
+      },
+      {
+        "id": 811,
+        "parsedLanguage": "sw",
+        "translation": "Mĩrũũthi, nginaraco na ngarĩ hĩndĩ ĩmwe na ĩngĩ nĩciiguaga thoni na ũgũciona wega ũkĩhũthĩra gĩcicio kĩa maitho meerĩ gĩa kuona kũraaya."
+      },
+      {
+        "id": 821,
+        "parsedLanguage": "sw",
+        "translation": "Kwĩ na njĩra ngũrani cia gũtheria maaĩ, imwe nĩirutaga wĩra wega kũhũũrana na mogwati ma mũthemba mũna."
+      },
+      {
+        "id": 831,
+        "parsedLanguage": "sw",
+        "translation": "The speed of the vehicle is 35-40 mph (56-64 km/h)."
+      },
+      {
+        "id": 841,
+        "parsedLanguage": "sw",
+        "translation": "No, I have no interest in the other people who are in charge of the land and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of the land, and the people who are in charge of"
+      },
+      {
+        "id": 851,
+        "parsedLanguage": "sw",
+        "translation": "To be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to do the work of the people of the land, to be able to"
+      },
+      {
+        "id": 861,
+        "parsedLanguage": "sw",
+        "translation": "I am a Kikuyu speaker."
+      },
+      {
+        "id": 871,
+        "parsedLanguage": "sw",
+        "translation": "There is one more person, a man of America, a man of the Middle East, and a man of the East, who is a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East, and a man of the East"
+      },
+      {
+        "id": 881,
+        "parsedLanguage": "sw",
+        "translation": "I am a man who has been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and I have been born to the people of the land, and"
+      },
+      {
+        "id": 891,
+        "parsedLanguage": "sw",
+        "translation": "The people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the land of the living, the people of the land of the dead, the people of the"
+      },
+      {
+        "id": 901,
+        "parsedLanguage": "sw",
+        "translation": "The Kikuyu language text provided is already in English. However, if you intended to ask for a translation of the Kikuyu text into English, here is the translation:\n\n\"Kaingĩ ũiguaga o thauti ya agendi na endia. Rũgano rwa mũgambo na ũtheri nĩ ta ibuku rĩa rũgano.\"\n\nThis text appears to be a poetic or proverbial statement in Kikuyu, likely meaning something about the importance of understanding the meaning of words and the value of knowledge."
+      },
+      {
+        "id": 911,
+        "parsedLanguage": "sw",
+        "translation": "The satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the satellite of the"
+      },
+      {
+        "id": 921,
+        "parsedLanguage": "sw",
+        "translation": "I am a Finnish citizen, and I am married to a Kenyan citizen."
+      },
+      {
+        "id": 931,
+        "parsedLanguage": "sw",
+        "translation": "A man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a woman, a man and a"
+      },
+      {
+        "id": 941,
+        "parsedLanguage": "sw",
+        "translation": "The people of Moldova are proud of their history, their culture, and their traditions."
+      },
+      {
+        "id": 951,
+        "parsedLanguage": "sw",
+        "translation": "The Holy Rosary is a tool for prayer and meditation, and it is used to pray for the healing of the sick, the conversion of sinners, and the salvation of souls."
+      },
+      {
+        "id": 961,
+        "parsedLanguage": "sw",
+        "translation": "The children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the children of the people of the land of the great and the small, the"
+      },
+      {
+        "id": 971,
+        "parsedLanguage": "sw",
+        "translation": "The majorican of the Mediterranean, who are known for their Mediterranean diet, eat fish, meat, and vegetables."
+      },
+      {
+        "id": 981,
+        "parsedLanguage": "sw",
+        "translation": "Hatirĩ na bata kuuga, ũngĩkorwo nĩũĩ rũthiomi rwa Romance, gũgũkorwo arĩ ũhũthũ harĩ we kwĩruta rũthiomi rwa Portugal."
+      },
+      {
+        "id": 991,
+        "parsedLanguage": "en",
+        "translation": "Singapore is a land of peace and prosperity, where the people live in harmony with nature, and where the people are free to pursue their own interests."
+      }
+    ],
+    "chrf": 18.31,
+    "copySourceChrf": 21.64
+  },
+  "swahili": {
+    "language": "Swahili",
+    "parsedLanguageCounts": {
+      "sw": 95,
+      "en": 5
+    },
+    "sentences": [
+      {
+        "id": 1,
+        "parsedLanguage": "sw",
+        "translation": "Now I have a man of thirty years old who has no sugar, whereas he used to have sugar."
+      },
+      {
+        "id": 11,
+        "parsedLanguage": "sw",
+        "translation": "A single trial of Ebola treatment that showed a reduction in deaths has not yet been completed, and there are no proven cures for the disease."
+      },
+      {
+        "id": 21,
+        "parsedLanguage": "sw",
+        "translation": "The film, which starred Ryan Gosling and Emma Stone, won awards in all major categories."
+      },
+      {
+        "id": 31,
+        "parsedLanguage": "sw",
+        "translation": "Because dinosaurs had a skull structure that was not well preserved, known as rachi, but also possessed other skull characteristics—such as a large brain and a large eye socket—researchers suspected that rachi might represent a later stage of evolution rather than just these other traits."
+      },
+      {
+        "id": 41,
+        "parsedLanguage": "sw",
+        "translation": "He was born to a Brahmin, went to Tibet to study medicine, and learned Sanskrit and Nepali. He was then sent to India and died there."
+      },
+      {
+        "id": 51,
+        "parsedLanguage": "en",
+        "translation": "The Iraqi group of Wasomi released its report at 12 GMT today."
+      },
+      {
+        "id": 61,
+        "parsedLanguage": "sw",
+        "translation": "The number of people present was so large that it was impossible for every person to enter the St. Peter's square."
+      },
+      {
+        "id": 71,
+        "parsedLanguage": "sw",
+        "translation": "Following the loss of a quarter of the vote in the presidential election, Bush announced plans to launch a business promotion campaign in Asia."
+      },
+      {
+        "id": 81,
+        "parsedLanguage": "sw",
+        "translation": "The tenth Dhoruba, named the Summer of the Atlantic Bungo, Jerry, was created today in the Atlantic Ocean."
+      },
+      {
+        "id": 91,
+        "parsedLanguage": "sw",
+        "translation": "Just as the month brings power to the world and causes winds, so too does the Way of the Ziwani bring power to the flag of Mshale."
+      },
+      {
+        "id": 101,
+        "parsedLanguage": "sw",
+        "translation": "In one year, a person who was caught would go to arrest 10 to 15 people nearby."
+      },
+      {
+        "id": 111,
+        "parsedLanguage": "sw",
+        "translation": "Hapo, walipata mwili wa Saroja Balasubramanian, aliyekuwa na umri wa miaka 53, umefunikwa kwa blanketi zilizokuwa na madoa ya damu."
+      },
+      {
+        "id": 121,
+        "parsedLanguage": "sw",
+        "translation": "Its 1,000th stamp was titled \"Great Deeds by Swedish Kings,\" a wonderful book by David Klocker Ehrenstrahl, published in 2000, which is recorded in the Guinness Book of World Records."
+      },
+      {
+        "id": 131,
+        "parsedLanguage": "sw",
+        "translation": "Fluke stated that some efforts to involve women in decision-making have not yielded results."
+      },
+      {
+        "id": 141,
+        "parsedLanguage": "sw",
+        "translation": "Although the water level rises only slightly after the rains, the authorities claim that the dam is overflowing the reservoirs in the lower reaches of the river."
+      },
+      {
+        "id": 151,
+        "parsedLanguage": "sw",
+        "translation": "Mangola, Medecines Sans Frontieres, and the World Health Organization are reporting a severe outbreak in the country."
+      },
+      {
+        "id": 161,
+        "parsedLanguage": "sw",
+        "translation": "It is colder near the house than in the yard, and it is warmer in the evening."
+      },
+      {
+        "id": 171,
+        "parsedLanguage": "sw",
+        "translation": "In the beginning of the day, this message was sent only to the TogiNet internet radio station's long-term frequency, which is dedicated to radio discussions."
+      },
+      {
+        "id": 181,
+        "parsedLanguage": "en",
+        "translation": "The final whistle of the match at Ellis Park in Johannesburg will be played this week, while the Springboks are playing against Australia."
+      },
+      {
+        "id": 191,
+        "parsedLanguage": "sw",
+        "translation": "If the result is that you must pay a fee for the flower in the basket, and you yourself are invited to participate, then you must pay the fee."
+      },
+      {
+        "id": 201,
+        "parsedLanguage": "sw",
+        "translation": "Along with Anna Jochemsen, who is competing in the women's super-G event, and Katja Saarinen, who is competing in the 10000m event, Anna Jochemsen is also competing in the women's super-G event."
+      },
+      {
+        "id": 211,
+        "parsedLanguage": "sw",
+        "translation": "The virus was in Nigeria, where some Ebola virus cases occurred."
+      },
+      {
+        "id": 221,
+        "parsedLanguage": "sw",
+        "translation": "International challenges prevent the development of new aircraft."
+      },
+      {
+        "id": 231,
+        "parsedLanguage": "sw",
+        "translation": "The event starts at 2:30 PM local time (15:00 UTC)."
+      },
+      {
+        "id": 241,
+        "parsedLanguage": "sw",
+        "translation": "Fernando Alonso, his manager, was leading the team with a high number of these cars, but he retired after a few races, possibly due to a knee injury."
+      },
+      {
+        "id": 251,
+        "parsedLanguage": "sw",
+        "translation": "Hokuriku Electric Power Co. reported no adverse effects from the land disturbance, and the Nambari 1 and 2 nuclear power plants in its vicinity were not affected by the seismic activity."
+      },
+      {
+        "id": 261,
+        "parsedLanguage": "sw",
+        "translation": "It is as if you are seeing this or not, but many goods from the Middle East are arriving in the country without being inspected."
+      },
+      {
+        "id": 271,
+        "parsedLanguage": "sw",
+        "translation": "Edgar Veguilla received a hand and a knee injury, while Kristoffer Schneider needs surgery to correct his posture."
+      },
+      {
+        "id": 281,
+        "parsedLanguage": "sw",
+        "translation": "Chief Police Chandra Shekar Solanki said the accused is being taken to court and the weapon used was confiscated."
+      },
+      {
+        "id": 291,
+        "parsedLanguage": "sw",
+        "translation": "The Crown Office, which oversees the issuance of certificates, has issued a notice stating that there is no further request for certificates, even if the certificates are not yet issued."
+      },
+      {
+        "id": 301,
+        "parsedLanguage": "sw",
+        "translation": "I was the answer to the Martelly question regarding the ongoing debate on the power of the state to regulate the economy, which began in October."
+      },
+      {
+        "id": 311,
+        "parsedLanguage": "sw",
+        "translation": "Rolando Mendoza fired his M16 rifle at the police."
+      },
+      {
+        "id": 321,
+        "parsedLanguage": "sw",
+        "translation": "Tommy Dreamer said, \"Luna was the first to become a Kithiri. My first manager. Luna spent two days a week in the office. Unique as always. A woman of the night.\""
+      },
+      {
+        "id": 331,
+        "parsedLanguage": "sw",
+        "translation": "There is a possibility that the sun was the source of transporting water throughout the world, along with carbon-containing substances that could form proteins and aid in growth."
+      },
+      {
+        "id": 341,
+        "parsedLanguage": "sw",
+        "translation": "Scientists from Princeton University in the United States and Uppsala University in Sweden reported that this new species has split into two distinct lineages, despite the process taking a much longer time than expected, due to the long separation between the ancestral shorebird Darwin's finches, Geospiza fortis, and the ancestral shorebird dungkey finches, Geospiza conirostris."
+      },
+      {
+        "id": 351,
+        "parsedLanguage": "sw",
+        "translation": "The cities of Harappa and Mohenjo-daro had modern plumbing systems, with each house connected to a communal water supply network."
+      },
+      {
+        "id": 361,
+        "parsedLanguage": "sw",
+        "translation": "In the future, there will be many small bags (including free bags) that carry small, heavy bags, such as bags, bags, bags, and bags."
+      },
+      {
+        "id": 371,
+        "parsedLanguage": "sw",
+        "translation": "Scientists believe that the sun is the best place to find food (windo) by the letter, to eat it, so that it may be found on the earth."
+      },
+      {
+        "id": 381,
+        "parsedLanguage": "sw",
+        "translation": "We grow our own houses and clothes from seeds. Our favorite food is also grown from seeds. Without seeds, we cannot live."
+      },
+      {
+        "id": 391,
+        "parsedLanguage": "sw",
+        "translation": "People are able to provide food at a low cost and their skills enable them to meet the needs of the poor through work and charity."
+      },
+      {
+        "id": 401,
+        "parsedLanguage": "sw",
+        "translation": "Although all countries were once called \"Scandinavia,\" they differed greatly in people, kings, land, and history between Denmark, Sweden, Norway, and Iceland."
+      },
+      {
+        "id": 411,
+        "parsedLanguage": "sw",
+        "translation": "Ustaarabu is a tradition of unity that involves a large group of people living and working together, in community."
+      },
+      {
+        "id": 421,
+        "parsedLanguage": "sw",
+        "translation": "The winter sports of the north are very popular in the north, where Waitaliano competes in international and Olympic sports."
+      },
+      {
+        "id": 431,
+        "parsedLanguage": "sw",
+        "translation": "For example, the average size of a still image file on the internet is about 35 kilobytes, which is the largest size for a film in the world of cinema."
+      },
+      {
+        "id": 441,
+        "parsedLanguage": "sw",
+        "translation": "The primary Christian doctrine is that money is useful for reducing poverty and alleviating suffering, and that church funds are located here, primarily because of this."
+      },
+      {
+        "id": 451,
+        "parsedLanguage": "sw",
+        "translation": "In the past, China had a unique method of displaying different time periods; each step of the Chinese dynasty or each family ruling was assigned a specific title."
+      },
+      {
+        "id": 461,
+        "parsedLanguage": "sw",
+        "translation": "Above the southernmost mountain range of Mecca, the entire valley has been swallowed by the sea."
+      },
+      {
+        "id": 471,
+        "parsedLanguage": "sw",
+        "translation": "Write your name with a pen, but remember that the letters you wrote are due to the sound of the voice, so they will be recognized."
+      },
+      {
+        "id": 481,
+        "parsedLanguage": "sw",
+        "translation": "The middle tier of the middle tier is followed by the middle tier of the end tier, which are separated by 1500 points."
+      },
+      {
+        "id": 491,
+        "parsedLanguage": "sw",
+        "translation": "His situation was dire during the tenth century, especially because of the truth that the Christian priests were selling relics and valuables at high prices, far exceeding what the Byzantine market offered."
+      },
+      {
+        "id": 501,
+        "parsedLanguage": "sw",
+        "translation": "Genetic diversity can be unique due to age, tribe, rank, location, and/or sex of the participants."
+      },
+      {
+        "id": 511,
+        "parsedLanguage": "sw",
+        "translation": "Majukwaa can be both visible and invisible, using other words. Teachers are a type of majukwaa, but they are also like the invisible ink used in Microsoft Office."
+      },
+      {
+        "id": 521,
+        "parsedLanguage": "sw",
+        "translation": "Kushiriki kwa kibinafsi na \"mahusiano endelezi\" pia yalitambuliwa na Eighmey na McCord (1998) kama vipengele vipya vya motisha walipichunguza mjibizo wa hadhira katika tovuti."
+      },
+      {
+        "id": 531,
+        "parsedLanguage": "sw",
+        "translation": "The proteins found in leaves and stems are easy to obtain, but they are difficult for mammals of high-level societies to digest unless they are pre-digested."
+      },
+      {
+        "id": 541,
+        "parsedLanguage": "sw",
+        "translation": "The Tibetan Buddha is based on the teachings of the Buddha, yet it was developed through the path of compassion and many methods of Yoga from India."
+      },
+      {
+        "id": 551,
+        "parsedLanguage": "sw",
+        "translation": "The job of the army of the people for the poor was to ensure that your country has the ability to transport people and your goods, while at the same time, preventing your ability to hire people and goods."
+      },
+      {
+        "id": 561,
+        "parsedLanguage": "sw",
+        "translation": "This was a mandatory requirement, but the chuma caused the collapse of the masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone masonry of the stone m"
+      },
+      {
+        "id": 571,
+        "parsedLanguage": "sw",
+        "translation": "The first aid for this nation was performed by John Nixon in the Uhuru Park on July 8."
+      },
+      {
+        "id": 581,
+        "parsedLanguage": "sw",
+        "translation": "The cause of internal swelling may be due to the presence of a foreign body or chemical substances such as dyes."
+      },
+      {
+        "id": 591,
+        "parsedLanguage": "sw",
+        "translation": "In the event of a child's death, the parents are obligated to honor the deceased child's rights so that other children may inherit their inheritance."
+      },
+      {
+        "id": 601,
+        "parsedLanguage": "sw",
+        "translation": "Hershey and Chase used viruses to inject their DNA into bacteria."
+      },
+      {
+        "id": 611,
+        "parsedLanguage": "sw",
+        "translation": "Every person participates in society and uses information systems. Everyone is interested in information systems."
+      },
+      {
+        "id": 621,
+        "parsedLanguage": "sw",
+        "translation": "This is a chance to win a small prize for your participation and your team."
+      },
+      {
+        "id": 631,
+        "parsedLanguage": "sw",
+        "translation": "The first kings of the new kingdom were crowned on a tower of their own, which existed at that time and lasted for more than 1000 years."
+      },
+      {
+        "id": 641,
+        "parsedLanguage": "sw",
+        "translation": "You may also have alo that includes low levels of the elements copper, iron, and zinc."
+      },
+      {
+        "id": 651,
+        "parsedLanguage": "sw",
+        "translation": "The month is formed by the moon and the sun. The outer surface of the month is known as the day."
+      },
+      {
+        "id": 661,
+        "parsedLanguage": "sw",
+        "translation": "At the end of the game, a player changes into an unmarked player who realizes that he must change every item the team has been doing and make it his own."
+      },
+      {
+        "id": 671,
+        "parsedLanguage": "sw",
+        "translation": "If the outcome is that the company's collaborative effort to combat climate change can lead to a new, innovative approach to meeting the needs of customers."
+      },
+      {
+        "id": 681,
+        "parsedLanguage": "sw",
+        "translation": "Example includes the ability to regulate, manage, and oversee, answer customer inquiries and questions, as well as conduct text, audio, and visual analysis."
+      },
+      {
+        "id": 691,
+        "parsedLanguage": "sw",
+        "translation": "The blog is a collaborative tool that encourages students to read more than the usual amount of schoolwork per day."
+      },
+      {
+        "id": 701,
+        "parsedLanguage": "sw",
+        "translation": "They also converted to Islam in these areas, which had a significant impact on Comoros and Mayotte."
+      },
+      {
+        "id": 711,
+        "parsedLanguage": "sw",
+        "translation": "Kasablanca is one of the best places to buy cheap goods in Morocco."
+      },
+      {
+        "id": 721,
+        "parsedLanguage": "sw",
+        "translation": "There were some special PBS Henry Louis Gates Jr. programs during the World AIDS Day."
+      },
+      {
+        "id": 731,
+        "parsedLanguage": "sw",
+        "translation": "The city of Hong Kong's urban renewal project has been completed on reclaimed land in the north."
+      },
+      {
+        "id": 741,
+        "parsedLanguage": "sw",
+        "translation": "Taxi services are a fast and convenient way to travel in the vicinity, such as in Paro (Nu 150) and Punakha (Nu 200)."
+      },
+      {
+        "id": 751,
+        "parsedLanguage": "sw",
+        "translation": "Argentina is well known for having some of the best football teams and players in the world."
+      },
+      {
+        "id": 761,
+        "parsedLanguage": "en",
+        "translation": "Montevideo is located in the subtropical zone; during the summer, temperatures exceeding +30°C are considered normal."
+      },
+      {
+        "id": 771,
+        "parsedLanguage": "sw",
+        "translation": "The port was a famous place for loading cargo in 1889, when seven ships from Germany, the United States, and the United Kingdom arrived at the port."
+      },
+      {
+        "id": 781,
+        "parsedLanguage": "sw",
+        "translation": "The water inside a bomb is safe to drink, but tap water is easy to get if you have a headache."
+      },
+      {
+        "id": 791,
+        "parsedLanguage": "sw",
+        "translation": "Standard travel agencies typically offer transport fares that include pick-up, drop-off, and sometimes airport transfers or hotel transfers."
+      },
+      {
+        "id": 801,
+        "parsedLanguage": "sw",
+        "translation": "Aghalabu hada na chakula cha kipekee, vinywaji na matoleo ya burdani, ili kuwatumbuiza wageni na kuwatunza katika majengo yao."
+      },
+      {
+        "id": 811,
+        "parsedLanguage": "sw",
+        "translation": "Simba, duma na chui wakati mwingine huwa na aibu na utawaona bora na darubini."
+      },
+      {
+        "id": 821,
+        "parsedLanguage": "sw",
+        "translation": "There are different methods for purifying water, some of which are beneficial for specific conditions."
+      },
+      {
+        "id": 831,
+        "parsedLanguage": "sw",
+        "translation": "The speed limits currently in place are at the absolute lowest level compared to those of the past, averaging 35–40 km/h (about 22–25 mph) per hour, with the most critical factor being the speed limit itself."
+      },
+      {
+        "id": 841,
+        "parsedLanguage": "sw",
+        "translation": "However, it was not used with more elaborate designs, so this word came to mean food that was originally from the middle and eastern parts of the island of Java."
+      },
+      {
+        "id": 851,
+        "parsedLanguage": "sw",
+        "translation": "The act of skiing is a major activity that attracts many people, often referred to as \"skiing,\" who gather in a specific area to ski on the snow."
+      },
+      {
+        "id": 861,
+        "parsedLanguage": "sw",
+        "translation": "Vilevile, since you hold a Schengen visa, you must apply for a visa for every Schengen country you intend to visit, thereby saving time, money, and effort."
+      },
+      {
+        "id": 871,
+        "parsedLanguage": "en",
+        "translation": "For example, a resident of the United States in the Middle East faces different conditions compared to those in the West."
+      },
+      {
+        "id": 881,
+        "parsedLanguage": "sw",
+        "translation": "By default, the kozi handles all issues raised here at the cost of time, and it also takes time to respond."
+      },
+      {
+        "id": 891,
+        "parsedLanguage": "sw",
+        "translation": "These events occur due to the difficulty of trying to overcome the opposing forces of nature, a situation that becomes increasingly complex."
+      },
+      {
+        "id": 901,
+        "parsedLanguage": "sw",
+        "translation": "Normally, it is heard the sound of the wind and the birds. The saying of sound and light is like a book of proverbs."
+      },
+      {
+        "id": 911,
+        "parsedLanguage": "sw",
+        "translation": "Satellite phones are not a replacement for landline phones, because they require an outside connection and direct line-of-sight to the satellite to make calls."
+      },
+      {
+        "id": 921,
+        "parsedLanguage": "sw",
+        "translation": "Finland is a country where the sport of archery is a national sport, and every citizen must shoot at least three or five arrows."
+      },
+      {
+        "id": 931,
+        "parsedLanguage": "sw",
+        "translation": "In some ways, large companies have their own planes, but other ways, small companies face difficulties."
+      },
+      {
+        "id": 941,
+        "parsedLanguage": "sw",
+        "translation": "The economic zones were established anew in these two regions of Moldova, despite the ongoing political tensions."
+      },
+      {
+        "id": 951,
+        "parsedLanguage": "sw",
+        "translation": "The East also pays tribute to Our Lady Fatima (Madhabahu), a renowned figure in the world of Marian apparitions."
+      },
+      {
+        "id": 961,
+        "parsedLanguage": "sw",
+        "translation": "At this time, it is often just a matter of luck, but the best way to meet someone in Paris is to be in a good mood, acting as if you are \"bien e'lev'e\" (well-mannered). This makes it much easier to connect."
+      },
+      {
+        "id": 971,
+        "parsedLanguage": "sw",
+        "translation": "The production of the Majokan variety of grapes, similar to other regions in the Mediterranean Sea, is carried out using the traditional method of mixing, pressing, and fermenting (specifically using red grapes), and it utilizes the entire grapevine."
+      },
+      {
+        "id": 981,
+        "parsedLanguage": "sw",
+        "translation": "If you know a language, it will be easy for you to learn Kireno."
+      },
+      {
+        "id": 991,
+        "parsedLanguage": "en",
+        "translation": "Singapore is generally a safer place to live, and you can easily buy almost anything after arriving."
+      }
+    ],
+    "chrf": 41.04,
+    "copySourceChrf": 18.13
+  },
+  "scoring": {
+    "metric": "chrF (sacrebleu corpus_chrf, default char order 6, beta 2)",
+    "sacrebleu": "2.6.0"
+  }
+}

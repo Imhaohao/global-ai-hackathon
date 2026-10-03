@@ -137,6 +137,7 @@ Do not quote "67,761 substandard bags reached 13,633 Kenyan farmers." No source 
 | Kenya adults 15+ whose main phone is a basic text phone (2024): 37.6% overall, 43.0% women, 32.0% men, 38.4% rural | [Global Findex 2025, con9b](https://api.worldbank.org/v2/country/KEN/indicator/con9b?format=json&source=28) | Checked |
 | Kenya 2024, adults 18+: smartphone ownership 50% men, 42% women (gap 16%); mobile ownership 95% and 93%; mobile internet 55% and 43% | [GSMA Mobile Gender Gap Report 2025, Figure 2, printed p. 20](https://web.archive.org/web/20250515054435/https://www.gsma.com/r/wp-content/uploads/2025/05/The-Mobile-Gender-Gap-Report-2025.pdf) | Checked |
 | Population within 10 km (WorldPop 2020 constrained, 100 m): Ruiru 624,388; Othaya 206,191. Total population, not farmers | [WorldPop Kenya 2020 constrained](https://hub.worldpop.org/geodata/summary?id=49643), computed by `evals/worldpop/countPopulation.py` | Checked |
+| Hub model Qwen3.5 2B on 100 FLORES-200 devtest sentences: Kikuyu read as Swahili 97/100, as `other` 0/100; translation to English chrF 18.31 Kikuyu (below 21.64 for copying the source) vs 41.04 Swahili. News-style text, not farmer messages | `evals/flores/results.json`, data from [FLORES-200](https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz) | Checked (measured here) |
 
 ## Not found
 
