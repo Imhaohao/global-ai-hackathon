@@ -12,7 +12,7 @@ const CROSSFADE = 12;
  * lift lands as the basic phone appears, a groove section repeats under the story, and its real ending closes the video.
  */
 const MUSIC_PIECES = [
-  { from: 0, to: 1150, sourceFrom: 7.7 },
+  { from: 0, to: 1150, sourceFrom: 8.6 },
   { from: 1150, to: DURATION - 260, sourceFrom: 24.0 },
   { from: DURATION - 260, to: DURATION, sourceFrom: 44.6 },
 ] as const;

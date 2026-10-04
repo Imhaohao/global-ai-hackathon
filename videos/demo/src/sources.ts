@@ -56,9 +56,11 @@ export const FOOTAGE: FootageSource[] = [
   },
 ];
 
-/** The team's own iPhone screen recordings. Paths are on the recording laptop. */
+/** The team's own iPhone screen recordings, plus one clip filmed from the app build in the iOS Simulator. */
 export const RECORDINGS = [
-  { file: "video/rec-scan.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-23-18_1.MP4", what: "Leaf scan to the coffee leaf rust result, iPhone" },
+  { file: "video/rec-scan.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-23-18_1.MP4", what: "Leaf scan: home, camera, leaves, the coffee leaf rust card, steps 1 to 5, recheck date and other causes, iPhone (Wi-Fi on)" },
+  { file: "video/rec-seed.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-33-02_1.MP4", what: "Seed check in airplane mode: barcode scan, Genuine seed, Do not plant this seed, Text the code to 1393, then Control Center with airplane mode on, iPhone" },
+  { file: "video/rec-officer.mp4", source: "iOS Simulator (iPhone 17 Pro, iOS 26.5), Leaf Doctor build org.hacknation.leafdoctor, filmed 2026-10-04 with xcrun simctl io recordVideo", what: "The not-sure card, scroll to Get help, and the Send to field officer tap" },
 ] as const;
 
 /** Text copied word for word from a recording rather than shown from it. */
@@ -71,10 +73,10 @@ export type PhotoSource = { file: string; title: string; author: string; page: s
 
 export const PHOTOS: PhotoSource[] = [
   {
-    file: "images/field-officer.jpg",
-    title: "Agricultural Field Advisor ( Extension worker)",
-    author: "Davie Binali",
-    page: "https://commons.wikimedia.org/wiki/File:Agricultural_Field_Advisor_(_Extension_worker).jpg",
+    file: "images/officer-kenya.jpg",
+    title: "Farm Extension Worker (Meru County, Kenya, Wiki Loves Africa 2017), cropped to the officer",
+    author: "Samuel Macharia (User:Smacharia)",
+    page: "https://commons.wikimedia.org/wiki/File:Farm_Extension_Worker.jpg",
     licence: "CC BY-SA 4.0",
   },
 ];

@@ -9,7 +9,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const apiKey = process.env.ELEVENLABS_API_KEY;
 if (!apiKey) throw new Error("Set ELEVENLABS_API_KEY");
 
-const MUST_HEAR = ["Leaf Doctor", "SHOP", "Noor", "smartphone", "field officer", "neighbours", "basic phone", "hub phone", "re-leaf", "megabyte", "adviser"];
+const MUST_HEAR = ["Leaf Doctor", "SHOP", "Noor", "smartphone", "field officer", "basic phone", "airplane mode", "re-leaf", "adviser", "internet", "data", "barcode"];
 
 async function transcribe(file: string): Promise<string> {
   const form = new FormData();

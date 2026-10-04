@@ -3,7 +3,7 @@
 //
 // Opening: 38 farmers swap their smartphone for a basic text phone (Global Findex 2024: 38.4% of rural adults use a
 // basic text phone as their main phone), then 66 lose their signal bars (Findex 2024: 33.7% of rural adults use the
-// internet daily, so about 66 in 100 do not). Closing: an SMS wave lights every farmer, then the grid folds into the
+// internet daily, so about 66 in 100 do not). With `reachAt`, a text then reaches every farmer anyway. Closing: an SMS wave lights every farmer, then the grid folds into the
 // Leaf Doctor mark. The caller renders any numbers or words; this component draws only the picture.
 import { CellSignalFull, CellSignalSlash, ChatCircleText } from "@phosphor-icons/react";
 import type { CSSProperties } from "react";
@@ -39,6 +39,8 @@ type OpeningTiming = {
   phonesAt: number;
   /** Frame at which the 66 signal bars start to drop. */
   signalAt: number;
+  /** Optional frame at which a text reaches every farmer anyway, lighting the grid without folding it. */
+  reachAt?: number;
 };
 
 type ClosingTiming = {
@@ -142,18 +144,23 @@ function SignalIcon({ state, size, colours }: { state: CellState; size: number; 
   return <CellSignalFull size={size} weight="bold" style={{ opacity: 1 - state.lost * 0.6 }} />;
 }
 
-function openingState(frame: number, farmer: number, timing: OpeningTiming, span: number): CellState {
-  const basic = hasBasicPhone(farmer) ? staggered(frame, timing.phonesAt, RANK[farmer], BASIC_PHONE_FARMERS, span) : 0;
-  const lost = isOffline(farmer) ? staggered(frame, timing.signalAt, RANK[farmer], OFFLINE_FARMERS, span) : 0;
-  return { basic, lost, lit: 0 };
-}
-
-function closingState(frame: number, farmer: number, timing: ClosingTiming, span: number): CellState {
+/** The SMS wave: it leaves the centre of the grid at `start` and reaches the corners after most of `span`. */
+function waveLight(frame: number, farmer: number, start: number, span: number) {
   const row = Math.floor(farmer / COLUMNS) - 4.5;
   const column = (farmer % COLUMNS) - 4.5;
   const reach = Math.hypot(row, column) / Math.hypot(4.5, 4.5);
-  const lit = interpolate(frame, [timing.lightAt + reach * span * 0.8, timing.lightAt + reach * span * 0.8 + 6], [0, 1], { ...clamp, easing: settle });
-  return { basic: hasBasicPhone(farmer) ? 1 : 0, lost: isOffline(farmer) ? 1 : 0, lit };
+  return interpolate(frame, [start + reach * span * 0.8, start + reach * span * 0.8 + 6], [0, 1], { ...clamp, easing: settle });
+}
+
+function openingState(frame: number, farmer: number, timing: OpeningTiming, span: number): CellState {
+  const basic = hasBasicPhone(farmer) ? staggered(frame, timing.phonesAt, RANK[farmer], BASIC_PHONE_FARMERS, span) : 0;
+  const lost = isOffline(farmer) ? staggered(frame, timing.signalAt, RANK[farmer], OFFLINE_FARMERS, span) : 0;
+  const lit = timing.reachAt === undefined ? 0 : waveLight(frame, farmer, timing.reachAt, span);
+  return { basic, lost, lit };
+}
+
+function closingState(frame: number, farmer: number, timing: ClosingTiming, span: number): CellState {
+  return { basic: hasBasicPhone(farmer) ? 1 : 0, lost: isOffline(farmer) ? 1 : 0, lit: waveLight(frame, farmer, timing.lightAt, span) };
 }
 
 /** Points on the outline of a leaf, rotated like a leaf on a branch, one per farmer. */

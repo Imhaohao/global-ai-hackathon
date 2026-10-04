@@ -1,5 +1,5 @@
-import { SCREEN } from "../components/Phone";
 import type { CameraKey } from "../components/Camera";
+import { SCREEN } from "./screen.ts";
 
 /** Phone screen height, in frame pixels, for every phone shot in the video. */
 export const PHONE_SCREEN_HEIGHT = 900;

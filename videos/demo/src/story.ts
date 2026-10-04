@@ -4,17 +4,13 @@
 import type { KeyId } from "./components/FlipPhone";
 import type { LcdView } from "./components/Lcd";
 import { VOICE_START, cue } from "./timeline";
-import { ROUTE } from "./story/framing";
 
 export const NOOR_QUESTION = "LEAF doctor, my crops have yellow and brown circles all over their leaves.";
 
-export const TYPING = { from: cue("texts", "Noor") + 4, to: VOICE_START.reply - 10 };
-export const SENT_AT = VOICE_START.reply - 4;
-export const SEED_DIGITS = { from: cue("seed", "to"), step: 7 };
-export const SEED_SENT_AT = cue("seed", "ninety-three") + 14;
-export const CALL_PRESS = cue("officer", "calls") - 2;
-export const ALERT_AT = cue("alert", "approves") + 18;
-const STEP = 22;
+export const TYPING = { from: cue("sms", "Just") - 6, to: cue("sms", "reply") - 10 };
+export const SENT_AT = cue("sms", "reply") - 6;
+export const SEED_DIGITS = { from: cue("followup", "send"), step: 6 };
+export const SEED_SENT_AT = cue("followup", "ninety-three") + 6;
 
 /** One page of a real message, shown from frame `at`. Pages split the real text at word boundaries, in order. */
 type Page = { at: number; view: LcdView; tag?: "Demo data" };
@@ -33,22 +29,15 @@ function seedRecipient(frame: number) {
 }
 
 const PAGES: Page[] = [
-  incoming(cue("reply", "reply") + 2, "Leaf Doctor: This looks like brown eye spot (Cercospora)"),
-  incoming(cue("reply", "three") - 6, "1) Feed trees with manure or balanced fertilizer."),
-  incoming(cue("reply", "three") - 6 + STEP, "2) Prune and clear weeds so leaves dry fast."),
-  incoming(cue("reply", "three") - 6 + 2 * STEP, "3) Carry away and burn fallen leaves."),
-  { at: ROUTE.from + 14, view: { kind: "idle" } },
-  outgoing(cue("shop", "SHOP"), "SHOP"),
-  incoming(cue("shop", "nearby"), "Which town or market are you near?"),
-  outgoing(cue("shop", "shops"), "Othaya"),
-  incoming(cue("shop", "shops") + 18, "1) Othaya Farmers Agrovet, Othaya town, 0712 000001.", "Demo data"),
-  { at: VOICE_START.seed + 30, view: { kind: "idle" } },
-  { at: cue("seed", "to") - 8, view: { kind: "compose", to: "", body: "", sentAt: SEED_SENT_AT } },
-  { at: VOICE_START.weekend, view: { kind: "idle" } },
-  { at: CALL_PRESS + 4, view: { kind: "calling", who: "Field officer", at: CALL_PRESS + 4 } },
-  { at: VOICE_START.alert + 16, view: { kind: "idle" } },
-  incoming(ALERT_AT, "Leaf alert for Karima: 3 farms near you"),
-  incoming(ALERT_AT + 20, "reported coffee leaf rust in the last 7 days."),
+  incoming(cue("sms", "reply"), "Leaf Doctor: This looks like brown eye spot (Cercospora)"),
+  incoming(cue("sms", "what") - 6, "1) Feed trees with manure or balanced fertilizer."),
+  outgoing(VOICE_START.followup + 2, "How can I get these fertilizers?"),
+  incoming(cue("followup", "follow-up") + 6, "Leaf Doctor: Manure is the cheapest:"),
+  outgoing(cue("followup", "SHOP") - 2, "SHOP"),
+  incoming(cue("followup", "find") + 2, "Which town or market are you near?"),
+  outgoing(cue("followup", "buy") - 6, "Othaya"),
+  incoming(cue("followup", "buy") + 6, "1) Othaya Farmers Agrovet, Othaya town, 0712 000001.", "Demo data"),
+  { at: cue("followup", "and") + 4, view: { kind: "compose", to: "", body: "", sentAt: SEED_SENT_AT } },
 ];
 
 function pageAt(frame: number): Page | undefined {
@@ -79,7 +68,6 @@ function keyForCharacter(character: string): KeyId {
 export const KEY_PRESSES: { key: KeyId; at: number }[] = [
   ...[...NOOR_QUESTION].map((character, index) => ({ key: keyForCharacter(character), at: TYPING.from + Math.round((index / NOOR_QUESTION.length) * (TYPING.to - TYPING.from)) })),
   ...[..."1393"].map((digit, index) => ({ key: digit as KeyId, at: SEED_DIGITS.from + index * SEED_DIGITS.step })),
-  { key: "call", at: CALL_PRESS },
 ];
 
 const LIGHT_FRAMES = 7;

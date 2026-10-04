@@ -20,7 +20,7 @@ function Specialist() {
   return (
     <div className="absolute" style={{ left: 260, top: 200, width: 500, height: 680, opacity: shown, rotate: "-2deg" }}>
       <div className="absolute inset-0 overflow-hidden rounded-[32px]" style={{ boxShadow: "0 60px 120px rgba(0,0,0,0.6), 0 0 0 10px #f2f0ea" }}>
-        <Img src={staticFile("images/field-officer.jpg")} className="size-full object-cover" style={{ objectPosition: "50% 10%" }} />
+        <Img src={staticFile("images/officer-kenya.jpg")} className="size-full object-cover"  />
       </div>
       <div className="absolute -right-[50px] -top-[50px] flex size-[150px] items-center justify-center rounded-full" style={{ background: "#1f5135", opacity: leaf, scale: 0.3 + 0.7 * leaf, rotate: `${(1 - leaf) * -60}deg`, boxShadow: "0 0 50px rgba(127,211,155,0.7)" }}>
         <Leaf size={90} weight="fill" color="#7fd39b" />

@@ -60,7 +60,7 @@ function Compose({ view }: { view: Extract<LcdView, { kind: "compose" }> }) {
 
 /** While typing, the screen keeps only the end of the text in view, like a real basic phone. */
 function lastLines(text: string) {
-  const maxChars = 34;
+  const maxChars = 24;
   if (text.length <= maxChars) return text;
   const cut = text.slice(-maxChars);
   return cut.slice(cut.indexOf(" ") + 1);

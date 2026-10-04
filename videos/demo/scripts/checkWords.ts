@@ -1,9 +1,10 @@
 // Fails if any checked frame of the rendered demo video shows more than 10 readable words.
 // It takes every 3rd frame of out/DemoVideo.mp4, reads it with Apple's Vision OCR (scripts/ocrWords.swift) and counts
 // words, where a word is any whitespace-separated token with a letter or digit, so numbers count too.
-// Keypad legends are part of the phone, not on-screen text, so before reading a frame the checker blacks out the box
-// that scripts/writeMasks.ts computed for the phone's keypad on that frame (out/keypad-masks.json). Nothing else is
-// masked: the LCD, tags, numbers and captions all count.
+// Keypad legends and the real app's own UI are product, not text the video adds, so before reading a frame the checker
+// blacks out the boxes scripts/writeMasks.ts computed for that frame (out/keypad-masks.json): the basic phone's keypad
+// and the iPhone screen while it plays a recording or capture of the app. Nothing else is masked: the basic phone's
+// LCD, tags, numbers, the motif marks and every caption count.
 // Usage: node scripts/writeMasks.ts && node scripts/checkWords.ts [video] [every]
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -36,12 +37,12 @@ function extractFrames() {
 
 /** Blacks out the keypad legends on every extracted frame that has a mask. Frame files are numbered from 1. */
 function maskKeypads(files: string[]) {
-  const masks = JSON.parse(readFileSync(resolve(out, "keypad-masks.json"), "utf8")) as Record<string, number[]>;
+  const masks = JSON.parse(readFileSync(resolve(out, "keypad-masks.json"), "utf8")) as Record<string, number[][]>;
   const jobs = files
     .map((name) => ({ path: resolve(framesDir, name), frame: (Number(name.match(/f_(\d+)\.jpg$/)?.[1] ?? 1) - 1) * every }))
     .filter((job) => masks[job.frame])
     .map((job) => ({ path: job.path, box: masks[job.frame] }));
-  const painter = "import json,sys\nfrom PIL import Image, ImageDraw\nfor job in json.load(sys.stdin):\n  im=Image.open(job['path']); x,y,w,h=job['box']; ImageDraw.Draw(im).rectangle([x,y,x+w,y+h],fill='black'); im.save(job['path'],quality=92)\n";
+  const painter = "import json,sys\nfrom PIL import Image, ImageDraw\nfor job in json.load(sys.stdin):\n  im=Image.open(job['path']); d=ImageDraw.Draw(im)\n  for x,y,w,h in job['box']: d.rectangle([x,y,x+w,y+h],fill='black')\n  im.save(job['path'],quality=92)\n";
   execFileSync("python3", ["-c", painter], { input: JSON.stringify(jobs) });
   return jobs.length;
 }
@@ -63,7 +64,7 @@ function readBatch(files: string[]): Reading[] {
 function main() {
   compileOcr();
   const files = extractFrames();
-  console.log(`masked the keypad on ${maskKeypads(files)} frames`);
+  console.log(`masked keypad or app screen on ${maskKeypads(files)} frames`);
   const readings: Reading[] = [];
   for (let start = 0; start < files.length; start += BATCH) readings.push(...readBatch(files.slice(start, start + BATCH)));
   writeFileSync(resolve(out, "word-count.tsv"), readings.map((reading) => `${reading.frame}\t${reading.words}\t${reading.text}`).join("\n") + "\n");

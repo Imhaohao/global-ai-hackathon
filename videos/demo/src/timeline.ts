@@ -9,9 +9,9 @@ type Timing = { beat: BeatId; seconds: number; speechEnd: number; words: { text:
 const TIMINGS = timings as Timing[];
 
 /** Frames of silence before each line, so each picture can finish moving before the next idea starts. */
-const GAP_BEFORE: Record<BeatId, number> = { problem: 18, advisers: 8, texts: 26, reply: 14, tiny: 20, shop: 18, seed: 22, weekend: 18, officer: 16, alert: 18, close: 22 };
+const GAP_BEFORE: Record<BeatId, number> = { reach: 10, barriers: 10, promise: 8, scan: 12, seed: 16, sms: 12, followup: 16, officer: 12, close: 16 };
 /** Frames after the last word while the grid folds into the mark and the name lands. */
-const TAIL = 92;
+const TAIL = 68;
 
 const seconds = (value: number) => Math.round(value * FPS);
 
@@ -45,9 +45,12 @@ export const voiceEnd = (beat: BeatId) => VOICE_START[beat] + seconds(timingOf(b
 export const voiceFile = (beat: BeatId) => `audio/voice/${beat}.mp3`;
 
 export const SCENES = {
-  problem: { from: 0, to: VOICE_START.texts - 8 },
-  story: { from: VOICE_START.texts - 8, to: VOICE_START.close - 10 },
-  close: { from: VOICE_START.close - 10, to: voiceEnd("close") + TAIL },
+  intro: { from: 0, to: VOICE_START.scan - 10 },
+  scan: { from: VOICE_START.scan - 10, to: VOICE_START.seed - 6 },
+  seed: { from: VOICE_START.seed - 6, to: VOICE_START.sms - 6 },
+  sms: { from: VOICE_START.sms - 6, to: VOICE_START.officer - 8 },
+  officer: { from: VOICE_START.officer - 8, to: VOICE_START.close - 8 },
+  close: { from: VOICE_START.close - 8, to: voiceEnd("close") + TAIL },
 } as const;
 
 export type SceneId = keyof typeof SCENES;

@@ -1,4 +1,4 @@
-import { OffthreadVideo, Sequence, staticFile } from "remotion";
+import { Freeze, OffthreadVideo, Sequence, staticFile } from "remotion";
 import { FPS } from "../timeline";
 
 /** One continuous stretch of a screen recording, from `sourceFrom` to `sourceTo` seconds, played at `rate`. */
@@ -9,32 +9,44 @@ export function cutLength(cut: RecordingCut) {
 }
 
 /**
- * Plays a real screen recording as a chain of cuts, each starting where the last one ended. The last cut holds its
- * final frame until the scene leaves.
+ * Plays a real screen recording as a chain of cuts, each starting where the last one ended. After the last cut, its
+ * final frame is held until the scene leaves.
  */
 export function Recording({ src, cuts }: { src: string; cuts: RecordingCut[] }) {
   let start = 0;
+  const pieces = cuts.map((cut, index) => {
+    const from = start;
+    const length = cutLength(cut);
+    start += length;
+    return (
+      <Sequence key={`${cut.sourceFrom}-${index}`} from={from} durationInFrames={length} layout="none">
+        <Clip src={src} cut={cut} />
+      </Sequence>
+    );
+  });
+  const last = cuts[cuts.length - 1];
   return (
     <>
-      {cuts.map((cut, index) => {
-        const from = start;
-        const length = cutLength(cut);
-        start += length;
-        const isLast = index === cuts.length - 1;
-        return (
-          <Sequence key={`${cut.sourceFrom}-${index}`} from={from} durationInFrames={isLast ? undefined : length} layout="none">
-            <OffthreadVideo
-              src={staticFile(src)}
-              muted
-              trimBefore={Math.round(cut.sourceFrom * FPS)}
-              trimAfter={isLast ? undefined : Math.round(cut.sourceTo * FPS)}
-              playbackRate={cut.rate ?? 1}
-              className="absolute inset-0 size-full object-cover"
-            />
-          </Sequence>
-        );
-      })}
+      {pieces}
+      <Sequence from={start} layout="none">
+        <Freeze frame={cutLength(last) - 1}>
+          <Clip src={src} cut={last} />
+        </Freeze>
+      </Sequence>
     </>
+  );
+}
+
+function Clip({ src, cut }: { src: string; cut: RecordingCut }) {
+  return (
+    <OffthreadVideo
+      src={staticFile(src)}
+      muted
+      trimBefore={Math.round(cut.sourceFrom * FPS)}
+      trimAfter={Math.round(cut.sourceTo * FPS)}
+      playbackRate={cut.rate ?? 1}
+      className="absolute inset-0 size-full object-cover"
+    />
   );
 }
 

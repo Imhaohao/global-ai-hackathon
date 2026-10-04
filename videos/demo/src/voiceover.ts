@@ -5,7 +5,7 @@ export const VOICE = {
   model: "eleven_multilingual_v2",
 } as const;
 
-export type BeatId = "problem" | "advisers" | "texts" | "reply" | "tiny" | "shop" | "seed" | "weekend" | "officer" | "alert" | "close";
+export type BeatId = "reach" | "barriers" | "promise" | "scan" | "seed" | "sms" | "followup" | "officer" | "close";
 
 /** Which part of the story a beat serves: the access problem, how a part works, or the result. */
 export type StoryRole = "problem" | "explanation" | "solution";
@@ -13,27 +13,13 @@ export type StoryRole = "problem" | "explanation" | "solution";
 export type ScriptLine = { beat: BeatId; role: StoryRole; text: string; spoken?: string; seed: number };
 
 export const SCRIPT: ScriptLine[] = [
-  { beat: "problem", role: "problem", text: "In rural Kenya, four in ten adults use a basic phone; two in three aren't online daily.", seed: 31 },
-  { beat: "advisers", role: "problem", text: "And each farm adviser must cover hundreds of farmers.", seed: 32 },
-  { beat: "texts", role: "explanation", text: "So Leaf Doctor works by text. Noor describes the spots,", seed: 33 },
-  { beat: "reply", role: "explanation", text: "and the reply names the disease and three things to do.", seed: 34 },
-  {
-    beat: "tiny",
-    role: "explanation",
-    text: "Replies are plain 160-character texts, answered by a hub phone even offline.",
-    spoken: "Replies are plain, one-hundred-and-sixty-character texts, answered by a hub phone even offline.",
-    seed: 35,
-  },
-  { beat: "shop", role: "explanation", text: "Text SHOP for nearby farm shops.", seed: 36 },
-  { beat: "seed", role: "explanation", text: "Before planting, she texts the seed packet's code to 1393.", spoken: "Before planting, she texts the seed packet's code to thirteen ninety-three.", seed: 37 },
-  {
-    beat: "weekend",
-    role: "explanation",
-    text: "At weekends, a smartphone checks leaves offline with an 8.57-megabyte model.",
-    spoken: "At weekends, a smartphone checks leaves offline, with an eight-point-five-seven-megabyte model.",
-    seed: 38,
-  },
-  { beat: "officer", role: "solution", text: "Unsure? One tap texts her field officer, or she simply calls.", seed: 39 },
-  { beat: "alert", role: "solution", text: "When three nearby farms report one disease, an officer approves an alert to neighbours.", seed: 40 },
+  { beat: "reach", role: "problem", text: "The tools to protect a harvest already exist, but they don't reach farmers.", seed: 51 },
+  { beat: "barriers", role: "problem", text: "Two in three rural Kenyans aren't online daily. Four in ten use a basic phone. And one adviser covers hundreds of farms.", seed: 52 },
+  { beat: "promise", role: "solution", text: "Leaf Doctor removes those barriers: the app works in airplane mode, and it answers by text.", seed: 53 },
+  { beat: "scan", role: "explanation", text: "Noor photographs her coffee leaves. The model runs on the phone with zero internet, then gives steps and a day to recheck.", seed: 54 },
+  { beat: "seed", role: "explanation", text: "A seed packet's barcode shows genuine or recalled. It all works in airplane mode, with zero internet.", seed: 55 },
+  { beat: "sms", role: "explanation", text: "No smartphone? No internet. No data. Just a text. The reply names the disease and what to do.", seed: 56 },
+  { beat: "followup", role: "explanation", text: "She can ask a follow-up, text SHOP to find where to buy, and send seed codes to 1393.", spoken: "She can ask a follow-up, text SHOP to find where to buy, and send seed codes to thirteen ninety-three.", seed: 57 },
+  { beat: "officer", role: "solution", text: "Unsure? One tap sends her case to the field officer.", seed: 58 },
   { beat: "close", role: "solution", text: "With Leaf Doctor, let's re-leaf over-burdened specialists, and reach every single farmer in need.", seed: 41 },
 ];

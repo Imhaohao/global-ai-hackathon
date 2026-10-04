@@ -1,708 +1,819 @@
 [
   {
-    "beat": "problem",
-    "seconds": 7.291066,
-    "speechEnd": 6.566349,
+    "beat": "reach",
+    "seconds": 4.365351,
+    "speechEnd": 3.694807,
     "words": [
       {
-        "text": "In",
+        "text": "The",
         "start": 0,
-        "end": 0.151
+        "end": 0.139
       },
       {
-        "text": "rural",
-        "start": 0.232,
-        "end": 0.569
-      },
-      {
-        "text": "Kenya,",
-        "start": 0.627,
-        "end": 1.184
-      },
-      {
-        "text": "four",
-        "start": 1.544,
-        "end": 1.753
-      },
-      {
-        "text": "in",
-        "start": 1.811,
-        "end": 1.881
-      },
-      {
-        "text": "ten",
-        "start": 1.927,
-        "end": 2.078
-      },
-      {
-        "text": "adults",
-        "start": 2.125,
-        "end": 2.566
-      },
-      {
-        "text": "use",
-        "start": 2.763,
-        "end": 2.949
-      },
-      {
-        "text": "a",
-        "start": 2.972,
-        "end": 2.995
-      },
-      {
-        "text": "basic",
-        "start": 3.053,
-        "end": 3.402
-      },
-      {
-        "text": "phone;",
-        "start": 3.471,
-        "end": 3.913
-      },
-      {
-        "text": "two",
-        "start": 4.563,
-        "end": 4.737
-      },
-      {
-        "text": "in",
-        "start": 4.795,
-        "end": 4.865
-      },
-      {
-        "text": "three",
-        "start": 4.934,
-        "end": 5.329
-      },
-      {
-        "text": "aren't",
-        "start": 5.445,
-        "end": 5.712
-      },
-      {
-        "text": "online",
-        "start": 5.759,
-        "end": 6.13
-      },
-      {
-        "text": "daily.",
-        "start": 6.177,
-        "end": 7.291
-      }
-    ]
-  },
-  {
-    "beat": "advisers",
-    "seconds": 3.343673,
-    "speechEnd": 2.764603,
-    "words": [
-      {
-        "text": "And",
-        "start": 0,
-        "end": 0.186
-      },
-      {
-        "text": "each",
-        "start": 0.29,
-        "end": 0.499
-      },
-      {
-        "text": "farm",
-        "start": 0.546,
-        "end": 0.743
-      },
-      {
-        "text": "adviser",
-        "start": 0.778,
-        "end": 1.231
-      },
-      {
-        "text": "must",
-        "start": 1.312,
-        "end": 1.498
-      },
-      {
-        "text": "cover",
-        "start": 1.544,
-        "end": 1.753
-      },
-      {
-        "text": "hundreds",
-        "start": 1.823,
-        "end": 2.183
-      },
-      {
-        "text": "of",
-        "start": 2.218,
-        "end": 2.264
-      },
-      {
-        "text": "farmers.",
-        "start": 2.322,
-        "end": 3.344
-      }
-    ]
-  },
-  {
-    "beat": "texts",
-    "seconds": 4.040272,
-    "speechEnd": 3.852381,
-    "words": [
-      {
-        "text": "So",
-        "start": 0,
-        "end": 0.174
-      },
-      {
-        "text": "Leaf",
-        "start": 0.244,
-        "end": 0.418
-      },
-      {
-        "text": "Doctor",
-        "start": 0.476,
-        "end": 0.755
-      },
-      {
-        "text": "works",
-        "start": 0.813,
-        "end": 1.045
-      },
-      {
-        "text": "by",
-        "start": 1.091,
-        "end": 1.196
-      },
-      {
-        "text": "text.",
-        "start": 1.265,
-        "end": 1.811
-      },
-      {
-        "text": "Noor",
-        "start": 2.461,
-        "end": 2.659
-      },
-      {
-        "text": "describes",
-        "start": 2.717,
-        "end": 3.158
-      },
-      {
-        "text": "the",
-        "start": 3.193,
-        "end": 3.262
-      },
-      {
-        "text": "spots,",
-        "start": 3.332,
-        "end": 4.04
-      }
-    ]
-  },
-  {
-    "beat": "reply",
-    "seconds": 3.390113,
-    "speechEnd": 2.869501,
-    "words": [
-      {
-        "text": "and",
-        "start": 0,
-        "end": 0.174
-      },
-      {
-        "text": "the",
-        "start": 0.221,
-        "end": 0.29
-      },
-      {
-        "text": "reply",
-        "start": 0.337,
-        "end": 0.65
-      },
-      {
-        "text": "names",
-        "start": 0.731,
-        "end": 0.964
-      },
-      {
-        "text": "the",
-        "start": 1.01,
-        "end": 1.08
-      },
-      {
-        "text": "disease",
-        "start": 1.126,
-        "end": 1.614
-      },
-      {
-        "text": "and",
-        "start": 1.672,
-        "end": 1.823
-      },
-      {
-        "text": "three",
-        "start": 1.892,
-        "end": 2.136
-      },
-      {
-        "text": "things",
-        "start": 2.183,
-        "end": 2.426
+        "text": "tools",
+        "start": 0.197,
+        "end": 0.464
       },
       {
         "text": "to",
-        "start": 2.473,
-        "end": 2.543
+        "start": 0.499,
+        "end": 0.546
       },
       {
-        "text": "do.",
-        "start": 2.612,
-        "end": 3.39
-      }
-    ]
-  },
-  {
-    "beat": "tiny",
-    "seconds": 6.640907,
-    "speechEnd": 5.911701,
-    "words": [
-      {
-        "text": "Replies",
-        "start": 0,
-        "end": 0.453
-      },
-      {
-        "text": "are",
-        "start": 0.488,
-        "end": 0.569
-      },
-      {
-        "text": "plain,",
-        "start": 0.592,
-        "end": 1.068
-      },
-      {
-        "text": "one-hundred-and-sixty-character",
-        "start": 1.474,
-        "end": 2.786
-      },
-      {
-        "text": "texts,",
-        "start": 2.833,
-        "end": 3.495
-      },
-      {
-        "text": "answered",
-        "start": 3.657,
-        "end": 4.098
-      },
-      {
-        "text": "by",
-        "start": 4.156,
-        "end": 4.284
+        "text": "protect",
+        "start": 0.604,
+        "end": 0.917
       },
       {
         "text": "a",
-        "start": 4.342,
+        "start": 0.964,
+        "end": 0.987
+      },
+      {
+        "text": "harvest",
+        "start": 1.057,
+        "end": 1.37
+      },
+      {
+        "text": "already",
+        "start": 1.405,
+        "end": 1.718
+      },
+      {
+        "text": "exist,",
+        "start": 1.776,
+        "end": 2.299
+      },
+      {
+        "text": "but",
+        "start": 2.438,
+        "end": 2.566
+      },
+      {
+        "text": "they",
+        "start": 2.589,
+        "end": 2.694
+      },
+      {
+        "text": "don't",
+        "start": 2.752,
+        "end": 2.949
+      },
+      {
+        "text": "reach",
+        "start": 2.995,
+        "end": 3.181
+      },
+      {
+        "text": "farmers.",
+        "start": 3.239,
         "end": 4.365
-      },
-      {
-        "text": "hub",
-        "start": 4.435,
-        "end": 4.598
-      },
-      {
-        "text": "phone",
-        "start": 4.656,
-        "end": 5.027
-      },
-      {
-        "text": "even",
-        "start": 5.108,
-        "end": 5.375
-      },
-      {
-        "text": "offline.",
-        "start": 5.41,
-        "end": 6.641
       }
     ]
   },
   {
-    "beat": "shop",
-    "seconds": 2.414875,
-    "speechEnd": 1.802834,
+    "beat": "barriers",
+    "seconds": 9.520181,
+    "speechEnd": 8.501633,
     "words": [
       {
-        "text": "Text",
+        "text": "Two",
         "start": 0,
-        "end": 0.313
+        "end": 0.232
       },
       {
-        "text": "SHOP",
-        "start": 0.337,
-        "end": 0.569
+        "text": "in",
+        "start": 0.29,
+        "end": 0.372
       },
       {
-        "text": "for",
-        "start": 0.639,
-        "end": 0.755
+        "text": "three",
+        "start": 0.441,
+        "end": 0.708
       },
       {
-        "text": "nearby",
-        "start": 0.801,
-        "end": 1.068
+        "text": "rural",
+        "start": 0.778,
+        "end": 1.057
       },
       {
-        "text": "farm",
+        "text": "Kenyans",
+        "start": 1.115,
+        "end": 1.579
+      },
+      {
+        "text": "aren't",
+        "start": 1.741,
+        "end": 2.02
+      },
+      {
+        "text": "online",
+        "start": 2.078,
+        "end": 2.531
+      },
+      {
+        "text": "daily.",
+        "start": 2.589,
+        "end": 3.053
+      },
+      {
+        "text": "Four",
+        "start": 3.692,
+        "end": 3.947
+      },
+      {
+        "text": "in",
+        "start": 3.994,
+        "end": 4.063
+      },
+      {
+        "text": "ten",
+        "start": 4.122,
+        "end": 4.389
+      },
+      {
+        "text": "use",
+        "start": 4.493,
+        "end": 4.656
+      },
+      {
+        "text": "a",
+        "start": 4.679,
+        "end": 4.702
+      },
+      {
+        "text": "basic",
+        "start": 4.748,
+        "end": 5.05
+      },
+      {
+        "text": "phone.",
+        "start": 5.108,
+        "end": 5.55
+      },
+      {
+        "text": "And",
+        "start": 6.095,
+        "end": 6.235
+      },
+      {
+        "text": "one",
+        "start": 6.316,
+        "end": 6.455
+      },
+      {
+        "text": "adviser",
+        "start": 6.478,
+        "end": 7.001
+      },
+      {
+        "text": "covers",
+        "start": 7.105,
+        "end": 7.407
+      },
+      {
+        "text": "hundreds",
+        "start": 7.477,
+        "end": 7.872
+      },
+      {
+        "text": "of",
+        "start": 7.906,
+        "end": 7.964
+      },
+      {
+        "text": "farms.",
+        "start": 8.022,
+        "end": 9.52
+      }
+    ]
+  },
+  {
+    "beat": "promise",
+    "seconds": 6.315828,
+    "speechEnd": 5.533379,
+    "words": [
+      {
+        "text": "Leaf",
+        "start": 0,
+        "end": 0.244
+      },
+      {
+        "text": "Doctor",
+        "start": 0.302,
+        "end": 0.546
+      },
+      {
+        "text": "removes",
+        "start": 0.604,
+        "end": 0.917
+      },
+      {
+        "text": "those",
+        "start": 0.952,
+        "end": 1.138
+      },
+      {
+        "text": "barriers:",
+        "start": 1.173,
+        "end": 1.8
+      },
+      {
+        "text": "the",
+        "start": 2.206,
+        "end": 2.31
+      },
+      {
+        "text": "app",
+        "start": 2.368,
+        "end": 2.519
+      },
+      {
+        "text": "works",
+        "start": 2.589,
+        "end": 2.844
+      },
+      {
+        "text": "in",
+        "start": 2.891,
+        "end": 2.949
+      },
+      {
+        "text": "airplane",
+        "start": 3.007,
+        "end": 3.402
+      },
+      {
+        "text": "mode,",
+        "start": 3.448,
+        "end": 3.913
+      },
+      {
+        "text": "and",
+        "start": 4.098,
+        "end": 4.238
+      },
+      {
+        "text": "it",
+        "start": 4.296,
+        "end": 4.354
+      },
+      {
+        "text": "answers",
+        "start": 4.4,
+        "end": 4.795
+      },
+      {
+        "text": "by",
+        "start": 4.853,
+        "end": 4.981
+      },
+      {
+        "text": "text.",
+        "start": 5.05,
+        "end": 6.316
+      }
+    ]
+  },
+  {
+    "beat": "scan",
+    "seconds": 7.987664,
+    "speechEnd": 6.921293,
+    "words": [
+      {
+        "text": "Noor",
+        "start": 0,
+        "end": 0.337
+      },
+      {
+        "text": "photographs",
+        "start": 0.395,
+        "end": 0.952
+      },
+      {
+        "text": "her",
+        "start": 0.998,
+        "end": 1.08
+      },
+      {
+        "text": "coffee",
         "start": 1.138,
-        "end": 1.382
+        "end": 1.393
       },
       {
-        "text": "shops.",
-        "start": 1.428,
-        "end": 2.415
+        "text": "leaves.",
+        "start": 1.44,
+        "end": 1.95
+      },
+      {
+        "text": "The",
+        "start": 2.299,
+        "end": 2.403
+      },
+      {
+        "text": "model",
+        "start": 2.461,
+        "end": 2.705
+      },
+      {
+        "text": "runs",
+        "start": 2.763,
+        "end": 2.972
+      },
+      {
+        "text": "on",
+        "start": 3.007,
+        "end": 3.077
+      },
+      {
+        "text": "the",
+        "start": 3.111,
+        "end": 3.181
+      },
+      {
+        "text": "phone",
+        "start": 3.228,
+        "end": 3.483
+      },
+      {
+        "text": "with",
+        "start": 3.518,
+        "end": 3.657
+      },
+      {
+        "text": "zero",
+        "start": 3.727,
+        "end": 4.017
+      },
+      {
+        "text": "internet,",
+        "start": 4.075,
+        "end": 4.702
+      },
+      {
+        "text": "then",
+        "start": 4.888,
+        "end": 5.05
+      },
+      {
+        "text": "gives",
+        "start": 5.097,
+        "end": 5.294
+      },
+      {
+        "text": "steps",
+        "start": 5.341,
+        "end": 5.759
+      },
+      {
+        "text": "and",
+        "start": 5.817,
+        "end": 5.944
+      },
+      {
+        "text": "a",
+        "start": 6.002,
+        "end": 6.026
+      },
+      {
+        "text": "day",
+        "start": 6.084,
+        "end": 6.258
+      },
+      {
+        "text": "to",
+        "start": 6.316,
+        "end": 6.385
+      },
+      {
+        "text": "recheck.",
+        "start": 6.455,
+        "end": 7.988
       }
     ]
   },
   {
     "beat": "seed",
-    "seconds": 5.01551,
-    "speechEnd": 4.415805,
+    "seconds": 6.873107,
+    "speechEnd": 6.419751,
     "words": [
       {
-        "text": "Before",
+        "text": "A",
         "start": 0,
-        "end": 0.337
-      },
-      {
-        "text": "planting,",
-        "start": 0.372,
-        "end": 1.01
-      },
-      {
-        "text": "she",
-        "start": 1.207,
-        "end": 1.347
-      },
-      {
-        "text": "texts",
-        "start": 1.405,
-        "end": 1.707
-      },
-      {
-        "text": "the",
-        "start": 1.741,
-        "end": 1.811
+        "end": 0.093
       },
       {
         "text": "seed",
-        "start": 1.869,
-        "end": 2.101
+        "start": 0.197,
+        "end": 0.43
       },
       {
         "text": "packet's",
-        "start": 2.159,
-        "end": 2.519
+        "start": 0.476,
+        "end": 0.801
       },
       {
-        "text": "code",
-        "start": 2.577,
-        "end": 2.914
+        "text": "barcode",
+        "start": 0.848,
+        "end": 1.335
       },
       {
-        "text": "to",
-        "start": 2.984,
-        "end": 3.1
+        "text": "shows",
+        "start": 1.37,
+        "end": 1.602
       },
       {
-        "text": "thirteen",
-        "start": 3.181,
-        "end": 3.646
+        "text": "genuine",
+        "start": 1.66,
+        "end": 2.101
       },
       {
-        "text": "ninety-three.",
-        "start": 3.715,
-        "end": 5.016
+        "text": "or",
+        "start": 2.183,
+        "end": 2.322
+      },
+      {
+        "text": "recalled.",
+        "start": 2.368,
+        "end": 2.984
+      },
+      {
+        "text": "It",
+        "start": 3.39,
+        "end": 3.518
+      },
+      {
+        "text": "all",
+        "start": 3.576,
+        "end": 3.727
+      },
+      {
+        "text": "works",
+        "start": 3.785,
+        "end": 4.087
+      },
+      {
+        "text": "in",
+        "start": 4.133,
+        "end": 4.226
+      },
+      {
+        "text": "airplane",
+        "start": 4.296,
+        "end": 4.714
+      },
+      {
+        "text": "mode,",
+        "start": 4.748,
+        "end": 5.12
+      },
+      {
+        "text": "with",
+        "start": 5.306,
+        "end": 5.48
+      },
+      {
+        "text": "zero",
+        "start": 5.538,
+        "end": 5.875
+      },
+      {
+        "text": "internet.",
+        "start": 5.944,
+        "end": 6.873
       }
     ]
   },
   {
-    "beat": "weekend",
-    "seconds": 5.619229,
-    "speechEnd": 5.109002,
+    "beat": "sms",
+    "seconds": 8.405624,
+    "speechEnd": 7.840635,
     "words": [
       {
-        "text": "At",
+        "text": "No",
         "start": 0,
-        "end": 0.139
+        "end": 0.151
       },
       {
-        "text": "weekends,",
-        "start": 0.197,
-        "end": 0.882
+        "text": "smartphone?",
+        "start": 0.209,
+        "end": 0.917
+      },
+      {
+        "text": "No",
+        "start": 1.463,
+        "end": 1.591
+      },
+      {
+        "text": "internet.",
+        "start": 1.66,
+        "end": 2.322
+      },
+      {
+        "text": "No",
+        "start": 2.67,
+        "end": 2.81
+      },
+      {
+        "text": "data.",
+        "start": 2.879,
+        "end": 3.425
+      },
+      {
+        "text": "Just",
+        "start": 4.063,
+        "end": 4.272
       },
       {
         "text": "a",
-        "start": 0.94,
-        "end": 0.998
+        "start": 4.319,
+        "end": 4.354
       },
       {
-        "text": "smartphone",
-        "start": 1.103,
+        "text": "text.",
+        "start": 4.412,
+        "end": 5.004
+      },
+      {
+        "text": "The",
+        "start": 5.468,
+        "end": 5.584
+      },
+      {
+        "text": "reply",
+        "start": 5.642,
+        "end": 5.991
+      },
+      {
+        "text": "names",
+        "start": 6.095,
+        "end": 6.351
+      },
+      {
+        "text": "the",
+        "start": 6.397,
+        "end": 6.467
+      },
+      {
+        "text": "disease",
+        "start": 6.513,
+        "end": 7.047
+      },
+      {
+        "text": "and",
+        "start": 7.105,
+        "end": 7.245
+      },
+      {
+        "text": "what",
+        "start": 7.303,
+        "end": 7.465
+      },
+      {
+        "text": "to",
+        "start": 7.5,
+        "end": 7.558
+      },
+      {
+        "text": "do.",
+        "start": 7.628,
+        "end": 8.406
+      }
+    ]
+  },
+  {
+    "beat": "followup",
+    "seconds": 6.176508,
+    "speechEnd": 5.555193,
+    "words": [
+      {
+        "text": "She",
+        "start": 0,
+        "end": 0.174
+      },
+      {
+        "text": "can",
+        "start": 0.221,
+        "end": 0.325
+      },
+      {
+        "text": "ask",
+        "start": 0.372,
+        "end": 0.511
+      },
+      {
+        "text": "a",
+        "start": 0.546,
+        "end": 0.569
+      },
+      {
+        "text": "follow-up,",
+        "start": 0.627,
+        "end": 1.184
+      },
+      {
+        "text": "text",
+        "start": 1.347,
         "end": 1.625
       },
       {
-        "text": "checks",
+        "text": "SHOP",
         "start": 1.66,
-        "end": 1.95
+        "end": 1.869
       },
       {
-        "text": "leaves",
-        "start": 1.997,
-        "end": 2.229
+        "text": "to",
+        "start": 1.927,
+        "end": 1.997
       },
       {
-        "text": "offline,",
-        "start": 2.264,
-        "end": 2.821
+        "text": "find",
+        "start": 2.067,
+        "end": 2.252
       },
       {
-        "text": "with",
-        "start": 2.984,
-        "end": 3.146
+        "text": "where",
+        "start": 2.299,
+        "end": 2.461
       },
       {
-        "text": "an",
-        "start": 3.181,
-        "end": 3.228
+        "text": "to",
+        "start": 2.496,
+        "end": 2.554
       },
       {
-        "text": "eight-point-five-seven-megabyte",
-        "start": 3.297,
-        "end": 4.783
+        "text": "buy,",
+        "start": 2.612,
+        "end": 3.077
       },
       {
-        "text": "model.",
-        "start": 4.818,
-        "end": 5.619
+        "text": "and",
+        "start": 3.239,
+        "end": 3.367
+      },
+      {
+        "text": "send",
+        "start": 3.425,
+        "end": 3.611
+      },
+      {
+        "text": "seed",
+        "start": 3.669,
+        "end": 3.878
+      },
+      {
+        "text": "codes",
+        "start": 3.924,
+        "end": 4.203
+      },
+      {
+        "text": "to",
+        "start": 4.249,
+        "end": 4.319
+      },
+      {
+        "text": "thirteen",
+        "start": 4.4,
+        "end": 4.83
+      },
+      {
+        "text": "ninety-three.",
+        "start": 4.888,
+        "end": 6.177
       }
     ]
   },
   {
     "beat": "officer",
-    "seconds": 5.34059,
-    "speechEnd": 4.617256,
+    "seconds": 3.390113,
+    "speechEnd": 2.987302,
     "words": [
       {
         "text": "Unsure?",
         "start": 0,
-        "end": 0.824
+        "end": 0.65
       },
       {
         "text": "One",
-        "start": 1.382,
-        "end": 1.614
+        "start": 0.94,
+        "end": 1.149
       },
       {
         "text": "tap",
-        "start": 1.66,
-        "end": 1.916
+        "start": 1.184,
+        "end": 1.405
       },
       {
-        "text": "texts",
-        "start": 1.985,
-        "end": 2.276
+        "text": "sends",
+        "start": 1.463,
+        "end": 1.672
       },
       {
         "text": "her",
-        "start": 2.31,
-        "end": 2.392
+        "start": 1.718,
+        "end": 1.8
       },
       {
-        "text": "field",
-        "start": 2.45,
-        "end": 2.694
-      },
-      {
-        "text": "officer,",
-        "start": 2.728,
-        "end": 3.251
-      },
-      {
-        "text": "or",
-        "start": 3.448,
-        "end": 3.553
-      },
-      {
-        "text": "she",
-        "start": 3.611,
-        "end": 3.727
-      },
-      {
-        "text": "simply",
-        "start": 3.796,
-        "end": 4.11
-      },
-      {
-        "text": "calls.",
-        "start": 4.18,
-        "end": 5.341
-      }
-    ]
-  },
-  {
-    "beat": "alert",
-    "seconds": 5.479909,
-    "speechEnd": 4.912744,
-    "words": [
-      {
-        "text": "When",
-        "start": 0,
-        "end": 0.197
-      },
-      {
-        "text": "three",
-        "start": 0.255,
-        "end": 0.522
-      },
-      {
-        "text": "nearby",
-        "start": 0.58,
-        "end": 0.906
-      },
-      {
-        "text": "farms",
-        "start": 0.987,
-        "end": 1.312
-      },
-      {
-        "text": "report",
-        "start": 1.37,
-        "end": 1.707
-      },
-      {
-        "text": "one",
-        "start": 1.765,
-        "end": 1.916
-      },
-      {
-        "text": "disease,",
-        "start": 1.939,
-        "end": 2.531
-      },
-      {
-        "text": "an",
-        "start": 2.694,
-        "end": 2.81
-      },
-      {
-        "text": "officer",
-        "start": 2.856,
-        "end": 3.181
-      },
-      {
-        "text": "approves",
-        "start": 3.239,
-        "end": 3.669
-      },
-      {
-        "text": "an",
-        "start": 3.704,
-        "end": 3.762
-      },
-      {
-        "text": "alert",
-        "start": 3.808,
-        "end": 4.133
+        "text": "case",
+        "start": 1.846,
+        "end": 2.09
       },
       {
         "text": "to",
-        "start": 4.203,
-        "end": 4.284
+        "start": 2.125,
+        "end": 2.183
       },
       {
-        "text": "neighbours.",
-        "start": 4.365,
-        "end": 5.48
+        "text": "the",
+        "start": 2.241,
+        "end": 2.31
+      },
+      {
+        "text": "field",
+        "start": 2.357,
+        "end": 2.589
+      },
+      {
+        "text": "officer.",
+        "start": 2.635,
+        "end": 3.39
       }
     ]
   },
   {
     "beat": "close",
-    "seconds": 6.130068,
-    "speechEnd": 5.888617,
+    "seconds": 5.665669,
+    "speechEnd": 5.441406,
     "words": [
       {
         "text": "With",
         "start": 0,
-        "end": 0.174
+        "end": 0.209
       },
       {
         "text": "Leaf",
-        "start": 0.232,
-        "end": 0.395
+        "start": 0.267,
+        "end": 0.453
       },
       {
         "text": "Doctor,",
-        "start": 0.453,
-        "end": 0.906
+        "start": 0.511,
+        "end": 0.882
       },
       {
         "text": "let's",
-        "start": 1.103,
-        "end": 1.3
+        "start": 0.94,
+        "end": 1.161
       },
       {
         "text": "re-leaf",
-        "start": 1.405,
-        "end": 1.834
+        "start": 1.265,
+        "end": 1.718
       },
       {
         "text": "over-burdened",
-        "start": 1.939,
-        "end": 2.543
+        "start": 1.823,
+        "end": 2.438
       },
       {
         "text": "specialists,",
-        "start": 2.589,
-        "end": 3.495
+        "start": 2.473,
+        "end": 3.251
       },
       {
         "text": "and",
-        "start": 3.657,
-        "end": 3.808
+        "start": 3.355,
+        "end": 3.518
       },
       {
         "text": "reach",
-        "start": 3.913,
-        "end": 4.191
+        "start": 3.622,
+        "end": 3.878
       },
       {
         "text": "every",
-        "start": 4.307,
-        "end": 4.621
+        "start": 3.947,
+        "end": 4.238
       },
       {
         "text": "single",
-        "start": 4.667,
-        "end": 4.969
+        "start": 4.284,
+        "end": 4.574
       },
       {
         "text": "farmer",
-        "start": 5.027,
-        "end": 5.341
+        "start": 4.621,
+        "end": 4.934
       },
       {
         "text": "in",
-        "start": 5.41,
-        "end": 5.515
+        "start": 4.992,
+        "end": 5.085
       },
       {
         "text": "need.",
-        "start": 5.584,
-        "end": 6.13
+        "start": 5.155,
+        "end": 5.666
       }
     ]
   }

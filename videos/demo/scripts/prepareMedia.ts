@@ -25,7 +25,7 @@ for (const clip of FOOTAGE) {
   console.log("footage", clip.file);
 }
 
-for (const recording of RECORDINGS) {
+for (const recording of RECORDINGS.filter((entry) => entry.source.startsWith("~"))) {
   const source = recording.source.replace(/^~/, homedir());
   ffmpeg(["-i", source, "-vf", "fps=30,scale=1206:-2", "-an", "-c:v", "libx264", "-crf", "21", "-preset", "slow", "-pix_fmt", "yuv420p", resolve(publicDir, recording.file)]);
   console.log("recording", recording.file);
@@ -34,7 +34,9 @@ for (const recording of RECORDINGS) {
 // The phone shots sit on a blurred still of the coffee farm clip.
 ffmpeg(["-ss", "3", "-i", resolve(publicDir, "video/coffee-farm.mp4"), "-frames:v", "1", "-q:v", "3", resolve(publicDir, "images/backdrop-farm.jpg")]);
 
+// The officer photo is the crop the technical video made from the Commons original; copy it from there.
 for (const photo of PHOTOS) {
+  if (existsSync(resolve(publicDir, photo.file))) continue;
   const title = decodeURIComponent(photo.page.split("/wiki/")[1]);
   const api = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlwidth=1400&format=json&titles=${encodeURIComponent(title)}`;
   const info = JSON.parse(execFileSync("curl", ["-sSfL", "-A", "LeafDoctorVideo/1.0", api]).toString()) as { query: { pages: Record<string, { imageinfo: { thumburl: string }[] }> } };
