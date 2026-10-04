@@ -1,4 +1,5 @@
 import type { WetDays } from "./contract.ts";
+import { isFreshWetDays, rainDayTimestamp } from "./wetDays.ts";
 
 export const WET_DAY_MIN_MM = 1;
 export const WINDOW_DAYS = 7;
@@ -7,7 +8,6 @@ export const NASA_POWER_TIMEOUT_MS = 6000;
 
 const LOOKBACK_DAYS = 14;
 const COORDINATE_DECIMALS = 1;
-const MISSING_VALUE_BELOW = -900;
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export type FetchLike = (url: string, init?: { signal?: AbortSignal }) => Promise<Pick<Response, "ok" | "status" | "json">>;
@@ -62,19 +62,35 @@ function dailyRainfall(payload: unknown): Record<string, number> | null {
   return series as Record<string, number>;
 }
 
-export function wetDaysFromNasaPower(payload: unknown): WetDays | null {
+function isMeasuredRain(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0;
+}
+
+function measuredRainDay(key: string, value: unknown): boolean {
+  return /^\d{8}$/.test(key) && rainDayTimestamp(isoDate(key)) !== null && isMeasuredRain(value);
+}
+
+export function wetDaysFromNasaPower(payload: unknown, now: Date = new Date()): WetDays | null {
   const series = dailyRainfall(payload);
   if (!series) return null;
-  const measuredDays = Object.entries(series)
-    .filter(([, millimetres]) => typeof millimetres === "number" && millimetres > MISSING_VALUE_BELOW)
-    .sort(([first], [second]) => first.localeCompare(second))
-    .slice(-WINDOW_DAYS);
-  if (measuredDays.length < WINDOW_DAYS) return null;
-  return {
-    wetDaysLast7: measuredDays.filter(([, millimetres]) => millimetres >= WET_DAY_MIN_MM).length,
+  const latest = Object.entries(series)
+    .filter(([day, millimetres]) => measuredRainDay(day, millimetres))
+    .map(([day]) => day)
+    .sort()
+    .at(-1);
+  if (!latest) return null;
+  const lastDay = rainDayTimestamp(isoDate(latest));
+  if (lastDay === null) return null;
+  const window = Array.from({ length: WINDOW_DAYS }, (_, offset) =>
+    series[compactDate(new Date(lastDay - offset * MS_PER_DAY))],
+  );
+  if (!window.every(isMeasuredRain)) return null;
+  const result: WetDays = {
+    wetDaysLast7: window.filter((millimetres) => millimetres >= WET_DAY_MIN_MM).length,
     source: "NASA POWER",
-    asOf: isoDate(measuredDays[measuredDays.length - 1][0]),
+    asOf: isoDate(latest),
   };
+  return isFreshWetDays(result, now) ? result : null;
 }
 
 export async function lookupWetDays(
@@ -88,7 +104,7 @@ export async function lookupWetDays(
       const response = await fetchLike(nasaPowerUrl(latitude, longitude, now), { signal });
       return response.ok ? ((await response.json()) as unknown) : null;
     });
-    return wetDaysFromNasaPower(payload);
+    return wetDaysFromNasaPower(payload, now);
   } catch {
     return null;
   }

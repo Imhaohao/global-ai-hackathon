@@ -1,6 +1,7 @@
 import type { CaseSummaryInput, FarmDecision, Observation, PlantVerdict, WetDays } from "./contract.ts";
 import { DISEASES } from "./diseases.ts";
 import { fitToSms } from "./smsReply.ts";
+import { isFreshWetDays } from "./wetDays.ts";
 
 const MAX_FARM_SECTION_CHARS = 30;
 const GPS_DECIMALS = 5;
@@ -36,7 +37,9 @@ function sectionText(observation: Observation): string | null {
 }
 
 function rainText(wetDays: WetDays | undefined): string | null {
-  return wetDays ? `Rain: ${wetDays.wetDaysLast7} wet days of last 7 (${wetDays.source})` : null;
+  return isFreshWetDays(wetDays)
+    ? `Rain: ${wetDays.wetDaysLast7} wet days in 7 ending ${wetDays.asOf} (${wetDays.source})`
+    : null;
 }
 
 export function formatCaseSummarySms(input: CaseSummaryInput): string {

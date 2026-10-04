@@ -7,6 +7,7 @@ import { DISEASES } from "./diseases.ts";
 import { DISEASES_SW } from "./diseases.sw.ts";
 import { toSmsSafeText } from "./smsReply.ts";
 import type { DiseaseKey } from "./types.ts";
+import { isFreshWetDays } from "./wetDays.ts";
 
 export const PLACEHOLDER_CONTACT = COOPERATIVE_OFFICER;
 
@@ -80,7 +81,7 @@ const STEP_BUILDERS: Record<DiseaseKey, StepBuilder> = {
 
 function decisionFor(rule: ConditionRule, wetDays?: WetDays): FarmDecision {
   const sprayThreshold = rule.sprayFromWetDays;
-  if (sprayThreshold === undefined || !wetDays) return rule.decision;
+  if (sprayThreshold === undefined || !isFreshWetDays(wetDays)) return rule.decision;
   return wetDays.wetDaysLast7 >= sprayThreshold ? "spray" : rule.decision;
 }
 

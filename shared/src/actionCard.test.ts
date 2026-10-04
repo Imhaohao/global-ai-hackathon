@@ -20,7 +20,7 @@ function plant(condition: DiseaseKey): ActionInput {
 }
 
 function wet(days: number): WetDays {
-  return { wetDaysLast7: days, source: "NASA POWER", asOf: "2026-10-03" };
+  return { wetDaysLast7: days, source: "NASA POWER", asOf: new Date().toISOString().slice(0, 10) };
 }
 
 function context(language: AppLanguage, wetDays?: WetDays): ActionContext {
@@ -170,4 +170,14 @@ test("the rust spray index points at the copper line in both languages", () => {
 test("the card never states a pesticide dose", () => {
   const card = buildActionCard(plant("rust"), context("en", wet(5)));
   assert.ok(!card.doNow.some((line) => /\b\d+\s?(ml|g|kg|l|litres?|grams?)\b/i.test(line)));
+});
+
+test("stale or future rain cannot upgrade rust advice even when a caller keeps it in memory", () => {
+  const now = Date.now();
+  for (const offset of [-4, 1]) {
+    const wetDays = { ...wet(7), asOf: new Date(now + offset * 24 * 60 * 60 * 1000).toISOString().slice(0, 10) };
+    const card = buildActionCard(plant("rust"), context("en", wetDays));
+    assert.equal(card.decision, "pruneAndClean");
+    assert.ok(!card.doNow.some((line) => /copper|NASA POWER/i.test(line)));
+  }
 });

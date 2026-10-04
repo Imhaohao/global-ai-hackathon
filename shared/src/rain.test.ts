@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { fetchWetDays } from "./rain.ts";
+import { fetchWetDays, isFreshWetDays, MAX_RAIN_AGE_MS } from "./rain.ts";
 import type { FetchLike } from "./rainSource.ts";
 import { lookupWetDays, nasaPowerUrl, wetDaysFromNasaPower } from "./rainSource.ts";
 
@@ -12,15 +12,13 @@ function powerPayload(series: Record<string, number>) {
 }
 
 const SEVEN_DAYS_WITH_FOUR_WET = {
-  "20260924": 5,
-  "20260925": 0.4,
-  "20260926": 0.24,
-  "20260927": 1.09,
-  "20260928": 2.71,
-  "20260929": 0.81,
-  "20260930": 1,
-  "20261001": -999,
-  "20261002": -999,
+  "20260926": 5,
+  "20260927": 0.4,
+  "20260928": 0.24,
+  "20260929": 1.09,
+  "20260930": 2.71,
+  "20261001": 0.81,
+  "20261002": 1,
   "20261003": -999,
 };
 
@@ -36,9 +34,37 @@ function fakeFetch(body: unknown, ok = true): { fetchLike: FetchLike; urls: stri
 const neverAnswers: FetchLike = (_url, init) =>
   new Promise((_resolve, reject) => init?.signal?.addEventListener("abort", () => reject(new Error("aborted"))));
 
-test("a wet day is at least 1 mm; the latest seven measured days are counted and fill values skipped", () => {
-  const result = wetDaysFromNasaPower(powerPayload(SEVEN_DAYS_WITH_FOUR_WET));
-  assert.deepEqual(result, { wetDaysLast7: 4, source: "NASA POWER", asOf: "2026-09-30" });
+test("a wet day is at least 1 mm in seven consecutive days ending at the latest fresh measurement", () => {
+  const result = wetDaysFromNasaPower(powerPayload(SEVEN_DAYS_WITH_FOUR_WET), NOW);
+  assert.deepEqual(result, { wetDaysLast7: 4, source: "NASA POWER", asOf: "2026-10-02" });
+});
+
+test("missing or invalid days cannot stretch the window or trigger a spray decision", () => {
+  for (const invalid of [-999, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    const series = { ...SEVEN_DAYS_WITH_FOUR_WET, "20260930": invalid, "20260920": 9 };
+    assert.equal(wetDaysFromNasaPower(powerPayload(series), NOW), null);
+  }
+  const gap = { ...SEVEN_DAYS_WITH_FOUR_WET };
+  delete (gap as Partial<typeof gap>)["20260930"];
+  assert.equal(wetDaysFromNasaPower(powerPayload(gap), NOW), null);
+});
+
+test("rain freshness uses the measurement date and rejects invalid, stale and future dates", () => {
+  const base = { wetDaysLast7: 3, source: "NASA POWER", asOf: "2026-10-02" };
+  assert.equal(isFreshWetDays(base, NOW), true);
+  for (const asOf of ["2026-09-30", "2026-10-04", "2026-02-30", "garbage"]) {
+    assert.equal(isFreshWetDays({ ...base, asOf }, NOW), false, asOf);
+  }
+  const measuredAt = Date.parse(`${base.asOf}T00:00:00Z`);
+  assert.equal(isFreshWetDays(base, new Date(measuredAt + MAX_RAIN_AGE_MS - 1)), true);
+  assert.equal(isFreshWetDays(base, new Date(measuredAt + MAX_RAIN_AGE_MS)), false);
+  assert.equal(wetDaysFromNasaPower(powerPayload(SEVEN_DAYS_WITH_FOUR_WET), new Date("2026-10-06")), null);
+});
+
+test("future and invalid date keys are never accepted as rainfall measurements", () => {
+  assert.equal(wetDaysFromNasaPower(powerPayload({ ...SEVEN_DAYS_WITH_FOUR_WET, "20261004": 2 }), NOW), null);
+  assert.deepEqual(wetDaysFromNasaPower(powerPayload({ ...SEVEN_DAYS_WITH_FOUR_WET, "not-a-date": 2, "20261301": 2 }), NOW),
+    { wetDaysLast7: 4, source: "NASA POWER", asOf: "2026-10-02" });
 });
 
 test("fewer than seven measured days gives no answer", () => {
@@ -68,11 +94,16 @@ test("lookupWetDays returns the count, and null on a bad status, a network error
 });
 
 test("fetchWetDays calls /rain with a rounded point and returns the backend answer", async () => {
-  const answer = { wetDaysLast7: 3, source: "NASA POWER", asOf: "2026-09-30" };
+  const answer = { wetDaysLast7: 3, source: "NASA POWER", asOf: "2026-10-02" };
   const { fetchLike, urls } = fakeFetch(answer);
-  const result = await fetchWetDays("https://backend.example.test/", -1.14612, 36.96105, { fetchLike });
+  const result = await fetchWetDays("https://backend.example.test/", -1.14612, 36.96105, { fetchLike, now: NOW });
   assert.deepEqual(result, answer);
   assert.equal(urls[0], "https://backend.example.test/rain?lat=-1.1&lon=37");
+});
+
+test("a newly fetched response with old measurements remains unusable", async () => {
+  const stale = { wetDaysLast7: 7, source: "NASA POWER", asOf: "2026-09-30" };
+  assert.equal(await fetchWetDays("https://backend.example.test", 0, 0, { fetchLike: fakeFetch(stale).fetchLike, now: NOW }), null);
 });
 
 test("fetchWetDays returns null on a bad status, a malformed body, a network error and a timeout", async () => {

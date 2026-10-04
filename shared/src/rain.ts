@@ -1,24 +1,16 @@
 import type { WetDays } from "./contract.ts";
 import { roundCoordinate, withTimeout } from "./rainSource.ts";
 import type { FetchLike } from "./rainSource.ts";
+import { isFreshWetDays } from "./wetDays.ts";
+
+export { isFreshWetDays, MAX_RAIN_AGE_MS } from "./wetDays.ts";
 
 export const RAIN_REQUEST_TIMEOUT_MS = 8000;
-
-const SOURCES: WetDays["source"][] = ["CHIRPS", "NASA POWER"];
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const DAYS_IN_WINDOW = 7;
 
 export interface FetchWetDaysOptions {
   fetchLike?: FetchLike;
   timeoutMs?: number;
-}
-
-function isWetDays(value: unknown): value is WetDays {
-  if (typeof value !== "object" || value === null) return false;
-  const { wetDaysLast7, source, asOf } = value as Partial<WetDays>;
-  const countIsValid = Number.isInteger(wetDaysLast7) && (wetDaysLast7 as number) >= 0 && (wetDaysLast7 as number) <= DAYS_IN_WINDOW;
-  const sourceIsKnown = SOURCES.includes(source as WetDays["source"]);
-  return countIsValid && sourceIsKnown && typeof asOf === "string" && ISO_DATE.test(asOf);
+  now?: Date;
 }
 
 export async function fetchWetDays(
@@ -37,7 +29,7 @@ export async function fetchWetDays(
       const response = await fetchLike(`${backendUrl.replace(/\/$/, "")}/rain?${query.toString()}`, { signal });
       return response.ok ? ((await response.json()) as unknown) : null;
     });
-    return isWetDays(payload) ? payload : null;
+    return isFreshWetDays(payload, options.now) ? payload : null;
   } catch {
     return null;
   }

@@ -7,7 +7,7 @@ import type { CaseSummaryInput, Observation, PlantVerdict, WetDays } from "./con
 import { SMS_MAX_CHARS } from "./smsReply.ts";
 
 const rustVerdict: PlantVerdict = { kind: "answer", condition: "rust", agreeing: 4, usable: 5, total: 6 };
-const wetDays: WetDays = { wetDaysLast7: 4, source: "NASA POWER", asOf: "2026-10-03" };
+const wetDays: WetDays = { wetDaysLast7: 4, source: "NASA POWER", asOf: new Date().toISOString().slice(0, 10) };
 
 function inputFor(overrides: Partial<Observation>, verdict: PlantVerdict, rain?: WetDays): CaseSummaryInput {
   const observation: Observation = {
@@ -29,7 +29,7 @@ test("a full summary names the id, date, section, GPS, verdict, decision, rain a
     sms,
     "Leaf Doctor case obs-0001, 2026-10-03. Section: upper slope. GPS -1.14612,36.96105 (within 12 m). " +
       "Result: Coffee leaf rust, 4 of 5 clear leaves agree. Decision: spray (copper, label rate). " +
-      "Rain: 4 wet days of last 7 (NASA POWER). Model efficientnet-b0-v1 3f9a1c0b2d4e.",
+      `Rain: 4 wet days in 7 ending ${wetDays.asOf} (NASA POWER). Model efficientnet-b0-v1 3f9a1c0b2d4e.`,
   );
 });
 
@@ -63,11 +63,16 @@ test("the longest realistic input stays under the SMS limit and keeps the model 
         accuracyMeters: 1234.5,
       },
       { kind: "needsPerson", reason: "tooFewClearLeaves", usable: 3, total: 6 },
-      { wetDaysLast7: 7, source: "NASA POWER", asOf: "2026-10-03" },
+      { ...wetDays, wetDaysLast7: 7 },
     ),
   );
   assert.ok(sms.length <= SMS_MAX_CHARS, `length ${sms.length}`);
   assert.match(sms, /Model efficientnet-b0-v1 3f9a1c0b2d4e\.$/);
+});
+
+test("the summary does not describe expired rain as recent weather", () => {
+  const stale = { ...wetDays, asOf: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10) };
+  assert.doesNotMatch(formatCaseSummarySms(inputFor({}, rustVerdict, stale)), /Rain:/);
 });
 
 test("the summary is plain ASCII even when the section name has accents", () => {

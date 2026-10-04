@@ -194,7 +194,12 @@ function powerFetch(body: unknown, ok = true) {
 }
 
 test("GET /rain returns wet days from the rainfall source for a rounded point", async () => {
-  const series = Object.fromEntries(Array.from({ length: 14 }, (_, index) => [`202609${17 + index}`, index % 2 === 0 ? 2 : 0]));
+  const today = new Date().toISOString().slice(0, 10);
+  const end = Date.parse(`${today}T00:00:00Z`);
+  const series = Object.fromEntries(Array.from({ length: 14 }, (_, index) => [
+    new Date(end - (13 - index) * 24 * 60 * 60 * 1000).toISOString().slice(0, 10).replaceAll("-", ""),
+    index % 2 === 0 ? 2 : 0,
+  ]));
   const { rainFetch, urls } = powerFetch({ properties: { parameter: { PRECTOTCORR: series } } });
   const { app } = buildApp({ rainFetch });
   const response = await app.fetch(new Request(`${BASE_URL}/rain?lat=-1.146&lon=36.961`));
@@ -203,8 +208,19 @@ test("GET /rain returns wet days from the rainfall source for a rounded point", 
   const body = (await response.json()) as { wetDaysLast7: number; source: string; asOf: string };
   assert.equal(body.source, "NASA POWER");
   assert.equal(body.wetDaysLast7, 3);
-  assert.equal(body.asOf, "2026-09-30");
+  assert.equal(body.asOf, today);
   assert.match(urls[0], /latitude=-1\.1&longitude=37/);
+});
+
+test("GET /rain refuses gapped and stale source data instead of counting older wet days", async () => {
+  const now = Date.now();
+  const seriesFor = (offsets: number[]) => Object.fromEntries(offsets.map((offset) => [
+    new Date(now - offset * 24 * 60 * 60 * 1000).toISOString().slice(0, 10).replaceAll("-", ""), 3,
+  ]));
+  for (const series of [seriesFor([5, 6, 7, 8, 9, 10, 11]), seriesFor([0, 1, 2, 4, 5, 6, 7])]) {
+    const { app } = buildApp({ rainFetch: powerFetch({ properties: { parameter: { PRECTOTCORR: series } } }).rainFetch });
+    assert.equal((await app.fetch(new Request(`${BASE_URL}/rain?lat=0&lon=0`))).status, 503);
+  }
 });
 
 test("GET /rain rejects missing or out-of-range coordinates without calling the source", async () => {
