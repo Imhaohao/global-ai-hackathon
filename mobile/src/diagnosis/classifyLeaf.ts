@@ -16,6 +16,7 @@ export type Diagnosis = {
   condition: LeafCondition;
   probability: number;
   confidence: Confidence;
+  qualityPassed: boolean;
 };
 
 async function cropAndResizeToJpegBase64(photo: LeafPhoto): Promise<string> {
@@ -59,7 +60,11 @@ export async function classifyLeaf(model: TfliteModel, photo: LeafPhoto): Promis
   const jpegBase64 = await cropAndResizeToJpegBase64(photo);
   const decoded = jpeg.decode(base64ToBytes(jpegBase64), { useTArray: true, formatAsRGBA: true });
   const input = rgbaToRgbFloatTensor(decoded.data);
+  const qualityPassed = passesQuality(input);
+  const started = performance.now();
   const [output] = await model.run([input.buffer as ArrayBuffer]);
+  const inferenceMs = performance.now() - started;
+  if (__DEV__) console.log(`[leaf-model] inference_ms=${inferenceMs.toFixed(1)} quality=${qualityPassed}`);
   const diagnosis = pickMostLikely(new Float32Array(output));
-  return passesQuality(input) ? diagnosis : { ...diagnosis, confidence: 'unclear' };
+  return { ...diagnosis, qualityPassed, confidence: qualityPassed ? diagnosis.confidence : 'unclear' };
 }

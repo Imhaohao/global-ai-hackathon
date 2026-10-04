@@ -1,26 +1,110 @@
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 const esbuild = require('../node_modules/esbuild');
-const destination = path.join(__dirname, 'runs/efficientnet/mobileDecision.cjs');
-esbuild.buildSync({entryPoints: [path.join(__dirname, '../mobile/src/diagnosis/modelDecision.ts')], bundle: true, platform: 'node', format: 'cjs', outfile: destination});
-const {pickMostLikely, passesQuality} = require(destination);
+const jpeg = require('../mobile/node_modules/jpeg-js');
+
+const root = path.join(__dirname, '..');
 const config = require('../mobile/assets/model/model-config.json');
-const labels = require('../shared/src/types.ts');
-assert.deepEqual(config.app_condition_keys, labels.DISEASE_KEYS);
-const predict = (i, value) => { const p = new Float32Array(8); p[i] = value; return pickMostLikely(p); };
-assert.equal(predict(7, 1).confidence, 'unclear');
-assert.equal(predict(5, 1).confidence, 'unclear');
-for (const i of [0, 1, 2, 3, 4, 6]) {
-  assert.equal(predict(i, 1).condition, config.app_condition_keys[i]);
-  assert.equal(predict(i, 1).confidence, 'confident');
-  assert.equal(predict(i, config.calibration.class_thresholds[i] - .001).confidence, 'unclear');
+
+function loadModule(file, overrides = {}) {
+  const built = esbuild.buildSync({
+    entryPoints: [path.join(root, file)], bundle: true, platform: 'node', format: 'cjs',
+    write: false, external: ['expo-image-manipulator', 'jpeg-js'],
+  });
+  const module = { exports: {} };
+  vm.runInNewContext(built.outputFiles[0].text, {
+    module, exports: module.exports, require, Float32Array, Uint8Array, ArrayBuffer,
+    console, performance, atob, __DEV__: false, ...overrides,
+  });
+  return module.exports;
 }
-assert.throws(() => pickMostLikely(new Float32Array(5)));
-const invalid = new Float32Array(8); invalid[0] = NaN;
-assert.throws(() => pickMostLikely(invalid));
-assert.equal(passesQuality(new Float32Array(224*224*3)), false);
-assert.equal(passesQuality(new Float32Array(224*224*3).fill(255)), false);
-const fixtures = JSON.parse(fs.readFileSync(path.join(__dirname, 'runs/efficientnet/quality_fixtures.json'), 'utf8'));
-for (const fixture of fixtures) assert.equal(passesQuality(Float32Array.from(fixture.rgb)), fixture.expected);
-console.log('Mobile label mapping, class gates, disabled/unsupported outputs, invalid output, darkness and uniform-image rejection passed.');
+
+function checkConfig() {
+  const { DISEASE_KEYS } = loadModule('shared/src/types.ts');
+  assert.deepEqual(config.app_condition_keys, Array.from(DISEASE_KEYS));
+  assert.deepEqual(config.labels, ['cercospora', 'healthy', 'miner', 'phoma', 'rust', 'red_spider_mite', 'weevil_damage', 'unsupported']);
+  assert.equal(config.input, 'float32 raw RGB 0..255 NHWC');
+  assert.equal(Math.floor(224 / config.crop_pct), 256);
+  const artifact = fs.readFileSync(path.join(root, 'mobile/assets/model/coffee-leaf.tflite'));
+  assert.equal(crypto.createHash('sha256').update(artifact).digest('hex'), config.calibration.artifact_sha256);
+}
+
+function checkDecisions(pickMostLikely, passesQuality) {
+  const predict = (index, value) => {
+    const probabilities = new Float32Array(8);
+    probabilities[index] = value;
+    return pickMostLikely(probabilities);
+  };
+  for (const index of [5, 7]) assert.equal(predict(index, 1).confidence, 'unclear');
+  for (const index of [0, 1, 2, 3, 4, 6]) {
+    assert.equal(predict(index, 1).condition, config.app_condition_keys[index]);
+    assert.equal(predict(index, 1).confidence, 'confident');
+    assert.equal(predict(index, config.calibration.class_thresholds[index] - .001).confidence, 'unclear');
+  }
+  assert.throws(() => pickMostLikely(new Float32Array(5)));
+  const invalid = new Float32Array(8);
+  invalid[0] = NaN;
+  assert.throws(() => pickMostLikely(invalid));
+  for (const value of [0, 255]) assert.equal(passesQuality(new Float32Array(224 * 224 * 3).fill(value)), false);
+}
+
+function encodeFixture(textured) {
+  const data = Buffer.alloc(224 * 224 * 4);
+  for (let pixel = 0; pixel < 224 * 224; pixel++) {
+    const light = textured ? ((Math.floor(pixel / 224) + pixel % 224) % 2 ? 220 : 60) : 0;
+    data.fill(light, pixel * 4, pixel * 4 + 3);
+    data[pixel * 4 + 3] = 255;
+  }
+  return jpeg.encode({ data, width: 224, height: 224 }, 100).data.toString('base64');
+}
+
+async function checkClassification(development, textured, classIndex) {
+  const operations = [];
+  const logs = [];
+  const context = {
+    resize(value) { operations.push(['resize', value]); return this; },
+    crop(value) { operations.push(['crop', value]); return this; },
+    async renderAsync() { return { saveAsync: async () => ({ base64: encodeFixture(textured) }) }; },
+  };
+  const { classifyLeaf } = loadModule('mobile/src/diagnosis/classifyLeaf.ts', {
+    __DEV__: development,
+    performance: { now: (() => { let time = 0; return () => (time += 12.5); })() },
+    console: { log: value => logs.push(value) },
+    require: name => name === 'expo-image-manipulator'
+      ? { ImageManipulator: { manipulate: () => context }, SaveFormat: { JPEG: 'jpeg' } }
+      : require(name === 'jpeg-js' ? '../mobile/node_modules/jpeg-js' : name),
+  });
+  const model = {
+    async run(inputs) {
+      const input = new Float32Array(inputs[0]);
+      assert.equal(input.length, 224 * 224 * 3);
+      assert.ok(input.every(value => value >= 0 && value <= 255));
+      const probabilities = new Float32Array(8);
+      probabilities[classIndex] = 1;
+      return [probabilities.buffer];
+    },
+  };
+  const result = await classifyLeaf(model, { uri: 'fixture.jpg', width: 400, height: 200 });
+  assert.equal(result.qualityPassed, textured);
+  assert.equal(result.confidence, textured && ![5, 7].includes(classIndex) ? 'confident' : 'unclear');
+  assert.deepEqual(Object.keys(result).sort(), ['condition', 'confidence', 'probability', 'qualityPassed']);
+  assert.deepEqual(JSON.parse(JSON.stringify(operations)), [['resize', { width: 512, height: 256 }], ['crop', { originX: 144, originY: 16, width: 224, height: 224 }]]);
+  assert.deepEqual(logs, development ? [`[leaf-model] inference_ms=12.5 quality=${textured}`] : []);
+}
+
+async function main() {
+  checkConfig();
+  const { pickMostLikely, passesQuality } = loadModule('mobile/src/diagnosis/modelDecision.ts');
+  checkDecisions(pickMostLikely, passesQuality);
+  await checkClassification(true, true, 4);
+  await checkClassification(true, false, 4);
+  await checkClassification(false, true, 4);
+  await checkClassification(true, true, 5);
+  await checkClassification(true, true, 7);
+  console.log('Mobile contract passed: artifact hash, labels, preprocessing, gates, qualityPassed and development-only inference timing.');
+}
+
+main().catch(error => { console.error(error); process.exitCode = 1; });
