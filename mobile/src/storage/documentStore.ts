@@ -1,9 +1,37 @@
 import { Directory, File, Paths } from 'expo-file-system';
+import { accountStorageSegments } from '../auth/session';
 
-const APP_FOLDER = new Directory(Paths.document, 'leaf-doctor');
+const LEGACY_FOLDER = new Directory(Paths.document, 'leaf-doctor');
+const SIGNED_OUT_FOLDER = new Directory(LEGACY_FOLDER, 'signed-out');
+let activeFolder = SIGNED_OUT_FOLDER;
+let activeAccountId: string | null = null;
+let activeAccountRevision = 0;
+
+export type ActiveAccountContext = { accountId: string; revision: number };
+
+export function getActiveAccountContext(): ActiveAccountContext | null {
+  return activeAccountId ? { accountId: activeAccountId, revision: activeAccountRevision } : null;
+}
+
+export function isActiveAccountContext(context: ActiveAccountContext | null): context is ActiveAccountContext {
+  return Boolean(context && context.accountId === activeAccountId && context.revision === activeAccountRevision);
+}
+
+export function setActiveAccount(accountId: string): void {
+  if (activeAccountId === accountId) return;
+  activeFolder = new Directory(LEGACY_FOLDER, ...accountStorageSegments(accountId));
+  activeAccountId = accountId;
+  activeAccountRevision += 1;
+}
+
+export function clearActiveAccount(): void {
+  activeFolder = SIGNED_OUT_FOLDER;
+  activeAccountId = null;
+  activeAccountRevision += 1;
+}
 
 function fileAt(...segments: string[]): File {
-  return new File(APP_FOLDER, ...segments);
+  return new File(activeFolder, ...segments);
 }
 
 export function readJson<T>(fallback: T, ...segments: string[]): T {
@@ -23,7 +51,7 @@ export function writeJson(value: unknown, ...segments: string[]): void {
 }
 
 export function listJsonFiles(folder: string): File[] {
-  const directory = new Directory(APP_FOLDER, folder);
+  const directory = new Directory(activeFolder, folder);
   if (!directory.exists) return [];
   return directory.list().filter((entry): entry is File => entry instanceof File && entry.name.endsWith('.json'));
 }
@@ -36,7 +64,7 @@ export function copyIntoFolder(sourceUri: string, ...segments: string[]): string
 }
 
 export function deleteEverything(): void {
-  if (APP_FOLDER.exists) APP_FOLDER.delete();
+  if (activeAccountId && activeFolder.exists) activeFolder.delete();
 }
 
 export function writeExportFile(contents: string): string {

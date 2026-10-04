@@ -10,10 +10,12 @@ export function PillButton({ label, icon: IconComponent, onPress }: PillButtonPr
     <Pressable
       accessibilityRole="button"
       onPress={onPress}
-      className="min-h-11 flex-row items-center gap-2 rounded-full bg-surface px-4 py-2 shadow-sm"
+      className="min-h-11 max-w-full flex-row items-center gap-2 rounded-full bg-surface px-4 py-2 shadow-sm"
     >
       <IconComponent size={20} color={colors.accent} />
-      <Text className="text-base font-medium text-ink">{label}</Text>
+      <Text className="min-w-0 text-base font-medium text-ink" style={{ flexShrink: 1 }}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

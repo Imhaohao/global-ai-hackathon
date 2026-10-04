@@ -7,6 +7,19 @@ export const turnValidator = v.object({
 });
 
 export default defineSchema({
+  accounts: defineTable({
+    phone: v.string(),
+  }).index("by_phone", ["phone"]),
+  authSessions: defineTable({
+    accountId: v.id("accounts"),
+    tokenHash: v.string(),
+    verificationSid: v.string(),
+    expiresAt: v.number(),
+  }).index("by_token", ["tokenHash"]).index("by_verification", ["verificationSid"]),
+  authAttempts: defineTable({
+    key: v.string(),
+    times: v.array(v.number()),
+  }).index("by_key", ["key"]),
   phoneSessions: defineTable({
     phone: v.string(),
     turns: v.array(turnValidator),

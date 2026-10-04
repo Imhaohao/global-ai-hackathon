@@ -39,10 +39,12 @@ export function Button({ label, icon: IconComponent, onPress, variant = 'primary
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
-      className={`flex-row items-center justify-center gap-3 rounded-control px-6 py-4 ${CONTAINER_BY_VARIANT[variant]} ${disabled ? 'opacity-40' : ''}`}
+      className={`min-h-14 max-w-full flex-row items-center justify-center gap-3 rounded-control px-6 py-4 ${CONTAINER_BY_VARIANT[variant]} ${disabled ? 'opacity-40' : ''}`}
     >
       <IconComponent size={26} weight="bold" color={ICON_COLOR_BY_VARIANT[variant]} />
-      <Text className={`text-lg font-semibold ${LABEL_BY_VARIANT[variant]}`}>{label}</Text>
+      <Text className={`min-w-0 text-center text-lg font-semibold ${LABEL_BY_VARIANT[variant]}`} style={{ flexShrink: 1 }}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

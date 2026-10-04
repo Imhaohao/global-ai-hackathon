@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { buildActionCard } from '../../../shared/src/actionCard.ts';
 import type { ActionCard, AppLanguage, Observation, PlantCheck, WetDays } from '../../../shared/src/contract.ts';
@@ -6,6 +6,7 @@ import type { LeafPhoto } from '../diagnosis/classifyLeaf';
 import { locationAllowed, type AppSettings } from '../storage/appSettings';
 import { readCurrentLocation } from '../storage/deviceLocation';
 import { createObservation, saveObservation } from '../storage/observations';
+import { getActiveAccountContext, isActiveAccountContext } from '../storage/documentStore';
 import { sendCaseToOfficer, type OfficerSendResult } from './sendCaseToOfficer';
 
 export type CheckResult = { observation: Observation; card: ActionCard; photoUris: string[] };
@@ -22,26 +23,41 @@ function withFarmSection(observation: Observation, farmSection: string | undefin
 }
 
 export function useResultFlow({ settings, updateSettings, language, wetDays }: ResultFlowInputs) {
+  const [account] = useState(getActiveAccountContext);
+  const mounted = useRef(true);
   const [result, setResult] = useState<CheckResult | null>(null);
+  const isCurrentAccount = useCallback(
+    () => mounted.current && isActiveAccountContext(account),
+    [account],
+  );
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const finishCheck = useCallback(
     async (check: PlantCheck, photos: LeafPhoto[]) => {
+      if (!isCurrentAccount()) return;
       const location = locationAllowed(settings) ? await readCurrentLocation() : null;
+      if (!isCurrentAccount()) return;
       const card = buildActionCard({ kind: 'plant', verdict: check.verdict }, { language, wetDays });
       const observation = createObservation(check, location);
-      setResult({ observation, card, photoUris: photos.map((photo) => photo.uri) });
+      if (isCurrentAccount()) setResult({ observation, card, photoUris: photos.map((photo) => photo.uri) });
     },
-    [language, settings, wetDays],
+    [isCurrentAccount, language, settings, wetDays],
   );
 
   const changeObservation = useCallback(
     (change: (observation: Observation) => Observation) => {
-      if (!result) return;
+      if (!result || !isCurrentAccount()) return;
       const observation = change(result.observation);
       saveObservation(observation);
       setResult({ ...result, observation });
     },
-    [result],
+    [isCurrentAccount, result],
   );
 
   const chooseFarmSection = useCallback(
@@ -51,23 +67,27 @@ export function useResultFlow({ settings, updateSettings, language, wetDays }: R
 
   const addFarmSection = useCallback(
     (name: string) => {
+      if (!isCurrentAccount()) return;
       if (!settings.farmSections.includes(name)) updateSettings({ farmSections: [...settings.farmSections, name] });
       chooseFarmSection(name);
     },
-    [chooseFarmSection, settings.farmSections, updateSettings],
+    [chooseFarmSection, isCurrentAccount, settings.farmSections, updateSettings],
   );
 
   const sendCase = useCallback(
     async (phone: string): Promise<OfficerSendResult> => {
       if (!result) return 'unavailable';
       const outcome = await sendCaseToOfficer(phone, result.observation, result.card, wetDays);
+      if (!isCurrentAccount()) return 'unavailable';
       if (outcome === 'opened') changeObservation((observation) => ({ ...observation, reviewStatus: 'sentToOfficer' }));
       return outcome;
     },
-    [changeObservation, result, wetDays],
+    [changeObservation, isCurrentAccount, result, wetDays],
   );
 
-  const clearResult = useCallback(() => setResult(null), []);
+  const clearResult = useCallback(() => {
+    if (isCurrentAccount()) setResult(null);
+  }, [isCurrentAccount]);
 
   return { result, finishCheck, chooseFarmSection, addFarmSection, sendCase, clearResult };
 }

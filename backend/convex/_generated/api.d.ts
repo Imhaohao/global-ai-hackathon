@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as phoneSessions from "../phoneSessions.js";
 import type * as sms from "../sms.js";
@@ -19,6 +20,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  auth: typeof auth;
   http: typeof http;
   phoneSessions: typeof phoneSessions;
   sms: typeof sms;

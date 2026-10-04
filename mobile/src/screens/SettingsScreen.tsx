@@ -1,4 +1,4 @@
-import { ArrowLeft, DownloadSimple, MapPin, Trash, X } from 'phosphor-react-native';
+import { ArrowLeft, DownloadSimple, MapPin, SignOut, Trash, X } from 'phosphor-react-native';
 import { useState } from 'react';
 import { Alert, Pressable, ScrollView, Switch, Text, View } from 'react-native';
 
@@ -19,6 +19,7 @@ type SettingsScreenProps = {
   strings: Strings;
   settings: AppSettings;
   savedCheckCount: number;
+  accountPhone: string;
   devScenario: DevScenario;
   onChangeDevScenario: (scenario: DevScenario) => void;
   onUpdateSettings: (changes: Partial<AppSettings>) => void;
@@ -26,6 +27,7 @@ type SettingsScreenProps = {
   onExport: () => Promise<boolean>;
   onDeleteAll: () => void;
   onBack: () => void;
+  onSignOut: () => Promise<void>;
 };
 
 function LocationSwitch({
@@ -175,6 +177,11 @@ export function SettingsScreen(props: SettingsScreenProps) {
         <PillButton label={strings.back} icon={ArrowLeft} onPress={props.onBack} />
       </View>
       <Title>{strings.settingsTitle}</Title>
+      <View className="gap-2 rounded-control bg-surface p-4 shadow-sm">
+        <SectionHeading>{strings.authSignedInAs}</SectionHeading>
+        <Body>{props.accountPhone}</Body>
+        <SignOutControl strings={strings} onSignOut={props.onSignOut} />
+      </View>
       <LocationSwitch strings={strings} enabled={locationAllowed(settings)} onToggle={props.onToggleLocation} />
       <OfficerNumberField
         strings={strings}
@@ -196,5 +203,35 @@ export function SettingsScreen(props: SettingsScreenProps) {
         <DevScenarioPicker strings={strings} selected={props.devScenario} onSelect={props.onChangeDevScenario} />
       )}
     </ScrollView>
+  );
+}
+
+function SignOutControl({ strings, onSignOut }: { strings: Strings; onSignOut: () => Promise<void> }) {
+  const [pending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const signOut = async () => {
+    if (pending) return;
+    setPending(true);
+    setFailed(false);
+    try {
+      await onSignOut();
+    } catch {
+      setFailed(true);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  return (
+    <View className="gap-2">
+      {failed ? <Body className="text-sick">{strings.authSignOutFailed}</Body> : null}
+      <Button
+        label={pending ? strings.authSigningOut : strings.authSignOut}
+        icon={SignOut}
+        variant="secondary"
+        onPress={() => void signOut()}
+        disabled={pending}
+      />
+    </View>
   );
 }

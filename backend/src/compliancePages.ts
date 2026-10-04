@@ -30,13 +30,15 @@ export const privacyPolicyPage = page(
 <p>${OPERATED_BY} ${BRAND_NAME} is a free advice line that helps coffee farmers identify and manage coffee leaf diseases by SMS and phone. This policy explains what ${REGISTERED_BRAND} collects and how it is used.</p>
 <h2>What we collect</h2>
 <p>When you text ${BRAND_NAME}, we receive your phone number, the text of your messages, the time they were sent, and any photo of a leaf you send.</p>
+<p>When you sign in to the mobile app, Twilio Verify receives your phone number and verification code. After a successful verification, we save your number with an account ID, a hash of your session token, and its expiry time. We also record sign-in attempt times to limit repeated requests.</p>
 <h2>How we use it</h2>
 <p>We use your messages only to answer your coffee plant questions. We keep up to the last eight messages of a conversation for 24 hours so that follow-up answers make sense, and we record when we last replied to your number so we can limit replies to 5 every 10 minutes.</p>
 <p>To write answers, the text of your messages and any leaf photos are processed by our AI provider (Anthropic), and messages are delivered through our SMS provider (Twilio). They process this data only to provide the service to us. We do not keep your photos after answering; we only note that a photo was sent.</p>
+<p>Mobile sessions expire after 30 days. Signing out clears the saved session from your phone and revokes it on the server when connected. Checks and photos saved in the mobile app stay on your phone and are kept separately for each account.</p>
 <h2>Sharing</h2>
 <p>We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes.</p>
 <h2>Your choices</h2>
-<p>Reply STOP at any time to stop receiving messages. To ask us to delete your messages, email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>.</p>`,
+<p>Reply STOP at any time to stop receiving messages. You can delete an account’s saved checks and settings from this phone in Settings. To ask us to delete your account or messages, email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>.</p>`,
 );
 
 export const termsPage = page(

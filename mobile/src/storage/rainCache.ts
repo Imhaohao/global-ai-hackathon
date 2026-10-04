@@ -23,7 +23,7 @@ export function loadFreshWetDays(): WetDays | undefined {
   return freshWetDays(readJson<CachedWetDays | null>(null, RAIN_FILE), new Date());
 }
 
-export async function refreshWetDays(): Promise<WetDays | undefined> {
+export async function refreshWetDays(shouldSave: () => boolean = () => true): Promise<WetDays | undefined> {
   const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
   if (!backendUrl) return loadFreshWetDays();
   const location = await readLastKnownLocation();
@@ -34,6 +34,7 @@ export async function refreshWetDays(): Promise<WetDays | undefined> {
     roundToTenthOfDegree(location.longitude),
   );
   if (!wetDays) return loadFreshWetDays();
+  if (!shouldSave()) return undefined;
   writeJson({ wetDays, fetchedAt: new Date().toISOString() } satisfies CachedWetDays, RAIN_FILE);
   return wetDays;
 }

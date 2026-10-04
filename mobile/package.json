@@ -13,6 +13,7 @@
     "expo-image-picker": "~57.0.20",
     "expo-localization": "~57.0.2",
     "expo-location": "~57.0.20",
+    "expo-secure-store": "~57.0.4",
     "expo-sharing": "~57.0.22",
     "expo-sms": "~57.0.2",
     "expo-speech": "~57.0.3",
@@ -41,7 +42,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "lint": "expo lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.tests.json"
   },
   "private": true
 }

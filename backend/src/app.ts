@@ -6,6 +6,7 @@ import { lookupWetDays } from "../../shared/src/rainSource.ts";
 import type { FetchLike } from "../../shared/src/rainSource.ts";
 import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
 import { constantTimeEqual, isValidTwilioSignature } from "./twilio.ts";
+import { createPhoneAuthApp, type AuthStore, type VerificationProvider } from "./phoneAuth.ts";
 
 export interface ReplyRateLimit {
   allow(sender: string, maxReplies: number): Promise<boolean>;
@@ -25,6 +26,7 @@ export interface AppDependencies {
   publicBaseUrl: string;
   hubToken: string;
   rainFetch?: FetchLike;
+  phoneAuth?: { provider: VerificationProvider | null; store: AuthStore };
 }
 
 const EMPTY_TWIML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response></Response>";
@@ -78,6 +80,7 @@ function parseAskBody(body: unknown): { from: string; text: string } | null {
 export function createApp(deps: AppDependencies): Hono {
   const app = new Hono();
   const smsWebhookUrl = `${deps.publicBaseUrl.replace(/\/$/, "")}/sms`;
+  if (deps.phoneAuth) app.route("/auth", createPhoneAuthApp(deps.phoneAuth.provider, deps.phoneAuth.store));
 
   app.get("/health", (c) => c.json({ ok: true }));
   app.get("/privacy", (c) => c.html(privacyPolicyPage));

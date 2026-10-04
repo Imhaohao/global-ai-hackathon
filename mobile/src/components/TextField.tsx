@@ -5,6 +5,7 @@ import { colors } from '../theme';
 type TextFieldProps = Pick<
   TextInputProps,
   'value' | 'onChangeText' | 'onBlur' | 'placeholder' | 'keyboardType' | 'autoFocus' | 'onSubmitEditing' | 'returnKeyType'
+  | 'autoComplete' | 'textContentType' | 'maxLength' | 'editable' | 'autoCapitalize' | 'accessibilityHint'
 > & { accessibilityLabel: string };
 
 export function TextField(props: TextFieldProps) {
