@@ -7,7 +7,10 @@
       "license": "CC BY 4.0",
       "status": "used",
       "purpose": "training and source-exposed checks",
-      "notes": "58549 rows;3756 published byteunique representatives; preserve authorholdout membership and close additionalnearhash groups; never claim new independent test"
+      "provenance_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8165403/",
+      "provenance_checked": "2026-10-03",
+      "capture_layout": "Field-origin digital-camera images from Mutira coffee plantation, Kirinyaga County, Kenya; Fujifilm X-T4; real-world weather conditions",
+      "notes": "58549 rows;3756 published byteunique representatives; preserve authorholdout membership and close additionalnearhash groups; never claim new independent test; JMuBEN/JMuBEN2 capture context is documented in the provenance paper"
     },
     {
       "id": "bracol",
@@ -25,6 +28,9 @@
       "revision": "c33f4617504d1b2ed75b7037dc4860ddc6e4b1f8",
       "license": "CC BY 4.0",
       "status": "used",
+      "provenance_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6727496/",
+      "provenance_checked": "2026-10-03",
+      "capture_layout": "Field photos captured with a 5MP smartphone camera at CIIDEA, Calceta, Manabi, Ecuador; varied backgrounds and weather",
       "notes": "1560 annotated RGB leaf crops; group CxPy plant IDs; rust severity collapsed to rust; redspider mite leafsymptoms added"
     },
     {
@@ -34,6 +40,9 @@
       "license": "CC BY 4.0",
       "archive_md5": "2ba46bd8f7a23708d982ff578760f1fa",
       "status": "used",
+      "provenance_url": "https://zenodo.org/api/records/22756170",
+      "provenance_checked": "2026-10-03",
+      "capture_layout": "Field photos from consumer Android smartphones in El Socorro, Santander, Colombia, under natural lighting; Silva derivatives include Brazil",
       "notes": "2315 sourceimages,12794 boxes;12595 crops at least16pixels;1113 emptylabels not assignedhealthy; preserve officialsplit then mostrestrictive parent/nearhash closure; parent leaf/plant IDs incomplete"
     },
     {

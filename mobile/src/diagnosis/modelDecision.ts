@@ -12,7 +12,7 @@ function confidenceFor(probability: number, index: number): Confidence {
 }
 
 export function pickMostLikely(probabilities: Float32Array): Omit<Diagnosis, 'qualityPassed'> {
-  if (probabilities.length !== modelConfig.labels.length || !probabilities.every(Number.isFinite)) {
+  if (probabilities.length !== modelConfig.labels.length || !probabilities.every(value => Number.isFinite(value) && value >= 0 && value <= 1)) {
     throw new Error('The leaf model returned invalid probabilities');
   }
   let bestIndex = 0;

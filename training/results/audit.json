@@ -1,0 +1,166 @@
+{
+  "scope": "Training pipeline and bundled artifact audit",
+  "audited_at_utc": "2026-10-04T02:31:56Z",
+  "repository_head_at_audit": "4ebe85705f6215174b50b5e05b97e63464b6367c",
+  "artifact": {
+    "path": "mobile/assets/model/coffee-leaf.tflite",
+    "bytes": 8091596,
+    "sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "config_path": "mobile/assets/model/model-config.json",
+    "config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+    "config_version": "deployed-v1",
+    "model_revision": "252d26841543befab22880876f8ca91543230aab",
+    "labels": [
+      "cercospora",
+      "healthy",
+      "miner",
+      "phoma",
+      "rust",
+      "red_spider_mite",
+      "weevil_damage",
+      "unsupported"
+    ],
+    "mites_enabled": false
+  },
+  "local_data": {
+    "training/data/images": {
+      "present": true,
+      "files": 7500,
+      "counts": {
+        "cercospora": 1500,
+        "healthy": 1500,
+        "miner": 1500,
+        "phoma": 1500,
+        "rust": 1500
+      },
+      "note": "The five-class image folders are the older train.py extraction; they are not the EfficientNet manifest."
+    },
+    "training/data/hf/data": {
+      "present": true,
+      "files": 4,
+      "rows": 58549,
+      "note": "AgML parquet files are present, but no prepared manifest links them to the EfficientNet run."
+    },
+    "required_for_full_reproduction": {
+      "missing": [
+        "training/data/manifest.json",
+        "training/data/revisions.json",
+        "training/data/agml",
+        "training/data/bracol",
+        "training/data/rocole",
+        "training/data/beans",
+        "training/data/coffeeleaf_co",
+        "training/data/multispec_binary.json",
+        "training/data/scans",
+        "training/models/huyt/config.json",
+        "training/models/huyt/model.safetensors"
+      ]
+    }
+  },
+  "local_run_state": {
+    "present": [
+      "training/runs/efficientnet/mobileDecision.cjs",
+      "training/results/offline-verification.json",
+      "training/results/emulator-metadata.json",
+      "training/results/progress.json"
+    ],
+    "missing": [
+      "training/runs/efficientnet/best.safetensors",
+      "training/runs/efficientnet/calibration.json",
+      "training/runs/efficientnet/results.json",
+      "training/runs/efficientnet/final_evaluation.json",
+      "training/runs/efficientnet/offline_verification.json",
+      "training/runs/efficientnet/quality_fixtures.json"
+    ]
+  },
+  "runtime": {
+    "python": "3.12.1",
+    "tensorflow": "2.21.0",
+    "numpy": "2.5.3",
+    "pillow": "12.3.0",
+    "pyarrow": "25.0.1",
+    "ai_edge_litert_importable": false,
+    "torch_importable": false,
+    "torchvision_importable": false,
+    "timm_importable": false,
+    "safetensors_importable": false,
+    "imagehash_importable": false,
+    "scikit_learn_importable": false,
+    "pip_check": "passed, but required runtime modules above are not importable"
+  },
+  "validation": {
+    "contract_command": "node training/check_mobile_contract.cjs",
+    "contract_result": "passed",
+    "offline_unit_tests": {
+      "command": "python -m pytest -q training/test_verify_offline.py",
+      "result": "3 passed"
+    },
+    "artifact_only_command": "training/.venv/bin/python training/verify_offline.py --artifact-only --photo training/data/images/rust/00000.jpg",
+    "artifact_only_result": {
+      "report": "training/results/offline-verification.json",
+      "runtime": "tensorflow_lite",
+      "attempted_connections": 0,
+      "input_shape": [1, 224, 224, 3],
+      "output_shape": [1, 8],
+      "softmax_verified": true,
+      "custom_ops_present": false,
+      "float16_storage_verified": true,
+      "float16_tensor_count": 168,
+      "dequantize_op_count": 168,
+      "model_signature": "serving_default: rgb -> probabilities"
+    },
+    "full_checkpoint_command": "training/.venv/bin/python training/verify_offline.py",
+    "full_checkpoint_result": "blocked before artifact/checkpoint comparison: torch is not importable",
+    "candidate_selection": "not feasible locally: checkpoint, manifest and prepared source trees are absent"
+  },
+  "canonical_historical_evidence": {
+    "status": "recovered attachment; semantically matches the current artifact/config, but not regenerated in this checkout",
+    "sources": [
+      {
+        "path": "/Users/yanzihao/Downloads/training-results.json",
+        "sha256": "b21814acac27879e46b99b39e9a3e8907da2adab44f8e0c18ba90ca50c749586"
+      },
+      {
+        "path": "/Users/yanzihao/Downloads/model-config.json",
+        "sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368"
+      },
+      {
+        "path": "/Users/yanzihao/Downloads/photo-evaluation.csv",
+        "sha256": "938db08691aa4b7dd581d6a687bb265a951ce649bf2475201de6f93500d212b6"
+      }
+    ],
+    "matching_checks": {
+      "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
+      "reported_checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+      "reported_manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7"
+    },
+    "reported_metrics_are_historical": true,
+    "current_checkout_reproduced": false,
+    "historical_internal_test": {
+      "n": 4571,
+      "raw_accuracy": 0.9105228615182673,
+      "accepted_coverage": 0.8149201487639466,
+      "accepted_accuracy": 0.931006711409396
+    },
+    "historical_unseen_new_source": {
+      "n": 3114,
+      "raw_accuracy": 0.8953114964675658,
+      "accepted_coverage": 0.7424534360950545,
+      "accepted_accuracy": 0.9156574394463668
+    },
+    "historical_limitations": [
+      "The attached report says AGML examples may be exposed through pretraining.",
+      "The attached report says native phone interpolation/JPEG and camera distribution were not validated.",
+      "The attached report says severe synthetic blur rejection was weak.",
+      "No current-checkout rerun or candidate comparison was possible."
+    ]
+  },
+  "conclusion": {
+    "model_changed": false,
+    "current_model_retained": true,
+    "full_reproduction": "blocked by missing checkpoint/manifest/source artifacts and incomplete runtime",
+    "smallest_meaningful_validation": "artifact-only offline inference with one available AGML photo",
+    "freeze_status": "not independently established in this checkout"
+  }
+}

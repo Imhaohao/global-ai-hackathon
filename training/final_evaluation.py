@@ -3,17 +3,17 @@ import hashlib
 import json
 import time
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 
 import imagehash
 import numpy as np
-from PIL import Image
 from ai_edge_litert.interpreter import Interpreter
-
-from model_utils import ROOT, LABELS, initialize_runtime, load_model, read_records
+from evaluate_additional import binary_metrics, quality_evaluation, quality_features
 from export_mobile import raw_tensor
 from finetune import predict, summarize
-from evaluate_additional import quality_features, quality_evaluation, binary_metrics
+from model_utils import LABELS, ROOT, initialize_runtime, load_model, read_records
+from PIL import Image
 
 RUN = ROOT / "runs/efficientnet"
 ARTIFACT = ROOT.parent / "mobile/assets/model/coffee-leaf.tflite"
@@ -95,9 +95,9 @@ def calibrate_mobile(probabilities, quality, y, config):
             )
             if accepted.sum() < 15:
                 continue
-            for precision in candidates:
+            for precision, selected in candidates.items():
                 if (y[accepted] == label).mean() >= precision:
-                    candidates[precision].append(float(threshold))
+                    selected.append(float(threshold))
         thresholds.append(min(candidates[0.9], default=1.01))
         confident.append(min(candidates[0.95], default=1.01))
     config.update(
@@ -110,12 +110,12 @@ def calibrate_mobile(probabilities, quality, y, config):
     )
     config.pop("accept_threshold", None)
     config["class_threshold_evidence"] = [
-        dict(
-            label=LABELS[i],
-            enabled=thresholds[i] <= 1,
-            accept_threshold=thresholds[i],
-            val_true_support=int((y == i).sum()),
-        )
+        {
+            "label": LABELS[i],
+            "enabled": thresholds[i] <= 1,
+            "accept_threshold": thresholds[i],
+            "val_true_support": int((y == i).sum()),
+        }
         for i in range(7)
     ]
     return config
@@ -123,17 +123,17 @@ def calibrate_mobile(probabilities, quality, y, config):
 
 def accepted_metrics(probabilities, quality, y, config):
     chosen, accepted, _ = decisions(probabilities, quality, config)
-    return dict(
-        n=len(y),
-        accepted_n=int(accepted.sum()),
-        accepted_coverage=float(accepted.mean()),
-        accepted_accuracy=float((chosen[accepted] == y[accepted]).mean())
+    return {
+        "n": len(y),
+        "accepted_n": int(accepted.sum()),
+        "accepted_coverage": float(accepted.mean()),
+        "accepted_accuracy": float((chosen[accepted] == y[accepted]).mean())
         if accepted.any()
         else None,
-        unsupported_reject_rate=float((~accepted[y == 7]).mean())
+        "unsupported_reject_rate": float((~accepted[y == 7]).mean())
         if (y == 7).any()
         else None,
-    )
+    }
 
 
 def audited_external(records, candidates=None, filename="external_audit.json"):
@@ -156,14 +156,14 @@ def audited_external(records, candidates=None, filename="external_audit.json"):
             (value ^ reference).bit_count() <= 5 for reference in hashes
         )
         (excluded if overlaps else kept).append(row)
-    audit = dict(
-        total=len(binary),
-        excluded=len(excluded),
-        excluded_by_label=dict(Counter(r["label"] for r in excluded)),
-        retained=len(kept),
-        method="SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
-        excluded_paths=[r["path"] for r in excluded],
-    )
+    audit = {
+        "total": len(binary),
+        "excluded": len(excluded),
+        "excluded_by_label": dict(Counter(r["label"] for r in excluded)),
+        "retained": len(kept),
+        "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
+        "excluded_paths": [r["path"] for r in excluded],
+    }
     (RUN / filename).write_text(json.dumps(audit, indent=2))
     return kept, audit
 
@@ -178,7 +178,7 @@ def select_binary_threshold(scores, y):
 
 def external_evaluation(records, val, val_probs, config):
     rows, audit = audited_external(records)
-    probabilities, quality, _ = mobile_predict(rows, "rust_stress")
+    probabilities, _quality, _ = mobile_predict(rows, "rust_stress")
     wrapped = [
         dict(r, label="rust" if r["label"] == "rust" else "healthy") for r in rows
     ]
@@ -191,27 +191,27 @@ def external_evaluation(records, val, val_probs, config):
     fine_threshold = select_binary_threshold(val_probs[:, 4], val_y)
     original_threshold = select_binary_threshold(original_val_scores, val_y)
     truth = np.array([r["label"] == "rust" for r in rows], dtype=int)
-    return dict(
-        status="Previously inspected development stress test; no checkpoint or gates selected on it",
-        audit=audit,
-        fine_tuned=binary_metrics(probabilities[:, 4], truth, fine_threshold),
-        original=binary_metrics(original_scores, truth, original_threshold),
-        note="Each model uses its own validation-selected binary threshold; NoRust is not a healthy label",
-    )
+    return {
+        "status": "Previously inspected development stress test; no checkpoint or gates selected on it",
+        "audit": audit,
+        "fine_tuned": binary_metrics(probabilities[:, 4], truth, fine_threshold),
+        "original": binary_metrics(original_scores, truth, original_threshold),
+        "note": "Each model uses its own validation-selected binary threshold; NoRust is not a healthy label",
+    }
 
 
 def scan_records():
     rows = list(csv.DictReader((ROOT / "data/scans/metadata.csv").open()))
     mapping = {"roya": "rust", "healthy": "healthy", "ojo": "unsupported"}
     return [
-        dict(
-            path=str(Path("data/scans/images") / r["category"] / r["file"]),
-            label=mapping[r["category"]],
-            source="pg26038_scans",
-            split="external",
-            parent=r["leaf_id"],
-            category=r["category"],
-        )
+        {
+            "path": str(Path("data/scans/images") / r["category"] / r["file"]),
+            "label": mapping[r["category"]],
+            "source": "pg26038_scans",
+            "split": "external",
+            "parent": r["leaf_id"],
+            "category": r["category"],
+        }
         for r in rows
     ]
 
@@ -239,12 +239,17 @@ def enrich_report(final, test, probabilities, quality, y, config):
         for i, row in enumerate(test)
         if row["source"] != "agml" and not row["pretraining_exposed"]
     ]
-    final["unseen_new_source"] = dict(
-        raw=summarize(probabilities[indices], y[indices]),
-        deployed=accepted_metrics(
+    final["unseen_new_source"] = {
+        "raw": summarize(probabilities[indices], y[indices]),
+        "deployed": accepted_metrics(
             probabilities[indices], quality[indices], y[indices], config
         ),
-    )
+    }
+    final["evaluated_at_utc"] = datetime.now(timezone.utc).isoformat()
+    final["split_counts"] = dict(Counter(r["split"] for r in read_records()))
+    final["data_audit"] = json.loads((ROOT / "data/manifest.json").read_text())["audit"]
+    final["model_revision"] = json.loads((ARTIFACT.parent / "model-config.json").read_text())["model_revision"]
+    final["calibration"] = config
     final["checkpoint_sha256"] = sha(RUN / "best.safetensors")
     final["manifest_sha256"] = sha(ROOT / "data/manifest.json")
     final["artifact_mib"] = final["artifact_bytes"] / 1024**2
@@ -254,7 +259,9 @@ def enrich_report(final, test, probabilities, quality, y, config):
     ]:
         path = RUN / filename
         if path.exists():
-            final[name] = json.loads(path.read_text())
+            evidence = json.loads(path.read_text())
+            if name != "offline" or evidence.get("artifact_sha256") == final["artifact_sha256"]:
+                final[name] = evidence
     final["limitations"] = [
         "Internal holdout includes AGML examples potentially seen in pretraining; use unseen_new_source and external results separately.",
         "Native phone interpolation/JPEG and camera distribution remain unvalidated.",
@@ -262,6 +269,14 @@ def enrich_report(final, test, probabilities, quality, y, config):
         "FP16 conversion changes some decisions; thresholds use deployed validation scores.",
         "Physical Android/iOS offline and latency tests not performed.",
     ]
+
+
+def persist_evaluation(final):
+    serialized = json.dumps(final, indent=2, allow_nan=False) + "\n"
+    (RUN / "final_evaluation.json").write_text(serialized)
+    destination = ROOT / "results"
+    destination.mkdir(parents=True, exist_ok=True)
+    (destination / "final-evaluation.json").write_text(serialized)
 
 
 def main():
@@ -290,23 +305,23 @@ def main():
     original_chosen, original_accepted, original_states = decisions(
         python, quality, config
     )
-    final = dict(
-        calibration_sha256=sha(RUN / "calibration.json"),
-        artifact_sha256=sha(ARTIFACT),
-        raw=summarize(probabilities, y),
-        deployed=accepted_metrics(probabilities, quality, y, config),
-        parity=dict(
-            top1_disagreements=int((chosen != original_chosen).sum()),
-            acceptance_disagreements=int((accepted != original_accepted).sum()),
-            confidence_state_disagreements=int((states != original_states).sum()),
-            maximum_probability_error=float(np.max(np.abs(probabilities - python))),
-            handling="Thresholds calibrated on deployed runtime validation outputs; deployed decisions authoritative. Disagreements retained in report.",
-        ),
-        model_parameters=sum(p.numel() for p in load_model().parameters()),
-        artifact_bytes=ARTIFACT.stat().st_size,
-        desktop_median_ms=float(np.median(timing)),
-        phone_device_tested=False,
-    )
+    final = {
+        "calibration_sha256": sha(RUN / "calibration.json"),
+        "artifact_sha256": sha(ARTIFACT),
+        "raw": summarize(probabilities, y),
+        "deployed": accepted_metrics(probabilities, quality, y, config),
+        "parity": {
+            "top1_disagreements": int((chosen != original_chosen).sum()),
+            "acceptance_disagreements": int((accepted != original_accepted).sum()),
+            "confidence_state_disagreements": int((states != original_states).sum()),
+            "maximum_probability_error": float(np.max(np.abs(probabilities - python))),
+            "handling": "Thresholds calibrated on deployed runtime validation outputs; deployed decisions authoritative. Disagreements retained in report.",
+        },
+        "model_parameters": sum(p.numel() for p in load_model().parameters()),
+        "artifact_bytes": ARTIFACT.stat().st_size,
+        "desktop_median_ms": float(np.median(timing)),
+        "phone_device_tested": False,
+    }
     final["per_source"] = {
         source: accepted_metrics(probabilities[idx], quality[idx], y[idx], config)
         for source in sorted({r["source"] for r in test})
@@ -316,7 +331,7 @@ def main():
     final["rust_stress"] = external_evaluation(records, val, val_probs, config)
     final["untouched_scans"] = scan_evaluation(config, records)
     enrich_report(final, test, probabilities, quality, y, config)
-    (RUN / "final_evaluation.json").write_text(json.dumps(final, indent=2))
+    persist_evaluation(final)
     results = json.loads((RUN / "results.json").read_text())
     results["calibration"] = config
     for part in ["test", "external"]:
@@ -326,11 +341,11 @@ def main():
     (RUN / "results.json").write_text(json.dumps(results, indent=2))
     (RUN / "additional_evaluation.json").write_text(
         json.dumps(
-            dict(
-                calibration_sha256=final["calibration_sha256"],
-                quality=final["quality"],
-                rust_source_holdout=final["rust_stress"],
-            ),
+            {
+                "calibration_sha256": final["calibration_sha256"],
+                "quality": final["quality"],
+                "rust_source_holdout": final["rust_stress"],
+            },
             indent=2,
         )
     )

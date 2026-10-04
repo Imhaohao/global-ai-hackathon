@@ -1,0 +1,188 @@
+{
+  "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+  "artifact_bytes": 8091596,
+  "model_config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+  "model_config": {
+    "labels": [
+      "cercospora",
+      "healthy",
+      "miner",
+      "phoma",
+      "rust",
+      "red_spider_mite",
+      "weevil_damage",
+      "unsupported"
+    ],
+    "app_condition_keys": [
+      "cercospora",
+      "healthy",
+      "miner",
+      "phoma",
+      "rust",
+      "mites",
+      "weevil"
+    ],
+    "calibration": {
+      "temperature": 0.6408186797050134,
+      "selection": "Validation-only deployed FP16 runtime scores with frozen quality gate; >=15 accepted and >=90%/95% validation precision per class",
+      "validation_n": 3921,
+      "quality": {
+        "minimum_edge_variance": 1.520114853217684,
+        "minimum_mean_luminance": 45.59410861968994,
+        "selection": "validation-only severe Gaussianblur challenge balancedaccuracy subject to >=90% clear acceptance"
+      },
+      "class_thresholds": [
+        0.47500000000000003,
+        0.72,
+        0.4,
+        0.6000000000000001,
+        0.4,
+        1.01,
+        0.4
+      ],
+      "confident_thresholds": [
+        0.64,
+        0.99,
+        0.455,
+        0.8,
+        0.67,
+        1.01,
+        0.4
+      ],
+      "class_threshold_evidence": [
+        {
+          "label": "cercospora",
+          "enabled": true,
+          "accept_threshold": 0.47500000000000003,
+          "val_true_support": 167
+        },
+        {
+          "label": "healthy",
+          "enabled": true,
+          "accept_threshold": 0.72,
+          "val_true_support": 210
+        },
+        {
+          "label": "miner",
+          "enabled": true,
+          "accept_threshold": 0.4,
+          "val_true_support": 917
+        },
+        {
+          "label": "phoma",
+          "enabled": true,
+          "accept_threshold": 0.6000000000000001,
+          "val_true_support": 312
+        },
+        {
+          "label": "rust",
+          "enabled": true,
+          "accept_threshold": 0.4,
+          "val_true_support": 1233
+        },
+        {
+          "label": "red_spider_mite",
+          "enabled": false,
+          "accept_threshold": 1.01,
+          "val_true_support": 25
+        },
+        {
+          "label": "weevil_damage",
+          "enabled": true,
+          "accept_threshold": 0.4,
+          "val_true_support": 924
+        }
+      ],
+      "runtime": "ai-edge-litert CPU float16 storage / float32 computation",
+      "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "version": "deployed-v1"
+    },
+    "input": "float32 raw RGB 0..255 NHWC",
+    "crop_pct": 0.875,
+    "model_revision": "252d26841543befab22880876f8ca91543230aab",
+    "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520"
+  },
+  "photo": "training/data/images/rust/00000.jpg",
+  "photo_sha256": "207558a3d4cf9648420972773dc4cf45b00a8cb59e0888a27ca9338aad1d85eb",
+  "evidence_signature_sha256": "b06720e8cb13b089fcfbe60bdbd6eaf75746870fa11b92e7ee47b2877df2c46b",
+  "fresh_process": true,
+  "outbound_sockets_blocked": true,
+  "attempted_connections": 0,
+  "runtime": "tensorflow_lite",
+  "input_shape": [
+    1,
+    224,
+    224,
+    3
+  ],
+  "input_dtype": "float32",
+  "output_shape": [
+    1,
+    8
+  ],
+  "output_dtype": "float32",
+  "model_signatures": {
+    "serving_default": {
+      "inputs": [
+        "rgb"
+      ],
+      "outputs": [
+        "probabilities"
+      ]
+    }
+  },
+  "probabilities": [
+    0.0017631028313189745,
+    0.0007694592350162566,
+    0.0041043986566364765,
+    0.008832000195980072,
+    0.9763414859771729,
+    0.006241354625672102,
+    0.0009139585308730602,
+    0.001034263870678842
+  ],
+  "predicted_index": 4,
+  "predicted_label": "rust",
+  "probability_sum": 1.0000001192092896,
+  "softmax_verified": true,
+  "runtime_operations": [
+    "ADD",
+    "CONV_2D",
+    "DELEGATE",
+    "DEPTHWISE_CONV_2D",
+    "DEQUANTIZE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "MEAN",
+    "MUL",
+    "PAD",
+    "RESHAPE",
+    "SOFTMAX",
+    "SUB",
+    "TRANSPOSE"
+  ],
+  "internal_operation_count": 419,
+  "custom_ops_present": false,
+  "float16_storage": {
+    "tensor_dtype_counts": {
+      "float32": 419,
+      "float16": 168,
+      "int32": 24
+    },
+    "float16_tensor_count": 168,
+    "dequantize_op_count": 168,
+    "dequantize_float16_input_count": 168,
+    "float16_storage_verified": true,
+    "description": "Float16 tensors are dequantized to float32 inside the graph."
+  },
+  "quality": {
+    "edge_variance": 2.209195613861084,
+    "mean_luminance": 179.56979370117188,
+    "minimum_edge_variance": 1.520114853217684,
+    "minimum_mean_luminance": 45.59410861968994,
+    "passed": true
+  },
+  "inference_ms": 8.281332964543253,
+  "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
+  "phone_device_tested": false
+}

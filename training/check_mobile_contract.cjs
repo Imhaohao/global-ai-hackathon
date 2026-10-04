@@ -28,6 +28,10 @@ function checkConfig() {
   assert.deepEqual(config.labels, ['cercospora', 'healthy', 'miner', 'phoma', 'rust', 'red_spider_mite', 'weevil_damage', 'unsupported']);
   assert.equal(config.input, 'float32 raw RGB 0..255 NHWC');
   assert.equal(Math.floor(224 / config.crop_pct), 256);
+  assert.equal(config.calibration.class_thresholds.length, 7);
+  assert.equal(config.calibration.confident_thresholds.length, 7);
+  assert.ok(config.calibration.class_thresholds[5] > 1);
+  assert.ok(config.calibration.confident_thresholds[5] > 1);
   const artifact = fs.readFileSync(path.join(root, 'mobile/assets/model/coffee-leaf.tflite'));
   assert.equal(crypto.createHash('sha256').update(artifact).digest('hex'), config.calibration.artifact_sha256);
 }
@@ -48,6 +52,7 @@ function checkDecisions(pickMostLikely, passesQuality) {
   const invalid = new Float32Array(8);
   invalid[0] = NaN;
   assert.throws(() => pickMostLikely(invalid));
+  for (const value of [-0.1, 1.1, Infinity]) assert.throws(() => predict(5, value));
   for (const value of [0, 255]) assert.equal(passesQuality(new Float32Array(224 * 224 * 3).fill(value)), false);
 }
 
