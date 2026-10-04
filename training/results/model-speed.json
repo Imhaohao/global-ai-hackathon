@@ -11,5 +11,6 @@
   "responsiveness": "not measured",
   "android_build_install": "succeeded",
   "gallery_photos_prepared": 6,
-  "blocker": "Computer-use tool cannot bind Android emulator; user authorization for adb UI automation is pending. Existing uncontrolled log entries excluded."
+  "blocker": "User requested manual gallery execution; automated timing collection stopped. No controlled timing samples were retained.",
+  "execution_preference": "manual_gallery_checks"
 }

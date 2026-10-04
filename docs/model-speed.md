@@ -1,6 +1,6 @@
 # Coffee-leaf model emulator speed
 
-No controlled speed result is available yet. The development app was built and installed, and six credited photos were added to the gallery. Repeated gallery checks are pending authorization to use adb for UI automation because the computer-use tool cannot control this emulator window. Existing log lines from other interactions were not counted as a benchmark.
+No controlled speed result is available. The development app was built and installed, and six credited photos were added to the gallery. At the user’s request, repeated gallery checks are ready for manual execution. An earlier launch encountered a Hermes `TextDecoder` error in `fast-png`; no uncontrolled log lines were counted as benchmark samples.
 
 This is a snapshot of the current model on 3 October 2026, before the plan's 4 October noon cutoff. A later model change would require another measurement.
 
@@ -23,7 +23,7 @@ This is a snapshot of the current model on 3 October 2026, before the plan's 4 O
 
 | Measurement | Result |
 |---|---|
-| Controlled inference count | Not measured |
+| Controlled inference count | 0 |
 | Median | Not measured |
 | 90th percentile | Not measured |
 | Slowest inference | Not measured |
@@ -38,7 +38,7 @@ This is a snapshot of the current model on 3 October 2026, before the plan's 4 O
 
 The app logs elapsed time around the awaited `model.run` call. Resizing, JPEG decoding, the quality check and result rendering are excluded. Include warm-up calls and photos that fail quality; do not discard slow samples. Keep the development scenario override off so every check runs the actual model.
 
-Start the app with `cd mobile && npx expo run:android`. Clear logcat before a controlled run, then check the same six photos repeatedly until at least 30 `[leaf-model]` lines are recorded. Save only those lines to `training/results/emulator-logcat.txt` and run from the repository root:
+Start the app with `cd mobile && npx expo run:android`. Select B0 and turn off the development scenario override. Use the six `leaf-speed-` gallery fixtures listed in the metadata; keep the same B0 artifact and calibration throughout the run. Clear logcat before a controlled run, then check the same six photos repeatedly until at least 30 `[leaf-model]` lines are recorded. Save only those lines to `training/results/emulator-logcat.txt` and run from the repository root:
 
 ```sh
 training/.venv/bin/python training/model_speed.py \
