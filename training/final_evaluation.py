@@ -1,3 +1,4 @@
+import argparse
 import csv
 import hashlib
 import json
@@ -176,13 +177,13 @@ def select_binary_threshold(scores, y):
     return float(choices[int(np.argmax(balanced))])
 
 
-def external_evaluation(records, val, val_probs, config):
+def external_evaluation(records, val, val_probs, config, checkpoint_device="cpu"):
     rows, audit = audited_external(records)
     probabilities, _quality, _ = mobile_predict(rows, "rust_stress")
     wrapped = [
         dict(r, label="rust" if r["label"] == "rust" else "healthy") for r in rows
     ]
-    baseline = load_model().eval()
+    baseline = load_model().eval().to(checkpoint_device)
     original_logits, _ = predict(baseline, wrapped)
     original_val, _ = predict(baseline, val)
     original_scores = original_logits[:, :5].softmax(1)[:, 4].numpy()
@@ -248,7 +249,9 @@ def enrich_report(final, test, probabilities, quality, y, config):
     final["evaluated_at_utc"] = datetime.now(timezone.utc).isoformat()
     final["split_counts"] = dict(Counter(r["split"] for r in read_records()))
     final["data_audit"] = json.loads((ROOT / "data/manifest.json").read_text())["audit"]
-    final["model_revision"] = json.loads((ARTIFACT.parent / "model-config.json").read_text())["model_revision"]
+    final["model_revision"] = json.loads(
+        (ARTIFACT.parent / "model-config.json").read_text()
+    )["model_revision"]
     final["calibration"] = config
     final["checkpoint_sha256"] = sha(RUN / "best.safetensors")
     final["manifest_sha256"] = sha(ROOT / "data/manifest.json")
@@ -260,7 +263,10 @@ def enrich_report(final, test, probabilities, quality, y, config):
         path = RUN / filename
         if path.exists():
             evidence = json.loads(path.read_text())
-            if name != "offline" or evidence.get("artifact_sha256") == final["artifact_sha256"]:
+            if (
+                name != "offline"
+                or evidence.get("artifact_sha256") == final["artifact_sha256"]
+            ):
                 final[name] = evidence
     final["limitations"] = [
         "Internal holdout includes AGML examples potentially seen in pretraining; use unseen_new_source and external results separately.",
@@ -279,33 +285,66 @@ def persist_evaluation(final):
     (destination / "final-evaluation.json").write_text(serialized)
 
 
+def evaluation_calibration(fixed):
+    if not fixed:
+        return json.loads((RUN / "calibration.json").read_text())
+    metadata = json.loads((ARTIFACT.parent / "model-config.json").read_text())
+    config = metadata["calibration"]
+    if config["artifact_sha256"] != sha(ARTIFACT):
+        raise ValueError("Fixed calibration does not match the bundled artifact")
+    return config
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--fixed-calibration",
+        action="store_true",
+        help="Reproduce bundled model results without selecting or changing thresholds",
+    )
+    parser.add_argument(
+        "--checkpoint-device",
+        choices=["cpu", "mps"],
+        default="cpu",
+        help="Device for PyTorch parity checks; deployed TFLite evaluation always uses CPU",
+    )
+    args = parser.parse_args()
     initialize_runtime()
     records = read_records()
     val = [r for r in records if r["split"] == "val"]
     test = [r for r in records if r["split"] == "test"]
-    config = json.loads((RUN / "calibration.json").read_text())
+    config = evaluation_calibration(args.fixed_calibration)
     val_probs, val_quality, _ = mobile_predict(val, "validation")
-    config = calibrate_mobile(
-        val_probs,
-        val_quality,
-        np.array([LABELS.index(r["label"]) for r in val]),
-        config,
-    )
-    (RUN / "calibration.json").write_text(json.dumps(config, indent=2))
     metadata_path = ARTIFACT.parent / "model-config.json"
-    metadata = json.loads(metadata_path.read_text())
-    metadata["calibration"] = config
-    metadata["calibration_sha256"] = sha(RUN / "calibration.json")
-    metadata_path.write_text(json.dumps(metadata, indent=2))
+    if not args.fixed_calibration:
+        config = calibrate_mobile(
+            val_probs,
+            val_quality,
+            np.array([LABELS.index(r["label"]) for r in val]),
+            config,
+        )
+        (RUN / "calibration.json").write_text(json.dumps(config, indent=2))
+        metadata = json.loads(metadata_path.read_text())
+        metadata["calibration"] = config
+        metadata["calibration_sha256"] = sha(RUN / "calibration.json")
+        metadata_path.write_text(json.dumps(metadata, indent=2))
     probabilities, quality, timing = mobile_predict(test, "test")
     y = np.array([LABELS.index(r["label"]) for r in test])
-    python = np.load(RUN / "test_predictions.npz")["probabilities"]
+    checkpoint_logits, _ = predict(
+        load_model(RUN / "best.safetensors").eval().to(args.checkpoint_device), test
+    )
+    python = (checkpoint_logits / config["temperature"]).softmax(1).numpy()
     chosen, accepted, states = decisions(probabilities, quality, config)
     original_chosen, original_accepted, original_states = decisions(
         python, quality, config
     )
     final = {
+        "evaluation_mode": "fixed_calibration"
+        if args.fixed_calibration
+        else "validation_recalibration",
+        "status": "reproduced",
+        "model_config_sha256": sha(metadata_path),
+        "checkpoint_device": args.checkpoint_device,
         "calibration_sha256": sha(RUN / "calibration.json"),
         "artifact_sha256": sha(ARTIFACT),
         "raw": summarize(probabilities, y),
@@ -328,17 +367,21 @@ def main():
         for idx in [[i for i, r in enumerate(test) if r["source"] == source]]
     }
     _, final["quality"] = quality_evaluation(records, config["quality"])
-    final["rust_stress"] = external_evaluation(records, val, val_probs, config)
+    final["rust_stress"] = external_evaluation(
+        records, val, val_probs, config, args.checkpoint_device
+    )
     final["untouched_scans"] = scan_evaluation(config, records)
     enrich_report(final, test, probabilities, quality, y, config)
     persist_evaluation(final)
-    results = json.loads((RUN / "results.json").read_text())
-    results["calibration"] = config
-    for part in ["test", "external"]:
-        results[part].pop("accepted_coverage", None)
-        results[part].pop("accepted_accuracy", None)
-    results["final_deployed_evaluation"] = "final_evaluation.json"
-    (RUN / "results.json").write_text(json.dumps(results, indent=2))
+    results_path = RUN / "results.json"
+    if results_path.exists():
+        results = json.loads(results_path.read_text())
+        results["calibration"] = config
+        for part in ["test", "external"]:
+            results[part].pop("accepted_coverage", None)
+            results[part].pop("accepted_accuracy", None)
+        results["final_deployed_evaluation"] = "final_evaluation.json"
+        results_path.write_text(json.dumps(results, indent=2))
     (RUN / "additional_evaluation.json").write_text(
         json.dumps(
             {

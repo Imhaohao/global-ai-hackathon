@@ -282,7 +282,8 @@ def full_checkpoint_verification():
     row = next(
         r for r in read_records() if r["split"] == "test" and r["label"] == "rust"
     )
-    config = json.loads((FINAL_RUN / "calibration.json").read_text())
+    metadata, config_hash, artifact_hash = load_config()
+    config = metadata["calibration"]
     raw = raw_tensor(row["path"])
     with torch.inference_mode():
         expected = PhoneModel(
@@ -294,14 +295,21 @@ def full_checkpoint_verification():
     lite.invoke()
     actual = lite.get_tensor(lite.get_output_details()[0]["index"])
     assert actual.shape == (1, 8) and np.isfinite(actual).all()
+    np.testing.assert_allclose(actual.sum(1), 1, atol=1e-4)
+    np.testing.assert_allclose(actual, expected, rtol=0, atol=0.025)
+    assert actual.argmax() == expected.argmax()
     assert not attempts
     report = {
-        "artifact_sha256": final_sha(FINAL_ARTIFACT),
+        "artifact_sha256": artifact_hash,
+        "model_config_sha256": config_hash,
+        "checkpoint_sha256": final_sha(FINAL_RUN / "best.safetensors"),
         "fresh_process": True,
         "outbound_sockets_blocked": True,
         "attempted_connections": len(attempts),
         "checkpoint_prediction": int(expected.argmax()),
         "mobile_prediction": int(actual.argmax()),
+        "maximum_probability_error": float(np.max(np.abs(actual - expected))),
+        "argmax_disagreements": 0,
         "runtime_operations": sorted({op["op_name"] for op in lite._get_ops_details()}),
         "input_dtype": str(lite.get_input_details()[0]["dtype"]),
         "custom_ops_present": any(

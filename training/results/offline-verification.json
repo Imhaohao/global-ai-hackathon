@@ -184,5 +184,38 @@
   },
   "inference_ms": 8.281332964543253,
   "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
-  "phone_device_tested": false
+  "phone_device_tested": false,
+  "checkpoint_verification": {
+    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "model_config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+    "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+    "fresh_process": true,
+    "outbound_sockets_blocked": true,
+    "attempted_connections": 0,
+    "checkpoint_prediction": 2,
+    "mobile_prediction": 2,
+    "maximum_probability_error": 0.0055318474769592285,
+    "argmax_disagreements": 0,
+    "runtime_operations": [
+      "ADD",
+      "CONV_2D",
+      "DELEGATE",
+      "DEPTHWISE_CONV_2D",
+      "DEQUANTIZE",
+      "FULLY_CONNECTED",
+      "LOGISTIC",
+      "MEAN",
+      "MUL",
+      "PAD",
+      "RESHAPE",
+      "SOFTMAX",
+      "SUB",
+      "TRANSPOSE"
+    ],
+    "input_dtype": "<class 'numpy.float32'>",
+    "custom_ops_present": false,
+    "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
+    "phone_device_tested": false
+  },
+  "checkpoint_verified_at_utc": "2026-10-04T03:13:23.038319+00:00"
 }

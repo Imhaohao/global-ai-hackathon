@@ -1,78 +1,353 @@
 {
-  "status": "not_reproduced",
-  "evidence_type": "recovered_historical_report",
-  "source_report": {
-    "path": "/Users/yanzihao/Downloads/training-results.json",
-    "sha256": "b21814acac27879e46b99b39e9a3e8907da2adab44f8e0c18ba90ca50c749586",
-    "values_preserved": true
-  },
-  "provenance": {
-    "artifact_path": "mobile/assets/model/coffee-leaf.tflite",
-    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
-    "artifact_matches_source_report": true,
-    "config_path": "mobile/assets/model/model-config.json",
-    "config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
-    "source_config_path": "/Users/yanzihao/Downloads/model-config.json",
-    "source_config_sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368",
-    "source_config_semantically_matches": true,
-    "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
-    "calibration_matches_source_report": true
-  },
-  "current_checkout": {
-    "model_changed": false,
-    "new_candidate_evaluated": false,
-    "rerun": false,
-    "freeze_status": "not_established",
-    "planned_freeze": "2026-10-04T12:00:00-07:00"
-  },
-  "historical_report": {
-    "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
-    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
-    "raw": {
-      "n": 4571,
+  "evaluation_mode": "fixed_calibration",
+  "status": "reproduced",
+  "model_config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+  "checkpoint_device": "mps",
+  "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
+  "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+  "raw": {
+    "n": 4571,
+    "accuracy": 0.9105228615182673,
+    "macro_f1": 0.8382677671963927,
+    "classification": {
+      "cercospora": {
+        "precision": 0.8136363636363636,
+        "recall": 0.8523809523809524,
+        "f1-score": 0.8325581395348837,
+        "support": 210.0
+      },
+      "healthy": {
+        "precision": 0.8392156862745098,
+        "recall": 0.9304347826086956,
+        "f1-score": 0.8824742268041237,
+        "support": 230.0
+      },
+      "miner": {
+        "precision": 0.9496527777777778,
+        "recall": 0.9139515455304928,
+        "f1-score": 0.9314601958280119,
+        "support": 1197.0
+      },
+      "phoma": {
+        "precision": 0.8803418803418803,
+        "recall": 0.9094922737306843,
+        "f1-score": 0.8946796959826275,
+        "support": 453.0
+      },
+      "rust": {
+        "precision": 0.9188612099644128,
+        "recall": 0.900907187718074,
+        "f1-score": 0.9097956307258633,
+        "support": 1433.0
+      },
+      "red_spider_mite": {
+        "precision": 0.23809523809523808,
+        "recall": 0.5769230769230769,
+        "f1-score": 0.33707865168539325,
+        "support": 26.0
+      },
+      "weevil_damage": {
+        "precision": 0.9474285714285714,
+        "recall": 0.9272930648769575,
+        "f1-score": 0.9372526851328434,
+        "support": 894.0
+      },
+      "unsupported": {
+        "precision": 0.9624060150375939,
+        "recall": 1.0,
+        "f1-score": 0.9808429118773946,
+        "support": 128.0
+      },
       "accuracy": 0.9105228615182673,
-      "macro_f1": 0.8382677671963927,
+      "macro avg": {
+        "precision": 0.8187047178195435,
+        "recall": 0.8764228604711167,
+        "f1-score": 0.8382677671963927,
+        "support": 4571.0
+      },
+      "weighted avg": {
+        "precision": 0.9171997798847255,
+        "recall": 0.9105228615182673,
+        "f1-score": 0.9131496423444728,
+        "support": 4571.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        179,
+        3,
+        2,
+        7,
+        16,
+        2,
+        1,
+        0
+      ],
+      [
+        1,
+        214,
+        0,
+        8,
+        3,
+        4,
+        0,
+        0
+      ],
+      [
+        11,
+        9,
+        1094,
+        25,
+        33,
+        4,
+        21,
+        0
+      ],
+      [
+        9,
+        0,
+        23,
+        412,
+        9,
+        0,
+        0,
+        0
+      ],
+      [
+        18,
+        24,
+        21,
+        13,
+        1291,
+        38,
+        24,
+        4
+      ],
+      [
+        0,
+        4,
+        0,
+        0,
+        6,
+        15,
+        0,
+        1
+      ],
+      [
+        2,
+        1,
+        12,
+        3,
+        47,
+        0,
+        829,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        128
+      ]
+    ]
+  },
+  "deployed": {
+    "n": 4571,
+    "accepted_n": 3725,
+    "accepted_coverage": 0.8149201487639466,
+    "accepted_accuracy": 0.931006711409396,
+    "unsupported_reject_rate": 1.0
+  },
+  "parity": {
+    "top1_disagreements": 7,
+    "acceptance_disagreements": 9,
+    "confidence_state_disagreements": 15,
+    "maximum_probability_error": 0.030295848846435547,
+    "handling": "Thresholds calibrated on deployed runtime validation outputs; deployed decisions authoritative. Disagreements retained in report."
+  },
+  "model_parameters": 4017796,
+  "artifact_bytes": 8091596,
+  "desktop_median_ms": 4.92141698487103,
+  "phone_device_tested": false,
+  "per_source": {
+    "agml": {
+      "n": 1457,
+      "accepted_n": 1413,
+      "accepted_coverage": 0.9698009608785175,
+      "accepted_accuracy": 0.9561217268223637,
+      "unsupported_reject_rate": null
+    },
+    "beans": {
+      "n": 128,
+      "accepted_n": 0,
+      "accepted_coverage": 0.0,
+      "accepted_accuracy": null,
+      "unsupported_reject_rate": 1.0
+    },
+    "bracol_leaf": {
+      "n": 199,
+      "accepted_n": 166,
+      "accepted_coverage": 0.8341708542713567,
+      "accepted_accuracy": 0.8614457831325302,
+      "unsupported_reject_rate": null
+    },
+    "bracol_symptom": {
+      "n": 343,
+      "accepted_n": 325,
+      "accepted_coverage": 0.9475218658892128,
+      "accepted_accuracy": 0.88,
+      "unsupported_reject_rate": null
+    },
+    "coffeeleaf_own_field": {
+      "n": 1318,
+      "accepted_n": 1089,
+      "accepted_coverage": 0.8262518968133535,
+      "accepted_accuracy": 0.938475665748393,
+      "unsupported_reject_rate": null
+    },
+    "coffeeleaf_rust_and_leaf_miner": {
+      "n": 866,
+      "accepted_n": 554,
+      "accepted_coverage": 0.6397228637413395,
+      "accepted_accuracy": 0.927797833935018,
+      "unsupported_reject_rate": null
+    },
+    "rocole": {
+      "n": 260,
+      "accepted_n": 178,
+      "accepted_coverage": 0.6846153846153846,
+      "accepted_accuracy": 0.8539325842696629,
+      "unsupported_reject_rate": null
+    }
+  },
+  "quality": {
+    "n_real_heldout_images": 223,
+    "clean_accept_rate": 0.8789237668161435,
+    "severe_blur_reject_rate": 0.2869955156950673,
+    "severe_darkness_reject_rate": 1.0,
+    "limitations": "Synthetic severe degradations of realheldoutimages; no validated mildblur threshold or actualphonecamera test."
+  },
+  "rust_stress": {
+    "status": "Previously inspected development stress test; no checkpoint or gates selected on it",
+    "audit": {
+      "total": 1120,
+      "excluded": 0,
+      "excluded_by_label": {},
+      "retained": 1120,
+      "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
+      "excluded_paths": []
+    },
+    "fine_tuned": {
+      "n": 1120,
+      "rust_n": 847,
+      "not_rust_n": 273,
+      "rust_recall": 0.526564344746163,
+      "false_positive_rate": 0.5641025641025641,
+      "specificity": 0.4358974358974359,
+      "auroc": 0.4912403613702315,
+      "confusion_matrix": [
+        [
+          119,
+          154
+        ],
+        [
+          401,
+          446
+        ]
+      ],
+      "threshold": 0.28
+    },
+    "original": {
+      "n": 1120,
+      "rust_n": 847,
+      "not_rust_n": 273,
+      "rust_recall": 0.9634002361275088,
+      "false_positive_rate": 0.9963369963369964,
+      "specificity": 0.003663003663003663,
+      "auroc": 0.4202291215278229,
+      "confusion_matrix": [
+        [
+          1,
+          272
+        ],
+        [
+          31,
+          816
+        ]
+      ],
+      "threshold": 0.15000000000000002
+    },
+    "note": "Each model uses its own validation-selected binary threshold; NoRust is not a healthy label"
+  },
+  "untouched_scans": {
+    "n": 100,
+    "accepted_n": 0,
+    "accepted_coverage": 0.0,
+    "accepted_accuracy": null,
+    "unsupported_reject_rate": 1.0,
+    "duplicate_audit": {
+      "total": 100,
+      "excluded": 0,
+      "excluded_by_label": {},
+      "retained": 100,
+      "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
+      "excluded_paths": []
+    },
+    "status": "Untouched external source before this fixed-model evaluation; flatbed scans, not phone photographs",
+    "independent_leaves": 50,
+    "note": "Mycena citricolor is unsupported, never mapped to cercospora; paired leaf sides are repeated measurements",
+    "supported_accuracy": 0.2
+  },
+  "unseen_new_source": {
+    "raw": {
+      "n": 3114,
+      "accuracy": 0.8953114964675658,
+      "macro_f1": 0.7965992161624074,
       "classification": {
         "cercospora": {
-          "precision": 0.8136363636363636,
-          "recall": 0.8523809523809524,
-          "f1-score": 0.8325581395348837,
-          "support": 210.0
+          "precision": 0.5,
+          "recall": 0.6415094339622641,
+          "f1-score": 0.5619834710743802,
+          "support": 53.0
         },
         "healthy": {
-          "precision": 0.8392156862745098,
-          "recall": 0.9304347826086956,
-          "f1-score": 0.8824742268041237,
-          "support": 230.0
+          "precision": 0.8429752066115702,
+          "recall": 0.9532710280373832,
+          "f1-score": 0.8947368421052632,
+          "support": 214.0
         },
         "miner": {
-          "precision": 0.9496527777777778,
-          "recall": 0.9139515455304928,
-          "f1-score": 0.9314601958280119,
-          "support": 1197.0
+          "precision": 0.9303675048355899,
+          "recall": 0.8635547576301615,
+          "f1-score": 0.8957169459962756,
+          "support": 557.0
         },
         "phoma": {
-          "precision": 0.8803418803418803,
-          "recall": 0.9094922737306843,
-          "f1-score": 0.8946796959826275,
-          "support": 453.0
+          "precision": 0.7947019867549668,
+          "recall": 0.9302325581395349,
+          "f1-score": 0.8571428571428571,
+          "support": 129.0
         },
         "rust": {
-          "precision": 0.9188612099644128,
-          "recall": 0.900907187718074,
-          "f1-score": 0.9097956307258633,
-          "support": 1433.0
+          "precision": 0.9122315592903828,
+          "recall": 0.8778077268643306,
+          "f1-score": 0.8946886446886447,
+          "support": 1113.0
         },
         "red_spider_mite": {
-          "precision": 0.23809523809523808,
+          "precision": 0.25,
           "recall": 0.5769230769230769,
-          "f1-score": 0.33707865168539325,
+          "f1-score": 0.3488372093023256,
           "support": 26.0
         },
         "weevil_damage": {
-          "precision": 0.9474285714285714,
+          "precision": 0.9506880733944955,
           "recall": 0.9272930648769575,
-          "f1-score": 0.9372526851328434,
+          "f1-score": 0.9388448471121178,
           "support": 894.0
         },
         "unsupported": {
@@ -81,57 +356,57 @@
           "f1-score": 0.9808429118773946,
           "support": 128.0
         },
-        "accuracy": 0.9105228615182673,
+        "accuracy": 0.8953114964675658,
         "macro avg": {
-          "precision": 0.8187047178195435,
-          "recall": 0.8764228604711167,
-          "f1-score": 0.8382677671963927,
-          "support": 4571.0
+          "precision": 0.7679212932405748,
+          "recall": 0.8463239558042135,
+          "f1-score": 0.7965992161624074,
+          "support": 3114.0
         },
         "weighted avg": {
-          "precision": 0.9171997798847255,
-          "recall": 0.9105228615182673,
-          "f1-score": 0.9131496423444728,
-          "support": 4571.0
+          "precision": 0.9064048759567686,
+          "recall": 0.8953114964675658,
+          "f1-score": 0.899318558345435,
+          "support": 3114.0
         }
       },
       "confusion_matrix": [
         [
-          179,
+          34,
           3,
           2,
           7,
-          16,
+          4,
           2,
           1,
           0
         ],
         [
           1,
-          214,
+          204,
           0,
-          8,
+          2,
           3,
           4,
           0,
           0
         ],
         [
-          11,
-          9,
-          1094,
-          25,
+          8,
+          6,
+          481,
+          10,
           33,
-          4,
-          21,
+          1,
+          18,
           0
         ],
         [
-          9,
+          5,
           0,
-          23,
-          412,
-          9,
+          3,
+          120,
+          1,
           0,
           0,
           0
@@ -139,9 +414,9 @@
         [
           18,
           24,
-          21,
-          13,
-          1291,
+          19,
+          9,
+          977,
           38,
           24,
           4
@@ -179,366 +454,151 @@
       ]
     },
     "deployed": {
-      "n": 4571,
-      "accepted_n": 3725,
-      "accepted_coverage": 0.8149201487639466,
-      "accepted_accuracy": 0.931006711409396,
+      "n": 3114,
+      "accepted_n": 2312,
+      "accepted_coverage": 0.7424534360950545,
+      "accepted_accuracy": 0.9156574394463668,
       "unsupported_reject_rate": 1.0
-    },
-    "parity": {
-      "top1_disagreements": 7,
-      "acceptance_disagreements": 9,
-      "confidence_state_disagreements": 15,
-      "maximum_probability_error": 0.030297815799713135,
-      "handling": "Thresholds calibrated on deployed runtime validation outputs; deployed decisions authoritative. Disagreements retained in report."
-    },
-    "model_parameters": 4017796,
-    "artifact_bytes": 8091596,
-    "desktop_median_ms": 51.42489983700216,
-    "phone_device_tested": false,
-    "per_source": {
-      "agml": {
-        "n": 1457,
-        "accepted_n": 1413,
-        "accepted_coverage": 0.9698009608785175,
-        "accepted_accuracy": 0.9561217268223637,
-        "unsupported_reject_rate": null
-      },
-      "beans": {
-        "n": 128,
-        "accepted_n": 0,
-        "accepted_coverage": 0.0,
-        "accepted_accuracy": null,
-        "unsupported_reject_rate": 1.0
-      },
-      "bracol_leaf": {
-        "n": 199,
-        "accepted_n": 166,
-        "accepted_coverage": 0.8341708542713567,
-        "accepted_accuracy": 0.8614457831325302,
-        "unsupported_reject_rate": null
-      },
-      "bracol_symptom": {
-        "n": 343,
-        "accepted_n": 325,
-        "accepted_coverage": 0.9475218658892128,
-        "accepted_accuracy": 0.88,
-        "unsupported_reject_rate": null
-      },
-      "coffeeleaf_own_field": {
-        "n": 1318,
-        "accepted_n": 1089,
-        "accepted_coverage": 0.8262518968133535,
-        "accepted_accuracy": 0.938475665748393,
-        "unsupported_reject_rate": null
-      },
-      "coffeeleaf_rust_and_leaf_miner": {
-        "n": 866,
-        "accepted_n": 554,
-        "accepted_coverage": 0.6397228637413395,
-        "accepted_accuracy": 0.927797833935018,
-        "unsupported_reject_rate": null
-      },
-      "rocole": {
-        "n": 260,
-        "accepted_n": 178,
-        "accepted_coverage": 0.6846153846153846,
-        "accepted_accuracy": 0.8539325842696629,
-        "unsupported_reject_rate": null
-      }
-    },
-    "quality": {
-      "n_real_heldout_images": 223,
-      "clean_accept_rate": 0.8789237668161435,
-      "severe_blur_reject_rate": 0.2869955156950673,
-      "severe_darkness_reject_rate": 1.0,
-      "limitations": "Synthetic severe degradations of realheldoutimages; no validated mildblur threshold or actualphonecamera test."
-    },
-    "rust_stress": {
-      "status": "Previously inspected development stress test; no checkpoint or gates selected on it",
-      "audit": {
-        "total": 1120,
-        "excluded": 0,
-        "excluded_by_label": {},
-        "retained": 1120,
-        "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
-        "excluded_paths": []
-      },
-      "fine_tuned": {
-        "n": 1120,
-        "rust_n": 847,
-        "not_rust_n": 273,
-        "rust_recall": 0.526564344746163,
-        "false_positive_rate": 0.5641025641025641,
-        "specificity": 0.4358974358974359,
-        "auroc": 0.4912403613702315,
-        "confusion_matrix": [
-          [
-            119,
-            154
-          ],
-          [
-            401,
-            446
-          ]
-        ],
-        "threshold": 0.28
-      },
-      "original": {
-        "n": 1120,
-        "rust_n": 847,
-        "not_rust_n": 273,
-        "rust_recall": 0.9634002361275088,
-        "false_positive_rate": 0.9963369963369964,
-        "specificity": 0.003663003663003663,
-        "auroc": 0.4202247968481735,
-        "confusion_matrix": [
-          [
-            1,
-            272
-          ],
-          [
-            31,
-            816
-          ]
-        ],
-        "threshold": 0.15000000000000002
-      },
-      "note": "Each model uses its own validation-selected binary threshold; NoRust is not a healthy label"
-    },
-    "untouched_scans": {
-      "n": 100,
-      "accepted_n": 0,
-      "accepted_coverage": 0.0,
-      "accepted_accuracy": null,
-      "unsupported_reject_rate": 1.0,
-      "status": "Untouched external source before this fixed-model evaluation; flatbed scans, not phone photographs",
-      "independent_leaves": 50,
-      "note": "Mycena citricolor is unsupported, never mapped to cercospora; paired leaf sides are repeated measurements",
-      "supported_accuracy": 0.2,
-      "duplicate_audit": {
-        "total": 100,
-        "excluded": 0,
-        "excluded_by_label": {},
-        "retained": 100,
-        "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
-        "excluded_paths": []
-      }
-    },
-    "unseen_new_source": {
-      "raw": {
-        "n": 3114,
-        "accuracy": 0.8953114964675658,
-        "macro_f1": 0.7965992161624074,
-        "classification": {
-          "cercospora": {
-            "precision": 0.5,
-            "recall": 0.6415094339622641,
-            "f1-score": 0.5619834710743802,
-            "support": 53.0
-          },
-          "healthy": {
-            "precision": 0.8429752066115702,
-            "recall": 0.9532710280373832,
-            "f1-score": 0.8947368421052632,
-            "support": 214.0
-          },
-          "miner": {
-            "precision": 0.9303675048355899,
-            "recall": 0.8635547576301615,
-            "f1-score": 0.8957169459962756,
-            "support": 557.0
-          },
-          "phoma": {
-            "precision": 0.7947019867549668,
-            "recall": 0.9302325581395349,
-            "f1-score": 0.8571428571428571,
-            "support": 129.0
-          },
-          "rust": {
-            "precision": 0.9122315592903828,
-            "recall": 0.8778077268643306,
-            "f1-score": 0.8946886446886447,
-            "support": 1113.0
-          },
-          "red_spider_mite": {
-            "precision": 0.25,
-            "recall": 0.5769230769230769,
-            "f1-score": 0.3488372093023256,
-            "support": 26.0
-          },
-          "weevil_damage": {
-            "precision": 0.9506880733944955,
-            "recall": 0.9272930648769575,
-            "f1-score": 0.9388448471121178,
-            "support": 894.0
-          },
-          "unsupported": {
-            "precision": 0.9624060150375939,
-            "recall": 1.0,
-            "f1-score": 0.9808429118773946,
-            "support": 128.0
-          },
-          "accuracy": 0.8953114964675658,
-          "macro avg": {
-            "precision": 0.7679212932405748,
-            "recall": 0.8463239558042135,
-            "f1-score": 0.7965992161624074,
-            "support": 3114.0
-          },
-          "weighted avg": {
-            "precision": 0.9064048759567686,
-            "recall": 0.8953114964675658,
-            "f1-score": 0.899318558345435,
-            "support": 3114.0
-          }
-        },
-        "confusion_matrix": [
-          [
-            34,
-            3,
-            2,
-            7,
-            4,
-            2,
-            1,
-            0
-          ],
-          [
-            1,
-            204,
-            0,
-            2,
-            3,
-            4,
-            0,
-            0
-          ],
-          [
-            8,
-            6,
-            481,
-            10,
-            33,
-            1,
-            18,
-            0
-          ],
-          [
-            5,
-            0,
-            3,
-            120,
-            1,
-            0,
-            0,
-            0
-          ],
-          [
-            18,
-            24,
-            19,
-            9,
-            977,
-            38,
-            24,
-            4
-          ],
-          [
-            0,
-            4,
-            0,
-            0,
-            6,
-            15,
-            0,
-            1
-          ],
-          [
-            2,
-            1,
-            12,
-            3,
-            47,
-            0,
-            829,
-            0
-          ],
-          [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            128
-          ]
-        ]
-      },
-      "deployed": {
-        "n": 3114,
-        "accepted_n": 2312,
-        "accepted_coverage": 0.7424534360950545,
-        "accepted_accuracy": 0.9156574394463668,
-        "unsupported_reject_rate": 1.0
-      }
-    },
-    "scan_duplicate_audit": {
-      "total": 100,
-      "excluded": 0,
-      "excluded_by_label": {},
-      "retained": 100,
-      "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
-      "excluded_paths": []
-    },
-    "offline": {
-      "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
-      "fresh_process": true,
-      "outbound_sockets_blocked": true,
-      "attempted_connections": 0,
-      "checkpoint_prediction": 2,
-      "mobile_prediction": 2,
-      "runtime_operations": [
-        "ADD",
-        "CONV_2D",
-        "DEPTHWISE_CONV_2D",
-        "DEQUANTIZE",
-        "FULLY_CONNECTED",
-        "LOGISTIC",
-        "MEAN",
-        "MUL",
-        "PAD",
-        "RESHAPE",
-        "SOFTMAX",
-        "SUB",
-        "TRANSPOSE"
-      ],
-      "input_dtype": "<class 'numpy.float32'>",
-      "custom_ops_present": false,
-      "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
-      "phone_device_tested": false
-    },
-    "artifact_mib": 7.716747283935547,
-    "limitations": [
-      "Internal holdout includes AGML examples potentially seen in pretraining; use unseen_new_source and external results separately.",
-      "Native phone interpolation/JPEG and camera distribution remain unvalidated.",
-      "Severe synthetic blur rejection is weak; no general image-quality guarantee.",
-      "FP16 conversion changes some decisions; thresholds use deployed validation scores.",
-      "Physical Android/iOS offline and latency tests not performed."
-    ],
-    "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
-    "manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
-    "checks": {
-      "python_lint_and_complexity": "passed, maximum complexity 15",
-      "python_dependencies": "pip check passed",
-      "shared_backend_tests": "17 passed",
-      "shared_backend_lint_and_types": "passed",
-      "mobile_lint": "0 errors; one existing require warning",
-      "mobile_typecheck": "passed",
-      "mobile_decision_contract": "passed",
-      "source_groups": "6174 groups, no cross-partition group overlaps"
     }
   },
-  "captured_at_utc": "2026-10-04T02:48:43.303043+00:00"
+  "evaluated_at_utc": "2026-10-04T03:25:33.391209+00:00",
+  "split_counts": {
+    "test": 4571,
+    "train": 14119,
+    "val": 3921,
+    "external": 941
+  },
+  "data_audit": {
+    "raw_records": 23553,
+    "exact_unique": 23552,
+    "conflicting_exact_excluded": 0,
+    "near_duplicate_groups": 6174,
+    "phash_hamming_limit": 5
+  },
+  "model_revision": "252d26841543befab22880876f8ca91543230aab",
+  "calibration": {
+    "temperature": 0.6408186797050134,
+    "selection": "Validation-only deployed FP16 runtime scores with frozen quality gate; >=15 accepted and >=90%/95% validation precision per class",
+    "validation_n": 3921,
+    "quality": {
+      "minimum_edge_variance": 1.520114853217684,
+      "minimum_mean_luminance": 45.59410861968994,
+      "selection": "validation-only severe Gaussianblur challenge balancedaccuracy subject to >=90% clear acceptance"
+    },
+    "class_thresholds": [
+      0.47500000000000003,
+      0.72,
+      0.4,
+      0.6000000000000001,
+      0.4,
+      1.01,
+      0.4
+    ],
+    "confident_thresholds": [
+      0.64,
+      0.99,
+      0.455,
+      0.8,
+      0.67,
+      1.01,
+      0.4
+    ],
+    "class_threshold_evidence": [
+      {
+        "label": "cercospora",
+        "enabled": true,
+        "accept_threshold": 0.47500000000000003,
+        "val_true_support": 167
+      },
+      {
+        "label": "healthy",
+        "enabled": true,
+        "accept_threshold": 0.72,
+        "val_true_support": 210
+      },
+      {
+        "label": "miner",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 917
+      },
+      {
+        "label": "phoma",
+        "enabled": true,
+        "accept_threshold": 0.6000000000000001,
+        "val_true_support": 312
+      },
+      {
+        "label": "rust",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 1233
+      },
+      {
+        "label": "red_spider_mite",
+        "enabled": false,
+        "accept_threshold": 1.01,
+        "val_true_support": 25
+      },
+      {
+        "label": "weevil_damage",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 924
+      }
+    ],
+    "runtime": "ai-edge-litert CPU float16 storage / float32 computation",
+    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "version": "deployed-v1"
+  },
+  "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+  "manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+  "artifact_mib": 7.716747283935547,
+  "scan_duplicate_audit": {
+    "total": 100,
+    "excluded": 0,
+    "excluded_by_label": {},
+    "retained": 100,
+    "method": "SHA256 and pHash distance<=5 against fine-tuning train/validation and known pretraining-exposed groups; no plant IDs available",
+    "excluded_paths": []
+  },
+  "offline": {
+    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "model_config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+    "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+    "fresh_process": true,
+    "outbound_sockets_blocked": true,
+    "attempted_connections": 0,
+    "checkpoint_prediction": 2,
+    "mobile_prediction": 2,
+    "maximum_probability_error": 0.0055318474769592285,
+    "argmax_disagreements": 0,
+    "runtime_operations": [
+      "ADD",
+      "CONV_2D",
+      "DELEGATE",
+      "DEPTHWISE_CONV_2D",
+      "DEQUANTIZE",
+      "FULLY_CONNECTED",
+      "LOGISTIC",
+      "MEAN",
+      "MUL",
+      "PAD",
+      "RESHAPE",
+      "SOFTMAX",
+      "SUB",
+      "TRANSPOSE"
+    ],
+    "input_dtype": "<class 'numpy.float32'>",
+    "custom_ops_present": false,
+    "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
+    "phone_device_tested": false
+  },
+  "limitations": [
+    "Internal holdout includes AGML examples potentially seen in pretraining; use unseen_new_source and external results separately.",
+    "Native phone interpolation/JPEG and camera distribution remain unvalidated.",
+    "Severe synthetic blur rejection is weak; no general image-quality guarantee.",
+    "FP16 conversion changes some decisions; thresholds use deployed validation scores.",
+    "Physical Android/iOS offline and latency tests not performed."
+  ]
 }

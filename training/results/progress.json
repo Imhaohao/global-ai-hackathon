@@ -2,20 +2,20 @@
   "scope": "model-plan.md",
   "tasks": {
     "quality_contract": "Committed 8459181; all mobile checks passed",
-    "model": "Current model retained; canonical matching final report recovered from Downloads; fine-tuning/reproduction blocked by missing checkpoint and manifest",
-    "data_card": "Complete from recovered original report; metrics marked not_reproduced, source layouts and Kenyan provenance checked, under 900 words",
-    "emulator_speed": "Measurement tooling and six photo fixtures ready; controlled run not measured pending adb UI authorization; emulator stopped"
+    "model": "Original checkpoint and exact split restored; fixed-calibration B0 evaluation reproduced the original metrics with unchanged model/config hashes. Published B1/B2/B3 experiments remain separate; B0 is the app default.",
+    "data_card": "Updated from reproduced evaluation, 896 words; legacy B0 gate results distinguished from newer brightness and alternative models.",
+    "emulator_speed": "App built and installed; six credited gallery fixtures and summary command ready. User requested manual gallery execution; automated collection stopped with zero controlled samples."
   },
   "push_authorized": false,
   "checks": {
-    "mobile_typecheck": "passed; concurrent auth type errors were fixed by their owner",
-    "mobile_lint": "passed",
+    "mobile_typecheck": "passed after concurrent UI changes settled",
+    "mobile_lint": "passed after concurrent UI changes settled",
     "mobile_contract": "passed",
     "repository_tests": {
-      "passed": 166,
+      "passed": 179,
       "failed": 0
     },
-    "python_complexity_max_15": "passed",
+    "python_complexity_max_15": "passed for all files changed in this task",
     "benchmark_summary_tests": {
       "passed": 4,
       "failed": 0
@@ -30,18 +30,27 @@
       "failed": 0
     },
     "python_total_tests": {
-      "passed": 10,
+      "passed": 15,
       "failed": 0
     },
     "changed_python_lint": "passed",
-    "untouched_python_style_lint": "Existing import-order and dict-style violations remain in untouched training scripts; complexity check passes for all training files"
+    "untouched_python_style_lint": "Existing import-order and dict-style violations remain in untouched training scripts; complexity check passes for all training files",
+    "full_checkpoint_offline": "passed; zero attempted connections and checkpoint/TFLite parity verified",
+    "fixed_calibration_evaluation": "passed; 4571 internal and 3114 new-source samples; model/config unchanged"
   },
   "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
   "cleanup": {
-    "started_emulator": "stopped",
+    "started_emulators": "stopped",
     "metro_8087": "stopped",
-    "started_gradle_daemon": "stopped"
+    "benchmark_worktree": "archived"
   },
   "planned_freeze": "2026-10-04T12:00:00-07:00; not established by this run",
-  "overall_status": "partially_complete: new fine-tuning requires original training artifacts; controlled emulator timings require pending adb authorization"
+  "overall_status": "Current implementation, source restoration and reproduced B0 evidence complete; user-requested manual gallery timing and scheduled noon freeze remain pending",
+  "training_input_restoration": "training/results/input-restoration.json",
+  "freeze_follow_up": {
+    "automation_id": "freeze-leaf-doctor-model-evidence",
+    "scheduled_local": "2026-10-04T12:00:00-07:00",
+    "mode": "one-time thread heartbeat",
+    "status": "scheduled; freeze not yet established"
+  }
 }

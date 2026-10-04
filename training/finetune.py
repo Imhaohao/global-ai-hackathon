@@ -1,24 +1,23 @@
 import argparse
 import copy
+import hashlib
 import json
 import time
-import hashlib
 
 import numpy as np
 import torch
-from safetensors.torch import save_file
-from scipy.optimize import minimize_scalar
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
-
 from model_utils import (
-    ROOT,
     LABELS,
+    ROOT,
     SEED,
     LeafDataset,
     initialize_runtime,
     load_model,
     read_records,
 )
+from safetensors.torch import save_file
+from scipy.optimize import minimize_scalar
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 
 RUN = ROOT / "runs/efficientnet"
 
@@ -143,9 +142,14 @@ def predict(model, records):
     )
     logits, labels = [], []
     model.eval()
+    device = next(model.parameters()).device
     with torch.inference_mode():
         for images, target in loader:
-            logits.append(model(images.to(memory_format=torch.channels_last)).clone())
+            logits.append(
+                model(images.to(device=device, memory_format=torch.channels_last))
+                .cpu()
+                .clone()
+            )
             labels.append(target)
     return torch.cat(logits), torch.cat(labels)
 
