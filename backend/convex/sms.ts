@@ -3,11 +3,15 @@ import { v } from "convex/values";
 import { createClaudeAdvisor, type Advisor } from "../src/advisor.ts";
 import { isSupportedImageType, maskPhone } from "../src/app.ts";
 import { bytesToBase64 } from "../src/base64.ts";
-import { createPhotoAdvisor, MAX_IMAGE_BASE64_CHARS, type PhotoAdvisor } from "../src/photoAdvisor.ts";
+import { createPhotoAdvisor, MAX_IMAGE_BASE64_CHARS, type PhotoAdvisor, type PhotoReadingListener } from "../src/photoAdvisor.ts";
 import { sendTwilioSms, type TwilioCredentials } from "../src/twilio.ts";
 import { formatOutgoingSms } from "../../shared/src/index.ts";
+import { conditionReportedInText, parseAlertCommand } from "../../shared/src/neighbourAlerts.ts";
 import { internal } from "./_generated/api";
 import { internalAction, type ActionCtx } from "./_generated/server";
+import type { Doc } from "./_generated/dataModel";
+
+type AlertChannel = Doc<"alertSubscriptions">["channel"];
 
 export function requireEnv(name: string): string {
   const value = process.env[name];
@@ -28,8 +32,33 @@ function historyFor(ctx: ActionCtx) {
   };
 }
 
-export function photoAdvisorFor(ctx: ActionCtx): PhotoAdvisor {
-  return createPhotoAdvisor(() => new Anthropic(), historyFor(ctx));
+function recordConfidentPhoto(ctx: ActionCtx, channel: AlertChannel): PhotoReadingListener {
+  return async (phone, reading) => {
+    if (reading.confidence !== "confident") return;
+    await ctx.runMutation(internal.neighbourAlerts.recordReport, { phone, channel, condition: reading.condition, source: "photo" });
+  };
+}
+
+export function photoAdvisorFor(ctx: ActionCtx, channel: AlertChannel): PhotoAdvisor {
+  return createPhotoAdvisor(() => new Anthropic(), historyFor(ctx), recordConfidentPhoto(ctx, channel));
+}
+
+function alertCommandReply(ctx: ActionCtx, phone: string, channel: AlertChannel, text: string): Promise<string | null> {
+  if (!parseAlertCommand(text)) return Promise.resolve(null);
+  return ctx.runMutation(internal.neighbourAlerts.handleCommand, { phone, channel, text });
+}
+
+async function answerText(ctx: ActionCtx, phone: string, channel: AlertChannel, question: string): Promise<string> {
+  const commandReply = await alertCommandReply(ctx, phone, channel, question);
+  if (commandReply) return commandReply;
+  const answer = await advisorFor(ctx).advise(phone, question);
+  const condition = conditionReportedInText(question);
+  if (condition) {
+    await ctx
+      .runMutation(internal.neighbourAlerts.recordReport, { phone, channel, condition, source: "text" })
+      .catch((error: unknown) => console.error("Could not record text report:", error));
+  }
+  return answer;
 }
 
 const UNSUPPORTED_PHOTO_REPLY = "I could not open that picture. Please send it as a normal photo, or tell me in words what the leaf looks like.";
@@ -46,7 +75,7 @@ async function downloadTwilioMedia(credentials: TwilioCredentials, url: string):
 async function photoReply(ctx: ActionCtx, credentials: TwilioCredentials, from: string, question: string, mediaUrl: string) {
   const { base64, mediaType } = await downloadTwilioMedia(credentials, mediaUrl);
   if (!isSupportedImageType(mediaType) || base64.length > MAX_IMAGE_BASE64_CHARS) return UNSUPPORTED_PHOTO_REPLY;
-  return photoAdvisorFor(ctx).advisePhoto(from, { base64, mediaType, caption: question });
+  return photoAdvisorFor(ctx, "twilio").advisePhoto(from, { base64, mediaType, caption: question });
 }
 
 export const answerPhoto = internalAction({
@@ -54,14 +83,14 @@ export const answerPhoto = internalAction({
   returns: v.string(),
   handler: (ctx, { from, caption, base64, mediaType }) =>
     isSupportedImageType(mediaType)
-      ? photoAdvisorFor(ctx).advisePhoto(from, { base64, mediaType, caption })
+      ? photoAdvisorFor(ctx, "hub").advisePhoto(from, { base64, mediaType, caption })
       : Promise.resolve(UNSUPPORTED_PHOTO_REPLY),
 });
 
 export const answer = internalAction({
   args: { from: v.string(), question: v.string() },
   returns: v.string(),
-  handler: (ctx, { from, question }) => advisorFor(ctx).advise(from, question),
+  handler: (ctx, { from, question }) => answerText(ctx, from, "hub", question),
 });
 
 export const replyBySms = internalAction({
@@ -76,7 +105,7 @@ export const replyBySms = internalAction({
     const isFirstReply = (await ctx.runQuery(internal.phoneSessions.history, { phone: from })).length === 0;
     const answer = mediaUrl
       ? await photoReply(ctx, credentials, from, question, mediaUrl).catch(() => UNSUPPORTED_PHOTO_REPLY)
-      : await advisorFor(ctx).advise(from, question);
+      : await answerText(ctx, from, "twilio", question);
     const reply = formatOutgoingSms(answer, isFirstReply);
     try {
       await sendTwilioSms(credentials, from, reply);

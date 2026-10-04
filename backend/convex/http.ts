@@ -25,6 +25,14 @@ const handleWithApp = httpAction(async (ctx, request) => {
     twilioAuthToken: process.env.TWILIO_AUTH_TOKEN ?? "",
     publicBaseUrl: requireEnv("CONVEX_SITE_URL"),
     hubToken: process.env.HUB_TOKEN ?? "",
+    alerts: {
+      officerView: () => ctx.runQuery(internal.neighbourAlerts.officerView, {}),
+      approve: (alertId, text) => ctx.runMutation(internal.neighbourAlerts.approve, { alertId, text }),
+      dismiss: (alertId) => ctx.runMutation(internal.neighbourAlerts.dismiss, { alertId }),
+      claimHubDeliveries: () => ctx.runMutation(internal.neighbourAlerts.claimHubDeliveries, {}),
+      finishHubDelivery: (deliveryId, sent) => ctx.runMutation(internal.neighbourAlerts.finishHubDelivery, { deliveryId, sent }),
+      leave: async (phone, channel) => { await ctx.runMutation(internal.neighbourAlerts.leave, { phone, channel }); },
+    },
     phoneAuth: {
       provider: createTwilioVerify({
         accountSid: process.env.TWILIO_ACCOUNT_SID ?? "",
@@ -43,13 +51,16 @@ const handleWithApp = httpAction(async (ctx, request) => {
   return app.fetch(request);
 });
 
-for (const path of ["/health", "/privacy", "/terms", "/text-us", "/rain"]) {
+for (const path of ["/health", "/privacy", "/terms", "/text-us", "/rain", "/officer", "/officer/alerts"]) {
   http.route({ path, method: "GET", handler: handleWithApp });
 }
 http.route({ path: "/sms", method: "POST", handler: handleWithApp });
 http.route({ path: "/ask", method: "POST", handler: handleWithApp });
 http.route({ path: "/ask-image", method: "POST", handler: handleWithApp });
 http.route({ path: "/hub/check", method: "POST", handler: handleWithApp });
+for (const path of ["/officer/send", "/officer/dismiss", "/hub/alerts/claim", "/hub/alerts/done", "/hub/alerts/leave"]) {
+  http.route({ path, method: "POST", handler: handleWithApp });
+}
 http.route({ path: "/auth/send-code", method: "POST", handler: handleWithApp });
 http.route({ path: "/auth/verify-code", method: "POST", handler: handleWithApp });
 http.route({ path: "/auth/session", method: "GET", handler: handleWithApp });

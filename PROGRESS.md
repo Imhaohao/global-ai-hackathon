@@ -65,3 +65,17 @@ Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamByte
 ## Build plan
 
 The current three-part build plan, written so an agent with no context can start, is [docs/build-plan.md](docs/build-plan.md). It supersedes the earlier plans in this file.
+
+## Neighbour disease alerts (branch neighbour-disease-alerts)
+
+Farmers text `ALERTS <area>` (Othaya wards: Chinga, Iria-ini, Karima, Mahiga) to any line. When 3 distinct signed-up farms in one area report the same disease (rust, brown eye spot, leaf miner, phoma) within 7 days, a draft appears at `<site>/officer` (hub token). The officer edits and sends; Twilio subscribers get it from Twilio, bridge and hub subscribers from the Mac Messages bridge, which pulls `/hub/alerts/claim` every 30 s. Reports keep only area, disease, source and time, and expire after 14 days.
+
+| Step | Owner model | Status |
+|---|---|---|
+| Shared rules: commands, 3-farms-in-7-days threshold, draft text | Opus (inline) | done, 10 tests |
+| Convex tables, mutations, Twilio send, report expiry cron | Opus (inline) | done, 7 tests with convex-test |
+| Officer page and hub routes | Opus (inline) | done, 3 route tests, checked in browser at 375 px light and desktop dark |
+| Mac Messages bridge: send queued alerts, ALERTS without LEAF, STOP leaves alerts | Opus (inline) | done, 2 tests |
+| Android hub: pull queued alerts and send over its SIM | - | todo; hub-channel alerts currently go out only from the bridge |
+| docs/data-flow.md row for area alerts | - | todo after the in-progress data-flow edits land |
+| Twilio campaign description: alerts are a new message type | user | todo before sending alerts from the Twilio number |

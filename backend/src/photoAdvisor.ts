@@ -84,7 +84,13 @@ function photoMessage(photo: LeafPhoto): Anthropic.Beta.Messages.BetaMessagePara
   };
 }
 
-export function createPhotoAdvisor(createClient: () => Anthropic, store: ConversationHistory): PhotoAdvisor {
+export type PhotoReadingListener = (phone: string, reading: PhotoReading) => Promise<void>;
+
+export function createPhotoAdvisor(
+  createClient: () => Anthropic,
+  store: ConversationHistory,
+  onReading?: PhotoReadingListener,
+): PhotoAdvisor {
   return {
     async advisePhoto(phone, photo) {
       try {
@@ -102,6 +108,7 @@ export function createPhotoAdvisor(createClient: () => Anthropic, store: Convers
         console.log(`Photo reading: ${reading.condition} (${reading.confidence})`);
         const smsAnswer = fitToSms(reading.reply);
         await store.append(phone, historyNoteForPhoto(photo.caption), smsAnswer);
+        await onReading?.(phone, reading).catch((error: unknown) => console.error("Could not record photo reading:", error));
         return smsAnswer;
       } catch (error) {
         console.error("Claude photo request failed:", error);

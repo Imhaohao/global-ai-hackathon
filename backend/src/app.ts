@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import type { Advisor } from "./advisor.ts";
 import { MAX_IMAGE_BASE64_CHARS, SUPPORTED_IMAGE_TYPES, type LeafPhoto, type PhotoAdvisor, type SupportedImageType } from "./photoAdvisor.ts";
 import { CONVERSATION_REPLIES_PER_WINDOW, isCarrierKeyword, MAX_REPLIES_PER_WINDOW } from "../../shared/src/index.ts";
+import { isStopRequest } from "../../shared/src/neighbourAlerts.ts";
+import { createAlertRoutes, type NeighbourAlertService } from "./alertRoutes.ts";
 import { lookupWetDays } from "../../shared/src/rainSource.ts";
 import type { FetchLike } from "../../shared/src/rainSource.ts";
 import { privacyPolicyPage, termsPage, textUsPage } from "./compliancePages.ts";
@@ -25,6 +27,7 @@ export interface AppDependencies {
   twilioAuthToken: string;
   publicBaseUrl: string;
   hubToken: string;
+  alerts: NeighbourAlertService;
   rainFetch?: FetchLike;
   phoneAuth?: { provider: VerificationProvider | null; store: AuthStore };
 }
@@ -107,6 +110,7 @@ export function createApp(deps: AppDependencies): Hono {
 
     const from = params.From ?? "";
     const question = (params.Body ?? "").trim().slice(0, MAX_QUESTION_CHARS);
+    if (from && isStopRequest(question)) await deps.alerts.leave(from, "twilio");
     const media = inboundMedia(params);
     const isQuestion = media !== null || (question.length > 0 && !isCarrierKeyword(question));
     if (from && isQuestion && (await deps.rateLimit.allow(from, MAX_REPLIES_PER_WINDOW))) {
@@ -120,6 +124,8 @@ export function createApp(deps: AppDependencies): Hono {
     const bearer = (authorization ?? "").replace(/^Bearer /, "");
     return constantTimeEqual(bearer, deps.hubToken) ? null : { error: "Unauthorized", status: 401 as const };
   };
+
+  app.route("/", createAlertRoutes(deps.alerts, hubAuthFailure));
 
   app.post("/hub/check", (c) => {
     const failure = hubAuthFailure(c.req.header("Authorization"));
