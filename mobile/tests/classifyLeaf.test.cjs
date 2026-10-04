@@ -23,14 +23,13 @@ function loadClassifier(failure) {
     release: () => released.push('context'),
   };
   const modules = {
-    'expo-image-manipulator': { ImageManipulator: { manipulate: () => context }, SaveFormat: { JPEG: 'jpeg', PNG: 'png' } },
+    'expo-image-manipulator': { ImageManipulator: { manipulate: () => context }, SaveFormat: { JPEG: 'jpeg' } },
     'jpeg-js': { decode: () => { failAt('decode'); return { data: new Uint8Array(4) }; } },
     './imageQuality': { qualityIssueFor: () => undefined },
     './modelDecision': { pickMostLikely: () => ({ condition: 'healthy', probability: 1, confidence: 'confident' }) },
     './photoPixels': {
       base64ToBytes: () => new Uint8Array(4),
       rgbaToRgbFloatTensor: () => new Float32Array(3),
-      decodeExposurePng: () => ({}),
     },
     '../../assets/model/model-config.json': { crop_pct: 1, calibration: { quality: { minimum_edge_variance: 0 } } },
   };
@@ -52,7 +51,7 @@ function loadClassifier(failure) {
 }
 
 test('image resources are released before inference and after every preprocessing failure', async () => {
-  for (const failure of [undefined, 'render', 'jpeg', 'png', 'decode', 'model']) {
+  for (const failure of [undefined, 'render', 'jpeg', 'decode', 'model']) {
     const { classify, released } = loadClassifier(failure);
     if (failure) await assert.rejects(classify, new RegExp(failure));
     else assert.equal((await classify()).condition, 'healthy');

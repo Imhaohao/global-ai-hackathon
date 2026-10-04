@@ -105,7 +105,7 @@ async function checkClassification(development, textured, classIndex) {
   const result = await classifyLeaf(model, { uri: 'fixture.jpg', width: 400, height: 200 });
   assert.equal(result.qualityPassed, textured);
   assert.equal(result.confidence, textured && ![5, 7].includes(classIndex) ? 'confident' : 'unclear');
-  assert.equal(result.qualityIssue, textured ? undefined : 'too_dark');
+  assert.equal(result.qualityIssue, textured ? undefined : 'blurred');
   const keys = ['condition', 'confidence', 'probability', 'qualityPassed'];
   if (!textured) keys.push('qualityIssue');
   assert.deepEqual(Object.keys(result).sort(), keys.sort());
@@ -122,7 +122,6 @@ async function main() {
   await checkClassification(false, true, 4);
   await checkClassification(true, true, 5);
   await checkClassification(true, true, 7);
-  require('./check_brightness.cjs');
   console.log('Mobile contract passed: artifact hash, labels, preprocessing, gates, qualityPassed and development-only inference timing.');
 }
 

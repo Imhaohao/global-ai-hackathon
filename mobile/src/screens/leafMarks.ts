@@ -12,9 +12,9 @@ export function leafMarkOf(reading: LeafReading, verdict: PlantVerdict): LeafMar
   return reading.condition === verdict.condition ? 'agrees' : 'differs';
 }
 
-export type LeafProblem = 'tooDark' | 'notClear';
+export type LeafProblem = 'blurry' | 'notClear';
 
 export function leafProblemOf(reading: LeafReading): LeafProblem | null {
-  if (!reading.qualityPassed) return 'tooDark';
+  if (!reading.qualityPassed) return 'blurry';
   return reading.confidence === 'unclear' ? 'notClear' : null;
 }

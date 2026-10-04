@@ -108,7 +108,7 @@ type ProblemLeafRowProps = {
 function ProblemLeafRow({ strings, number, photo, reading, onRetake, disabled }: ProblemLeafRowProps) {
   const reason = reading.qualityIssue
     ? getQualityGuidance(strings, reading.qualityIssue).body
-    : leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
+    : leafProblemOf(reading) === 'blurry' ? strings.blurredBody : strings.leafNotClear;
   return (
     <View className="flex-row items-center gap-4 rounded-control bg-surface p-3 shadow-sm">
       <Image

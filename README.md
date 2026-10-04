@@ -182,7 +182,7 @@ The farmer or her daughter photographs a symptomatic leaf or plant. The app chec
 |---|---|
 | Consent screen for photos and location, with export and delete | `mobile/src/screens/ConsentScreen.tsx`, `mobile/src/storage/dataControls.ts` |
 | Six-leaf capture. Each leaf slot is a separate photo | `mobile/src/screens/CaptureScreen.tsx`, `mobile/src/components/LeafSlots.tsx`, `useCaptureFlow.ts` |
-| Image quality checks and retake prompts (brightness and blur) | `mobile/src/diagnosis/imageQuality.ts`, `qualityGuidance.ts` |
+| Image quality checks and retake prompts (blur) | `mobile/src/diagnosis/imageQuality.ts`, `qualityGuidance.ts` |
 | On-device classification | `mobile/src/diagnosis/classifyLeaf.ts`, `useLeafModel.ts`, `modelDecision.ts` |
 | A vote across the leaves into one plant verdict. Disagreement or low confidence becomes "not sure" | `shared/src/plantVote.ts`, `mobile/src/diagnosis/diagnosePlant.ts` |
 | Choice of model: B0 (default), B1 or B2 | `mobile/src/components/ModelSelector.tsx`, `mobile/src/diagnosis/modelCatalog.ts` |
@@ -250,13 +250,13 @@ Across all 4,571 test images, FP16 and Python differed on seven top labels, nine
 
 #### Brightness feedback
 
-The app now uses `mobile/assets/model/brightness-config.json` for exposure screening, while retaining the model weights, JPEG inference pixels, blur threshold and disease-confidence thresholds. `training/calibrate_brightness.py` derives brightness bounds from all **13,085 supported training images**, weighting sources, groups, parents and their crops equally at each level. It verifies every image hash and freezes the limits before validation. It does not use the external scans to choose thresholds.
+The app no longer rejects photos for brightness; only the blur check can ask for a retake. The research record below explains how `mobile/assets/model/brightness-config.json` was derived, and the comparison results further down were measured with it enabled. `training/calibrate_brightness.py` derives brightness bounds from all **13,085 supported training images**, weighting sources, groups, parents and their crops equally at each level. It verifies every image hash and freezes the limits before validation. It does not use the external scans to choose thresholds.
 
-Brightness is measured on a lossless PNG of the same 224-pixel crop, weighted by alpha so transparent backgrounds contribute nothing. Opaque photographs still include their background; this change does not locate the leaf. Mean luminance below **40.3341** prompts the user to increase light. Mean luminance above **199.9971**, together with more than **9.2554%** of pixels at grayscale 250 or higher, prompts the user to reduce harsh light or flash. Both messages appear in English and Swahili with a retake button. Brightness guidance takes precedence over blur guidance, and unclear results continue hiding disease advice.
+When it was enabled, brightness was measured on a lossless PNG of the same 224-pixel crop, weighted by alpha so transparent backgrounds contribute nothing. Opaque photographs still include their background; this change does not locate the leaf. Mean luminance below **40.3341** prompted the user to increase light. Mean luminance above **199.9971**, together with more than **9.2554%** of pixels at grayscale 250 or higher, prompted the user to reduce harsh light or flash.
 
 After freezing the limits, **3,776 of 3,788** normal supported validation images passed the brightness check. All 3,788 synthetic images darkened to 10% were flagged; 3,195 of 3,788 brightened 4× were flagged. These are exposure-screening results, not updated end-to-end accuracy or phone-validation results.
 
-Run `training/.venv/Scripts/python.exe training/calibrate_brightness.py` to reproduce the limits and evidence in `training/runs/brightness_v1/`. Run `node --experimental-transform-types training/check_mobile_contract.cjs` for class-gate, exposure, transparency, decoder, localization and mocked classifier integration checks. Native resize/color handling and the extra PNG encoding still require a physical-phone check.
+Run `training/.venv/Scripts/python.exe training/calibrate_brightness.py` to reproduce the limits and evidence in `training/runs/brightness_v1/`. Run `node --experimental-transform-types training/check_mobile_contract.cjs` for class-gate, blur, localization and mocked classifier integration checks.
 
 #### Reproduce on Windows
 

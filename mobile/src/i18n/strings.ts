@@ -17,10 +17,6 @@ type BaseStrings = {
   notSure: string;
   unclearTitle: string;
   unclearBody: string;
-  tooDarkTitle: string;
-  tooDarkBody: string;
-  tooBrightTitle: string;
-  tooBrightBody: string;
   blurredTitle: string;
   blurredBody: string;
   whatYouSee: string;
@@ -54,10 +50,6 @@ const english: BaseStrings = {
   notSure: 'Not fully sure. Take one more photo to check.',
   unclearTitle: 'Leaf not clear',
   unclearBody: 'Take another photo of one leaf, in good light, from closer.',
-  tooDarkTitle: 'The photo is too dark',
-  tooDarkBody: 'Increase the light on the leaf. Move to brighter, even light and take another photo.',
-  tooBrightTitle: 'The photo is too bright',
-  tooBrightBody: 'Reduce the light on the leaf. Move into shade or turn off the flash and take another photo.',
   blurredTitle: 'The photo is blurry',
   blurredBody: 'Hold the phone still and focus on one leaf before taking another photo.',
   whatYouSee: 'What you can see',
@@ -95,10 +87,6 @@ const swahili: BaseStrings = {
   notSure: 'Hakuna uhakika kamili. Piga picha nyingine kuhakikisha.',
   unclearTitle: 'Jani halionekani vizuri',
   unclearBody: 'Piga picha nyingine ya jani moja, kwenye mwanga mzuri, ukiwa karibu zaidi.',
-  tooDarkTitle: 'Picha ina giza sana',
-  tooDarkBody: 'Ongeza mwanga kwenye jani. Nenda penye mwanga zaidi unaoangaza jani sawasawa, kisha piga picha nyingine.',
-  tooBrightTitle: 'Picha ina mwanga mwingi sana',
-  tooBrightBody: 'Punguza mwanga kwenye jani. Nenda kivulini au zima flashi ya kamera, kisha piga picha nyingine.',
   blurredTitle: 'Picha haiko wazi',
   blurredBody: 'Shikilia simu bila kuitikisa na hakikisha kamera imelenga jani moja kabla ya kupiga picha nyingine.',
   whatYouSee: 'Unachoweza kuona',
@@ -175,10 +163,6 @@ const NEW_LINES = {
   seeAdvice: draftLine('See advice', 'Angalia ushauri'),
   retakeLeaf: draftLine('Retake this leaf', 'Piga upya jani hili'),
   retakeLeafNumber: draftLine('Leaf {number}: retake this leaf', 'Jani {number}: piga upya jani hili'),
-  leafTooDark: draftLine(
-    'Too dark or blurry. Move into daylight and hold steady.',
-    'Giza sana au halionekani vizuri. Nenda kwenye mwanga na ushike imara.',
-  ),
   leafNotClear: draftLine('Could not tell. Fill the frame with one leaf.', 'Haijaweza kujua. Jaza skrini na jani moja.'),
   retakeTitle: draftLine('Add clear leaves', 'Ongeza majani wazi'),
   retakeBody: draftLine(
