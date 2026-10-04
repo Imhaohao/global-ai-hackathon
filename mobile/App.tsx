@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { seedCheckContact, seedCheckCopy } from '../shared/src/seedCheck.ts';
-import { createAuthApi } from './src/auth/authApi';
+import { createDemoAuth } from './src/auth/demoAuthApi';
 import type { AuthSession } from './src/auth/session';
 import { useAuthSession } from './src/auth/useAuthSession';
 import { DEFAULT_MODEL_ID, type ModelId } from './src/diagnosis/modelConfig';
@@ -31,7 +31,8 @@ import { useAppSettings } from './src/storage/useAppSettings';
 import { useWetDays } from './src/storage/useWetDays';
 import { colors } from './src/theme';
 
-const AUTH_API = createAuthApi();
+const DEMO_AUTH = createDemoAuth();
+const AUTH_API = DEMO_AUTH.api;
 
 function deviceLanguage(): Language {
   return getLocales()[0]?.languageCode === 'sw' ? 'sw' : 'en';
@@ -55,6 +56,7 @@ export default function App() {
             language={loginLanguage}
             onSwitchLanguage={() => setLoginLanguage((current) => (current === 'en' ? 'sw' : 'en'))}
             onAuthenticated={auth.acceptSession}
+            signInWithoutCode={DEMO_AUTH.signInWithoutCode}
           />
         ) : (
           <AuthenticatedApp

@@ -17,11 +17,12 @@ type LoginScreenProps = {
   language: Language;
   onSwitchLanguage: () => void;
   onAuthenticated: (session: AuthSession) => Promise<void>;
+  signInWithoutCode?: (phone: string) => Promise<AuthSession>;
 };
 
 type Step = 'phone' | 'code';
 
-export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }: LoginScreenProps) {
+export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated, signInWithoutCode }: LoginScreenProps) {
   const strings = STRINGS[language];
   const [phoneInput, setPhoneInput] = useState('');
   const [phone, setPhone] = useState('');
@@ -67,6 +68,10 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
     setPending(true);
     setError('');
     try {
+      if (signInWithoutCode && !resend) {
+        await onAuthenticated(await signInWithoutCode(canonicalPhone));
+        return;
+      }
       const seconds = await api.sendCode(canonicalPhone, language);
       setPhone(canonicalPhone);
       setPhoneInput(canonicalPhone);
