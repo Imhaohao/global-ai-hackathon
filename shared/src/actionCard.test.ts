@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { ENGLISH_COPY } from "./actionCard.en.ts";
 import { ACTION_CARD_SW } from "./actionCard.sw.ts";
 import { buildActionCard, RUST_SPRAY_ACTION_INDEX } from "./actionCard.ts";
-import type { ActionContext, ActionInput, AppLanguage, PlantVerdict, WetDays } from "./contract.ts";
+import type { ActionCard, ActionContext, ActionInput, AppLanguage, PlantVerdict, WetDays } from "./contract.ts";
 import { DISEASES } from "./diseases.ts";
 import { DISEASES_SW } from "./diseases.sw.ts";
 import type { DiseaseKey } from "./types.ts";
@@ -57,8 +57,8 @@ for (const language of LANGUAGES) {
     const sprayStep = card.doNow.find((line) => /copper|shaba/i.test(line)) ?? "";
     assert.match(sprayStep, language === "sw" ? /haiponyi yaliyougua/ : /does not cure sick ones/);
     assert.match(sprayStep, language === "sw" ? /afisa ugani/ : /extension officer about timing/);
-    assert.match(sprayStep, /Use the rate on the product label\.$/);
-    assert.match(card.doNow[0], /3 of the last 7 days.*NASA POWER/);
+    assert.ok(sprayStep.endsWith(language === "sw" ? ACTION_CARD_SW.labelRate.text : ENGLISH_COPY.labelRate));
+    assert.match(card.doNow[0], language === "sw" ? /siku 3 kati ya 7.*NASA POWER/ : /3 of the last 7 days.*NASA POWER/);
   });
 
   for (const condition of ["cercospora", "phoma"] as const) {
@@ -94,7 +94,7 @@ for (const language of LANGUAGES) {
     assert.equal(card.needsPerson, false);
     assert.equal(card.condition, null);
     assert.equal(card.doNow.length, 3);
-    assert.equal(card.headline, ENGLISH_COPY.headlineRetake);
+    assert.equal(card.headline, language === "sw" ? ACTION_CARD_SW.headlineRetake.text : ENGLISH_COPY.headlineRetake);
   });
 
   for (const reason of ["leavesDisagree", "tooFewClearLeaves"] as const) {
@@ -104,7 +104,7 @@ for (const language of LANGUAGES) {
       assert.equal(card.decision, "callOfficer");
       assert.equal(card.needsPerson, true);
       assert.equal(card.condition, null);
-      assert.match(card.headline, /not sure/);
+      assert.match(card.headline, language === "sw" ? /haina uhakika/ : /not sure/);
     });
   }
 
@@ -123,10 +123,14 @@ for (const language of LANGUAGES) {
     assert.match(card.headline, /might be/);
   });
 
-  test(`sms confirmed: same card as the plant answer (${language})`, () => {
+  test(`sms confirmed: same decision as the plant answer (${language})`, () => {
     for (const condition of ["healthy", "rust", "cercospora", "phoma", "miner", "weevil", "mites"] as const) {
       const fromSms = buildActionCard({ kind: "sms", condition, confirmed: true }, context(language, wet(3)));
-      assert.deepEqual(fromSms, buildActionCard(plant(condition), context(language, wet(3))));
+      const fromPlant = buildActionCard(plant(condition), context(language, wet(3)));
+      const decisionOf = ({ condition: c, decision, urgency, recheckInDays, needsPerson, sourceUrls, doNow }: ActionCard) =>
+        ({ condition: c, decision, urgency, recheckInDays, needsPerson, sourceUrls, stepCount: doNow.length });
+      assert.deepEqual(decisionOf(fromSms), decisionOf(fromPlant));
+      if (language === "en") assert.deepEqual(fromSms, fromPlant);
     }
   });
 
@@ -144,15 +148,20 @@ test("source urls come from the disease entry", () => {
   assert.deepEqual(buildActionCard({ kind: "sms", condition: null, confirmed: false }, context("en")).sourceUrls, []);
 });
 
-test("an unreviewed Swahili line falls back to English and a reviewed one is used", () => {
-  const card = buildActionCard(plant("miner"), context("sw"));
-  assert.equal(card.headline, ENGLISH_COPY.headlineMonitor.replace("{name}", DISEASES_SW.miner.name));
+test("the app shows an unreviewed Swahili line", () => {
   assert.equal(ACTION_CARD_SW.headlineMonitor.reviewed, false);
+  const card = buildActionCard(plant("miner"), context("sw"));
+  assert.equal(card.headline, ACTION_CARD_SW.headlineMonitor.text.replace("{name}", DISEASES_SW.miner.name));
+});
+
+test("a text message keeps an unreviewed Swahili line in English and uses it once reviewed", () => {
+  const sms: ActionInput = { kind: "sms", condition: "miner", confirmed: true };
+  assert.equal(buildActionCard(sms, context("sw")).headline, ENGLISH_COPY.headlineMonitor.replace("{name}", DISEASES_SW.miner.name));
 
   const original = ACTION_CARD_SW.headlineMonitor;
   ACTION_CARD_SW.headlineMonitor = { ...original, reviewed: true };
   try {
-    assert.equal(buildActionCard(plant("miner"), context("sw")).headline, original.text.replace("{name}", DISEASES_SW.miner.name));
+    assert.equal(buildActionCard(sms, context("sw")).headline, original.text.replace("{name}", DISEASES_SW.miner.name));
   } finally {
     ACTION_CARD_SW.headlineMonitor = original;
   }

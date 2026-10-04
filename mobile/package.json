@@ -4,6 +4,7 @@
   "main": "index.ts",
   "dependencies": {
     "@kayahr/text-encoding": "^2.2.0",
+    "@rapideditor/country-coder": "^5.6.1",
     "babel-preset-expo": "~57.0.0",
     "eslint-config-expo": "~57.0.2",
     "expo": "~57.0.26",

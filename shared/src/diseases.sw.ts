@@ -1,7 +1,5 @@
 import { DISEASES } from "./diseases.ts";
-import type { DiseaseCatalog, DiseaseInfo, DiseaseKey } from "./types.ts";
-
-export type DiseaseText = Pick<DiseaseInfo, "name" | "look" | "tellApart" | "actions" | "urgencyReason">;
+import type { DiseaseCatalog, DiseaseKey, DiseaseText } from "./types.ts";
 
 export const DISEASES_SW: Record<DiseaseKey, DiseaseText> = {
   mites: {

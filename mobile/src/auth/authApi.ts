@@ -2,6 +2,8 @@ import { DEFAULT_BACKEND_URL } from '../../../shared/src/backendUrl';
 import { isCanonicalPhone, validateServerSession, type AuthSession, type ServerSession } from './session';
 
 const REQUEST_TIMEOUT_MS = 12_000;
+// The sign-in text message is only written in these languages; every other app language gets English.
+const CODE_MESSAGE_LANGUAGES = new Set(['en', 'sw']);
 const PHONE_CODE_PATTERN = /^\d{4,10}$/;
 const ERROR_CODES = ['invalid_phone', 'invalid_code', 'rate_limited', 'unavailable', 'unauthorized'] as const;
 type AuthErrorCode = (typeof ERROR_CODES)[number];
@@ -53,11 +55,12 @@ export function createAuthApi(
 ) {
   const resolveBackendUrl = () => (backendUrl ?? getBackendUrl()).replace(/\/$/, '');
   return {
-    async sendCode(phone: string, language: 'en' | 'sw'): Promise<number> {
+    async sendCode(phone: string, language: string): Promise<number> {
       if (!isCanonicalPhone(phone)) throw new AuthApiError('Enter a valid phone number.', 'invalid_phone');
+      const messageLanguage = CODE_MESSAGE_LANGUAGES.has(language) ? language : 'en';
       const response = await requestJson(fetcher, resolveBackendUrl(), '/auth/send-code', {
         method: 'POST',
-        body: JSON.stringify({ phone, language }),
+        body: JSON.stringify({ phone, language: messageLanguage }),
       }, timeoutMs);
       const resendAfterSeconds = recordField(response, 'resendAfterSeconds');
       if (!isPositiveInteger(resendAfterSeconds) || resendAfterSeconds > 600) throw new AuthProtocolError();

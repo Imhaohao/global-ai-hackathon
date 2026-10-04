@@ -34,6 +34,11 @@ test("the seed check SMS lists the three steps with the short code and fits one 
   assert.ok(sms.length + COMPLIANCE_OVERHEAD_CHARS <= SMS_MAX_CHARS, `${sms.length} chars`);
 });
 
-test("unreviewed Swahili falls back to English", () => {
-  assert.deepEqual(seedCheckCopy("sw"), seedCheckCopy("en"));
+test("the app shows unreviewed Swahili seed steps", () => {
+  assert.notDeepEqual(seedCheckCopy("sw"), seedCheckCopy("en"));
+  assert.match(seedCheckCopy("sw")?.steps[0] ?? "", /KEPHIS/);
+});
+
+test("a text message keeps unreviewed Swahili seed steps in English", () => {
+  assert.equal(seedCheckSms("sw"), seedCheckSms("en"));
 });

@@ -17,4 +17,6 @@ export interface DiseaseInfo {
   sources: string[];
 }
 
+export type DiseaseText = Pick<DiseaseInfo, "name" | "look" | "tellApart" | "actions" | "urgencyReason">;
+
 export type DiseaseCatalog = Record<DiseaseKey, DiseaseInfo>;

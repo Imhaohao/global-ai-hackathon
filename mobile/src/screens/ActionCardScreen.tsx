@@ -1,4 +1,4 @@
-import { Camera, CalendarCheck, Question, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
+import { Camera, CalendarCheck, Question, SpeakerHigh, SpeakerSlash, Translate } from 'phosphor-react-native';
 import { useEffect, useRef } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -20,6 +20,17 @@ import { FarmSectionPicker } from './FarmSectionPicker';
 import { CheckAnotherButton, OfficerActions } from './OfficerActions';
 import { formatRecheckDate } from './recheckDate';
 import type { OfficerSendResult } from './sendCaseToOfficer';
+
+function UncheckedTranslationNote({ text }: { text: string }) {
+  return (
+    <View className="flex-row items-start gap-3 rounded-control bg-watch-soft px-4 py-3">
+      <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" className="pt-0.5">
+        <Translate size={22} weight="regular" color={colors.watch} />
+      </View>
+      <Muted className="flex-1 text-ink">{text}</Muted>
+    </View>
+  );
+}
 
 type ActionCardScreenProps = {
   strings: Strings;
@@ -136,6 +147,7 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
       <DecisionHeader decision={card.decision} urgency={card.urgency} headline={card.headline} />
       <ReadAloudButton strings={strings} card={card} />
       <StepPager steps={card.doNow} strings={strings} />
+      {strings.adviceChecked ? null : <UncheckedTranslationNote text={strings.translationUnchecked} />}
       <WhatToBuy advice={whatToBuy(card)} strings={strings} />
       <OfficerActions
         strings={strings}
