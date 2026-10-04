@@ -1,0 +1,81 @@
+@import "../../../assets/brand/tokens.css";
+@import "tailwindcss";
+
+/* Colours, families and curves come from the shared brand tokens. This file names them for Tailwind, adds the
+   dark cinematic base the demo video sits on, and the type sizes a 1920x1080 frame needs. */
+@theme inline {
+  --color-paper: var(--brand-paper);
+  --color-paper-raised: var(--brand-paper-raised);
+  --color-ink: var(--brand-ink);
+  --color-ink-muted: var(--brand-ink-muted);
+  --color-leaf: var(--brand-leaf);
+  --color-leaf-soft: var(--brand-leaf-soft);
+  --color-rust: var(--brand-rust);
+  --color-rust-glow: var(--brand-rust-glow);
+  --color-rust-deep: var(--brand-rust-deep);
+
+  --font-display: var(--brand-font-display);
+  --font-body: var(--brand-font-body);
+  --font-data: var(--brand-font-data);
+}
+
+@theme {
+  /* The night base and its text, used where the video goes dark. */
+  --color-night: #0d0f0b;
+  --color-night-raised: #1a1d17;
+  --color-on-night: #f2f0ea;
+  --color-on-night-muted: #b5b2a8;
+  --color-imessage-blue: #2d8eff;
+  --color-imessage-grey: #222126;
+
+  --text-poster: 240px;
+  --text-poster--line-height: 0.88;
+  --text-headline: 128px;
+  --text-headline--line-height: 0.95;
+  --text-title: 84px;
+  --text-title--line-height: 1.02;
+  --text-lead: 46px;
+  --text-lead--line-height: 1.2;
+  --text-label: 34px;
+  --text-label--line-height: 1.25;
+  --text-fine: 24px;
+  --text-fine--line-height: 1.3;
+  --text-bubble: 17px;
+  --text-bubble--line-height: 22px;
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--color-night);
+    color: var(--color-on-night);
+    font-family: var(--brand-font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@utility display-poster {
+  font-family: var(--brand-font-display);
+  font-weight: var(--brand-weight-poster);
+  font-stretch: 70%;
+  text-wrap: balance;
+}
+
+@utility display-headline {
+  font-family: var(--brand-font-display);
+  font-weight: var(--brand-weight-display);
+  font-stretch: 84%;
+  text-wrap: balance;
+}
+
+@utility figures {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@utility ios-text {
+  font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+@utility rust-glow {
+  text-shadow: 0 0 22px color-mix(in srgb, var(--brand-rust-glow) 70%, transparent), 0 0 70px color-mix(in srgb, var(--brand-rust) 45%, transparent);
+}
