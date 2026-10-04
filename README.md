@@ -1,32 +1,74 @@
-# Global AI Hackathon
+# Leaf Doctor
 
-Our project for **Hack-Nation's 7th Global AI Hackathon**, a 24-hour hybrid hackathon where AI builders compete, collaborate, and ship.
+Leaf Doctor is our project for the **World Bank agriculture challenge** in **Small AI for Development** at Hack-Nation's 7th Global AI Hackathon, October 3–4, 2026.
 
-## About the event
+We are building for smallholder coffee farmers who have limited mobile data and infrequent access to an extension officer. The challenge uses a fictional farmer, Noor; our research focuses on Kenya's coffee belt. Leaf Doctor combines offline leaf checks with SMS support so a farmer can decide what to inspect next and when to ask a person for help.
 
-- **Dates:** October 3–4, 2026
-- **Format:** 24-hour hybrid build marathon, run online and in person across 14 city hubs worldwide
-- **Challenges:** roughly 6–8 AI challenge tracks, announced during the event
-- **Prizes:** $35k+ in cash and credits, including $30k+ in cash prizes and API credits across the challenges, plus $200k+ in AI tools and credits for participating teams
-- **Venture Track:** the top 1% of teams are invited to the Venture Lab to keep incubating their startups after the event
-- **Mentors and judges:** drawn from OpenAI, Meta, Apple, and leading AI startups
-- **Who can join:** anyone building with AI, from indie hackers and students to startup teams
+## What we are building
 
-## Our project
+- **Offline leaf checks:** photograph up to six leaves on a smartphone. A bundled TensorFlow Lite model screens image quality and suggests a supported condition. Unclear photos prompt a retake; conflicting or insufficient usable readings lead to an officer referral.
+- **Action cards:** shared rules turn findings into next steps and a recheck date. Farmers can read the card aloud and choose to send a case summary through their SMS app.
+- **Basic-phone support:** a cooperative's Android hub receives SMS questions. It uses the backend when connected and a local language model with rule-based replies when offline. Model-assisted symptom readings require confirmation.
+- **English and Swahili:** the apps and replies support both languages. Unreviewed action-card translations fall back to English; native-speaker review remains necessary before field use.
 
-_To be filled in once the challenge track is chosen._
+This is a research prototype. Dataset accuracy does not establish field accuracy, physical-phone performance remains unverified, and we have not measured a yield benefit. The project is a hackathon submission; it does not claim a World Bank partnership or endorsement.
+
+## How it fits together
+
+```mermaid
+flowchart LR
+    Photos[Smartphone leaf photos] --> Model[Offline leaf model]
+    Model --> Rules[Shared advice rules]
+    Farmer[Farmer SMS] --> Hub[Cooperative Android hub]
+    Hub --> Local[Offline language model]
+    Hub --> Backend[Online backend]
+    Local --> Confirm[Confirm symptoms]
+    Backend --> Confirm
+    Confirm --> Rules
+    Rules --> Card[Action card or SMS reply]
+    Card --> Officer[Farmer chooses officer referral]
+```
+
+| Folder | Purpose |
+| --- | --- |
+| `mobile/` | Expo smartphone app, multi-leaf checks, local observations and case sharing |
+| `hub/` | Android SMS hub with online and offline answering |
+| `shared/` | Disease facts, symptom matching, plant voting, advice and SMS rules |
+| `backend/` | Convex backend, Claude advisor, Twilio SMS and phone authentication |
+| `training/` | Coffee-leaf training, export and evaluation evidence |
+| `satellite-hotspots/` | Separate crop-anomaly research component; not a validated coffee disease detector |
 
 ## Getting started
+
+Install Node.js and npm, then run:
 
 ```bash
 git clone https://github.com/Imhaohao/global-ai-hackathon
 cd global-ai-hackathon
+npm ci
+npm run typecheck
+npm run lint
+npm test
 ```
 
-## Sources
+The smartphone app needs a native development build because it bundles TensorFlow Lite:
 
-- [Global AI Hackathon 7 – Hack-Nation](https://www.createwith.com/event/unknown-global-ai-hackathon-7-hack-nation-oct-2026)
-- [Vienna Hub – 7th Hack-Nation Global AI Hackathon](https://luma.com/37954ppi)
+```bash
+cd mobile
+npm ci
+npm run android
+# Or, on macOS with Xcode installed:
+npm run ios
+```
+
+Android builds require the Android SDK and a device or emulator. Online SMS and authentication require your own provider configuration; see [backend configuration](backend/.env.example) and [hub configuration](hub/.env.example).
+
+## Project references
+
+- [Product plan](docs/refined-plan.md) and [build plan](docs/build-plan.md) describe the intended workflow; some details predate the current implementation.
+- [Research sources](docs/research-sources.md) and [development evidence](docs/evidence.md) record sources and their verification status.
+- [Farmer data flow](docs/data-flow.md) explains storage, providers and deletion limits.
+- [Model data card](docs/data-card.md) documents training data and evaluation limits. Model results and reproduction steps follow below.
 
 ## Local coffee-leaf model
 
