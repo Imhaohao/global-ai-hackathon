@@ -1,0 +1,6834 @@
+{
+  "parameter_count": 10708528,
+  "artifact_bytes": 11796544,
+  "under_10_decimal_MB": false,
+  "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+  "checkpoint_sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+  "subsets": {
+    "expanded_all_eight": {
+      "raw": {
+        "n": 5868,
+        "accuracy": 0.9321745057941377,
+        "macro_f1": 0.8543653503213113,
+        "classification": {
+          "cercospora": {
+            "precision": 0.803921568627451,
+            "recall": 0.70995670995671,
+            "f1-score": 0.7540229885057471,
+            "support": 231.0
+          },
+          "healthy": {
+            "precision": 0.9369369369369369,
+            "recall": 0.9811320754716981,
+            "f1-score": 0.9585253456221198,
+            "support": 318.0
+          },
+          "miner": {
+            "precision": 0.939297124600639,
+            "recall": 0.9385474860335196,
+            "f1-score": 0.9389221556886228,
+            "support": 1253.0
+          },
+          "phoma": {
+            "precision": 0.8631415241057543,
+            "recall": 0.8197932053175776,
+            "f1-score": 0.8409090909090909,
+            "support": 677.0
+          },
+          "rust": {
+            "precision": 0.9543258673693457,
+            "recall": 0.9585355094838994,
+            "f1-score": 0.9564260563380281,
+            "support": 2267.0
+          },
+          "red_spider_mite": {
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1-score": 0.43478260869565216,
+            "support": 26.0
+          },
+          "weevil_damage": {
+            "precision": 0.9410503751339764,
+            "recall": 0.9821029082774049,
+            "f1-score": 0.9611384783798577,
+            "support": 894.0
+          },
+          "unsupported": {
+            "precision": 0.9805825242718447,
+            "recall": 1.0,
+            "f1-score": 0.9901960784313726,
+            "support": 202.0
+          },
+          "accuracy": 0.9321745057941377,
+          "macro avg": {
+            "precision": 0.8649069901307435,
+            "recall": 0.8468354098945243,
+            "f1-score": 0.8543653503213113,
+            "support": 5868.0
+          },
+          "weighted avg": {
+            "precision": 0.9306018036540692,
+            "recall": 0.9321745057941377,
+            "f1-score": 0.931076160691051,
+            "support": 5868.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            164,
+            2,
+            6,
+            18,
+            37,
+            0,
+            4,
+            0
+          ],
+          [
+            1,
+            312,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1176,
+            39,
+            14,
+            0,
+            16,
+            3
+          ],
+          [
+            8,
+            6,
+            68,
+            555,
+            24,
+            0,
+            16,
+            0
+          ],
+          [
+            31,
+            6,
+            2,
+            27,
+            2173,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            13,
+            10,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            13,
+            0,
+            878,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202
+          ]
+        ]
+      },
+      "app": {
+        "n": 5868,
+        "accepted_n": 4642,
+        "accepted_coverage": 0.7910702113156101,
+        "accepted_accuracy": 0.941404566996984,
+        "correct_accepted_fraction": 0.7447171097477846,
+        "confident_n": 4285,
+        "unsupported_n": 202,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 231,
+          "accepted_as_class": 170,
+          "correct_accepted": 143,
+          "accepted_precision": 0.8411764705882353,
+          "correct_accepted_recall": 0.6190476190476191,
+          "true_class_accepted_coverage": 0.8354978354978355,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 318,
+          "accepted_as_class": 332,
+          "correct_accepted": 312,
+          "accepted_precision": 0.9397590361445783,
+          "correct_accepted_recall": 0.9811320754716981,
+          "true_class_accepted_coverage": 0.9905660377358491,
+          "enabled": true
+        },
+        "miner": {
+          "support": 1253,
+          "accepted_as_class": 1213,
+          "correct_accepted": 1143,
+          "accepted_precision": 0.9422918384171476,
+          "correct_accepted_recall": 0.9122106943335994,
+          "true_class_accepted_coverage": 0.9433359936153233,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 677,
+          "accepted_as_class": 450,
+          "correct_accepted": 425,
+          "accepted_precision": 0.9444444444444444,
+          "correct_accepted_recall": 0.6277695716395865,
+          "true_class_accepted_coverage": 0.7872968980797637,
+          "enabled": true
+        },
+        "rust": {
+          "support": 2267,
+          "accepted_as_class": 1625,
+          "correct_accepted": 1536,
+          "accepted_precision": 0.9452307692307692,
+          "correct_accepted_recall": 0.6775474194971328,
+          "true_class_accepted_coverage": 0.7000441111601235,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 26,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.5769230769230769,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 894,
+          "accepted_as_class": 852,
+          "correct_accepted": 811,
+          "accepted_precision": 0.9518779342723005,
+          "correct_accepted_recall": 0.9071588366890381,
+          "true_class_accepted_coverage": 0.9138702460850112,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 202,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 982,
+      "parents": 1770
+    },
+    "original_all_eight": {
+      "raw": {
+        "n": 4571,
+        "accuracy": 0.9374316342157077,
+        "macro_f1": 0.8639987673234013,
+        "classification": {
+          "cercospora": {
+            "precision": 0.9281437125748503,
+            "recall": 0.7380952380952381,
+            "f1-score": 0.8222811671087533,
+            "support": 210.0
+          },
+          "healthy": {
+            "precision": 0.9218106995884774,
+            "recall": 0.9739130434782609,
+            "f1-score": 0.9471458773784355,
+            "support": 230.0
+          },
+          "miner": {
+            "precision": 0.9514644351464435,
+            "recall": 0.949874686716792,
+            "f1-score": 0.9506688963210702,
+            "support": 1197.0
+          },
+          "phoma": {
+            "precision": 0.8847058823529412,
+            "recall": 0.8300220750551877,
+            "f1-score": 0.856492027334852,
+            "support": 453.0
+          },
+          "rust": {
+            "precision": 0.9405737704918032,
+            "recall": 0.9609211444521982,
+            "f1-score": 0.9506385916465309,
+            "support": 1433.0
+          },
+          "red_spider_mite": {
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1-score": 0.43478260869565216,
+            "support": 26.0
+          },
+          "weevil_damage": {
+            "precision": 0.9491891891891892,
+            "recall": 0.9821029082774049,
+            "f1-score": 0.9653655854865311,
+            "support": 894.0
+          },
+          "unsupported": {
+            "precision": 0.9696969696969697,
+            "recall": 1.0,
+            "f1-score": 0.9846153846153847,
+            "support": 128.0
+          },
+          "accuracy": 0.9374316342157077,
+          "macro avg": {
+            "precision": 0.8806980823800843,
+            "recall": 0.8524430600863083,
+            "f1-score": 0.8639987673234013,
+            "support": 4571.0
+          },
+          "weighted avg": {
+            "precision": 0.9363683864566494,
+            "recall": 0.9374316342157077,
+            "f1-score": 0.9361411521505538,
+            "support": 4571.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            155,
+            2,
+            6,
+            10,
+            33,
+            0,
+            4,
+            0
+          ],
+          [
+            1,
+            224,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1137,
+            24,
+            13,
+            0,
+            15,
+            3
+          ],
+          [
+            1,
+            5,
+            50,
+            376,
+            12,
+            0,
+            9,
+            0
+          ],
+          [
+            10,
+            5,
+            2,
+            11,
+            1377,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            13,
+            10,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            13,
+            0,
+            878,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            128
+          ]
+        ]
+      },
+      "app": {
+        "n": 4571,
+        "accepted_n": 3724,
+        "accepted_coverage": 0.8147013782542113,
+        "accepted_accuracy": 0.9460257787325457,
+        "correct_accepted_fraction": 0.7707285057974185,
+        "confident_n": 3449,
+        "unsupported_n": 128,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 210,
+          "accepted_as_class": 143,
+          "correct_accepted": 135,
+          "accepted_precision": 0.9440559440559441,
+          "correct_accepted_recall": 0.6428571428571429,
+          "true_class_accepted_coverage": 0.8476190476190476,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 230,
+          "accepted_as_class": 242,
+          "correct_accepted": 224,
+          "accepted_precision": 0.9256198347107438,
+          "correct_accepted_recall": 0.9739130434782609,
+          "true_class_accepted_coverage": 0.9869565217391304,
+          "enabled": true
+        },
+        "miner": {
+          "support": 1197,
+          "accepted_as_class": 1157,
+          "correct_accepted": 1104,
+          "accepted_precision": 0.9541918755401901,
+          "correct_accepted_recall": 0.9223057644110275,
+          "true_class_accepted_coverage": 0.9515455304928989,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 453,
+          "accepted_as_class": 291,
+          "correct_accepted": 278,
+          "accepted_precision": 0.9553264604810997,
+          "correct_accepted_recall": 0.6136865342163356,
+          "true_class_accepted_coverage": 0.7660044150110376,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1433,
+          "accepted_as_class": 1047,
+          "correct_accepted": 971,
+          "accepted_precision": 0.9274116523400191,
+          "correct_accepted_recall": 0.677599441730635,
+          "true_class_accepted_coverage": 0.6985345429169574,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 26,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.5769230769230769,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 894,
+          "accepted_as_class": 844,
+          "correct_accepted": 811,
+          "accepted_precision": 0.9609004739336493,
+          "correct_accepted_recall": 0.9071588366890381,
+          "true_class_accepted_coverage": 0.9138702460850112,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 128,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 970,
+      "parents": 1758
+    },
+    "expanded_common_five": {
+      "raw": {
+        "n": 4746,
+        "accuracy": 0.922882427307206,
+        "macro_f1": 0.8918358003752068,
+        "classification": {
+          "cercospora": {
+            "precision": 0.803921568627451,
+            "recall": 0.70995670995671,
+            "f1-score": 0.7540229885057471,
+            "support": 231.0
+          },
+          "healthy": {
+            "precision": 0.9425981873111783,
+            "recall": 0.9811320754716981,
+            "f1-score": 0.9614791987673343,
+            "support": 318.0
+          },
+          "miner": {
+            "precision": 0.939297124600639,
+            "recall": 0.9385474860335196,
+            "f1-score": 0.9389221556886228,
+            "support": 1253.0
+          },
+          "phoma": {
+            "precision": 0.8671875,
+            "recall": 0.8197932053175776,
+            "f1-score": 0.8428246013667426,
+            "support": 677.0
+          },
+          "rust": {
+            "precision": 0.9653487338960463,
+            "recall": 0.9585355094838994,
+            "f1-score": 0.9619300575475874,
+            "support": 2267.0
+          },
+          "micro avg": {
+            "precision": 0.9362975630611372,
+            "recall": 0.922882427307206,
+            "f1-score": 0.9295415959252971,
+            "support": 4746.0
+          },
+          "macro avg": {
+            "precision": 0.9036706228870628,
+            "recall": 0.881592997252681,
+            "f1-score": 0.8918358003752068,
+            "support": 4746.0
+          },
+          "weighted avg": {
+            "precision": 0.9350870038526831,
+            "recall": 0.922882427307206,
+            "f1-score": 0.928716150909471,
+            "support": 4746.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            164,
+            2,
+            6,
+            18,
+            37,
+            0,
+            4,
+            0
+          ],
+          [
+            1,
+            312,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1176,
+            39,
+            14,
+            0,
+            16,
+            3
+          ],
+          [
+            8,
+            6,
+            68,
+            555,
+            24,
+            0,
+            16,
+            0
+          ],
+          [
+            31,
+            6,
+            2,
+            27,
+            2173,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 4746,
+        "accepted_n": 3810,
+        "accepted_coverage": 0.8027812895069533,
+        "accepted_accuracy": 0.9341207349081365,
+        "correct_accepted_fraction": 0.7498946481247366,
+        "confident_n": 3455,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 231,
+          "accepted_as_class": 170,
+          "correct_accepted": 143,
+          "accepted_precision": 0.8411764705882353,
+          "correct_accepted_recall": 0.6190476190476191,
+          "true_class_accepted_coverage": 0.8354978354978355,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 318,
+          "accepted_as_class": 330,
+          "correct_accepted": 312,
+          "accepted_precision": 0.9454545454545454,
+          "correct_accepted_recall": 0.9811320754716981,
+          "true_class_accepted_coverage": 0.9905660377358491,
+          "enabled": true
+        },
+        "miner": {
+          "support": 1253,
+          "accepted_as_class": 1213,
+          "correct_accepted": 1143,
+          "accepted_precision": 0.9422918384171476,
+          "correct_accepted_recall": 0.9122106943335994,
+          "true_class_accepted_coverage": 0.9433359936153233,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 677,
+          "accepted_as_class": 449,
+          "correct_accepted": 425,
+          "accepted_precision": 0.9465478841870824,
+          "correct_accepted_recall": 0.6277695716395865,
+          "true_class_accepted_coverage": 0.7872968980797637,
+          "enabled": true
+        },
+        "rust": {
+          "support": 2267,
+          "accepted_as_class": 1607,
+          "correct_accepted": 1536,
+          "accepted_precision": 0.955818294959552,
+          "correct_accepted_recall": 0.6775474194971328,
+          "true_class_accepted_coverage": 0.7000441111601235,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 41,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 801,
+      "parents": 1573
+    },
+    "expanded_common_five_excluding_agml_and_known_exposure": {
+      "raw": {
+        "n": 3289,
+        "accuracy": 0.9279416235937975,
+        "macro_f1": 0.8471576664138093,
+        "classification": {
+          "cercospora": {
+            "precision": 0.5180722891566265,
+            "recall": 0.581081081081081,
+            "f1-score": 0.5477707006369427,
+            "support": 74.0
+          },
+          "healthy": {
+            "precision": 0.9456869009584664,
+            "recall": 0.9801324503311258,
+            "f1-score": 0.9626016260162602,
+            "support": 302.0
+          },
+          "miner": {
+            "precision": 0.9620034542314335,
+            "recall": 0.9086460032626428,
+            "f1-score": 0.9345637583892618,
+            "support": 613.0
+          },
+          "phoma": {
+            "precision": 0.7931937172774869,
+            "recall": 0.8583569405099151,
+            "f1-score": 0.8244897959183674,
+            "support": 353.0
+          },
+          "rust": {
+            "precision": 0.9814618644067796,
+            "recall": 0.9517205957883924,
+            "f1-score": 0.9663624511082138,
+            "support": 1947.0
+          },
+          "micro avg": {
+            "precision": 0.9405238828967643,
+            "recall": 0.9279416235937975,
+            "f1-score": 0.9341903887358433,
+            "support": 3289.0
+          },
+          "macro avg": {
+            "precision": 0.8400836452061586,
+            "recall": 0.8559874141946315,
+            "f1-score": 0.8471576664138093,
+            "support": 3289.0
+          },
+          "weighted avg": {
+            "precision": 0.9439180733140374,
+            "recall": 0.9279416235937975,
+            "f1-score": 0.9354456968876675,
+            "support": 3289.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            43,
+            2,
+            2,
+            18,
+            9,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            296,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            557,
+            33,
+            11,
+            0,
+            7,
+            0
+          ],
+          [
+            8,
+            4,
+            18,
+            303,
+            12,
+            0,
+            8,
+            0
+          ],
+          [
+            31,
+            6,
+            2,
+            27,
+            1853,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 3289,
+        "accepted_n": 2484,
+        "accepted_coverage": 0.7552447552447552,
+        "accepted_accuracy": 0.9424315619967794,
+        "correct_accepted_fraction": 0.71176649437519,
+        "confident_n": 2317,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 74,
+          "accepted_as_class": 69,
+          "correct_accepted": 42,
+          "accepted_precision": 0.6086956521739131,
+          "correct_accepted_recall": 0.5675675675675675,
+          "true_class_accepted_coverage": 0.8108108108108109,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 302,
+          "accepted_as_class": 312,
+          "correct_accepted": 296,
+          "accepted_precision": 0.9487179487179487,
+          "correct_accepted_recall": 0.9801324503311258,
+          "true_class_accepted_coverage": 0.9900662251655629,
+          "enabled": true
+        },
+        "miner": {
+          "support": 613,
+          "accepted_as_class": 544,
+          "correct_accepted": 524,
+          "accepted_precision": 0.9632352941176471,
+          "correct_accepted_recall": 0.8548123980424144,
+          "true_class_accepted_coverage": 0.8988580750407831,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 353,
+          "accepted_as_class": 285,
+          "correct_accepted": 261,
+          "accepted_precision": 0.9157894736842105,
+          "correct_accepted_recall": 0.7393767705382436,
+          "true_class_accepted_coverage": 0.8640226628895185,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1947,
+          "accepted_as_class": 1246,
+          "correct_accepted": 1218,
+          "accepted_precision": 0.9775280898876404,
+          "correct_accepted_recall": 0.6255778120184899,
+          "true_class_accepted_coverage": 0.6517719568567026,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 28,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 442,
+      "parents": 465
+    },
+    "original_common_five": {
+      "raw": {
+        "n": 3523,
+        "accuracy": 0.9279023559466364,
+        "macro_f1": 0.9085588023998017,
+        "classification": {
+          "cercospora": {
+            "precision": 0.9281437125748503,
+            "recall": 0.7380952380952381,
+            "f1-score": 0.8222811671087533,
+            "support": 210.0
+          },
+          "healthy": {
+            "precision": 0.9294605809128631,
+            "recall": 0.9739130434782609,
+            "f1-score": 0.9511677282377919,
+            "support": 230.0
+          },
+          "miner": {
+            "precision": 0.9514644351464435,
+            "recall": 0.949874686716792,
+            "f1-score": 0.9506688963210702,
+            "support": 1197.0
+          },
+          "phoma": {
+            "precision": 0.8909952606635071,
+            "recall": 0.8300220750551877,
+            "f1-score": 0.8594285714285714,
+            "support": 453.0
+          },
+          "rust": {
+            "precision": 0.9575799721835884,
+            "recall": 0.9609211444521982,
+            "f1-score": 0.9592476489028213,
+            "support": 1433.0
+          },
+          "micro avg": {
+            "precision": 0.9439792087785157,
+            "recall": 0.9279023559466364,
+            "f1-score": 0.935871743486974,
+            "support": 3523.0
+          },
+          "macro avg": {
+            "precision": 0.9315287922962504,
+            "recall": 0.8905652375595354,
+            "f1-score": 0.9085588023998017,
+            "support": 3523.0
+          },
+          "weighted avg": {
+            "precision": 0.9433499844849903,
+            "recall": 0.9279023559466364,
+            "f1-score": 0.9348059367637631,
+            "support": 3523.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            155,
+            2,
+            6,
+            10,
+            33,
+            0,
+            4,
+            0
+          ],
+          [
+            1,
+            224,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            1137,
+            24,
+            13,
+            0,
+            15,
+            3
+          ],
+          [
+            1,
+            5,
+            50,
+            376,
+            12,
+            0,
+            9,
+            0
+          ],
+          [
+            10,
+            5,
+            2,
+            11,
+            1377,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 3523,
+        "accepted_n": 2892,
+        "accepted_coverage": 0.8208912858359353,
+        "accepted_accuracy": 0.9377593360995851,
+        "correct_accepted_fraction": 0.7697984672154414,
+        "confident_n": 2619,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 210,
+          "accepted_as_class": 143,
+          "correct_accepted": 135,
+          "accepted_precision": 0.9440559440559441,
+          "correct_accepted_recall": 0.6428571428571429,
+          "true_class_accepted_coverage": 0.8476190476190476,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 230,
+          "accepted_as_class": 240,
+          "correct_accepted": 224,
+          "accepted_precision": 0.9333333333333333,
+          "correct_accepted_recall": 0.9739130434782609,
+          "true_class_accepted_coverage": 0.9869565217391304,
+          "enabled": true
+        },
+        "miner": {
+          "support": 1197,
+          "accepted_as_class": 1157,
+          "correct_accepted": 1104,
+          "accepted_precision": 0.9541918755401901,
+          "correct_accepted_recall": 0.9223057644110275,
+          "true_class_accepted_coverage": 0.9515455304928989,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 453,
+          "accepted_as_class": 290,
+          "correct_accepted": 278,
+          "accepted_precision": 0.9586206896551724,
+          "correct_accepted_recall": 0.6136865342163356,
+          "true_class_accepted_coverage": 0.7660044150110376,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1433,
+          "accepted_as_class": 1029,
+          "correct_accepted": 971,
+          "accepted_precision": 0.9436345966958212,
+          "correct_accepted_recall": 0.677599441730635,
+          "true_class_accepted_coverage": 0.6985345429169574,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 33,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 792,
+      "parents": 1564
+    },
+    "expanded_excluding_agml_and_known_exposure": {
+      "raw": {
+        "n": 4411,
+        "accuracy": 0.939016096123328,
+        "macro_f1": 0.8284296214726182,
+        "classification": {
+          "cercospora": {
+            "precision": 0.5180722891566265,
+            "recall": 0.581081081081081,
+            "f1-score": 0.5477707006369427,
+            "support": 74.0
+          },
+          "healthy": {
+            "precision": 0.9396825396825397,
+            "recall": 0.9801324503311258,
+            "f1-score": 0.9594813614262561,
+            "support": 302.0
+          },
+          "miner": {
+            "precision": 0.9620034542314335,
+            "recall": 0.9086460032626428,
+            "f1-score": 0.9345637583892618,
+            "support": 613.0
+          },
+          "phoma": {
+            "precision": 0.787012987012987,
+            "recall": 0.8583569405099151,
+            "f1-score": 0.8211382113821138,
+            "support": 353.0
+          },
+          "rust": {
+            "precision": 0.9681295715778474,
+            "recall": 0.9517205957883924,
+            "f1-score": 0.9598549598549598,
+            "support": 1947.0
+          },
+          "red_spider_mite": {
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1-score": 0.43478260869565216,
+            "support": 26.0
+          },
+          "weevil_damage": {
+            "precision": 0.9627192982456141,
+            "recall": 0.9821029082774049,
+            "f1-score": 0.9723145071982281,
+            "support": 894.0
+          },
+          "unsupported": {
+            "precision": 0.9950738916256158,
+            "recall": 1.0,
+            "f1-score": 0.9975308641975309,
+            "support": 202.0
+          },
+          "accuracy": 0.939016096123328,
+          "macro avg": {
+            "precision": 0.829086753941583,
+            "recall": 0.8308319204832433,
+            "f1-score": 0.8284296214726182,
+            "support": 4411.0
+          },
+          "weighted avg": {
+            "precision": 0.9406641198919049,
+            "recall": 0.939016096123328,
+            "f1-score": 0.9394559361086323,
+            "support": 4411.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            43,
+            2,
+            2,
+            18,
+            9,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            296,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            557,
+            33,
+            11,
+            0,
+            7,
+            0
+          ],
+          [
+            8,
+            4,
+            18,
+            303,
+            12,
+            0,
+            8,
+            0
+          ],
+          [
+            31,
+            6,
+            2,
+            27,
+            1853,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            13,
+            10,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            13,
+            0,
+            878,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            202
+          ]
+        ]
+      },
+      "app": {
+        "n": 4411,
+        "accepted_n": 3316,
+        "accepted_coverage": 0.7517569712083427,
+        "accepted_accuracy": 0.9505428226779252,
+        "correct_accepted_fraction": 0.7145771933801859,
+        "confident_n": 3147,
+        "unsupported_n": 202,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 74,
+          "accepted_as_class": 69,
+          "correct_accepted": 42,
+          "accepted_precision": 0.6086956521739131,
+          "correct_accepted_recall": 0.5675675675675675,
+          "true_class_accepted_coverage": 0.8108108108108109,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 302,
+          "accepted_as_class": 314,
+          "correct_accepted": 296,
+          "accepted_precision": 0.9426751592356688,
+          "correct_accepted_recall": 0.9801324503311258,
+          "true_class_accepted_coverage": 0.9900662251655629,
+          "enabled": true
+        },
+        "miner": {
+          "support": 613,
+          "accepted_as_class": 544,
+          "correct_accepted": 524,
+          "accepted_precision": 0.9632352941176471,
+          "correct_accepted_recall": 0.8548123980424144,
+          "true_class_accepted_coverage": 0.8988580750407831,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 353,
+          "accepted_as_class": 286,
+          "correct_accepted": 261,
+          "accepted_precision": 0.9125874125874126,
+          "correct_accepted_recall": 0.7393767705382436,
+          "true_class_accepted_coverage": 0.8640226628895185,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1947,
+          "accepted_as_class": 1264,
+          "correct_accepted": 1218,
+          "accepted_precision": 0.9636075949367089,
+          "correct_accepted_recall": 0.6255778120184899,
+          "true_class_accepted_coverage": 0.6517719568567026,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 26,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.5769230769230769,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 894,
+          "accepted_as_class": 839,
+          "correct_accepted": 811,
+          "accepted_precision": 0.966626936829559,
+          "correct_accepted_recall": 0.9071588366890381,
+          "true_class_accepted_coverage": 0.9138702460850112,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 202,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 623,
+      "parents": 662
+    },
+    "original_excluding_agml_and_known_exposure": {
+      "raw": {
+        "n": 3114,
+        "accuracy": 0.949582530507386,
+        "macro_f1": 0.8493535202859817,
+        "classification": {
+          "cercospora": {
+            "precision": 0.7391304347826086,
+            "recall": 0.6415094339622641,
+            "f1-score": 0.6868686868686869,
+            "support": 53.0
+          },
+          "healthy": {
+            "precision": 0.9244444444444444,
+            "recall": 0.9719626168224299,
+            "f1-score": 0.9476082004555809,
+            "support": 214.0
+          },
+          "miner": {
+            "precision": 0.9923371647509579,
+            "recall": 0.9299820466786356,
+            "f1-score": 0.9601482854494903,
+            "support": 557.0
+          },
+          "phoma": {
+            "precision": 0.7425149700598802,
+            "recall": 0.9612403100775194,
+            "f1-score": 0.8378378378378378,
+            "support": 129.0
+          },
+          "rust": {
+            "precision": 0.9600363306085377,
+            "recall": 0.949685534591195,
+            "f1-score": 0.95483288166215,
+            "support": 1113.0
+          },
+          "red_spider_mite": {
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1-score": 0.43478260869565216,
+            "support": 26.0
+          },
+          "weevil_damage": {
+            "precision": 0.9712389380530974,
+            "recall": 0.9821029082774049,
+            "f1-score": 0.9766407119021134,
+            "support": 894.0
+          },
+          "unsupported": {
+            "precision": 0.9922480620155039,
+            "recall": 1.0,
+            "f1-score": 0.9961089494163424,
+            "support": 128.0
+          },
+          "accuracy": 0.949582530507386,
+          "macro avg": {
+            "precision": 0.8527437930893788,
+            "recall": 0.8526372793781042,
+            "f1-score": 0.8493535202859817,
+            "support": 3114.0
+          },
+          "weighted avg": {
+            "precision": 0.9512964208681288,
+            "recall": 0.949582530507386,
+            "f1-score": 0.9494951697045033,
+            "support": 3114.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            34,
+            2,
+            2,
+            10,
+            5,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            208,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            518,
+            18,
+            10,
+            0,
+            6,
+            0
+          ],
+          [
+            1,
+            3,
+            0,
+            124,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            10,
+            5,
+            2,
+            11,
+            1057,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            13,
+            10,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            13,
+            0,
+            878,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            128
+          ]
+        ]
+      },
+      "app": {
+        "n": 3114,
+        "accepted_n": 2398,
+        "accepted_coverage": 0.7700706486833655,
+        "accepted_accuracy": 0.9612176814011676,
+        "correct_accepted_fraction": 0.7402055234425177,
+        "confident_n": 2311,
+        "unsupported_n": 128,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 53,
+          "accepted_as_class": 42,
+          "correct_accepted": 34,
+          "accepted_precision": 0.8095238095238095,
+          "correct_accepted_recall": 0.6415094339622641,
+          "true_class_accepted_coverage": 0.8490566037735849,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 214,
+          "accepted_as_class": 224,
+          "correct_accepted": 208,
+          "accepted_precision": 0.9285714285714286,
+          "correct_accepted_recall": 0.9719626168224299,
+          "true_class_accepted_coverage": 0.985981308411215,
+          "enabled": true
+        },
+        "miner": {
+          "support": 557,
+          "accepted_as_class": 488,
+          "correct_accepted": 485,
+          "accepted_precision": 0.9938524590163934,
+          "correct_accepted_recall": 0.8707360861759426,
+          "true_class_accepted_coverage": 0.9120287253141831,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 129,
+          "accepted_as_class": 127,
+          "correct_accepted": 114,
+          "accepted_precision": 0.8976377952755905,
+          "correct_accepted_recall": 0.8837209302325582,
+          "true_class_accepted_coverage": 0.9224806201550387,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1113,
+          "accepted_as_class": 686,
+          "correct_accepted": 653,
+          "accepted_precision": 0.9518950437317785,
+          "correct_accepted_recall": 0.5867026055705301,
+          "true_class_accepted_coverage": 0.6136567834681043,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 26,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.5769230769230769,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 894,
+          "accepted_as_class": 831,
+          "correct_accepted": 811,
+          "accepted_precision": 0.9759326113116726,
+          "correct_accepted_recall": 0.9071588366890381,
+          "true_class_accepted_coverage": 0.9138702460850112,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 128,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 611,
+      "parents": 650
+    },
+    "original_common_five_excluding_agml_and_known_exposure": {
+      "raw": {
+        "n": 2066,
+        "accuracy": 0.9394966118102613,
+        "macro_f1": 0.882311518742326,
+        "classification": {
+          "cercospora": {
+            "precision": 0.7391304347826086,
+            "recall": 0.6415094339622641,
+            "f1-score": 0.6868686868686869,
+            "support": 53.0
+          },
+          "healthy": {
+            "precision": 0.9327354260089686,
+            "recall": 0.9719626168224299,
+            "f1-score": 0.9519450800915332,
+            "support": 214.0
+          },
+          "miner": {
+            "precision": 0.9923371647509579,
+            "recall": 0.9299820466786356,
+            "f1-score": 0.9601482854494903,
+            "support": 557.0
+          },
+          "phoma": {
+            "precision": 0.7560975609756098,
+            "recall": 0.9612403100775194,
+            "f1-score": 0.8464163822525598,
+            "support": 129.0
+          },
+          "rust": {
+            "precision": 0.9832558139534884,
+            "recall": 0.949685534591195,
+            "f1-score": 0.9661791590493601,
+            "support": 1113.0
+          },
+          "micro avg": {
+            "precision": 0.9561576354679803,
+            "recall": 0.9394966118102613,
+            "f1-score": 0.94775390625,
+            "support": 2066.0
+          },
+          "macro avg": {
+            "precision": 0.8807112800943268,
+            "recall": 0.8908759884264088,
+            "f1-score": 0.882311518742326,
+            "support": 2066.0
+          },
+          "weighted avg": {
+            "precision": 0.9600248796087935,
+            "recall": 0.9394966118102613,
+            "f1-score": 0.9484356243327747,
+            "support": 2066.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            34,
+            2,
+            2,
+            10,
+            5,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            208,
+            0,
+            1,
+            3,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            518,
+            18,
+            10,
+            0,
+            6,
+            0
+          ],
+          [
+            1,
+            3,
+            0,
+            124,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            10,
+            5,
+            2,
+            11,
+            1057,
+            9,
+            19,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 2066,
+        "accepted_n": 1566,
+        "accepted_coverage": 0.7579864472410455,
+        "accepted_accuracy": 0.9540229885057471,
+        "correct_accepted_fraction": 0.723136495643756,
+        "confident_n": 1481,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 53,
+          "accepted_as_class": 42,
+          "correct_accepted": 34,
+          "accepted_precision": 0.8095238095238095,
+          "correct_accepted_recall": 0.6415094339622641,
+          "true_class_accepted_coverage": 0.8490566037735849,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 214,
+          "accepted_as_class": 222,
+          "correct_accepted": 208,
+          "accepted_precision": 0.9369369369369369,
+          "correct_accepted_recall": 0.9719626168224299,
+          "true_class_accepted_coverage": 0.985981308411215,
+          "enabled": true
+        },
+        "miner": {
+          "support": 557,
+          "accepted_as_class": 488,
+          "correct_accepted": 485,
+          "accepted_precision": 0.9938524590163934,
+          "correct_accepted_recall": 0.8707360861759426,
+          "true_class_accepted_coverage": 0.9120287253141831,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 129,
+          "accepted_as_class": 126,
+          "correct_accepted": 114,
+          "accepted_precision": 0.9047619047619048,
+          "correct_accepted_recall": 0.8837209302325582,
+          "true_class_accepted_coverage": 0.9224806201550387,
+          "enabled": true
+        },
+        "rust": {
+          "support": 1113,
+          "accepted_as_class": 668,
+          "correct_accepted": 653,
+          "accepted_precision": 0.9775449101796407,
+          "correct_accepted_recall": 0.5867026055705301,
+          "true_class_accepted_coverage": 0.6136567834681043,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 20,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 433,
+      "parents": 456
+    },
+    "peru": {
+      "raw": {
+        "n": 225,
+        "accuracy": 0.9955555555555555,
+        "macro_f1": 0.3732937853107345,
+        "classification": {
+          "cercospora": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "healthy": {
+            "precision": 0.9887640449438202,
+            "recall": 1.0,
+            "f1-score": 0.9943502824858758,
+            "support": 88.0
+          },
+          "miner": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "phoma": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "rust": {
+            "precision": 1.0,
+            "recall": 0.9841269841269841,
+            "f1-score": 0.992,
+            "support": 63.0
+          },
+          "red_spider_mite": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "weevil_damage": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "unsupported": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 74.0
+          },
+          "accuracy": 0.9955555555555555,
+          "macro avg": {
+            "precision": 0.3735955056179775,
+            "recall": 0.373015873015873,
+            "f1-score": 0.3732937853107345,
+            "support": 225.0
+          },
+          "weighted avg": {
+            "precision": 0.995605493133583,
+            "recall": 0.9955555555555555,
+            "f1-score": 0.995550332705587,
+            "support": 225.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            88,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            62,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            74
+          ]
+        ]
+      },
+      "app": {
+        "n": 225,
+        "accepted_n": 151,
+        "accepted_coverage": 0.6711111111111111,
+        "accepted_accuracy": 0.9933774834437086,
+        "correct_accepted_fraction": 0.6666666666666666,
+        "confident_n": 147,
+        "unsupported_n": 74,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 88,
+          "accepted_as_class": 89,
+          "correct_accepted": 88,
+          "accepted_precision": 0.9887640449438202,
+          "correct_accepted_recall": 1.0,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "miner": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 63,
+          "accepted_as_class": 62,
+          "correct_accepted": 62,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.9841269841269841,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 74,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 12,
+      "parents": 12
+    },
+    "reviewed_bracol_additional_views": {
+      "raw": {
+        "n": 1072,
+        "accuracy": 0.8964552238805971,
+        "macro_f1": 0.3468856791725022,
+        "classification": {
+          "cercospora": {
+            "precision": 0.24324324324324326,
+            "recall": 0.42857142857142855,
+            "f1-score": 0.3103448275862069,
+            "support": 21.0
+          },
+          "healthy": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "miner": {
+            "precision": 0.6842105263157895,
+            "recall": 0.6964285714285714,
+            "f1-score": 0.6902654867256637,
+            "support": 56.0
+          },
+          "phoma": {
+            "precision": 0.8211009174311926,
+            "recall": 0.7991071428571429,
+            "f1-score": 0.8099547511312217,
+            "support": 224.0
+          },
+          "rust": {
+            "precision": 0.9773635153129161,
+            "recall": 0.9520103761348897,
+            "f1-score": 0.9645203679369251,
+            "support": 771.0
+          },
+          "red_spider_mite": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "weevil_damage": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "unsupported": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "accuracy": 0.8964552238805971,
+          "macro avg": {
+            "precision": 0.3407397752878927,
+            "recall": 0.3595146898740041,
+            "f1-score": 0.3468856791725022,
+            "support": 1072.0
+          },
+          "weighted avg": {
+            "precision": 0.9150165796573113,
+            "recall": 0.8964552238805971,
+            "f1-score": 0.9050813214260359,
+            "support": 1072.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            9,
+            0,
+            0,
+            8,
+            4,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            39,
+            15,
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            7,
+            1,
+            18,
+            179,
+            12,
+            0,
+            7,
+            0
+          ],
+          [
+            21,
+            0,
+            0,
+            16,
+            734,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 1072,
+        "accepted_n": 767,
+        "accepted_coverage": 0.7154850746268657,
+        "accepted_accuracy": 0.9087353324641461,
+        "correct_accepted_fraction": 0.6501865671641791,
+        "confident_n": 689,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 21,
+          "accepted_as_class": 27,
+          "correct_accepted": 8,
+          "accepted_precision": 0.2962962962962963,
+          "correct_accepted_recall": 0.38095238095238093,
+          "true_class_accepted_coverage": 0.7142857142857143,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "miner": {
+          "support": 56,
+          "accepted_as_class": 56,
+          "correct_accepted": 39,
+          "accepted_precision": 0.6964285714285714,
+          "correct_accepted_recall": 0.6964285714285714,
+          "true_class_accepted_coverage": 0.7678571428571429,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 224,
+          "accepted_as_class": 159,
+          "correct_accepted": 147,
+          "accepted_precision": 0.9245283018867925,
+          "correct_accepted_recall": 0.65625,
+          "true_class_accepted_coverage": 0.8303571428571429,
+          "enabled": true
+        },
+        "rust": {
+          "support": 771,
+          "accepted_as_class": 516,
+          "correct_accepted": 503,
+          "accepted_precision": 0.9748062015503876,
+          "correct_accepted_recall": 0.6523994811932555,
+          "true_class_accepted_coverage": 0.6783398184176395,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 8,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 209,
+      "parents": 210
+    }
+  },
+  "per_source": {
+    "agml": {
+      "raw": {
+        "n": 1457,
+        "accuracy": 0.911461908030199,
+        "macro_f1": 0.9115161624330472,
+        "classification": {
+          "cercospora": {
+            "precision": 1.0,
+            "recall": 0.7707006369426752,
+            "f1-score": 0.8705035971223022,
+            "support": 157.0
+          },
+          "healthy": {
+            "precision": 0.8888888888888888,
+            "recall": 1.0,
+            "f1-score": 0.9411764705882353,
+            "support": 16.0
+          },
+          "miner": {
+            "precision": 0.9197622585438335,
+            "recall": 0.9671875,
+            "f1-score": 0.9428789032749428,
+            "support": 640.0
+          },
+          "phoma": {
+            "precision": 0.9767441860465116,
+            "recall": 0.7777777777777778,
+            "f1-score": 0.865979381443299,
+            "support": 324.0
+          },
+          "rust": {
+            "precision": 0.8815426997245179,
+            "recall": 1.0,
+            "f1-score": 0.9370424597364568,
+            "support": 320.0
+          },
+          "micro avg": {
+            "precision": 0.9267271458478716,
+            "recall": 0.911461908030199,
+            "f1-score": 0.9190311418685121,
+            "support": 1457.0
+          },
+          "macro avg": {
+            "precision": 0.9333876066407504,
+            "recall": 0.9031331829440905,
+            "f1-score": 0.9115161624330472,
+            "support": 1457.0
+          },
+          "weighted avg": {
+            "precision": 0.9323464982026022,
+            "recall": 0.911461908030199,
+            "f1-score": 0.9166789931893422,
+            "support": 1457.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            121,
+            0,
+            4,
+            0,
+            28,
+            0,
+            4,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            619,
+            6,
+            3,
+            0,
+            9,
+            3
+          ],
+          [
+            0,
+            2,
+            50,
+            252,
+            12,
+            0,
+            8,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            320,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 1457,
+        "accepted_n": 1326,
+        "accepted_coverage": 0.910089224433768,
+        "accepted_accuracy": 0.918552036199095,
+        "correct_accepted_fraction": 0.8359643102264928,
+        "confident_n": 1138,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 157,
+          "accepted_as_class": 101,
+          "correct_accepted": 101,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.643312101910828,
+          "true_class_accepted_coverage": 0.8471337579617835,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 16,
+          "accepted_as_class": 18,
+          "correct_accepted": 16,
+          "accepted_precision": 0.8888888888888888,
+          "correct_accepted_recall": 1.0,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "miner": {
+          "support": 640,
+          "accepted_as_class": 669,
+          "correct_accepted": 619,
+          "accepted_precision": 0.9252615844544095,
+          "correct_accepted_recall": 0.9671875,
+          "true_class_accepted_coverage": 0.9859375,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 324,
+          "accepted_as_class": 164,
+          "correct_accepted": 164,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.5061728395061729,
+          "true_class_accepted_coverage": 0.7037037037037037,
+          "enabled": true
+        },
+        "rust": {
+          "support": 320,
+          "accepted_as_class": 361,
+          "correct_accepted": 318,
+          "accepted_precision": 0.8808864265927978,
+          "correct_accepted_recall": 0.99375,
+          "true_class_accepted_coverage": 0.99375,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 13,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 359,
+      "parents": 1108
+    },
+    "beans": {
+      "raw": {
+        "n": 128,
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "classification": {
+          "unsupported": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 128.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 128.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 128.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            128
+          ]
+        ]
+      },
+      "app": {
+        "n": 128,
+        "accepted_n": 0,
+        "accepted_coverage": 0.0,
+        "accepted_accuracy": null,
+        "correct_accepted_fraction": 0.0,
+        "confident_n": 0,
+        "unsupported_n": 128,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "miner": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 128,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 128,
+      "parents": 128
+    },
+    "bracol_expert": {
+      "raw": {
+        "n": 1072,
+        "accuracy": 0.8964552238805971,
+        "macro_f1": 0.6937713583450044,
+        "classification": {
+          "cercospora": {
+            "precision": 0.24324324324324326,
+            "recall": 0.42857142857142855,
+            "f1-score": 0.3103448275862069,
+            "support": 21.0
+          },
+          "miner": {
+            "precision": 0.6842105263157895,
+            "recall": 0.6964285714285714,
+            "f1-score": 0.6902654867256637,
+            "support": 56.0
+          },
+          "phoma": {
+            "precision": 0.8211009174311926,
+            "recall": 0.7991071428571429,
+            "f1-score": 0.8099547511312217,
+            "support": 224.0
+          },
+          "rust": {
+            "precision": 0.9773635153129161,
+            "recall": 0.9520103761348897,
+            "f1-score": 0.9645203679369251,
+            "support": 771.0
+          },
+          "micro avg": {
+            "precision": 0.9040451552210724,
+            "recall": 0.8964552238805971,
+            "f1-score": 0.9002341920374707,
+            "support": 1072.0
+          },
+          "macro avg": {
+            "precision": 0.6814795505757854,
+            "recall": 0.7190293797480081,
+            "f1-score": 0.6937713583450044,
+            "support": 1072.0
+          },
+          "weighted avg": {
+            "precision": 0.9150165796573113,
+            "recall": 0.8964552238805971,
+            "f1-score": 0.9050813214260359,
+            "support": 1072.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            9,
+            0,
+            0,
+            8,
+            4,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            39,
+            15,
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            7,
+            1,
+            18,
+            179,
+            12,
+            0,
+            7,
+            0
+          ],
+          [
+            21,
+            0,
+            0,
+            16,
+            734,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 1072,
+        "accepted_n": 767,
+        "accepted_coverage": 0.7154850746268657,
+        "accepted_accuracy": 0.9087353324641461,
+        "correct_accepted_fraction": 0.6501865671641791,
+        "confident_n": 689,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 21,
+          "accepted_as_class": 27,
+          "correct_accepted": 8,
+          "accepted_precision": 0.2962962962962963,
+          "correct_accepted_recall": 0.38095238095238093,
+          "true_class_accepted_coverage": 0.7142857142857143,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "miner": {
+          "support": 56,
+          "accepted_as_class": 56,
+          "correct_accepted": 39,
+          "accepted_precision": 0.6964285714285714,
+          "correct_accepted_recall": 0.6964285714285714,
+          "true_class_accepted_coverage": 0.7678571428571429,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 224,
+          "accepted_as_class": 159,
+          "correct_accepted": 147,
+          "accepted_precision": 0.9245283018867925,
+          "correct_accepted_recall": 0.65625,
+          "true_class_accepted_coverage": 0.8303571428571429,
+          "enabled": true
+        },
+        "rust": {
+          "support": 771,
+          "accepted_as_class": 516,
+          "correct_accepted": 503,
+          "accepted_precision": 0.9748062015503876,
+          "correct_accepted_recall": 0.6523994811932555,
+          "true_class_accepted_coverage": 0.6783398184176395,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 8,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 209,
+      "parents": 210
+    },
+    "bracol_leaf": {
+      "raw": {
+        "n": 199,
+        "accuracy": 0.914572864321608,
+        "macro_f1": 0.8634846977177337,
+        "classification": {
+          "cercospora": {
+            "precision": 0.7142857142857143,
+            "recall": 0.5555555555555556,
+            "f1-score": 0.625,
+            "support": 9.0
+          },
+          "healthy": {
+            "precision": 0.7916666666666666,
+            "recall": 0.9743589743589743,
+            "f1-score": 0.8735632183908046,
+            "support": 39.0
+          },
+          "miner": {
+            "precision": 0.9512195121951219,
+            "recall": 0.8478260869565217,
+            "f1-score": 0.896551724137931,
+            "support": 46.0
+          },
+          "phoma": {
+            "precision": 0.96,
+            "recall": 0.9230769230769231,
+            "f1-score": 0.9411764705882353,
+            "support": 52.0
+          },
+          "rust": {
+            "precision": 0.9811320754716981,
+            "recall": 0.9811320754716981,
+            "f1-score": 0.9811320754716981,
+            "support": 53.0
+          },
+          "accuracy": 0.914572864321608,
+          "macro avg": {
+            "precision": 0.8796607937238402,
+            "recall": 0.8563899230839345,
+            "f1-score": 0.8634846977177337,
+            "support": 199.0
+          },
+          "weighted avg": {
+            "precision": 0.9194958240680755,
+            "recall": 0.914572864321608,
+            "f1-score": 0.9139523683325349,
+            "support": 199.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            5,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            38,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            39,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            3,
+            0,
+            48,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            52,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 199,
+        "accepted_n": 191,
+        "accepted_coverage": 0.9597989949748744,
+        "accepted_accuracy": 0.9214659685863874,
+        "correct_accepted_fraction": 0.8844221105527639,
+        "confident_n": 165,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 9,
+          "accepted_as_class": 7,
+          "correct_accepted": 5,
+          "accepted_precision": 0.7142857142857143,
+          "correct_accepted_recall": 0.5555555555555556,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 39,
+          "accepted_as_class": 48,
+          "correct_accepted": 38,
+          "accepted_precision": 0.7916666666666666,
+          "correct_accepted_recall": 0.9743589743589743,
+          "true_class_accepted_coverage": 0.9743589743589743,
+          "enabled": true
+        },
+        "miner": {
+          "support": 46,
+          "accepted_as_class": 41,
+          "correct_accepted": 39,
+          "accepted_precision": 0.9512195121951219,
+          "correct_accepted_recall": 0.8478260869565217,
+          "true_class_accepted_coverage": 0.9782608695652174,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 52,
+          "accepted_as_class": 42,
+          "correct_accepted": 42,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.8076923076923077,
+          "true_class_accepted_coverage": 0.8846153846153846,
+          "enabled": true
+        },
+        "rust": {
+          "support": 53,
+          "accepted_as_class": 53,
+          "correct_accepted": 52,
+          "accepted_precision": 0.9811320754716981,
+          "correct_accepted_recall": 0.9811320754716981,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 198,
+      "parents": 199
+    },
+    "bracol_symptom": {
+      "raw": {
+        "n": 343,
+        "accuracy": 0.880466472303207,
+        "macro_f1": 0.8740120445818185,
+        "classification": {
+          "cercospora": {
+            "precision": 0.8787878787878788,
+            "recall": 0.6590909090909091,
+            "f1-score": 0.7532467532467533,
+            "support": 44.0
+          },
+          "healthy": {
+            "precision": 1.0,
+            "recall": 0.8918918918918919,
+            "f1-score": 0.9428571428571428,
+            "support": 37.0
+          },
+          "miner": {
+            "precision": 1.0,
+            "recall": 0.8064516129032258,
+            "f1-score": 0.8928571428571429,
+            "support": 93.0
+          },
+          "phoma": {
+            "precision": 0.7450980392156863,
+            "recall": 0.987012987012987,
+            "f1-score": 0.8491620111731844,
+            "support": 77.0
+          },
+          "rust": {
+            "precision": 0.898989898989899,
+            "recall": 0.967391304347826,
+            "f1-score": 0.9319371727748691,
+            "support": 92.0
+          },
+          "micro avg": {
+            "precision": 0.8830409356725146,
+            "recall": 0.880466472303207,
+            "f1-score": 0.8817518248175182,
+            "support": 343.0
+          },
+          "macro avg": {
+            "precision": 0.9045751633986928,
+            "recall": 0.8623677410493679,
+            "f1-score": 0.8740120445818185,
+            "support": 343.0
+          },
+          "weighted avg": {
+            "precision": 0.900134945753193,
+            "recall": 0.880466472303207,
+            "f1-score": 0.8810145203204341,
+            "support": 343.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            29,
+            0,
+            0,
+            10,
+            5,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            33,
+            0,
+            0,
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            75,
+            16,
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            76,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            89,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 343,
+        "accepted_n": 321,
+        "accepted_coverage": 0.9358600583090378,
+        "accepted_accuracy": 0.9283489096573209,
+        "correct_accepted_fraction": 0.8688046647230321,
+        "confident_n": 280,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 44,
+          "accepted_as_class": 32,
+          "correct_accepted": 29,
+          "accepted_precision": 0.90625,
+          "correct_accepted_recall": 0.6590909090909091,
+          "true_class_accepted_coverage": 0.8181818181818182,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 37,
+          "accepted_as_class": 33,
+          "correct_accepted": 33,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.8918918918918919,
+          "true_class_accepted_coverage": 0.972972972972973,
+          "enabled": true
+        },
+        "miner": {
+          "support": 93,
+          "accepted_as_class": 75,
+          "correct_accepted": 75,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.8064516129032258,
+          "true_class_accepted_coverage": 0.9032258064516129,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 77,
+          "accepted_as_class": 81,
+          "correct_accepted": 72,
+          "accepted_precision": 0.8888888888888888,
+          "correct_accepted_recall": 0.935064935064935,
+          "true_class_accepted_coverage": 0.948051948051948,
+          "enabled": true
+        },
+        "rust": {
+          "support": 92,
+          "accepted_as_class": 99,
+          "correct_accepted": 89,
+          "accepted_precision": 0.898989898989899,
+          "correct_accepted_recall": 0.967391304347826,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 216,
+      "parents": 216
+    },
+    "coffeeleaf_own_field": {
+      "raw": {
+        "n": 1318,
+        "accuracy": 0.9726858877086495,
+        "macro_f1": 0.9722572501057498,
+        "classification": {
+          "rust": {
+            "precision": 0.9688249400479616,
+            "recall": 0.9528301886792453,
+            "f1-score": 0.9607609988109393,
+            "support": 424.0
+          },
+          "weevil_damage": {
+            "precision": 0.9854096520763187,
+            "recall": 0.9821029082774049,
+            "f1-score": 0.9837535014005602,
+            "support": 894.0
+          },
+          "micro avg": {
+            "precision": 0.9801223241590215,
+            "recall": 0.9726858877086495,
+            "f1-score": 0.9763899466869764,
+            "support": 1318.0
+          },
+          "macro avg": {
+            "precision": 0.9771172960621402,
+            "recall": 0.9674665484783251,
+            "f1-score": 0.9722572501057498,
+            "support": 1318.0
+          },
+          "weighted avg": {
+            "precision": 0.9800743577667409,
+            "recall": 0.9726858877086495,
+            "f1-score": 0.9763568237844759,
+            "support": 1318.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            2,
+            2,
+            404,
+            0,
+            13,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            3,
+            13,
+            0,
+            878,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 1318,
+        "accepted_n": 1099,
+        "accepted_coverage": 0.8338391502276176,
+        "accepted_accuracy": 0.9818016378525932,
+        "correct_accepted_fraction": 0.8186646433990895,
+        "confident_n": 1095,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 2,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "miner": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 424,
+          "accepted_as_class": 273,
+          "correct_accepted": 268,
+          "accepted_precision": 0.9816849816849816,
+          "correct_accepted_recall": 0.6320754716981132,
+          "true_class_accepted_coverage": 0.6650943396226415,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 894,
+          "accepted_as_class": 822,
+          "correct_accepted": 811,
+          "accepted_precision": 0.98661800486618,
+          "correct_accepted_recall": 0.9071588366890381,
+          "true_class_accepted_coverage": 0.9138702460850112,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 83,
+      "parents": 101
+    },
+    "coffeeleaf_rust_and_leaf_miner": {
+      "raw": {
+        "n": 866,
+        "accuracy": 0.9630484988452656,
+        "macro_f1": 0.9773598911295311,
+        "classification": {
+          "miner": {
+            "precision": 1.0,
+            "recall": 0.9665071770334929,
+            "f1-score": 0.9829683698296837,
+            "support": 418.0
+          },
+          "rust": {
+            "precision": 0.9839816933638444,
+            "recall": 0.9598214285714286,
+            "f1-score": 0.9717514124293786,
+            "support": 448.0
+          },
+          "micro avg": {
+            "precision": 0.9916765755053508,
+            "recall": 0.9630484988452656,
+            "f1-score": 0.9771528998242531,
+            "support": 866.0
+          },
+          "macro avg": {
+            "precision": 0.9919908466819223,
+            "recall": 0.9631643028024608,
+            "f1-score": 0.9773598911295311,
+            "support": 866.0
+          },
+          "weighted avg": {
+            "precision": 0.991713393333721,
+            "recall": 0.9630484988452656,
+            "f1-score": 0.977165602029064,
+            "support": 866.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            404,
+            1,
+            7,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            9,
+            430,
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 866,
+        "accepted_n": 550,
+        "accepted_coverage": 0.6351039260969977,
+        "accepted_accuracy": 0.9709090909090909,
+        "correct_accepted_fraction": 0.6166281755196305,
+        "confident_n": 543,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 1,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "miner": {
+          "support": 418,
+          "accepted_as_class": 371,
+          "correct_accepted": 371,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.8875598086124402,
+          "true_class_accepted_coverage": 0.9066985645933014,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 3,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 448,
+          "accepted_as_class": 167,
+          "correct_accepted": 163,
+          "accepted_precision": 0.9760479041916168,
+          "correct_accepted_recall": 0.3638392857142857,
+          "true_class_accepted_coverage": 0.38169642857142855,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 8,
+          "correct_accepted": 0,
+          "accepted_precision": 0.0,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 96,
+      "parents": 104
+    },
+    "peru": {
+      "raw": {
+        "n": 225,
+        "accuracy": 0.9955555555555555,
+        "macro_f1": 0.9954500941619586,
+        "classification": {
+          "healthy": {
+            "precision": 0.9887640449438202,
+            "recall": 1.0,
+            "f1-score": 0.9943502824858758,
+            "support": 88.0
+          },
+          "rust": {
+            "precision": 1.0,
+            "recall": 0.9841269841269841,
+            "f1-score": 0.992,
+            "support": 63.0
+          },
+          "unsupported": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 74.0
+          },
+          "accuracy": 0.9955555555555555,
+          "macro avg": {
+            "precision": 0.99625468164794,
+            "recall": 0.9947089947089948,
+            "f1-score": 0.9954500941619586,
+            "support": 225.0
+          },
+          "weighted avg": {
+            "precision": 0.995605493133583,
+            "recall": 0.9955555555555555,
+            "f1-score": 0.995550332705587,
+            "support": 225.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            88,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            62,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            74
+          ]
+        ]
+      },
+      "app": {
+        "n": 225,
+        "accepted_n": 151,
+        "accepted_coverage": 0.6711111111111111,
+        "accepted_accuracy": 0.9933774834437086,
+        "correct_accepted_fraction": 0.6666666666666666,
+        "confident_n": 147,
+        "unsupported_n": 74,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": 1.0
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 88,
+          "accepted_as_class": 89,
+          "correct_accepted": 88,
+          "accepted_precision": 0.9887640449438202,
+          "correct_accepted_recall": 1.0,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "miner": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 63,
+          "accepted_as_class": 62,
+          "correct_accepted": 62,
+          "accepted_precision": 1.0,
+          "correct_accepted_recall": 0.9841269841269841,
+          "true_class_accepted_coverage": 1.0,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 74,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.0,
+          "enabled": false
+        }
+      },
+      "groups": 12,
+      "parents": 12
+    },
+    "rocole": {
+      "raw": {
+        "n": 260,
+        "accuracy": 0.8807692307692307,
+        "macro_f1": 0.7550175192749694,
+        "classification": {
+          "healthy": {
+            "precision": 0.9513888888888888,
+            "recall": 0.9927536231884058,
+            "f1-score": 0.9716312056737588,
+            "support": 138.0
+          },
+          "rust": {
+            "precision": 0.8631578947368421,
+            "recall": 0.8541666666666666,
+            "f1-score": 0.8586387434554974,
+            "support": 96.0
+          },
+          "red_spider_mite": {
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1-score": 0.43478260869565216,
+            "support": 26.0
+          },
+          "micro avg": {
+            "precision": 0.8841698841698842,
+            "recall": 0.8807692307692307,
+            "f1-score": 0.882466281310212,
+            "support": 260.0
+          },
+          "macro avg": {
+            "precision": 0.7715155945419103,
+            "recall": 0.7438452248234856,
+            "f1-score": 0.7550175192749694,
+            "support": 260.0
+          },
+          "weighted avg": {
+            "precision": 0.8736724021592442,
+            "recall": 0.8807692307692307,
+            "f1-score": 0.876226052233821,
+            "support": 260.0
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            137,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            5,
+            0,
+            0,
+            82,
+            9,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            13,
+            10,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "app": {
+        "n": 260,
+        "accepted_n": 237,
+        "accepted_coverage": 0.9115384615384615,
+        "accepted_accuracy": 0.919831223628692,
+        "correct_accepted_fraction": 0.8384615384615385,
+        "confident_n": 228,
+        "unsupported_n": 0,
+        "unsupported_false_accepts": 0,
+        "unsupported_reject_rate": null
+      },
+      "per_class_app": {
+        "cercospora": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "healthy": {
+          "support": 138,
+          "accepted_as_class": 143,
+          "correct_accepted": 137,
+          "accepted_precision": 0.958041958041958,
+          "correct_accepted_recall": 0.9927536231884058,
+          "true_class_accepted_coverage": 0.9927536231884058,
+          "enabled": true
+        },
+        "miner": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "phoma": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "rust": {
+          "support": 96,
+          "accepted_as_class": 94,
+          "correct_accepted": 81,
+          "accepted_precision": 0.8617021276595744,
+          "correct_accepted_recall": 0.84375,
+          "true_class_accepted_coverage": 0.8854166666666666,
+          "enabled": true
+        },
+        "red_spider_mite": {
+          "support": 26,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": 0.0,
+          "true_class_accepted_coverage": 0.5769230769230769,
+          "enabled": false
+        },
+        "weevil_damage": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": true
+        },
+        "unsupported": {
+          "support": 0,
+          "accepted_as_class": 0,
+          "correct_accepted": 0,
+          "accepted_precision": null,
+          "correct_accepted_recall": null,
+          "true_class_accepted_coverage": null,
+          "enabled": false
+        }
+      },
+      "groups": 54,
+      "parents": 65
+    }
+  },
+  "checkpoint_runtime_parity": {
+    "n": 5868,
+    "top1_disagreements": 45,
+    "acceptance_disagreements": 57,
+    "confidence_state_disagreements": 121,
+    "maximum_probability_error": 0.20343434810638428,
+    "mean_absolute_probability_error": 0.0024461152497678995,
+    "explanation": "All held-out images, shared current app quality policy and each model's frozen confidence thresholds; checkpoint canonical transform matches raw runtime input"
+  },
+  "legacy_brightness_app_metrics": {
+    "n": 5868,
+    "accepted_n": 4631,
+    "accepted_coverage": 0.7891956373551465,
+    "accepted_accuracy": 0.941265385445908,
+    "correct_accepted_fraction": 0.7428425357873211,
+    "confident_n": 4274,
+    "unsupported_n": 202,
+    "unsupported_false_accepts": 0,
+    "unsupported_reject_rate": 1.0
+  },
+  "class_thresholds": [
+    0.6000000000000001,
+    0.4,
+    0.4,
+    0.835,
+    0.4,
+    1.01,
+    0.4
+  ],
+  "confident_thresholds": [
+    0.895,
+    0.755,
+    0.6000000000000001,
+    0.9750000000000001,
+    0.47000000000000003,
+    1.01,
+    0.4
+  ],
+  "calibration": {
+    "quality": {
+      "minimum_edge_variance": 1.520114853217684,
+      "minimum_mean_luminance": 45.59410861968994,
+      "selection": "validation-only severe Gaussianblur challenge balancedaccuracy subject to >=90% clear acceptance"
+    },
+    "validation_n": 5294,
+    "class_thresholds": [
+      0.6000000000000001,
+      0.4,
+      0.4,
+      0.835,
+      0.4,
+      1.01,
+      0.4
+    ],
+    "confident_thresholds": [
+      0.895,
+      0.755,
+      0.6000000000000001,
+      0.9750000000000001,
+      0.47000000000000003,
+      1.01,
+      0.4
+    ],
+    "class_threshold_evidence": [
+      {
+        "label": "cercospora",
+        "enabled": true,
+        "accept_threshold": 0.6000000000000001,
+        "val_true_support": 216
+      },
+      {
+        "label": "healthy",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 265
+      },
+      {
+        "label": "miner",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 964
+      },
+      {
+        "label": "phoma",
+        "enabled": true,
+        "accept_threshold": 0.835,
+        "val_true_support": 575
+      },
+      {
+        "label": "rust",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 2101
+      },
+      {
+        "label": "red_spider_mite",
+        "enabled": false,
+        "accept_threshold": 1.01,
+        "val_true_support": 25
+      },
+      {
+        "label": "weevil_damage",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 924
+      }
+    ],
+    "runtime": "LiteRT CPU int8 per-channel weight storage / float32 computation",
+    "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+    "brightness_config_sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+    "version": "b3-candidate-v1",
+    "temperature": 0.7371749772668695,
+    "selection": "Same B2 validation-only compressed runtime and shared brightness policy; >=15 accepted and >=90%/95% precision per class"
+  },
+  "external_rust": {
+    "n": 1119,
+    "rust_n": 847,
+    "not_rust_n": 272,
+    "rust_recall": 0.23258559622195984,
+    "false_positive_rate": 0.011029411764705883,
+    "specificity": 0.9889705882352942,
+    "auroc": 0.6972880061115356,
+    "confusion_matrix": [
+      [
+        269,
+        3
+      ],
+      [
+        650,
+        197
+      ]
+    ],
+    "threshold": 0.34,
+    "threshold_selection": "Maximum balanced accuracy on B3 validation only; no external selection",
+    "app_accepted_rust_on_rust": 52,
+    "app_accepted_rust_on_not_rust": 0,
+    "all_app_accepted": 240,
+    "all_app_accepted_coverage": 0.21447721179624665,
+    "status": "Previously inspected external development stress test; no selection on this source",
+    "qualification": "NoRust is binary-negative truth only, not a healthy label; candidate gate metrics are computed offline"
+  },
+  "external_scans": {
+    "raw": {
+      "n": 100,
+      "accuracy": 0.42,
+      "macro_f1": 0.48579234972677593,
+      "classification": {
+        "healthy": {
+          "precision": 0.425,
+          "recall": 0.85,
+          "f1-score": 0.5666666666666667,
+          "support": 20.0
+        },
+        "rust": {
+          "precision": 0.8095238095238095,
+          "recall": 0.425,
+          "f1-score": 0.5573770491803278,
+          "support": 40.0
+        },
+        "unsupported": {
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1-score": 0.3333333333333333,
+          "support": 40.0
+        },
+        "micro avg": {
+          "precision": 0.6086956521739131,
+          "recall": 0.42,
+          "f1-score": 0.4970414201183432,
+          "support": 100.0
+        },
+        "macro avg": {
+          "precision": 0.7448412698412699,
+          "recall": 0.49166666666666664,
+          "f1-score": 0.48579234972677593,
+          "support": 100.0
+        },
+        "weighted avg": {
+          "precision": 0.8088095238095238,
+          "recall": 0.42,
+          "f1-score": 0.4696174863387978,
+          "support": 100.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          17,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          21,
+          0,
+          0,
+          17,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          4,
+          0,
+          3,
+          3,
+          20,
+          8
+        ]
+      ]
+    },
+    "app": {
+      "n": 100,
+      "accepted_n": 63,
+      "accepted_coverage": 0.63,
+      "accepted_accuracy": 0.4444444444444444,
+      "correct_accepted_fraction": 0.28,
+      "confident_n": 32,
+      "unsupported_n": 40,
+      "unsupported_false_accepts": 13,
+      "unsupported_reject_rate": 0.675
+    },
+    "per_class_app": {
+      "cercospora": {
+        "support": 0,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": null,
+        "true_class_accepted_coverage": null,
+        "enabled": true
+      },
+      "healthy": {
+        "support": 20,
+        "accepted_as_class": 36,
+        "correct_accepted": 16,
+        "accepted_precision": 0.4444444444444444,
+        "correct_accepted_recall": 0.8,
+        "true_class_accepted_coverage": 0.9,
+        "enabled": true
+      },
+      "miner": {
+        "support": 0,
+        "accepted_as_class": 2,
+        "correct_accepted": 0,
+        "accepted_precision": 0.0,
+        "correct_accepted_recall": null,
+        "true_class_accepted_coverage": null,
+        "enabled": true
+      },
+      "phoma": {
+        "support": 0,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": null,
+        "true_class_accepted_coverage": null,
+        "enabled": true
+      },
+      "rust": {
+        "support": 40,
+        "accepted_as_class": 13,
+        "correct_accepted": 12,
+        "accepted_precision": 0.9230769230769231,
+        "correct_accepted_recall": 0.3,
+        "true_class_accepted_coverage": 0.8,
+        "enabled": true
+      },
+      "red_spider_mite": {
+        "support": 0,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": null,
+        "true_class_accepted_coverage": null,
+        "enabled": false
+      },
+      "weevil_damage": {
+        "support": 0,
+        "accepted_as_class": 12,
+        "correct_accepted": 0,
+        "accepted_precision": 0.0,
+        "correct_accepted_recall": null,
+        "true_class_accepted_coverage": null,
+        "enabled": true
+      },
+      "unsupported": {
+        "support": 40,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": 0.0,
+        "true_class_accepted_coverage": 0.325,
+        "enabled": false
+      }
+    },
+    "groups": 50,
+    "parents": 50,
+    "supported_n": 60,
+    "supported_raw_accuracy": 0.5666666666666667,
+    "independent_leaves": 50,
+    "status": "Previously inspected separate-source stress test; flatbed scans, not camera photographs",
+    "qualification": "Paired leaf sides repeat physical leaves; Mycena/Ojo maps to unsupported, never cercospora"
+  },
+  "far_probe": {
+    "raw": {
+      "n": 1495,
+      "accuracy": 0.8762541806020067,
+      "macro_f1": 0.8083306427298587,
+      "classification": {
+        "cercospora": {
+          "precision": 0.726027397260274,
+          "recall": 0.5760869565217391,
+          "f1-score": 0.6424242424242425,
+          "support": 92.0
+        },
+        "healthy": {
+          "precision": 0.9083969465648855,
+          "recall": 0.9083969465648855,
+          "f1-score": 0.9083969465648855,
+          "support": 131.0
+        },
+        "miner": {
+          "precision": 0.9128919860627178,
+          "recall": 0.8213166144200627,
+          "f1-score": 0.8646864686468647,
+          "support": 319.0
+        },
+        "phoma": {
+          "precision": 0.8338983050847457,
+          "recall": 0.8571428571428571,
+          "f1-score": 0.845360824742268,
+          "support": 287.0
+        },
+        "rust": {
+          "precision": 0.879837067209776,
+          "recall": 0.9515418502202643,
+          "f1-score": 0.9142857142857143,
+          "support": 454.0
+        },
+        "red_spider_mite": {
+          "precision": 0.5454545454545454,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.41379310344827586,
+          "support": 18.0
+        },
+        "weevil_damage": {
+          "precision": 0.8026315789473685,
+          "recall": 0.9682539682539683,
+          "f1-score": 0.8776978417266187,
+          "support": 63.0
+        },
+        "unsupported": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 131.0
+        },
+        "accuracy": 0.8762541806020067,
+        "macro avg": {
+          "precision": 0.8261422283230391,
+          "recall": 0.8020090658071388,
+          "f1-score": 0.8083306427298587,
+          "support": 1495.0
+        },
+        "weighted avg": {
+          "precision": 0.8743584464658051,
+          "recall": 0.8762541806020067,
+          "f1-score": 0.8731675750361012,
+          "support": 1495.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          53,
+          1,
+          1,
+          14,
+          22,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          119,
+          0,
+          1,
+          9,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          5,
+          262,
+          30,
+          9,
+          1,
+          8,
+          0
+        ],
+        [
+          6,
+          3,
+          22,
+          246,
+          6,
+          1,
+          3,
+          0
+        ],
+        [
+          9,
+          2,
+          2,
+          4,
+          432,
+          3,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          11,
+          6,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          61,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          131
+        ]
+      ]
+    },
+    "app": {
+      "n": 1495,
+      "accepted_n": 1227,
+      "accepted_coverage": 0.8207357859531773,
+      "accepted_accuracy": 0.895680521597392,
+      "correct_accepted_fraction": 0.7351170568561873,
+      "confident_n": 1071,
+      "unsupported_n": 131,
+      "unsupported_false_accepts": 0,
+      "unsupported_reject_rate": 1.0
+    },
+    "per_class_app": {
+      "cercospora": {
+        "support": 92,
+        "accepted_as_class": 59,
+        "correct_accepted": 47,
+        "accepted_precision": 0.7966101694915254,
+        "correct_accepted_recall": 0.5108695652173914,
+        "true_class_accepted_coverage": 0.8369565217391305,
+        "enabled": true
+      },
+      "healthy": {
+        "support": 131,
+        "accepted_as_class": 131,
+        "correct_accepted": 119,
+        "accepted_precision": 0.9083969465648855,
+        "correct_accepted_recall": 0.9083969465648855,
+        "true_class_accepted_coverage": 0.9770992366412213,
+        "enabled": true
+      },
+      "miner": {
+        "support": 319,
+        "accepted_as_class": 279,
+        "correct_accepted": 258,
+        "accepted_precision": 0.9247311827956989,
+        "correct_accepted_recall": 0.8087774294670846,
+        "true_class_accepted_coverage": 0.8996865203761756,
+        "enabled": true
+      },
+      "phoma": {
+        "support": 287,
+        "accepted_as_class": 204,
+        "correct_accepted": 188,
+        "accepted_precision": 0.9215686274509803,
+        "correct_accepted_recall": 0.6550522648083623,
+        "true_class_accepted_coverage": 0.7630662020905923,
+        "enabled": true
+      },
+      "rust": {
+        "support": 454,
+        "accepted_as_class": 482,
+        "correct_accepted": 426,
+        "accepted_precision": 0.8838174273858921,
+        "correct_accepted_recall": 0.9383259911894273,
+        "true_class_accepted_coverage": 0.9713656387665198,
+        "enabled": true
+      },
+      "red_spider_mite": {
+        "support": 18,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": 0.0,
+        "true_class_accepted_coverage": 0.6666666666666666,
+        "enabled": false
+      },
+      "weevil_damage": {
+        "support": 63,
+        "accepted_as_class": 72,
+        "correct_accepted": 61,
+        "accepted_precision": 0.8472222222222222,
+        "correct_accepted_recall": 0.9682539682539683,
+        "true_class_accepted_coverage": 1.0,
+        "enabled": true
+      },
+      "unsupported": {
+        "support": 131,
+        "accepted_as_class": 0,
+        "correct_accepted": 0,
+        "accepted_precision": null,
+        "correct_accepted_recall": 0.0,
+        "true_class_accepted_coverage": 0.0,
+        "enabled": false
+      }
+    },
+    "groups": 982,
+    "parents": 989,
+    "per_source": {
+      "agml": {
+        "raw": {
+          "n": 359,
+          "accuracy": 0.8857938718662952,
+          "macro_f1": 0.8259553315672719,
+          "classification": {
+            "cercospora": {
+              "precision": 0.8928571428571429,
+              "recall": 0.6578947368421053,
+              "f1-score": 0.7575757575757576,
+              "support": 38.0
+            },
+            "healthy": {
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1-score": 0.6666666666666666,
+              "support": 3.0
+            },
+            "miner": {
+              "precision": 0.9035087719298246,
+              "recall": 0.9279279279279279,
+              "f1-score": 0.9155555555555556,
+              "support": 111.0
+            },
+            "phoma": {
+              "precision": 0.9692307692307692,
+              "recall": 0.7682926829268293,
+              "f1-score": 0.8571428571428571,
+              "support": 82.0
+            },
+            "rust": {
+              "precision": 0.8741258741258742,
+              "recall": 1.0,
+              "f1-score": 0.9328358208955224,
+              "support": 125.0
+            },
+            "micro avg": {
+              "precision": 0.9008498583569405,
+              "recall": 0.8857938718662952,
+              "f1-score": 0.8932584269662921,
+              "support": 359.0
+            },
+            "macro avg": {
+              "precision": 0.8612778449620556,
+              "recall": 0.8041564028727057,
+              "f1-score": 0.8259553315672719,
+              "support": 359.0
+            },
+            "weighted avg": {
+              "precision": 0.9051830151962098,
+              "recall": 0.8857938718662952,
+              "f1-score": 0.8894282377498609,
+              "support": 359.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              25,
+              0,
+              0,
+              0,
+              12,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              103,
+              1,
+              2,
+              0,
+              4,
+              0
+            ],
+            [
+              2,
+              1,
+              11,
+              63,
+              4,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              125,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 359,
+          "accepted_n": 319,
+          "accepted_coverage": 0.8885793871866295,
+          "accepted_accuracy": 0.9028213166144201,
+          "correct_accepted_fraction": 0.8022284122562674,
+          "confident_n": 267,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 38,
+            "accepted_as_class": 23,
+            "correct_accepted": 23,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.6052631578947368,
+            "true_class_accepted_coverage": 0.9210526315789473,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 3,
+            "accepted_as_class": 3,
+            "correct_accepted": 2,
+            "accepted_precision": 0.6666666666666666,
+            "correct_accepted_recall": 0.6666666666666666,
+            "true_class_accepted_coverage": 0.6666666666666666,
+            "enabled": true
+          },
+          "miner": {
+            "support": 111,
+            "accepted_as_class": 109,
+            "correct_accepted": 100,
+            "accepted_precision": 0.9174311926605505,
+            "correct_accepted_recall": 0.9009009009009009,
+            "true_class_accepted_coverage": 0.954954954954955,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 82,
+            "accepted_as_class": 38,
+            "correct_accepted": 38,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.4634146341463415,
+            "true_class_accepted_coverage": 0.6219512195121951,
+            "enabled": true
+          },
+          "rust": {
+            "support": 125,
+            "accepted_as_class": 142,
+            "correct_accepted": 125,
+            "accepted_precision": 0.8802816901408451,
+            "correct_accepted_recall": 1.0,
+            "true_class_accepted_coverage": 1.0,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 4,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 359,
+        "parents": 359
+      },
+      "beans": {
+        "raw": {
+          "n": 128,
+          "accuracy": 1.0,
+          "macro_f1": 1.0,
+          "classification": {
+            "unsupported": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1-score": 1.0,
+              "support": 128.0
+            },
+            "accuracy": 1.0,
+            "macro avg": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1-score": 1.0,
+              "support": 128.0
+            },
+            "weighted avg": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1-score": 1.0,
+              "support": 128.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              128
+            ]
+          ]
+        },
+        "app": {
+          "n": 128,
+          "accepted_n": 0,
+          "accepted_coverage": 0.0,
+          "accepted_accuracy": null,
+          "correct_accepted_fraction": 0.0,
+          "confident_n": 0,
+          "unsupported_n": 128,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": 1.0
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "miner": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "rust": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 128,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": 0.0,
+            "true_class_accepted_coverage": 0.0,
+            "enabled": false
+          }
+        },
+        "groups": 128,
+        "parents": 128
+      },
+      "bracol_expert": {
+        "raw": {
+          "n": 252,
+          "accuracy": 0.8174603174603174,
+          "macro_f1": 0.7061398695201513,
+          "classification": {
+            "cercospora": {
+              "precision": 0.46153846153846156,
+              "recall": 0.4,
+              "f1-score": 0.42857142857142855,
+              "support": 15.0
+            },
+            "miner": {
+              "precision": 0.6774193548387096,
+              "recall": 0.6,
+              "f1-score": 0.6363636363636364,
+              "support": 35.0
+            },
+            "phoma": {
+              "precision": 0.8148148148148148,
+              "recall": 0.8380952380952381,
+              "f1-score": 0.8262910798122066,
+              "support": 105.0
+            },
+            "rust": {
+              "precision": 0.9285714285714286,
+              "recall": 0.9381443298969072,
+              "f1-score": 0.9333333333333333,
+              "support": 97.0
+            },
+            "micro avg": {
+              "precision": 0.824,
+              "recall": 0.8174603174603174,
+              "f1-score": 0.8207171314741036,
+              "support": 252.0
+            },
+            "macro avg": {
+              "precision": 0.7205860149408536,
+              "recall": 0.6940598919980363,
+              "f1-score": 0.7061398695201513,
+              "support": 252.0
+            },
+            "weighted avg": {
+              "precision": 0.8184910256722853,
+              "recall": 0.8174603174603174,
+              "f1-score": 0.8174412516464831,
+              "support": 252.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              6,
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              21,
+              13,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              10,
+              88,
+              2,
+              0,
+              2,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              2,
+              91,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 252,
+          "accepted_n": 207,
+          "accepted_coverage": 0.8214285714285714,
+          "accepted_accuracy": 0.8647342995169082,
+          "correct_accepted_fraction": 0.7103174603174603,
+          "confident_n": 172,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 15,
+            "accepted_as_class": 8,
+            "correct_accepted": 4,
+            "accepted_precision": 0.5,
+            "correct_accepted_recall": 0.26666666666666666,
+            "true_class_accepted_coverage": 0.8,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "miner": {
+            "support": 35,
+            "accepted_as_class": 30,
+            "correct_accepted": 21,
+            "accepted_precision": 0.7,
+            "correct_accepted_recall": 0.6,
+            "true_class_accepted_coverage": 0.6285714285714286,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 105,
+            "accepted_as_class": 70,
+            "correct_accepted": 64,
+            "accepted_precision": 0.9142857142857143,
+            "correct_accepted_recall": 0.6095238095238096,
+            "true_class_accepted_coverage": 0.7428571428571429,
+            "enabled": true
+          },
+          "rust": {
+            "support": 97,
+            "accepted_as_class": 97,
+            "correct_accepted": 90,
+            "accepted_precision": 0.9278350515463918,
+            "correct_accepted_recall": 0.9278350515463918,
+            "true_class_accepted_coverage": 0.979381443298969,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 2,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 209,
+        "parents": 210
+      },
+      "bracol_leaf": {
+        "raw": {
+          "n": 198,
+          "accuracy": 0.8787878787878788,
+          "macro_f1": 0.8091494738324005,
+          "classification": {
+            "cercospora": {
+              "precision": 0.4444444444444444,
+              "recall": 0.4444444444444444,
+              "f1-score": 0.4444444444444444,
+              "support": 9.0
+            },
+            "healthy": {
+              "precision": 0.8260869565217391,
+              "recall": 1.0,
+              "f1-score": 0.9047619047619048,
+              "support": 38.0
+            },
+            "miner": {
+              "precision": 0.9444444444444444,
+              "recall": 0.7391304347826086,
+              "f1-score": 0.8292682926829268,
+              "support": 46.0
+            },
+            "phoma": {
+              "precision": 0.9791666666666666,
+              "recall": 0.9038461538461539,
+              "f1-score": 0.94,
+              "support": 52.0
+            },
+            "rust": {
+              "precision": 0.8947368421052632,
+              "recall": 0.9622641509433962,
+              "f1-score": 0.9272727272727272,
+              "support": 53.0
+            },
+            "micro avg": {
+              "precision": 0.8877551020408163,
+              "recall": 0.8787878787878788,
+              "f1-score": 0.883248730964467,
+              "support": 198.0
+            },
+            "macro avg": {
+              "precision": 0.8177758708365115,
+              "recall": 0.8099370368033206,
+              "f1-score": 0.8091494738324005,
+              "support": 198.0
+            },
+            "weighted avg": {
+              "precision": 0.8948154954066471,
+              "recall": 0.8787878787878788,
+              "f1-score": 0.8815795373223311,
+              "support": 198.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              4,
+              1,
+              1,
+              1,
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              38,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              5,
+              34,
+              0,
+              4,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              2,
+              1,
+              47,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              51,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 198,
+          "accepted_n": 184,
+          "accepted_coverage": 0.9292929292929293,
+          "accepted_accuracy": 0.8913043478260869,
+          "correct_accepted_fraction": 0.8282828282828283,
+          "confident_n": 154,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 9,
+            "accepted_as_class": 8,
+            "correct_accepted": 4,
+            "accepted_precision": 0.5,
+            "correct_accepted_recall": 0.4444444444444444,
+            "true_class_accepted_coverage": 0.8888888888888888,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 38,
+            "accepted_as_class": 46,
+            "correct_accepted": 38,
+            "accepted_precision": 0.8260869565217391,
+            "correct_accepted_recall": 1.0,
+            "true_class_accepted_coverage": 1.0,
+            "enabled": true
+          },
+          "miner": {
+            "support": 46,
+            "accepted_as_class": 35,
+            "correct_accepted": 33,
+            "accepted_precision": 0.9428571428571428,
+            "correct_accepted_recall": 0.717391304347826,
+            "true_class_accepted_coverage": 0.9347826086956522,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 52,
+            "accepted_as_class": 39,
+            "correct_accepted": 39,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.75,
+            "true_class_accepted_coverage": 0.8269230769230769,
+            "enabled": true
+          },
+          "rust": {
+            "support": 53,
+            "accepted_as_class": 56,
+            "correct_accepted": 50,
+            "accepted_precision": 0.8928571428571429,
+            "correct_accepted_recall": 0.9433962264150944,
+            "true_class_accepted_coverage": 0.9811320754716981,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 198,
+        "parents": 198
+      },
+      "bracol_symptom": {
+        "raw": {
+          "n": 236,
+          "accuracy": 0.8389830508474576,
+          "macro_f1": 0.8303206750825478,
+          "classification": {
+            "cercospora": {
+              "precision": 0.8181818181818182,
+              "recall": 0.6,
+              "f1-score": 0.6923076923076923,
+              "support": 30.0
+            },
+            "healthy": {
+              "precision": 1.0,
+              "recall": 0.8529411764705882,
+              "f1-score": 0.9206349206349206,
+              "support": 34.0
+            },
+            "miner": {
+              "precision": 1.0,
+              "recall": 0.703125,
+              "f1-score": 0.8256880733944955,
+              "support": 64.0
+            },
+            "phoma": {
+              "precision": 0.676056338028169,
+              "recall": 1.0,
+              "f1-score": 0.8067226890756303,
+              "support": 48.0
+            },
+            "rust": {
+              "precision": 0.8529411764705882,
+              "recall": 0.9666666666666667,
+              "f1-score": 0.90625,
+              "support": 60.0
+            },
+            "micro avg": {
+              "precision": 0.8425531914893617,
+              "recall": 0.8389830508474576,
+              "f1-score": 0.8407643312101911,
+              "support": 236.0
+            },
+            "macro avg": {
+              "precision": 0.869435866536115,
+              "recall": 0.824546568627451,
+              "f1-score": 0.8303206750825478,
+              "support": 236.0
+            },
+            "weighted avg": {
+              "precision": 0.8736128362671268,
+              "recall": 0.8389830508474576,
+              "f1-score": 0.8390362027275257,
+              "support": 236.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              18,
+              0,
+              0,
+              8,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              29,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              45,
+              15,
+              2,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              48,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              58,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 236,
+          "accepted_n": 215,
+          "accepted_coverage": 0.9110169491525424,
+          "accepted_accuracy": 0.9023255813953488,
+          "correct_accepted_fraction": 0.8220338983050848,
+          "confident_n": 190,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 30,
+            "accepted_as_class": 19,
+            "correct_accepted": 16,
+            "accepted_precision": 0.8421052631578947,
+            "correct_accepted_recall": 0.5333333333333333,
+            "true_class_accepted_coverage": 0.7333333333333333,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 34,
+            "accepted_as_class": 29,
+            "correct_accepted": 29,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.8529411764705882,
+            "true_class_accepted_coverage": 0.9705882352941176,
+            "enabled": true
+          },
+          "miner": {
+            "support": 64,
+            "accepted_as_class": 45,
+            "correct_accepted": 45,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.703125,
+            "true_class_accepted_coverage": 0.84375,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 48,
+            "accepted_as_class": 56,
+            "correct_accepted": 47,
+            "accepted_precision": 0.8392857142857143,
+            "correct_accepted_recall": 0.9791666666666666,
+            "true_class_accepted_coverage": 0.9791666666666666,
+            "enabled": true
+          },
+          "rust": {
+            "support": 60,
+            "accepted_as_class": 66,
+            "correct_accepted": 57,
+            "accepted_precision": 0.8636363636363636,
+            "correct_accepted_recall": 0.95,
+            "true_class_accepted_coverage": 0.9833333333333333,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 216,
+        "parents": 216
+      },
+      "coffeeleaf_own_field": {
+        "raw": {
+          "n": 96,
+          "accuracy": 0.9479166666666666,
+          "macro_f1": 0.9495384615384616,
+          "classification": {
+            "rust": {
+              "precision": 0.9375,
+              "recall": 0.9090909090909091,
+              "f1-score": 0.9230769230769231,
+              "support": 33.0
+            },
+            "weevil_damage": {
+              "precision": 0.9838709677419355,
+              "recall": 0.9682539682539683,
+              "f1-score": 0.976,
+              "support": 63.0
+            },
+            "micro avg": {
+              "precision": 0.9680851063829787,
+              "recall": 0.9479166666666666,
+              "f1-score": 0.9578947368421052,
+              "support": 96.0
+            },
+            "macro avg": {
+              "precision": 0.9606854838709677,
+              "recall": 0.9386724386724387,
+              "f1-score": 0.9495384615384616,
+              "support": 96.0
+            },
+            "weighted avg": {
+              "precision": 0.9679309475806451,
+              "recall": 0.9479166666666666,
+              "f1-score": 0.9578076923076924,
+              "support": 96.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              1,
+              30,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              61,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 96,
+          "accepted_n": 91,
+          "accepted_coverage": 0.9479166666666666,
+          "accepted_accuracy": 0.967032967032967,
+          "correct_accepted_fraction": 0.9166666666666666,
+          "confident_n": 91,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "miner": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "rust": {
+            "support": 33,
+            "accepted_as_class": 29,
+            "correct_accepted": 27,
+            "accepted_precision": 0.9310344827586207,
+            "correct_accepted_recall": 0.8181818181818182,
+            "true_class_accepted_coverage": 0.8484848484848485,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 63,
+            "accepted_as_class": 62,
+            "correct_accepted": 61,
+            "accepted_precision": 0.9838709677419355,
+            "correct_accepted_recall": 0.9682539682539683,
+            "true_class_accepted_coverage": 1.0,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 83,
+        "parents": 85
+      },
+      "coffeeleaf_rust_and_leaf_miner": {
+        "raw": {
+          "n": 99,
+          "accuracy": 0.9191919191919192,
+          "macro_f1": 0.9502630320420851,
+          "classification": {
+            "miner": {
+              "precision": 0.9833333333333333,
+              "recall": 0.9365079365079365,
+              "f1-score": 0.959349593495935,
+              "support": 63.0
+            },
+            "rust": {
+              "precision": 1.0,
+              "recall": 0.8888888888888888,
+              "f1-score": 0.9411764705882353,
+              "support": 36.0
+            },
+            "micro avg": {
+              "precision": 0.9891304347826086,
+              "recall": 0.9191919191919192,
+              "f1-score": 0.9528795811518325,
+              "support": 99.0
+            },
+            "macro avg": {
+              "precision": 0.9916666666666667,
+              "recall": 0.9126984126984127,
+              "f1-score": 0.9502630320420851,
+              "support": 99.0
+            },
+            "weighted avg": {
+              "precision": 0.9893939393939393,
+              "recall": 0.9191919191919192,
+              "f1-score": 0.9527411851658623,
+              "support": 99.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              59,
+              1,
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              1,
+              32,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 99,
+          "accepted_n": 97,
+          "accepted_coverage": 0.9797979797979798,
+          "accepted_accuracy": 0.9381443298969072,
+          "correct_accepted_fraction": 0.9191919191919192,
+          "confident_n": 92,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 0,
+            "accepted_as_class": 1,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "miner": {
+            "support": 63,
+            "accepted_as_class": 60,
+            "correct_accepted": 59,
+            "accepted_precision": 0.9833333333333333,
+            "correct_accepted_recall": 0.9365079365079365,
+            "true_class_accepted_coverage": 0.9841269841269841,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 0,
+            "accepted_as_class": 1,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "rust": {
+            "support": 36,
+            "accepted_as_class": 32,
+            "correct_accepted": 32,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.8888888888888888,
+            "true_class_accepted_coverage": 0.9722222222222222,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 3,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 96,
+        "parents": 96
+      },
+      "peru": {
+        "raw": {
+          "n": 12,
+          "accuracy": 0.9166666666666666,
+          "macro_f1": 0.9076923076923077,
+          "classification": {
+            "healthy": {
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1-score": 0.8,
+              "support": 3.0
+            },
+            "rust": {
+              "precision": 0.8571428571428571,
+              "recall": 1.0,
+              "f1-score": 0.9230769230769231,
+              "support": 6.0
+            },
+            "unsupported": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1-score": 1.0,
+              "support": 3.0
+            },
+            "accuracy": 0.9166666666666666,
+            "macro avg": {
+              "precision": 0.9523809523809524,
+              "recall": 0.8888888888888888,
+              "f1-score": 0.9076923076923077,
+              "support": 12.0
+            },
+            "weighted avg": {
+              "precision": 0.9285714285714285,
+              "recall": 0.9166666666666666,
+              "f1-score": 0.9115384615384615,
+              "support": 12.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          ]
+        },
+        "app": {
+          "n": 12,
+          "accepted_n": 9,
+          "accepted_coverage": 0.75,
+          "accepted_accuracy": 0.8888888888888888,
+          "correct_accepted_fraction": 0.6666666666666666,
+          "confident_n": 9,
+          "unsupported_n": 3,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": 1.0
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 3,
+            "accepted_as_class": 2,
+            "correct_accepted": 2,
+            "accepted_precision": 1.0,
+            "correct_accepted_recall": 0.6666666666666666,
+            "true_class_accepted_coverage": 1.0,
+            "enabled": true
+          },
+          "miner": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "rust": {
+            "support": 6,
+            "accepted_as_class": 7,
+            "correct_accepted": 6,
+            "accepted_precision": 0.8571428571428571,
+            "correct_accepted_recall": 1.0,
+            "true_class_accepted_coverage": 1.0,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 3,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": 0.0,
+            "true_class_accepted_coverage": 0.0,
+            "enabled": false
+          }
+        },
+        "groups": 12,
+        "parents": 12
+      },
+      "rocole": {
+        "raw": {
+          "n": 115,
+          "accuracy": 0.808695652173913,
+          "macro_f1": 0.7211465782894354,
+          "classification": {
+            "healthy": {
+              "precision": 0.9411764705882353,
+              "recall": 0.9056603773584906,
+              "f1-score": 0.9230769230769231,
+              "support": 53.0
+            },
+            "rust": {
+              "precision": 0.7222222222222222,
+              "recall": 0.8863636363636364,
+              "f1-score": 0.7959183673469388,
+              "support": 44.0
+            },
+            "red_spider_mite": {
+              "precision": 0.6666666666666666,
+              "recall": 0.3333333333333333,
+              "f1-score": 0.4444444444444444,
+              "support": 18.0
+            },
+            "micro avg": {
+              "precision": 0.8157894736842105,
+              "recall": 0.808695652173913,
+              "f1-score": 0.8122270742358079,
+              "support": 115.0
+            },
+            "macro avg": {
+              "precision": 0.7766884531590413,
+              "recall": 0.7084524490184868,
+              "f1-score": 0.7211465782894354,
+              "support": 115.0
+            },
+            "weighted avg": {
+              "precision": 0.8144359192952544,
+              "recall": 0.808695652173913,
+              "f1-score": 0.7995085659681933,
+              "support": 115.0
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              48,
+              0,
+              0,
+              4,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              0,
+              0,
+              39,
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              11,
+              6,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        "app": {
+          "n": 115,
+          "accepted_n": 105,
+          "accepted_coverage": 0.9130434782608695,
+          "accepted_accuracy": 0.8285714285714286,
+          "correct_accepted_fraction": 0.7565217391304347,
+          "confident_n": 96,
+          "unsupported_n": 0,
+          "unsupported_false_accepts": 0,
+          "unsupported_reject_rate": null
+        },
+        "per_class_app": {
+          "cercospora": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "healthy": {
+            "support": 53,
+            "accepted_as_class": 51,
+            "correct_accepted": 48,
+            "accepted_precision": 0.9411764705882353,
+            "correct_accepted_recall": 0.9056603773584906,
+            "true_class_accepted_coverage": 0.9811320754716981,
+            "enabled": true
+          },
+          "miner": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "phoma": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "rust": {
+            "support": 44,
+            "accepted_as_class": 53,
+            "correct_accepted": 39,
+            "accepted_precision": 0.7358490566037735,
+            "correct_accepted_recall": 0.8863636363636364,
+            "true_class_accepted_coverage": 0.9318181818181818,
+            "enabled": true
+          },
+          "red_spider_mite": {
+            "support": 18,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": 0.0,
+            "true_class_accepted_coverage": 0.6666666666666666,
+            "enabled": false
+          },
+          "weevil_damage": {
+            "support": 0,
+            "accepted_as_class": 1,
+            "correct_accepted": 0,
+            "accepted_precision": 0.0,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": true
+          },
+          "unsupported": {
+            "support": 0,
+            "accepted_as_class": 0,
+            "correct_accepted": 0,
+            "accepted_precision": null,
+            "correct_accepted_recall": null,
+            "true_class_accepted_coverage": null,
+            "enabled": false
+          }
+        },
+        "groups": 54,
+        "parents": 58
+      }
+    },
+    "class_counts": {
+      "cercospora": 92,
+      "healthy": 131,
+      "miner": 319,
+      "phoma": 287,
+      "rust": 454,
+      "red_spider_mite": 18,
+      "weevil_damage": 63,
+      "unsupported": 131
+    },
+    "selection": "One seeded example per source/group/label from the frozen expanded test; identical images for both models",
+    "image_transform": "Shrink canonical 224px crop to 146px, center it on a 224px median-RGB canvas; identical raw pixels for both models",
+    "qualification": "Synthetic distance stress, not evidence from genuine distant field photographs; differs from full-image padding used in training"
+  },
+  "deployment": {
+    "role": "comparison_candidate",
+    "installed_in_app": false,
+    "deployment_eligible": false,
+    "artifact_location": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\coffee-leaf-b3.tflite",
+    "note": "Validated comparison candidate exceeds the unchanged 10 MB app-artifact limit; not installed in app",
+    "gates": "Candidate decisions apply the same app policy offline; model choice in the app is not implied"
+  }
+}

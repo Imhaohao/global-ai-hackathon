@@ -1,0 +1,37 @@
+Some weights of SegformerForSemanticSegmentation were not initialized from the model checkpoint at nvidia/mit-b0 and are newly initialized: ['decode_head.batch_norm.bias', 'decode_head.batch_norm.num_batches_tracked', 'decode_head.batch_norm.running_mean', 'decode_head.batch_norm.running_var', 'decode_head.batch_norm.weight', 'decode_head.classifier.bias', 'decode_head.classifier.weight', 'decode_head.linear_c.0.proj.bias', 'decode_head.linear_c.0.proj.weight', 'decode_head.linear_c.1.proj.bias', 'decode_head.linear_c.1.proj.weight', 'decode_head.linear_c.2.proj.bias', 'decode_head.linear_c.2.proj.weight', 'decode_head.linear_c.3.proj.bias', 'decode_head.linear_c.3.proj.weight', 'decode_head.linear_fuse.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+{"device": "mps", "train_tiles": 128, "val_tiles": 64, "initial": {"loss": 0.6948311366140842, "classes": {"drydown": {"iou": 0.005985691490241669, "precision": 0.02465984287095095, "recall": 0.007842318173488629, "positive_pixels": 507503, "predicted_positive_pixels": 161396}, "nutrient_deficiency": {"iou": 0.08611141876176764, "precision": 0.08785120069393561, "recall": 0.8130226448899955, "positive_pixels": 313669, "predicted_positive_pixels": 2902863}, "water": {"iou": 0.013930995528957064, "precision": 0.014568296980617415, "recall": 0.2415356345110639, "positive_pixels": 90881, "predicted_positive_pixels": 1506765}, "weed_cluster": {"iou": 0.04854152082053414, "precision": 0.05110276434005279, "recall": 0.4920031705013084, "positive_pixels": 184198, "predicted_positive_pixels": 1773407}, "double_plant": {"iou": 0.01624474008998941, "precision": 0.017071932725391693, "recall": 0.2510852422080361, "positive_pixels": 66575, "predicted_positive_pixels": 979151}, "endrow": {"iou": 0.018380402265329544, "precision": 0.018392791245867318, "recall": 0.964648958230473, "positive_pixels": 70889, "predicted_positive_pixels": 3717924}, "planter_skip": {"iou": 0.0018213962406744058, "precision": 0.001822207817815481, "recall": 0.8035178892664402, "positive_pixels": 5003, "predicted_positive_pixels": 2206115}, "waterway": {"iou": 0.0023693607145770126, "precision": 0.0023722850169503526, "recall": 0.6577802565532627, "positive_pixels": 8965, "predicted_positive_pixels": 2485789}}, "mean_iou_present_classes": 0.02417319073900886, "score_threshold": 0.5, "threshold_calibrated": false}}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/connor/Documents/Codex/2026-10-03/satellite-field-hotspots/outputs/satellite-hotspots/training/train.py", line 148, in <module>
+    train(p.parse_args())
+    ~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/connor/Documents/Codex/2026-10-03/satellite-field-hotspots/outputs/satellite-hotspots/training/train.py", line 113, in train
+    loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(),1.0); optimizer.step()
+    ~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/torch/autograd/graph.py", line 979, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+RuntimeError: view size is not compatible with input tensor's size and stride (at least one dimension spans across two contiguous subspaces). Use .reshape(...) instead.

@@ -1,0 +1,15 @@
+{
+  "repository": "timm/efficientnet_b2.ra_in1k",
+  "revision": "3577c4a7d84723645311bb5a9e5086f1b62ec8e2",
+  "license": "apache-2.0",
+  "pretraining": "ImageNet-1k; no coffee disease head reused",
+  "source": "https://huggingface.co/timm/efficientnet_b2.ra_in1k/tree/3577c4a7d84723645311bb5a9e5086f1b62ec8e2",
+  "native_pretraining_resolution": 256,
+  "published_test_resolution": 288,
+  "fine_tuning_and_app_resolution": 224,
+  "resolution_note": "The checkpoint allows variable input sizes. Fine-tuning uses the same 224-pixel images as B1 for a controlled app comparison. This does not measure B2 at its published 288-pixel test setting.",
+  "sha256": {
+    "config.json": "c661df6cbac745243bb787559fbc781140bf7e2d58869c5d30ffa4e51e0a43da",
+    "model.safetensors": "e9adbcce7e5d5055c571c4cafdcc7f920b6a6ec42e643c49dff1aabe1d5f53c5"
+  }
+}

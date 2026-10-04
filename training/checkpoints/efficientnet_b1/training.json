@@ -1,0 +1,1050 @@
+{
+  "architecture": "efficientnet_b1",
+  "input_size": 224,
+  "labels": [
+    "cercospora",
+    "healthy",
+    "miner",
+    "phoma",
+    "rust",
+    "red_spider_mite",
+    "weevil_damage",
+    "unsupported"
+  ],
+  "seed": 20261003,
+  "parameters": 6523432,
+  "pretrained": {
+    "repository": "timm/efficientnet_b1.ft_in1k",
+    "revision": "1d6ddfd0ad535646fdb05bc3834913d93816152e",
+    "license": "apache-2.0",
+    "pretraining": "ImageNet-1k; no coffee disease head reused",
+    "source": "https://huggingface.co/timm/efficientnet_b1.ft_in1k/tree/1d6ddfd0ad535646fdb05bc3834913d93816152e",
+    "sha256": {
+      "config.json": "4bcc5bdacffb1bb9264fff246bf8e167f9e4318fb8d2ad2d178ee32b92f9d2f6",
+      "model.safetensors": "2eb860ed42ef594b3ae479669e306927bb4d4018e246e38f512b6b25b1734f6e"
+    }
+  },
+  "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+  "split_counts": {
+    "train": 20311,
+    "val": 5294
+  },
+  "test_used_for_selection": false,
+  "external_used_for_training_or_selection": false,
+  "recipe": {
+    "head": "All vetted 20311 training images and 5294 validation images; pretrained feature extraction; weighted AdamW lr0.001 wd0.01, smoothing0.05, dropout0.15, max30 epochs patience5 after10, validation0.65 mean-source F1 +0.20 macroF1 +0.15 weakclassF1",
+    "backbone": "Last two blocks/head only; frozen BatchNorm; grouped parent rotation with weak-class replay; AdamW lr0.00003 wd0.03 smoothing0.05 dropout0.15 gradientclip1; max6 epochs patience2 delta0.002; 70% canonical and30% full-target scale65-100%; validation0.5 source F1 +0.3 far F1 +0.2 full-context F1; retainhead ifnoeligiblegain; each weakclass allowed<=1pp regression fromhead",
+    "context_geometry": "Full supplied annotated context contained in224canvas, no subsequent center-crop; both context training and context validation preserve supplied target region",
+    "teacher": "No B0 teacher: B1 independently learns labels without copying the external-failure-prone B0 probabilities"
+  },
+  "comparison_limits": "B0 started coffee-finetuned and used original datasets; B1 starts ImageNet and includes reviewed BRACOL+Peru; outcome compares deployable models, not architecture alone",
+  "status": "complete",
+  "head_history": [
+    {
+      "accuracy": 0.7559501322251606,
+      "macro_f1": 0.6309680517078494,
+      "source_macro_f1": 0.700118969980356,
+      "per_source": {
+        "agml": 0.6184119497555312,
+        "beans": 0.9847328244274809,
+        "bracol_expert": 0.5308506062070911,
+        "bracol_leaf": 0.5752175478341808,
+        "bracol_symptom": 0.554519730642788,
+        "coffeeleaf_own_field": 0.8617920929069189,
+        "coffeeleaf_rust_and_leaf_miner": 0.883486243708669,
+        "peru": 0.8343886820975769,
+        "rocole": 0.4576710522429677
+      },
+      "weak_macro_f1": 0.3749912922326715,
+      "old_class_f1": {
+        "cercospora": 0.32727272727272727,
+        "healthy": 0.6942528735632184,
+        "miner": 0.771770062606716,
+        "phoma": 0.5301914580265096,
+        "rust": 0.7768187422934648,
+        "red_spider_mite": 0.10344827586206896,
+        "weevil_damage": 0.8415614236509759,
+        "unsupported": 0.8835616438356164
+      },
+      "old_native_accuracy": 0.7072912997534343,
+      "stage": "head",
+      "epoch": 1,
+      "selection_score": 0.637519634663702
+    },
+    {
+      "accuracy": 0.8111069134869664,
+      "macro_f1": 0.6960887260414397,
+      "source_macro_f1": 0.758879228589409,
+      "per_source": {
+        "agml": 0.7091457268299242,
+        "beans": 0.9847328244274809,
+        "bracol_expert": 0.5892240790390977,
+        "bracol_leaf": 0.6077198802839121,
+        "bracol_symptom": 0.6960232819682501,
+        "coffeeleaf_own_field": 0.9131421870811285,
+        "coffeeleaf_rust_and_leaf_miner": 0.9097334477876501,
+        "peru": 0.9101926163723917,
+        "rocole": 0.5099990135148467
+      },
+      "weak_macro_f1": 0.45982632349863994,
+      "old_class_f1": {
+        "cercospora": 0.4576271186440678,
+        "healthy": 0.7644444444444445,
+        "miner": 0.8276670574443142,
+        "phoma": 0.6506410256410257,
+        "rust": 0.8332636857501045,
+        "red_spider_mite": 0.1574074074074074,
+        "weevil_damage": 0.9073869900771775,
+        "unsupported": 0.9052631578947369
+      },
+      "old_native_accuracy": 0.7604790419161677,
+      "stage": "head",
+      "epoch": 2,
+      "selection_score": 0.7014631923161998
+    },
+    {
+      "accuracy": 0.842840952021156,
+      "macro_f1": 0.7315310135480777,
+      "source_macro_f1": 0.7892527719981614,
+      "per_source": {
+        "agml": 0.7645768091956109,
+        "beans": 0.9924242424242424,
+        "bracol_expert": 0.6250784226390883,
+        "bracol_leaf": 0.6715140822314424,
+        "bracol_symptom": 0.7098568435874621,
+        "coffeeleaf_own_field": 0.9248245055830093,
+        "coffeeleaf_rust_and_leaf_miner": 0.9371337998844815,
+        "peru": 0.9302242824366718,
+        "rocole": 0.5476419600014437
+      },
+      "weak_macro_f1": 0.5228406028566948,
+      "old_class_f1": {
+        "cercospora": 0.5664739884393064,
+        "healthy": 0.7982261640798226,
+        "miner": 0.8692737430167597,
+        "phoma": 0.657051282051282,
+        "rust": 0.8597816960537363,
+        "red_spider_mite": 0.20382165605095542,
+        "weevil_damage": 0.9258849557522124,
+        "unsupported": 0.9225352112676056
+      },
+      "old_native_accuracy": 0.8048608665022895,
+      "stage": "head",
+      "epoch": 3,
+      "selection_score": 0.7377465949369247
+    },
+    {
+      "accuracy": 0.8588968643747639,
+      "macro_f1": 0.7539702778088155,
+      "source_macro_f1": 0.8069102547651721,
+      "per_source": {
+        "agml": 0.7770261678619141,
+        "beans": 0.9924242424242424,
+        "bracol_expert": 0.6400068900506478,
+        "bracol_leaf": 0.6731333052210863,
+        "bracol_symptom": 0.7577941165805732,
+        "coffeeleaf_own_field": 0.9377356409187851,
+        "coffeeleaf_rust_and_leaf_miner": 0.9407271787245723,
+        "peru": 0.9493611149813256,
+        "rocole": 0.5939836361234018
+      },
+      "weak_macro_f1": 0.5574666940272928,
+      "old_class_f1": {
+        "cercospora": 0.5806451612903226,
+        "healthy": 0.8272921108742004,
+        "miner": 0.8830576155162578,
+        "phoma": 0.6998394863563403,
+        "rust": 0.87468671679198,
+        "red_spider_mite": 0.2644628099173554,
+        "weevil_damage": 0.935659760087241,
+        "unsupported": 0.9492753623188406
+      },
+      "old_native_accuracy": 0.8245861218738992,
+      "stage": "head",
+      "epoch": 4,
+      "selection_score": 0.7589057252632189
+    },
+    {
+      "accuracy": 0.86550812240272,
+      "macro_f1": 0.7601319655180242,
+      "source_macro_f1": 0.8213794477236563,
+      "per_source": {
+        "agml": 0.7657608793154098,
+        "beans": 0.9924242424242424,
+        "bracol_expert": 0.6392657348816178,
+        "bracol_leaf": 0.7270691058948533,
+        "bracol_symptom": 0.7531939959741482,
+        "coffeeleaf_own_field": 0.9427082068493218,
+        "coffeeleaf_rust_and_leaf_miner": 0.9434297026744359,
+        "peru": 0.9757429366125018,
+        "rocole": 0.6528202248863765
+      },
+      "weak_macro_f1": 0.5598390428579109,
+      "old_class_f1": {
+        "cercospora": 0.5444743935309974,
+        "healthy": 0.8444444444444444,
+        "miner": 0.8792605430387059,
+        "phoma": 0.7178683385579937,
+        "rust": 0.8879702356345598,
+        "red_spider_mite": 0.2905982905982906,
+        "weevil_damage": 0.9435396308360477,
+        "unsupported": 0.9562043795620438
+      },
+      "old_native_accuracy": 0.8295174357168017,
+      "stage": "head",
+      "epoch": 5,
+      "selection_score": 0.7698988905526681
+    },
+    {
+      "accuracy": 0.8802417831507366,
+      "macro_f1": 0.7841992576502406,
+      "source_macro_f1": 0.8344927513506657,
+      "per_source": {
+        "agml": 0.804236225419951,
+        "beans": 0.9962264150943396,
+        "bracol_expert": 0.670208568237083,
+        "bracol_leaf": 0.7319239944213087,
+        "bracol_symptom": 0.7686168040233141,
+        "coffeeleaf_own_field": 0.9468215181412918,
+        "coffeeleaf_rust_and_leaf_miner": 0.9513737646715947,
+        "peru": 0.9806075217751254,
+        "rocole": 0.6604199503719826
+      },
+      "weak_macro_f1": 0.6130004187975203,
+      "old_class_f1": {
+        "cercospora": 0.6438746438746439,
+        "healthy": 0.8434782608695652,
+        "miner": 0.9010388190267906,
+        "phoma": 0.7258064516129032,
+        "rust": 0.8951107396573339,
+        "red_spider_mite": 0.3516483516483517,
+        "weevil_damage": 0.9511257550796266,
+        "unsupported": 0.9530685920577617
+      },
+      "old_native_accuracy": 0.8548784783374428,
+      "stage": "head",
+      "epoch": 6,
+      "selection_score": 0.7912102027276089
+    },
+    {
+      "accuracy": 0.8859085757461277,
+      "macro_f1": 0.791741642596482,
+      "source_macro_f1": 0.8394661210298314,
+      "per_source": {
+        "agml": 0.8232014318614821,
+        "beans": 0.9962264150943396,
+        "bracol_expert": 0.6506822306860147,
+        "bracol_leaf": 0.7640513412912335,
+        "bracol_symptom": 0.7882508999998932,
+        "coffeeleaf_own_field": 0.9496386002236588,
+        "coffeeleaf_rust_and_leaf_miner": 0.9458110856852275,
+        "peru": 0.9806075217751254,
+        "rocole": 0.6567255626515084
+      },
+      "weak_macro_f1": 0.6265613757873819,
+      "old_class_f1": {
+        "cercospora": 0.6783625730994152,
+        "healthy": 0.8496732026143791,
+        "miner": 0.9089893914014517,
+        "phoma": 0.7558320373250389,
+        "rust": 0.8978916907813146,
+        "red_spider_mite": 0.3516483516483517,
+        "weevil_damage": 0.9561883899233297,
+        "unsupported": 0.974169741697417
+      },
+      "old_native_accuracy": 0.8643888693201832,
+      "stage": "head",
+      "epoch": 7,
+      "selection_score": 0.7979855135567941
+    },
+    {
+      "accuracy": 0.887986399697771,
+      "macro_f1": 0.7939417220252147,
+      "source_macro_f1": 0.8402361313155358,
+      "per_source": {
+        "agml": 0.8440799004266548,
+        "beans": 0.9962264150943396,
+        "bracol_expert": 0.679931219136059,
+        "bracol_leaf": 0.7502396356394889,
+        "bracol_symptom": 0.8102354695612242,
+        "coffeeleaf_own_field": 0.957179005205321,
+        "coffeeleaf_rust_and_leaf_miner": 0.9460751574028854,
+        "peru": 0.9907509719664417,
+        "rocole": 0.5874074074074075
+      },
+      "weak_macro_f1": 0.6293484914817006,
+      "old_class_f1": {
+        "cercospora": 0.695906432748538,
+        "healthy": 0.8558558558558559,
+        "miner": 0.9059080962800875,
+        "phoma": 0.7479131886477463,
+        "rust": 0.9031990029081844,
+        "red_spider_mite": 0.336283185840708,
+        "weevil_damage": 0.9592169657422512,
+        "unsupported": 0.9777777777777777
+      },
+      "old_native_accuracy": 0.8622754491017964,
+      "stage": "head",
+      "epoch": 8,
+      "selection_score": 0.7993441034823963
+    },
+    {
+      "accuracy": 0.8864752550056668,
+      "macro_f1": 0.7896579494147866,
+      "source_macro_f1": 0.8364859611346789,
+      "per_source": {
+        "agml": 0.8298020863572393,
+        "beans": 0.9962264150943396,
+        "bracol_expert": 0.6770924032970914,
+        "bracol_leaf": 0.7599940752146745,
+        "bracol_symptom": 0.7942862947148367,
+        "coffeeleaf_own_field": 0.9537733713996638,
+        "coffeeleaf_rust_and_leaf_miner": 0.954858940811289,
+        "peru": 0.9904064413893529,
+        "rocole": 0.571933621933622
+      },
+      "weak_macro_f1": 0.6188852813852813,
+      "old_class_f1": {
+        "cercospora": 0.7,
+        "healthy": 0.8441558441558441,
+        "miner": 0.907608695652174,
+        "phoma": 0.7639344262295082,
+        "rust": 0.9012189995796553,
+        "red_spider_mite": 0.3125,
+        "weevil_damage": 0.9579923622476814,
+        "unsupported": 0.9777777777777777
+      },
+      "old_native_accuracy": 0.8619232123987319,
+      "stage": "head",
+      "epoch": 9,
+      "selection_score": 0.7944802568282907
+    },
+    {
+      "accuracy": 0.8964865885908576,
+      "macro_f1": 0.8119598821968059,
+      "source_macro_f1": 0.8604528689453255,
+      "per_source": {
+        "agml": 0.8617734594865496,
+        "beans": 1.0,
+        "bracol_expert": 0.6843233873048973,
+        "bracol_leaf": 0.7971902859391952,
+        "bracol_symptom": 0.8225134854124176,
+        "coffeeleaf_own_field": 0.9543260493450225,
+        "coffeeleaf_rust_and_leaf_miner": 0.9489370304952012,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6842611505582034
+      },
+      "weak_macro_f1": 0.670702087315911,
+      "old_class_f1": {
+        "cercospora": 0.7252747252747253,
+        "healthy": 0.8771929824561403,
+        "miner": 0.9152542372881356,
+        "phoma": 0.7813021702838063,
+        "rust": 0.9105219552609777,
+        "red_spider_mite": 0.40963855421686746,
+        "weevil_damage": 0.9594742606790799,
+        "unsupported": 0.981549815498155
+      },
+      "old_native_accuracy": 0.8812962310672772,
+      "stage": "head",
+      "epoch": 10,
+      "selection_score": 0.8222916543512094
+    },
+    {
+      "accuracy": 0.898753305629014,
+      "macro_f1": 0.8110637915291927,
+      "source_macro_f1": 0.8552717974181063,
+      "per_source": {
+        "agml": 0.8593443328197548,
+        "beans": 1.0,
+        "bracol_expert": 0.6862622771579958,
+        "bracol_leaf": 0.7436681021392169,
+        "bracol_symptom": 0.8158484172813232,
+        "coffeeleaf_own_field": 0.9585519337174966,
+        "coffeeleaf_rust_and_leaf_miner": 0.9558796742387243,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6871404674420033
+      },
+      "weak_macro_f1": 0.6611790758292069,
+      "old_class_f1": {
+        "cercospora": 0.7068965517241379,
+        "healthy": 0.881578947368421,
+        "miner": 0.9155953046394634,
+        "phoma": 0.7741935483870968,
+        "rust": 0.9141229141229141,
+        "red_spider_mite": 0.3950617283950617,
+        "weevil_damage": 0.9626373626373627,
+        "unsupported": 0.981549815498155
+      },
+      "old_native_accuracy": 0.8827051778795351,
+      "stage": "head",
+      "epoch": 11,
+      "selection_score": 0.8173162880019889
+    },
+    {
+      "accuracy": 0.8970532678503966,
+      "macro_f1": 0.8141018489894627,
+      "source_macro_f1": 0.8582234174385921,
+      "per_source": {
+        "agml": 0.8584022164149878,
+        "beans": 1.0,
+        "bracol_expert": 0.6837745497723706,
+        "bracol_leaf": 0.7974050910190529,
+        "bracol_symptom": 0.8033037400870982,
+        "coffeeleaf_own_field": 0.9558082885906647,
+        "coffeeleaf_rust_and_leaf_miner": 0.9572302018376779,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6773356972590348
+      },
+      "weak_macro_f1": 0.6796023567345593,
+      "old_class_f1": {
+        "cercospora": 0.7300613496932515,
+        "healthy": 0.8801742919389978,
+        "miner": 0.9113648722131593,
+        "phoma": 0.7639344262295082,
+        "rust": 0.9119470855725507,
+        "red_spider_mite": 0.42857142857142855,
+        "weevil_damage": 0.9585605234460196,
+        "unsupported": 0.981549815498155
+      },
+      "old_native_accuracy": 0.878830574145826,
+      "stage": "head",
+      "epoch": 12,
+      "selection_score": 0.8226059446431613
+    },
+    {
+      "accuracy": 0.9000755572346052,
+      "macro_f1": 0.8088016079716778,
+      "source_macro_f1": 0.8546569492226781,
+      "per_source": {
+        "agml": 0.8663313588108992,
+        "beans": 1.0,
+        "bracol_expert": 0.6979671179430817,
+        "bracol_leaf": 0.7976545404273809,
+        "bracol_symptom": 0.8105590062111802,
+        "coffeeleaf_own_field": 0.9596652393506162,
+        "coffeeleaf_rust_and_leaf_miner": 0.955905478625747,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6130788296687546
+      },
+      "weak_macro_f1": 0.657895219611754,
+      "old_class_f1": {
+        "cercospora": 0.7414330218068536,
+        "healthy": 0.8758169934640523,
+        "miner": 0.9159802306425041,
+        "phoma": 0.7664473684210527,
+        "rust": 0.9144981412639405,
+        "red_spider_mite": 0.3564356435643564,
+        "weevil_damage": 0.9630434782608696,
+        "unsupported": 0.981549815498155
+      },
+      "old_native_accuracy": 0.8784783374427615,
+      "stage": "head",
+      "epoch": 13,
+      "selection_score": 0.8159716215308395
+    },
+    {
+      "accuracy": 0.9013978088401965,
+      "macro_f1": 0.8143753846371212,
+      "source_macro_f1": 0.8503534504859451,
+      "per_source": {
+        "agml": 0.8612670815135873,
+        "beans": 1.0,
+        "bracol_expert": 0.690829957572206,
+        "bracol_leaf": 0.766987825243478,
+        "bracol_symptom": 0.8055642932848815,
+        "coffeeleaf_own_field": 0.963766608674324,
+        "coffeeleaf_rust_and_leaf_miner": 0.9559814391050089,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6180328770135796
+      },
+      "weak_macro_f1": 0.6620526635334186,
+      "old_class_f1": {
+        "cercospora": 0.7223880597014926,
+        "healthy": 0.8720173535791758,
+        "miner": 0.9137737961926092,
+        "phoma": 0.7874015748031497,
+        "rust": 0.9158025715470759,
+        "red_spider_mite": 0.3917525773195876,
+        "weevil_damage": 0.9658906334596643,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8777738640366326,
+      "stage": "head",
+      "epoch": 14,
+      "selection_score": 0.8149127192733014
+    },
+    {
+      "accuracy": 0.9064979221760484,
+      "macro_f1": 0.8209157530668039,
+      "source_macro_f1": 0.860439208363107,
+      "per_source": {
+        "agml": 0.8782775559845808,
+        "beans": 1.0,
+        "bracol_expert": 0.6933001738586089,
+        "bracol_leaf": 0.7745763880991345,
+        "bracol_symptom": 0.8130376683363811,
+        "coffeeleaf_own_field": 0.9624727449744941,
+        "coffeeleaf_rust_and_leaf_miner": 0.9577694482803971,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6737679237679238
+      },
+      "weak_macro_f1": 0.6783944142990087,
+      "old_class_f1": {
+        "cercospora": 0.7391304347826086,
+        "healthy": 0.8864142538975501,
+        "miner": 0.9193370165745857,
+        "phoma": 0.7864077669902912,
+        "rust": 0.923202614379085,
+        "red_spider_mite": 0.40963855421686746,
+        "weevil_damage": 0.9663409337676439,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8886932018316308,
+      "stage": "head",
+      "epoch": 15,
+      "selection_score": 0.8252277981942316
+    },
+    {
+      "accuracy": 0.9095202115602569,
+      "macro_f1": 0.8255994291582024,
+      "source_macro_f1": 0.8657971951908431,
+      "per_source": {
+        "agml": 0.8745417902655722,
+        "beans": 1.0,
+        "bracol_expert": 0.7027825578875693,
+        "bracol_leaf": 0.7933137658979271,
+        "bracol_symptom": 0.8186568461318624,
+        "coffeeleaf_own_field": 0.965787596295075,
+        "coffeeleaf_rust_and_leaf_miner": 0.9583070402389516,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6880341880341879
+      },
+      "weak_macro_f1": 0.6911274387914902,
+      "old_class_f1": {
+        "cercospora": 0.7652733118971061,
+        "healthy": 0.8777292576419214,
+        "miner": 0.9198682766190999,
+        "phoma": 0.7888707037643208,
+        "rust": 0.9279022403258655,
+        "red_spider_mite": 0.43037974683544306,
+        "weevil_damage": 0.9673202614379085,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8939767523775978,
+      "stage": "head",
+      "epoch": 16,
+      "selection_score": 0.831557178524412
+    },
+    {
+      "accuracy": 0.9063090290895354,
+      "macro_f1": 0.8230829652211007,
+      "source_macro_f1": 0.8546810110969291,
+      "per_source": {
+        "agml": 0.8741203244848019,
+        "beans": 1.0,
+        "bracol_expert": 0.6881709347105112,
+        "bracol_leaf": 0.7846063478789305,
+        "bracol_symptom": 0.7893934440845196,
+        "coffeeleaf_own_field": 0.9660375638220278,
+        "coffeeleaf_rust_and_leaf_miner": 0.960790513833992,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6382589990911368
+      },
+      "weak_macro_f1": 0.6811685414454344,
+      "old_class_f1": {
+        "cercospora": 0.743421052631579,
+        "healthy": 0.8731182795698925,
+        "miner": 0.9172681843420322,
+        "phoma": 0.7888198757763976,
+        "rust": 0.9219391947411668,
+        "red_spider_mite": 0.42696629213483145,
+        "weevil_damage": 0.9700272479564033,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8869320183163085,
+      "stage": "head",
+      "epoch": 17,
+      "selection_score": 0.8223345314740392
+    },
+    {
+      "accuracy": 0.9093313184737438,
+      "macro_f1": 0.8244639470399907,
+      "source_macro_f1": 0.8612662712624403,
+      "per_source": {
+        "agml": 0.8791036658256826,
+        "beans": 1.0,
+        "bracol_expert": 0.6962448261056039,
+        "bracol_leaf": 0.7712502276646099,
+        "bracol_symptom": 0.8278082518109413,
+        "coffeeleaf_own_field": 0.9679012523702748,
+        "coffeeleaf_rust_and_leaf_miner": 0.9609105881917512,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6574266574266574
+      },
+      "weak_macro_f1": 0.6819690213664841,
+      "old_class_f1": {
+        "cercospora": 0.7530120481927711,
+        "healthy": 0.8782608695652174,
+        "miner": 0.9213732004429679,
+        "phoma": 0.8123980424143556,
+        "rust": 0.9276910435497124,
+        "red_spider_mite": 0.4146341463414634,
+        "weevil_damage": 0.9691056910569106,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8936245156745333,
+      "stage": "head",
+      "epoch": 18,
+      "selection_score": 0.8270112189335569
+    },
+    {
+      "accuracy": 0.9066868152625613,
+      "macro_f1": 0.8223577056287119,
+      "source_macro_f1": 0.8605429502978501,
+      "per_source": {
+        "agml": 0.8661257690875253,
+        "beans": 1.0,
+        "bracol_expert": 0.6902775591285251,
+        "bracol_leaf": 0.7807311461483227,
+        "bracol_symptom": 0.8242379284902841,
+        "coffeeleaf_own_field": 0.967357163908888,
+        "coffeeleaf_rust_and_leaf_miner": 0.9646019562630952,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6608040576875686
+      },
+      "weak_macro_f1": 0.6775913517376931,
+      "old_class_f1": {
+        "cercospora": 0.7371428571428571,
+        "healthy": 0.8780487804878049,
+        "miner": 0.922566371681416,
+        "phoma": 0.797427652733119,
+        "rust": 0.9263854425144747,
+        "red_spider_mite": 0.4175824175824176,
+        "weevil_damage": 0.9716157205240175,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8908066220500176,
+      "stage": "head",
+      "epoch": 19,
+      "selection_score": 0.825463161579999
+    },
+    {
+      "accuracy": 0.9131091802040046,
+      "macro_f1": 0.8303144252373598,
+      "source_macro_f1": 0.8634405760600576,
+      "per_source": {
+        "agml": 0.8756049650640214,
+        "beans": 1.0,
+        "bracol_expert": 0.6961255359725432,
+        "bracol_leaf": 0.7990189917609273,
+        "bracol_symptom": 0.8129136064361646,
+        "coffeeleaf_own_field": 0.9706753650500237,
+        "coffeeleaf_rust_and_leaf_miner": 0.9633330168976647,
+        "peru": 0.9907509719664417,
+        "rocole": 0.6625427313927322
+      },
+      "weak_macro_f1": 0.6864598734401799,
+      "old_class_f1": {
+        "cercospora": 0.7297297297297297,
+        "healthy": 0.8796498905908097,
+        "miner": 0.9250416435313714,
+        "phoma": 0.8289676425269645,
+        "rust": 0.9265905383360522,
+        "red_spider_mite": 0.45,
+        "weevil_damage": 0.9727965179542981,
+        "unsupported": 0.9888475836431226
+      },
+      "old_native_accuracy": 0.8971468827051778,
+      "stage": "head",
+      "epoch": 20,
+      "selection_score": 0.8302682405025366
+    },
+    {
+      "accuracy": 0.9114091424253872,
+      "macro_f1": 0.8284835107590157,
+      "source_macro_f1": 0.8653787414633687,
+      "per_source": {
+        "agml": 0.8667220707508692,
+        "beans": 1.0,
+        "bracol_expert": 0.7067656722098973,
+        "bracol_leaf": 0.7989171684731701,
+        "bracol_symptom": 0.8360636214921463,
+        "coffeeleaf_own_field": 0.9675915561108424,
+        "coffeeleaf_rust_and_leaf_miner": 0.9647605224963716,
+        "peru": 0.9806075217751254,
+        "rocole": 0.6669805398618958
+      },
+      "weak_macro_f1": 0.6907040097716485,
+      "old_class_f1": {
+        "cercospora": 0.7508305647840532,
+        "healthy": 0.8739130434782608,
+        "miner": 0.9218836565096953,
+        "phoma": 0.8164556962025317,
+        "rust": 0.9251423921887714,
+        "red_spider_mite": 0.4473684210526316,
+        "weevil_damage": 0.9717391304347827,
+        "unsupported": 0.9851851851851852
+      },
+      "old_native_accuracy": 0.8950334624867912,
+      "stage": "head",
+      "epoch": 21,
+      "selection_score": 0.83179848556874
+    }
+  ],
+  "head_baseline": {
+    "accuracy": 0.9095202115602569,
+    "macro_f1": 0.8255994291582024,
+    "source_macro_f1": 0.8657971951908431,
+    "per_source": {
+      "agml": 0.8745417902655722,
+      "beans": 1.0,
+      "bracol_expert": 0.7027825578875693,
+      "bracol_leaf": 0.7933137658979271,
+      "bracol_symptom": 0.8186568461318624,
+      "coffeeleaf_own_field": 0.965787596295075,
+      "coffeeleaf_rust_and_leaf_miner": 0.9583070402389516,
+      "peru": 0.9907509719664417,
+      "rocole": 0.6880341880341879
+    },
+    "weak_macro_f1": 0.6911274387914902,
+    "old_class_f1": {
+      "cercospora": 0.7652733118971061,
+      "healthy": 0.8777292576419214,
+      "miner": 0.9198682766190999,
+      "phoma": 0.7888707037643208,
+      "rust": 0.9279022403258655,
+      "red_spider_mite": 0.43037974683544306,
+      "weevil_damage": 0.9673202614379085,
+      "unsupported": 0.9851851851851852
+    },
+    "old_native_accuracy": 0.8939767523775978,
+    "far_macro_f1": 0.6966310418425338,
+    "context_macro_f1": 0.6488141842547973,
+    "selection_score": 0.7716507469991412
+  },
+  "backbone_history": [
+    {
+      "accuracy": 0.9081979599546657,
+      "macro_f1": 0.8332354000585422,
+      "source_macro_f1": 0.8721457958955453,
+      "per_source": {
+        "agml": 0.8628935484827067,
+        "beans": 1.0,
+        "bracol_expert": 0.7127797991163859,
+        "bracol_leaf": 0.8421481481481481,
+        "bracol_symptom": 0.8397188397127098,
+        "coffeeleaf_own_field": 0.9554027514533532,
+        "coffeeleaf_rust_and_leaf_miner": 0.9645840427343151,
+        "peru": 0.9610348072035478,
+        "rocole": 0.7107502262087415
+      },
+      "weak_macro_f1": 0.7091670852535809,
+      "old_class_f1": {
+        "cercospora": 0.7421383647798742,
+        "healthy": 0.898876404494382,
+        "miner": 0.9173693086003373,
+        "phoma": 0.8097412480974124,
+        "rust": 0.9296939619520265,
+        "red_spider_mite": 0.4864864864864865,
+        "weevil_damage": 0.9543039319872476,
+        "unsupported": 0.9888475836431226
+      },
+      "old_native_accuracy": 0.8890454385346953,
+      "far_macro_f1": 0.8057846117855041,
+      "context_macro_f1": 0.7738954412863163,
+      "selection_score": 0.8325873697406871,
+      "stage": "partial_backbone",
+      "epoch": 1,
+      "training_loss": 0.7711814717010216,
+      "training_examples": 6469,
+      "seconds": 239.3794266001787,
+      "eligible": false
+    },
+    {
+      "accuracy": 0.9159425765017001,
+      "macro_f1": 0.845287935256001,
+      "source_macro_f1": 0.8834405861429065,
+      "per_source": {
+        "agml": 0.8850266373704787,
+        "beans": 1.0,
+        "bracol_expert": 0.7269363444535188,
+        "bracol_leaf": 0.8557654600301661,
+        "bracol_symptom": 0.874278578564293,
+        "coffeeleaf_own_field": 0.962684110495094,
+        "coffeeleaf_rust_and_leaf_miner": 0.962870462870463,
+        "peru": 0.9763206199670288,
+        "rocole": 0.7070830615351164
+      },
+      "weak_macro_f1": 0.735197744029055,
+      "old_class_f1": {
+        "cercospora": 0.804953560371517,
+        "healthy": 0.9074889867841409,
+        "miner": 0.9262697979246314,
+        "phoma": 0.797427652733119,
+        "rust": 0.9359768690623709,
+        "red_spider_mite": 0.4931506849315068,
+        "weevil_damage": 0.968682505399568,
+        "unsupported": 1.0
+      },
+      "old_native_accuracy": 0.9034871433603382,
+      "far_macro_f1": 0.8431802780305657,
+      "context_macro_f1": 0.7960897790724403,
+      "selection_score": 0.853892332295111,
+      "stage": "partial_backbone",
+      "epoch": 2,
+      "training_loss": 0.6834013199364698,
+      "training_examples": 6469,
+      "seconds": 240.09780779993162,
+      "eligible": true
+    },
+    {
+      "accuracy": 0.9278428409520212,
+      "macro_f1": 0.8639056042589051,
+      "source_macro_f1": 0.8969376810883488,
+      "per_source": {
+        "agml": 0.9038703817417495,
+        "beans": 1.0,
+        "bracol_expert": 0.7457012033745664,
+        "bracol_leaf": 0.8557450912115778,
+        "bracol_symptom": 0.8874159071190366,
+        "coffeeleaf_own_field": 0.9690786050181172,
+        "coffeeleaf_rust_and_leaf_miner": 0.9663535205165326,
+        "peru": 0.9907509719664417,
+        "rocole": 0.7535234488471163
+      },
+      "weak_macro_f1": 0.7648750445360615,
+      "old_class_f1": {
+        "cercospora": 0.8333333333333334,
+        "healthy": 0.918918918918919,
+        "miner": 0.9329700272479564,
+        "phoma": 0.8362480127186009,
+        "rust": 0.9480940794809408,
+        "red_spider_mite": 0.5423728813559322,
+        "weevil_damage": 0.9677771709448388,
+        "unsupported": 1.0
+      },
+      "old_native_accuracy": 0.9235646354350123,
+      "far_macro_f1": 0.8568418834788152,
+      "context_macro_f1": 0.8371968253231817,
+      "selection_score": 0.8729607706524554,
+      "stage": "partial_backbone",
+      "epoch": 3,
+      "training_loss": 0.6276570138004091,
+      "training_examples": 6469,
+      "seconds": 240.71601229999214,
+      "eligible": true
+    },
+    {
+      "accuracy": 0.9302984510766906,
+      "macro_f1": 0.8622695294048502,
+      "source_macro_f1": 0.8981134504435987,
+      "per_source": {
+        "agml": 0.9200343074671892,
+        "beans": 1.0,
+        "bracol_expert": 0.7543613210349907,
+        "bracol_leaf": 0.8672900397550801,
+        "bracol_symptom": 0.9013332569301168,
+        "coffeeleaf_own_field": 0.9743669416764884,
+        "coffeeleaf_rust_and_leaf_miner": 0.9613256024986283,
+        "peru": 0.9806075217751254,
+        "rocole": 0.7237020628547696
+      },
+      "weak_macro_f1": 0.758473220022195,
+      "old_class_f1": {
+        "cercospora": 0.8369230769230769,
+        "healthy": 0.9384965831435079,
+        "miner": 0.9348066298342541,
+        "phoma": 0.8436018957345972,
+        "rust": 0.9471974004874086,
+        "red_spider_mite": 0.5,
+        "weevil_damage": 0.9744426318651441,
+        "unsupported": 1.0
+      },
+      "old_native_accuracy": 0.9232123987319478,
+      "far_macro_f1": 0.8412522201191782,
+      "context_macro_f1": 0.83994817814572,
+      "selection_score": 0.8694220268866969,
+      "stage": "partial_backbone",
+      "epoch": 4,
+      "training_loss": 0.5921191169155968,
+      "training_examples": 6469,
+      "seconds": 238.39523659995757,
+      "eligible": true
+    },
+    {
+      "accuracy": 0.9265205893464299,
+      "macro_f1": 0.8559458644391108,
+      "source_macro_f1": 0.8973891692471686,
+      "per_source": {
+        "agml": 0.9070780612680462,
+        "beans": 1.0,
+        "bracol_expert": 0.7357680827622878,
+        "bracol_leaf": 0.874684743827601,
+        "bracol_symptom": 0.9172927528168999,
+        "coffeeleaf_own_field": 0.967224857061723,
+        "coffeeleaf_rust_and_leaf_miner": 0.963531954568571,
+        "peru": 0.9907509719664417,
+        "rocole": 0.7201710989529461
+      },
+      "weak_macro_f1": 0.7509967876039304,
+      "old_class_f1": {
+        "cercospora": 0.85,
+        "healthy": 0.9342403628117913,
+        "miner": 0.935149863760218,
+        "phoma": 0.839622641509434,
+        "rust": 0.9459459459459459,
+        "red_spider_mite": 0.46875,
+        "weevil_damage": 0.9689711486118672,
+        "unsupported": 0.9962546816479401
+      },
+      "old_native_accuracy": 0.9235646354350123,
+      "far_macro_f1": 0.8675885765130058,
+      "context_macro_f1": 0.8357700853934377,
+      "selection_score": 0.8761251746561736,
+      "stage": "partial_backbone",
+      "epoch": 5,
+      "training_loss": 0.5816069171384529,
+      "training_examples": 6469,
+      "seconds": 237.97026240010746,
+      "eligible": true
+    },
+    {
+      "accuracy": 0.9267094824329429,
+      "macro_f1": 0.8615664456105612,
+      "source_macro_f1": 0.9017653922436808,
+      "per_source": {
+        "agml": 0.8887864280170918,
+        "beans": 1.0,
+        "bracol_expert": 0.7231324639753671,
+        "bracol_leaf": 0.8659949680092123,
+        "bracol_symptom": 0.9302071804384393,
+        "coffeeleaf_own_field": 0.9684062518858246,
+        "coffeeleaf_rust_and_leaf_miner": 0.9685388753030435,
+        "peru": 0.998158379373849,
+        "rocole": 0.7726639831902989
+      },
+      "weak_macro_f1": 0.7746784636545936,
+      "old_class_f1": {
+        "cercospora": 0.8256880733944955,
+        "healthy": 0.9427917620137299,
+        "miner": 0.9387096774193548,
+        "phoma": 0.831918505942275,
+        "rust": 0.9493722154718509,
+        "red_spider_mite": 0.5555555555555556,
+        "weevil_damage": 0.9672846237731734,
+        "unsupported": 0.9779411764705882
+      },
+      "old_native_accuracy": 0.9267347657625925,
+      "far_macro_f1": 0.8730342200198373,
+      "context_macro_f1": 0.8476201301214613,
+      "selection_score": 0.8823169881520838,
+      "stage": "partial_backbone",
+      "epoch": 6,
+      "training_loss": 0.5678141356618316,
+      "training_examples": 6469,
+      "seconds": 237.83124050009064,
+      "eligible": true
+    }
+  ],
+  "selected_epoch": 6,
+  "selected_score": 0.8823169881520838,
+  "checkpoint_sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+  "temperature": {
+    "temperature": 0.7291812046428157,
+    "validation_n": 5294,
+    "source": "scale_v3 validation only",
+    "test_used": false
+  },
+  "stopping": {
+    "head_completed_epochs": 21,
+    "head_selected_epoch": 16,
+    "backbone_completed_epochs": 6,
+    "backbone_reason": "predeclared_maximum_epochs_reached",
+    "checkpoint_selection": "Validation composite and weak-class preservation only; test and external images never used for model selection"
+  },
+  "completion_verification": {
+    "checked": 25605,
+    "split_counts": {
+      "train": 20311,
+      "val": 5294
+    },
+    "source_counts": {
+      "train": {
+        "agml": 1278,
+        "bracol_leaf": 964,
+        "bracol_symptom": 1462,
+        "rocole": 1072,
+        "beans": 1034,
+        "coffeeleaf_own_field": 5448,
+        "coffeeleaf_rust_and_leaf_miner": 2861,
+        "peru": 1105,
+        "bracol_expert": 5087
+      },
+      "val": {
+        "agml": 1021,
+        "bracol_leaf": 207,
+        "bracol_symptom": 324,
+        "rocole": 228,
+        "beans": 133,
+        "coffeeleaf_own_field": 1380,
+        "coffeeleaf_rust_and_leaf_miner": 628,
+        "peru": 168,
+        "bracol_expert": 1205
+      }
+    },
+    "mismatches": [],
+    "selected_checkpoint_validation_cache_check": {
+      "n": 96,
+      "max_absolute_logit_difference": 0.0,
+      "top1_differences": 0
+    },
+    "checkpoint_sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+    "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+    "selected_validation": {
+      "accuracy": 0.9267094824329429,
+      "macro_f1": 0.8615664456105612,
+      "source_macro_f1": 0.9017653922436808,
+      "per_source": {
+        "agml": 0.8887864280170918,
+        "beans": 1.0,
+        "bracol_expert": 0.7231324639753671,
+        "bracol_leaf": 0.8659949680092123,
+        "bracol_symptom": 0.9302071804384393,
+        "coffeeleaf_own_field": 0.9684062518858246,
+        "coffeeleaf_rust_and_leaf_miner": 0.9685388753030435,
+        "peru": 0.998158379373849,
+        "rocole": 0.7726639831902989
+      },
+      "weak_macro_f1": 0.7746784636545936,
+      "old_class_f1": {
+        "cercospora": 0.8256880733944955,
+        "healthy": 0.9427917620137299,
+        "miner": 0.9387096774193548,
+        "phoma": 0.831918505942275,
+        "rust": 0.9493722154718509,
+        "red_spider_mite": 0.5555555555555556,
+        "weevil_damage": 0.9672846237731734,
+        "unsupported": 0.9779411764705882
+      },
+      "old_native_accuracy": 0.9267347657625925,
+      "far_macro_f1": 0.8730342200198373,
+      "context_macro_f1": 0.8476201301214613,
+      "selection_score": 0.8823169881520838,
+      "stage": "partial_backbone",
+      "epoch": 6,
+      "training_loss": 0.5678141356618316,
+      "training_examples": 6469,
+      "seconds": 237.83124050009064,
+      "eligible": true
+    },
+    "additional_validation_only_guard_audit": {
+      "old_macro_f1_loss_at_most_1pp": true,
+      "old_native_accuracy_loss_at_most_1pp": true,
+      "each_weak_class_loss_at_most_1pp": true,
+      "source_f1_gain_at_least_1pp": true,
+      "far_f1_gain_at_least_1_5pp": true
+    },
+    "guard_audit_note": "Additional broader B0-style guards audited after selection; no test data, checkpoint reselection, or further training used for this audit."
+  }
+}

@@ -17,6 +17,7 @@
     "expo-sms": "~57.0.2",
     "expo-speech": "~57.0.3",
     "expo-status-bar": "~57.0.1",
+    "fast-png": "^8.0.0",
     "jpeg-js": "^0.4.4",
     "nativewind": "^4.2.7",
     "phosphor-react-native": "^3.0.6",

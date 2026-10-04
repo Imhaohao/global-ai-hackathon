@@ -1,0 +1,22 @@
+{
+  "mobile\\assets\\model\\coffee-leaf.tflite": {
+    "sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "bytes": 8091596
+  },
+  "mobile\\assets\\model\\coffee-leaf-b1.tflite": {
+    "sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+    "bytes": 7324120
+  },
+  "mobile\\assets\\model\\model-config.json": {
+    "sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368",
+    "bytes": 2567
+  },
+  "mobile\\assets\\model\\model-config-b1.json": {
+    "sha256": "06f6dfa8539db4a9fd82dcfaa371c37c8ba5efdeb61b9a11e79d81e1ffb0b4f7",
+    "bytes": 2952
+  },
+  "mobile\\assets\\model\\brightness-config.json": {
+    "sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+    "bytes": 1893
+  }
+}

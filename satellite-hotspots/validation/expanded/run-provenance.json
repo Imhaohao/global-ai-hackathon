@@ -1,0 +1,21 @@
+{
+  "training_command": "python -m training.train_expanded --data work/data/agriculture-expanded --initial outputs/satellite-hotspots/models/agriculture-pilot --output outputs/satellite-hotspots/models/agriculture-expanded --epochs 12 --batch-size 8",
+  "seed": 20261003,
+  "source_sha256": {
+    "training/train_expanded.py": "5be16743b4178652f63e413670417848a84163f9a8ff68bb5c0128a90b46b1c1",
+    "training/prepare_expanded.py": "86d76783342ecf3bdcfc47bfbdfcd89a4836acbad0d157b94317e4eb6fb660d0",
+    "training/report_expanded.py": "db95702f05c36509be5206f5d792cfa4d28ce44fdb31177b75465194d91d6c04"
+  },
+  "field_counts": {
+    "train": 1950,
+    "val": 192,
+    "test": 256
+  },
+  "field_overlap": 0,
+  "prior_pilot_validation_fields_in_locked_test": 0,
+  "network_during_training": false,
+  "data_source": "https://huggingface.co/datasets/shi-labs/Agriculture-Vision",
+  "data_archive_bytes": 21033702578,
+  "data_archive_previously_verified_sha256": "b952dbac47333f387a0348846eff8f322df99099c88ced50bd070eb455d089a6",
+  "production_ready": false
+}

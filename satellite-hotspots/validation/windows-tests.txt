@@ -1,0 +1,65 @@
+{"device": "cpu", "train_tiles": 2, "baseline_validation_mean_iou": 0.0625, "locked_test_opened": false}
+{"epoch": 1, "validation_mean_iou": 0.0625, "best_mean_iou": 0.0625, "selected_epoch": 0, "epoch_seconds": 0.0400087833404541}
+TRAINING COMPLETE {"base_model": "synthetic-test-model", "base_revision": "synthetic", "license": "test fixture", "model_version": "d1f12b1d0da1563a", "checkpoint_sha256": "d1f12b1d0da1563a90e0535d63597aae3cb78610d79bf8939930dad20613901d", "initial_checkpoint_sha256": "d1f12b1d0da1563a90e0535d63597aae3cb78610d79bf8939930dad20613901d", "metadata_source": "C:\\Users\\leeco\\AppData\\Local\\Temp\\tmp4roce7t5\\initial\\training-summary.json", "metadata_source_sha256": "ba89f40ed4b27873a9fcc5cea7ac874e53a4bf002dbd548d46b92ed0ecd2ab16", "warm_start_from_partial_checkpoint": false, "optimizer_state_restored": false, "scheduler_state_restored": false, "initial_checkpoint": "d1f12b1d0da1563a", "classes": ["drydown", "nutrient_deficiency", "water", "weed_cluster", "double_plant", "endrow", "planter_skip", "waterway"], "channels": ["red", "green", "blue", "nir"], "normalization": {"mean": [0.485, 0.456, 0.406, 0.5], "std": [0.229, 0.224, 0.225, 0.25]}, "input_size": 256, "seed": 17, "train_tiles": 2, "validation_tiles": 1, "test_tiles": 1, "field_counts": {"train": 2, "val": 1, "test": 1}, "optimizer_steps": 1, "epochs_completed": 1, "selected_epoch": 0, "elapsed_seconds": 0.17902827262878418, "learning_rate_encoder": 1e-05, "learning_rate_decoder": 5e-05, "loss": "Masked positive-weighted BCE (sqrt imbalance, cap 8) + 0.5 Dice on batch-positive classes", "checkpoint_selection": "Maximum validation mean foreground IoU at 0.5; starting weights retained unless improved", "training_domain": "Agriculture-Vision US aerial RGB+NIR; JPEG digital numbers /255", "locked_test_mean_iou_fixed_0_5": 0.0625, "locked_test_mean_iou_validation_selected": 0.0625, "coffee_validated": false, "satellite_validated": false, "disease_or_pest_labels": false, "production_ready": false, "status": "Windows warm-start research checkpoint"}
+test_complete_run_writes_frozen_test_and_model_metadata (test_continuation.ContinuationTests.test_complete_run_writes_frozen_test_and_model_metadata) ... ok
+test_field_overlap_and_duplicate_samples_are_rejected (test_continuation.ContinuationTests.test_field_overlap_and_duplicate_samples_are_rejected) ... ok
+test_masked_pixels_do_not_change_training_loss (test_continuation.ContinuationTests.test_masked_pixels_do_not_change_training_loss) ... ok
+test_partial_checkpoint_needs_metadata (test_continuation.ContinuationTests.test_partial_checkpoint_needs_metadata) ... ok
+test_partial_checkpoint_records_actual_initial_hash (test_continuation.ContinuationTests.test_partial_checkpoint_records_actual_initial_hash) ... ok
+test_rejects_existing_checkpoint_without_modifying_it (test_continuation.ContinuationTests.test_rejects_existing_checkpoint_without_modifying_it) ... ok
+test_rejects_existing_run_and_nested_output (test_continuation.ContinuationTests.test_rejects_existing_run_and_nested_output) ... ok
+test_all_evaluation_fields_are_separate_and_pilot_validation_is_excluded (test_expanded_training.ExpandedTrainingTests.test_all_evaluation_fields_are_separate_and_pilot_validation_is_excluded) ... ok
+test_cache_loader_preserves_overlapping_labels_and_validity (test_expanded_training.ExpandedTrainingTests.test_cache_loader_preserves_overlapping_labels_and_validity) ... ok
+test_metrics_use_foreground_and_ignore_unsupported_classes (test_expanded_training.ExpandedTrainingTests.test_metrics_use_foreground_and_ignore_unsupported_classes) ... ok
+test_round_robin_limits_dominance_by_large_fields (test_expanded_training.ExpandedTrainingTests.test_round_robin_limits_dominance_by_large_fields) ... ok
+test_threshold_selection_uses_only_the_supplied_validation_histogram (test_expanded_training.ExpandedTrainingTests.test_threshold_selection_uses_only_the_supplied_validation_histogram) ... ok
+test_model_rejects_nonfinite_pixels (test_model_optional.ModelContractTests.test_model_rejects_nonfinite_pixels) ... ok
+test_model_rejects_three_channel_image (test_model_optional.ModelContractTests.test_model_rejects_three_channel_image) ... ok
+test_model_rejects_unscaled_digital_numbers (test_model_optional.ModelContractTests.test_model_rejects_unscaled_digital_numbers) ... ok
+test_overlap_labels_and_quality_masks_survive_data_loader (test_model_optional.ModelContractTests.test_overlap_labels_and_quality_masks_survive_data_loader) ... ok
+test_saved_checkpoint_runs_offline_on_cpu (test_model_optional.ModelContractTests.test_saved_checkpoint_runs_offline_on_cpu) ... ok
+test_cloudy_acquisition_does_not_erase_track (test_monitor.MonitoringTests.test_cloudy_acquisition_does_not_erase_track) ... ok
+test_dry_run_and_repeat_do_not_duplicate_alert (test_monitor.MonitoringTests.test_dry_run_and_repeat_do_not_duplicate_alert) ... ok
+test_fake_provider_accepts_once (test_monitor.MonitoringTests.test_fake_provider_accepts_once) ... ok
+test_first_image_cannot_claim_spread (test_monitor.MonitoringTests.test_first_image_cannot_claim_spread) ... ok
+test_full_replay_writes_reviewable_report (test_monitor.MonitoringTests.test_full_replay_writes_reviewable_report) ... ok
+test_future_date_rejected (test_monitor.MonitoringTests.test_future_date_rejected) ... ok
+test_geographic_area_from_native_grid (test_monitor.MonitoringTests.test_geographic_area_from_native_grid) ... ok
+test_grid_mismatch_is_rejected (test_monitor.MonitoringTests.test_grid_mismatch_is_rejected) ... ok
+test_historical_replay_cannot_send_live (test_monitor.MonitoringTests.test_historical_replay_cannot_send_live) ... ok
+test_low_coverage_latest_suppresses_sms (test_monitor.MonitoringTests.test_low_coverage_latest_suppresses_sms) ... ok
+test_masked_previous_extent_suppresses_growth_claim (test_monitor.MonitoringTests.test_masked_previous_extent_suppresses_growth_claim) ... ok
+test_nonfinite_score_rejected (test_monitor.MonitoringTests.test_nonfinite_score_rejected) ... ok
+test_progression_uses_comparable_extent_and_stable_identity (test_monitor.MonitoringTests.test_progression_uses_comparable_extent_and_stable_identity) ... ok
+test_provider_timeout_is_not_retried (test_monitor.MonitoringTests.test_provider_timeout_is_not_retried) ... ok
+test_stale_images_never_queue_sms (test_monitor.MonitoringTests.test_stale_images_never_queue_sms) ... ok
+test_unvalidated_live_sms_rejected (test_monitor.MonitoringTests.test_unvalidated_live_sms_rejected) ... ok
+test_all_clouded_date_is_insufficient (test_pipeline.PipelineTests.test_all_clouded_date_is_insufficient) ... ok
+test_archive_adapter_is_explicit_placeholder (test_pipeline.PipelineTests.test_archive_adapter_is_explicit_placeholder) ... ok
+test_baseline_only_is_insufficient (test_pipeline.PipelineTests.test_baseline_only_is_insufficient) ... ok
+test_cli_invalid_input_has_nonzero_exit (test_pipeline.PipelineTests.test_cli_invalid_input_has_nonzero_exit) ... ok
+test_clouded_decline_does_not_form_zone (test_pipeline.PipelineTests.test_clouded_decline_does_not_form_zone) ... ok
+test_config_and_empty_mask_fail (test_pipeline.PipelineTests.test_config_and_empty_mask_fail) ... ok
+test_coverage_uses_coffee_mask (test_pipeline.PipelineTests.test_coverage_uses_coffee_mask) ... ok
+test_decline_zones_rank_by_mean_drop (test_pipeline.PipelineTests.test_decline_zones_rank_by_mean_drop) ... ok
+test_four_neighbour_grouping_does_not_bridge_unknown (test_pipeline.PipelineTests.test_four_neighbour_grouping_does_not_bridge_unknown) ... ok
+test_full_cli_demo_and_local_round_trip (test_pipeline.PipelineTests.test_full_cli_demo_and_local_round_trip) ... ok
+test_grid_mismatch_fails_actionably (test_pipeline.PipelineTests.test_grid_mismatch_fails_actionably) ... ok
+test_html_escapes_labels_and_remains_self_contained (test_pipeline.PipelineTests.test_html_escapes_labels_and_remains_self_contained) ... ok
+test_invalid_arrays_and_dates_fail (test_pipeline.PipelineTests.test_invalid_arrays_and_dates_fail) ... ok
+test_json_import_rejects_nonstandard_numbers (test_pipeline.PipelineTests.test_json_import_rejects_nonstandard_numbers) ... ok
+test_mask_and_denominator_rules (test_pipeline.PipelineTests.test_mask_and_denominator_rules) ... ok
+test_missing_baseline_never_becomes_normal (test_pipeline.PipelineTests.test_missing_baseline_never_becomes_normal) ... ok
+test_missing_grid_metadata_is_rejected (test_pipeline.PipelineTests.test_missing_grid_metadata_is_rejected) ... ok
+test_no_data_and_zero_denominator_stay_unknown (test_pipeline.PipelineTests.test_no_data_and_zero_denominator_stay_unknown) ... ok
+test_no_future_dates_used_for_counts (test_pipeline.PipelineTests.test_no_future_dates_used_for_counts) ... ok
+test_pansharpened_resolution_rejected (test_pipeline.PipelineTests.test_pansharpened_resolution_rejected) ... ok
+test_real_data_requires_preparation_notes (test_pipeline.PipelineTests.test_real_data_requires_preparation_notes) ... ok
+test_small_change_is_not_labelled_stable (test_pipeline.PipelineTests.test_small_change_is_not_labelled_stable) ... ok
+test_stable_cells_have_no_threshold_drop (test_pipeline.PipelineTests.test_stable_cells_have_no_threshold_drop) ... ok
+test_svg_has_synthetic_caption_and_valid_zone_geometry (test_pipeline.PipelineTests.test_svg_has_synthetic_caption_and_valid_zone_geometry) ... ok
+
+----------------------------------------------------------------------
+Ran 57 tests in 5.003s
+
+OK

@@ -1,0 +1,15 @@
+{
+  "repository": "timm/efficientnet_b3.ra2_in1k",
+  "revision": "0366a75518620e0f2077789202073759f2d61393",
+  "license": "apache-2.0",
+  "pretraining": "ImageNet-1k; no coffee disease head reused",
+  "source": "https://huggingface.co/timm/efficientnet_b3.ra2_in1k/tree/0366a75518620e0f2077789202073759f2d61393",
+  "native_pretraining_resolution": 288,
+  "published_test_resolution": 320,
+  "fine_tuning_and_app_resolution": 224,
+  "resolution_note": "Same 224-pixel app contract as B0/B1/B2; not the published 320-pixel B3 test setting.",
+  "sha256": {
+    "config.json": "d3413ca359c4c5283bbabbba46ef66a265a14031b0b86132de9aa59f84b8d363",
+    "model.safetensors": "279d2a53898aa89dab43fd6bd7df9f706aea4cb9cf916223988bbcb8e5850469"
+  }
+}

@@ -1,0 +1,2 @@
+SYNTHETIC DEMO: /Users/connor/Documents/Codex/2026-10-03/satellite-field-hotspots/outputs/satellite-hotspots/demo-output/report.html
+Latest date 2026-07-13: 2 inspection zones; 269/288 cells comparable. No disease diagnosis or calibrated confidence.

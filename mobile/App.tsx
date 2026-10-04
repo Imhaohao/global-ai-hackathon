@@ -3,10 +3,11 @@ import './global.css';
 import { getLocales } from 'expo-localization';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { useTensorflowModel } from 'react-native-fast-tflite';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { seedCheckContact, seedCheckCopy } from '../shared/src/seedCheck.ts';
+import { DEFAULT_MODEL_ID, type ModelId } from './src/diagnosis/modelConfig';
+import { useLeafModel } from './src/diagnosis/useLeafModel';
 import { STRINGS, type Language } from './src/i18n/strings';
 import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
@@ -23,8 +24,6 @@ import { listObservations } from './src/storage/observations';
 import { useAppSettings } from './src/storage/useAppSettings';
 import { useWetDays } from './src/storage/useWetDays';
 
-const COFFEE_LEAF_MODEL = require('./assets/model/coffee-leaf.tflite');
-
 function deviceLanguage(): Language {
   return getLocales()[0]?.languageCode === 'sw' ? 'sw' : 'en';
 }
@@ -35,9 +34,10 @@ export default function App() {
   const [isInSettings, setIsInSettings] = useState(false);
   const [isInSeedCheck, setIsInSeedCheck] = useState(false);
   const [devScenario, setDevScenario] = useState<DevScenario>('off');
-  const leafModel = useTensorflowModel(COFFEE_LEAF_MODEL, []);
+  const [modelId, setModelId] = useState<ModelId>(DEFAULT_MODEL_ID);
+  const { load: leafModel, config, retry } = useLeafModel(modelId);
   const { wetDays, forgetWetDays } = useWetDays(locationAllowed(settings));
-  const capture = useCaptureFlow(leafModel.state === 'loaded' ? leafModel.model : undefined, devScenario);
+  const capture = useCaptureFlow(leafModel.state === 'loaded' ? leafModel.model : undefined, devScenario, config);
   const resultFlow = useResultFlow({ settings, updateSettings, language, wetDays });
   const strings = STRINGS[language];
   const seedContact = seedCheckContact();
@@ -75,6 +75,13 @@ export default function App() {
   const checkAnotherTree = () => {
     resultFlow.clearResult();
     capture.startOver();
+  };
+
+  const selectModel = (selected: ModelId) => {
+    if (capture.isBusy() || selected === modelId) return;
+    capture.startOver();
+    resultFlow.clearResult();
+    setModelId(selected);
   };
 
   const modelProblem: CaptureProblem | undefined = leafModel.state === 'error' ? 'modelFailed' : undefined;
@@ -115,6 +122,7 @@ export default function App() {
           strings={strings}
           language={language}
           card={resultFlow.result.card}
+          modelId={modelId}
           observation={resultFlow.result.observation}
           photoUris={resultFlow.result.photoUris}
           farmSections={settings.farmSections}
@@ -135,6 +143,10 @@ export default function App() {
         isChecking={capture.isChecking}
         problem={modelProblem ?? capture.problem}
         canCheck={leafModel.state === 'loaded'}
+        modelId={modelId}
+        modelLoading={leafModel.state === 'loading'}
+        onSelectModel={selectModel}
+        onRetryModel={retry}
         onTakeLeaf={capture.takeLeaf}
         onFinish={finishAndShowAdvice}
         onOpenSettings={() => setIsInSettings(true)}

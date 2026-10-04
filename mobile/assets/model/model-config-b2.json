@@ -1,0 +1,106 @@
+{
+  "labels": [
+    "cercospora",
+    "healthy",
+    "miner",
+    "phoma",
+    "rust",
+    "red_spider_mite",
+    "weevil_damage",
+    "unsupported"
+  ],
+  "app_condition_keys": [
+    "cercospora",
+    "healthy",
+    "miner",
+    "phoma",
+    "rust",
+    "mites",
+    "weevil"
+  ],
+  "calibration": {
+    "quality": {
+      "minimum_edge_variance": 1.520114853217684,
+      "minimum_mean_luminance": 45.59410861968994,
+      "selection": "validation-only severe Gaussianblur challenge balancedaccuracy subject to >=90% clear acceptance"
+    },
+    "validation_n": 5294,
+    "class_thresholds": [
+      0.605,
+      0.4,
+      0.4,
+      0.865,
+      0.4,
+      1.01,
+      0.4
+    ],
+    "confident_thresholds": [
+      0.895,
+      0.7050000000000001,
+      0.605,
+      0.9600000000000001,
+      0.4,
+      1.01,
+      0.4
+    ],
+    "class_threshold_evidence": [
+      {
+        "label": "cercospora",
+        "enabled": true,
+        "accept_threshold": 0.605,
+        "val_true_support": 216
+      },
+      {
+        "label": "healthy",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 265
+      },
+      {
+        "label": "miner",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 964
+      },
+      {
+        "label": "phoma",
+        "enabled": true,
+        "accept_threshold": 0.865,
+        "val_true_support": 575
+      },
+      {
+        "label": "rust",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 2101
+      },
+      {
+        "label": "red_spider_mite",
+        "enabled": false,
+        "accept_threshold": 1.01,
+        "val_true_support": 25
+      },
+      {
+        "label": "weevil_damage",
+        "enabled": true,
+        "accept_threshold": 0.4,
+        "val_true_support": 924
+      }
+    ],
+    "runtime": "LiteRT CPU int8 per-channel weight storage / float32 computation",
+    "artifact_sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+    "brightness_config_sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+    "version": "b2-deployed-v1",
+    "temperature": 0.7418458392824085,
+    "selection": "Validation-only compressed runtime, current shared brightness policy; >=15 accepted and >=90%/95% precision per class"
+  },
+  "input": "float32 raw RGB 0..255 NHWC",
+  "crop_pct": 0.875,
+  "architecture": "efficientnet_b2",
+  "input_size": 224,
+  "model_repository": "timm/efficientnet_b2.ra_in1k",
+  "model_revision": "3577c4a7d84723645311bb5a9e5086f1b62ec8e2",
+  "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+  "checkpoint_sha256": "eb6a5d4daac75046befce1250bc9278d4c1d2ccfa8ccf0fe2f4302cb918e8dd8",
+  "calibration_sha256": "8224070d8194b0df0cdfb9ea517307fab4878b7a7e13e1691605fe4be4f98f8d"
+}

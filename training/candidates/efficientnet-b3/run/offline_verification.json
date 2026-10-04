@@ -1,0 +1,31 @@
+{
+  "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+  "fresh_process": true,
+  "python_outbound_sockets_blocked": true,
+  "attempted_connections": 0,
+  "os_firewall_test": false,
+  "phone_device_tested": false,
+  "runtime_operations": [
+    "ADD",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "DEQUANTIZE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "MEAN",
+    "MUL",
+    "PAD",
+    "RESHAPE",
+    "SOFTMAX",
+    "SUB",
+    "TRANSPOSE"
+  ],
+  "custom_ops_present": false,
+  "samples": 3,
+  "predicted_indices": [
+    0,
+    4,
+    0
+  ],
+  "installed_in_app": false
+}

@@ -1,0 +1,1082 @@
+[
+  {
+    "epoch": 1,
+    "training_loss": 0.6973451176309027,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.4765971516969368,
+          "precision": 0.6013660637655361,
+          "recall": 0.6967051431070397,
+          "f1": 0.6455344318512618,
+          "true_positive_pixels": 302694,
+          "false_positive_pixels": 200650,
+          "false_negative_pixels": 131771,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 503344,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.24849472309069826,
+          "precision": 0.2614632253823752,
+          "recall": 0.833610724295706,
+          "f1": 0.3980709225194636,
+          "true_positive_pixels": 423230,
+          "false_positive_pixels": 1195468,
+          "false_negative_pixels": 84477,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1618698,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.5169775730165819,
+          "precision": 0.6172367296943996,
+          "recall": 0.7609215354864252,
+          "f1": 0.6815889466164584,
+          "true_positive_pixels": 299832,
+          "false_positive_pixels": 185933,
+          "false_negative_pixels": 94206,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 485765,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.23079581091202506,
+          "precision": 0.2715616895960617,
+          "recall": 0.6059028033167105,
+          "f1": 0.3750350933368945,
+          "true_positive_pixels": 123566,
+          "false_positive_pixels": 331454,
+          "false_negative_pixels": 80371,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 455020,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.0418811699372479,
+          "precision": 0.37032474804031357,
+          "recall": 0.045092277589533464,
+          "f1": 0.08039529102876557,
+          "true_positive_pixels": 6614,
+          "false_positive_pixels": 11246,
+          "false_negative_pixels": 140063,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 17860,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.08210389515302387,
+          "precision": 0.2578169904586734,
+          "recall": 0.10751567013027481,
+          "f1": 0.1517486361906373,
+          "true_positive_pixels": 8971,
+          "false_positive_pixels": 25825,
+          "false_negative_pixels": 74468,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 34796,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.27218647958358927,
+          "precision": 0.29896309272981225,
+          "recall": 0.752413012392755,
+          "f1": 0.42790343074968235,
+          "true_positive_pixels": 25257,
+          "false_positive_pixels": 59225,
+          "false_negative_pixels": 8311,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 84482,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.26032595321071056,
+          "precision": 0.2964915215160461,
+          "recall": 0.6809389827340968,
+          "f1": 0.4131089303485721,
+          "true_positive_pixels": 65586,
+          "false_positive_pixels": 155621,
+          "false_negative_pixels": 30731,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 221207,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.2661703445751017,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.09632116090506315,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 101.64118599891663,
+    "optimizer_steps": 512
+  },
+  {
+    "epoch": 2,
+    "training_loss": 0.5575970745994709,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.4829432705143778,
+          "precision": 0.5819988876348109,
+          "recall": 0.7394151427617874,
+          "f1": 0.6513307422027854,
+          "true_positive_pixels": 321250,
+          "false_positive_pixels": 230727,
+          "false_negative_pixels": 113215,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 551977,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.25932055735674137,
+          "precision": 0.29902644417015317,
+          "recall": 0.6613558607622113,
+          "f1": 0.4118420140794713,
+          "true_positive_pixels": 335775,
+          "false_positive_pixels": 787119,
+          "false_negative_pixels": 171932,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1122894,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.5456711957129335,
+          "precision": 0.6724538977127387,
+          "recall": 0.74321004573163,
+          "f1": 0.7060637439921306,
+          "true_positive_pixels": 292853,
+          "false_positive_pixels": 142646,
+          "false_negative_pixels": 101185,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 435499,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.2961120887836055,
+          "precision": 0.3857863049592944,
+          "recall": 0.5602269328272947,
+          "f1": 0.4569235814496649,
+          "true_positive_pixels": 114251,
+          "false_positive_pixels": 181900,
+          "false_negative_pixels": 89686,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 296151,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.10508380751769429,
+          "precision": 0.18185550592831282,
+          "recall": 0.19930868506991553,
+          "f1": 0.19018251249873955,
+          "true_positive_pixels": 29234,
+          "false_positive_pixels": 131520,
+          "false_negative_pixels": 117443,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 160754,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.12625318882732398,
+          "precision": 0.14764789492486488,
+          "recall": 0.4656096070183008,
+          "f1": 0.22420036645362343,
+          "true_positive_pixels": 38850,
+          "false_positive_pixels": 224276,
+          "false_negative_pixels": 44589,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 263126,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.3460050962993623,
+          "precision": 0.379470302015803,
+          "recall": 0.7968898951382268,
+          "f1": 0.514121524874833,
+          "true_positive_pixels": 26750,
+          "false_positive_pixels": 43743,
+          "false_negative_pixels": 6818,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 70493,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.23167437192543722,
+          "precision": 0.2532671450925376,
+          "recall": 0.7309924520074338,
+          "f1": 0.3761941909423155,
+          "true_positive_pixels": 70407,
+          "false_positive_pixels": 207588,
+          "false_negative_pixels": 25910,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 277995,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.2991329471171845,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.08124435227364302,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 103.27593612670898,
+    "optimizer_steps": 1024
+  },
+  {
+    "epoch": 3,
+    "training_loss": 0.5082276723114774,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.4913802232748987,
+          "precision": 0.6106629266673346,
+          "recall": 0.7155536119135029,
+          "f1": 0.658960358473689,
+          "true_positive_pixels": 310883,
+          "false_positive_pixels": 198208,
+          "false_negative_pixels": 123582,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 509091,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.3078498428673665,
+          "precision": 0.3712890540598937,
+          "recall": 0.6430795714851283,
+          "f1": 0.47077245839236087,
+          "true_positive_pixels": 326496,
+          "false_positive_pixels": 552862,
+          "false_negative_pixels": 181211,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 879358,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.6292055823026715,
+          "precision": 0.7114707636275032,
+          "recall": 0.8447611651668113,
+          "f1": 0.7724078399159064,
+          "true_positive_pixels": 332868,
+          "false_positive_pixels": 134991,
+          "false_negative_pixels": 61170,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 467859,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.1939792872029677,
+          "precision": 0.2998333291872932,
+          "recall": 0.354609511760985,
+          "f1": 0.32492906582556597,
+          "true_positive_pixels": 72318,
+          "false_positive_pixels": 168876,
+          "false_negative_pixels": 131619,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 241194,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.17451506832785302,
+          "precision": 0.32174382850922845,
+          "recall": 0.27608282143758056,
+          "f1": 0.2971695690142292,
+          "true_positive_pixels": 40495,
+          "false_positive_pixels": 85366,
+          "false_negative_pixels": 106182,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 125861,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.14288415217481726,
+          "precision": 0.17269557189669435,
+          "recall": 0.45286976114287086,
+          "f1": 0.2500413570402917,
+          "true_positive_pixels": 37787,
+          "false_positive_pixels": 181020,
+          "false_negative_pixels": 45652,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 218807,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.3632389279604638,
+          "precision": 0.4002692998204668,
+          "recall": 0.797009056244042,
+          "f1": 0.5329057445621863,
+          "true_positive_pixels": 26754,
+          "false_positive_pixels": 40086,
+          "false_negative_pixels": 6814,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 66840,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.29877876282498256,
+          "precision": 0.32653150093187716,
+          "recall": 0.7785333845530903,
+          "f1": 0.4600918514791647,
+          "true_positive_pixels": 74986,
+          "false_positive_pixels": 154658,
+          "false_negative_pixels": 21331,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 229644,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.32522898086700264,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.0726792470862468,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 103.68053007125854,
+    "optimizer_steps": 1536
+  },
+  {
+    "epoch": 4,
+    "training_loss": 0.477771107602166,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.4328525693516904,
+          "precision": 0.4778732853503765,
+          "recall": 0.8212537258467311,
+          "f1": 0.6041829824090544,
+          "true_positive_pixels": 356806,
+          "false_positive_pixels": 389848,
+          "false_negative_pixels": 77659,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 746654,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.28427694593793346,
+          "precision": 0.3467962391822912,
+          "recall": 0.6119356242872366,
+          "f1": 0.4427034945026133,
+          "true_positive_pixels": 310684,
+          "false_positive_pixels": 585185,
+          "false_negative_pixels": 197023,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 895869,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.5884988476152091,
+          "precision": 0.7198240584302145,
+          "recall": 0.7633527730827991,
+          "f1": 0.7409496689263755,
+          "true_positive_pixels": 300790,
+          "false_positive_pixels": 117076,
+          "false_negative_pixels": 93248,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 417866,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.19043911237936154,
+          "precision": 0.21284433107641645,
+          "recall": 0.6440175152130315,
+          "f1": 0.3199476737600228,
+          "true_positive_pixels": 131339,
+          "false_positive_pixels": 485727,
+          "false_negative_pixels": 72598,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 617066,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.17214540628754865,
+          "precision": 0.33456776138650957,
+          "recall": 0.2617724660308024,
+          "f1": 0.2937270501835985,
+          "true_positive_pixels": 38396,
+          "false_positive_pixels": 76367,
+          "false_negative_pixels": 108281,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 114763,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.17306996722052673,
+          "precision": 0.24671296445489993,
+          "recall": 0.3670106305205,
+          "f1": 0.29507185770103533,
+          "true_positive_pixels": 30623,
+          "false_positive_pixels": 93501,
+          "false_negative_pixels": 52816,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 124124,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.39963456016705823,
+          "precision": 0.4377899218402491,
+          "recall": 0.8209604385128694,
+          "f1": 0.5710555762775084,
+          "true_positive_pixels": 27558,
+          "false_positive_pixels": 35390,
+          "false_negative_pixels": 6010,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 62948,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.3110492566978137,
+          "precision": 0.3542936458344004,
+          "recall": 0.7181805911728978,
+          "f1": 0.4745043027311796,
+          "true_positive_pixels": 69173,
+          "false_positive_pixels": 126069,
+          "false_negative_pixels": 27144,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 195242,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.31899583320714275,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.08022723176206152,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 110.56112885475159,
+    "optimizer_steps": 2048
+  },
+  {
+    "epoch": 5,
+    "training_loss": 0.4504927933739964,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.45968641941042454,
+          "precision": 0.5527590234948094,
+          "recall": 0.7319093597873246,
+          "f1": 0.6298427022375045,
+          "true_positive_pixels": 317989,
+          "false_positive_pixels": 257287,
+          "false_negative_pixels": 116476,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 575276,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.3205257224651767,
+          "precision": 0.3585145875634339,
+          "recall": 0.7515476446060425,
+          "f1": 0.4854516909626184,
+          "true_positive_pixels": 381566,
+          "false_positive_pixels": 682731,
+          "false_negative_pixels": 126141,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1064297,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.5675977925266817,
+          "precision": 0.6110052655270237,
+          "recall": 0.888759459747537,
+          "f1": 0.7241625310173697,
+          "true_positive_pixels": 350205,
+          "false_positive_pixels": 222957,
+          "false_negative_pixels": 43833,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 573162,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.21434913984126344,
+          "precision": 0.2420118741550627,
+          "recall": 0.6522063186180046,
+          "f1": 0.35302720248854064,
+          "true_positive_pixels": 133009,
+          "false_positive_pixels": 416588,
+          "false_negative_pixels": 70928,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 549597,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.18518688542651743,
+          "precision": 0.3618034565952447,
+          "recall": 0.27502607770816145,
+          "f1": 0.31250242084795526,
+          "true_positive_pixels": 40340,
+          "false_positive_pixels": 71157,
+          "false_negative_pixels": 106337,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 111497,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.12615592052285624,
+          "precision": 0.15505042833008806,
+          "recall": 0.4036841285250303,
+          "f1": 0.22404698714239152,
+          "true_positive_pixels": 33683,
+          "false_positive_pixels": 183556,
+          "false_negative_pixels": 49756,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 217239,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.3488440152180275,
+          "precision": 0.3713010071643651,
+          "recall": 0.8522402287893232,
+          "f1": 0.5172488609242786,
+          "true_positive_pixels": 28608,
+          "false_positive_pixels": 48440,
+          "false_negative_pixels": 4960,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 77048,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.3011527147150988,
+          "precision": 0.3287046125791267,
+          "recall": 0.7822710424950943,
+          "f1": 0.46290141243111405,
+          "true_positive_pixels": 75346,
+          "false_positive_pixels": 153875,
+          "false_negative_pixels": 20971,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 229221,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.31543732626575577,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.08214044927929838,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 107.19234204292297,
+    "optimizer_steps": 2560
+  },
+  {
+    "epoch": 6,
+    "training_loss": 0.4355535416107159,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.5000161391843256,
+          "precision": 0.62593946985615,
+          "recall": 0.7130954162015353,
+          "f1": 0.6666810124539366,
+          "true_positive_pixels": 309815,
+          "false_positive_pixels": 185145,
+          "false_negative_pixels": 124650,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 494960,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.3011525309178231,
+          "precision": 0.3267782711899056,
+          "recall": 0.7934005243181599,
+          "f1": 0.46290119530473867,
+          "true_positive_pixels": 402815,
+          "false_positive_pixels": 829871,
+          "false_negative_pixels": 104892,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1232686,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.6314465787104305,
+          "precision": 0.7088665824018839,
+          "recall": 0.8525421406057284,
+          "f1": 0.7740940916490867,
+          "true_positive_pixels": 335934,
+          "false_positive_pixels": 137969,
+          "false_negative_pixels": 58104,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 473903,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.17854496614904586,
+          "precision": 0.228948826388767,
+          "recall": 0.4478196697999873,
+          "f1": 0.30299220017450906,
+          "true_positive_pixels": 91327,
+          "false_positive_pixels": 307570,
+          "false_negative_pixels": 112610,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 398897,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.1818887873365687,
+          "precision": 0.32920682504795706,
+          "recall": 0.28899554804093347,
+          "f1": 0.3077934054124703,
+          "true_positive_pixels": 42389,
+          "false_positive_pixels": 86372,
+          "false_negative_pixels": 104288,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 128761,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.1599314657383257,
+          "precision": 0.22696825851614952,
+          "recall": 0.3512745838277065,
+          "f1": 0.2757601987054042,
+          "true_positive_pixels": 29310,
+          "false_positive_pixels": 99827,
+          "false_negative_pixels": 54129,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 129137,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.39949156393796514,
+          "precision": 0.43293368014405986,
+          "recall": 0.8379706863679695,
+          "f1": 0.570909570635573,
+          "true_positive_pixels": 28129,
+          "false_positive_pixels": 36844,
+          "false_negative_pixels": 5439,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 64973,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.31613997771700597,
+          "precision": 0.3816455541426196,
+          "recall": 0.6481202695266671,
+          "f1": 0.4804047944283048,
+          "true_positive_pixels": 62425,
+          "false_positive_pixels": 101143,
+          "false_negative_pixels": 33892,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 163568,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.33357650121143634,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.07252244263266523,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 111.3435788154602,
+    "optimizer_steps": 3072
+  },
+  {
+    "epoch": 7,
+    "training_loss": 0.41165916531463154,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.47746198498282494,
+          "precision": 0.5609305885779702,
+          "recall": 0.7623951296422037,
+          "f1": 0.6463272691085521,
+          "true_positive_pixels": 331234,
+          "false_positive_pixels": 259274,
+          "false_negative_pixels": 103231,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 590508,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.3165761192093015,
+          "precision": 0.34604393456348265,
+          "recall": 0.7880273464813367,
+          "f1": 0.48090818994868023,
+          "true_positive_pixels": 400087,
+          "false_positive_pixels": 756087,
+          "false_negative_pixels": 107620,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1156174,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.6122915881500512,
+          "precision": 0.6691087753492041,
+          "recall": 0.8782071779879098,
+          "f1": 0.7595295945848066,
+          "true_positive_pixels": 346047,
+          "false_positive_pixels": 171129,
+          "false_negative_pixels": 47991,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 517176,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.22605748001342682,
+          "precision": 0.2498784968095614,
+          "recall": 0.7033789846864473,
+          "f1": 0.3687551092807675,
+          "true_positive_pixels": 143445,
+          "false_positive_pixels": 430614,
+          "false_negative_pixels": 60492,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 574059,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.2131195698003138,
+          "precision": 0.3017803312062013,
+          "recall": 0.4204271971747445,
+          "f1": 0.3513578959663382,
+          "true_positive_pixels": 61667,
+          "false_positive_pixels": 142677,
+          "false_negative_pixels": 85010,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 204344,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.16019534520777348,
+          "precision": 0.2016533121426837,
+          "recall": 0.4379486810724002,
+          "f1": 0.27615236670180726,
+          "true_positive_pixels": 36542,
+          "false_positive_pixels": 144670,
+          "false_negative_pixels": 46897,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 181212,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.4122186208332094,
+          "precision": 0.45143694537165185,
+          "recall": 0.8259354146806482,
+          "f1": 0.5837886779739533,
+          "true_positive_pixels": 27725,
+          "false_positive_pixels": 33690,
+          "false_negative_pixels": 5843,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 61415,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.3316180674671241,
+          "precision": 0.38700696589529876,
+          "recall": 0.6985267398278601,
+          "f1": 0.49806784027479606,
+          "true_positive_pixels": 67280,
+          "false_positive_pixels": 106567,
+          "false_negative_pixels": 29037,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 173847,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.34369234695800316,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.07926762507607539,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 108.72314190864563,
+    "optimizer_steps": 3584
+  },
+  {
+    "epoch": 8,
+    "training_loss": 0.38617064492427744,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.47621893731538084,
+          "precision": 0.5992711724214171,
+          "recall": 0.6987237176757621,
+          "f1": 0.6451874112676296,
+          "true_positive_pixels": 303571,
+          "false_positive_pixels": 202996,
+          "false_negative_pixels": 130894,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 506567,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.34813895621739505,
+          "precision": 0.3952684800501685,
+          "recall": 0.7448843525891902,
+          "f1": 0.5164734015167137,
+          "true_positive_pixels": 378183,
+          "false_positive_pixels": 578592,
+          "false_negative_pixels": 129524,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 956775,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.6370511998039371,
+          "precision": 0.6872362223246067,
+          "recall": 0.8971596648039022,
+          "f1": 0.7782911125568145,
+          "true_positive_pixels": 353515,
+          "false_positive_pixels": 160886,
+          "false_negative_pixels": 40523,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 514401,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.21278909447821892,
+          "precision": 0.2431206800366872,
+          "recall": 0.6303956614052378,
+          "f1": 0.35090865418734274,
+          "true_positive_pixels": 128561,
+          "false_positive_pixels": 400234,
+          "false_negative_pixels": 75376,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 528795,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.22978258474420654,
+          "precision": 0.4129561336204407,
+          "recall": 0.3412532298860762,
+          "f1": 0.3736962737881039,
+          "true_positive_pixels": 50054,
+          "false_positive_pixels": 71155,
+          "false_negative_pixels": 96623,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 121209,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.15236767066082865,
+          "precision": 0.18416728269211755,
+          "recall": 0.46877359508143673,
+          "f1": 0.26444280682302196,
+          "true_positive_pixels": 39114,
+          "false_positive_pixels": 173269,
+          "false_negative_pixels": 44325,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 212383,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.35984965950109776,
+          "precision": 0.3814144282727882,
+          "recall": 0.8642159199237369,
+          "f1": 0.5292491813148221,
+          "true_positive_pixels": 29010,
+          "false_positive_pixels": 47049,
+          "false_negative_pixels": 4558,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 76059,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.3469654615000489,
+          "precision": 0.4076587611218978,
+          "recall": 0.6997414786590114,
+          "f1": 0.5151809328706181,
+          "true_positive_pixels": 67397,
+          "false_positive_pixels": 97930,
+          "false_negative_pixels": 28920,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 165327,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.34539544552763923,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.07494174409657717,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 110.13944387435913,
+    "optimizer_steps": 4096
+  },
+  {
+    "epoch": 9,
+    "training_loss": 0.375712004606612,
+    "validation": {
+      "classes": {
+        "drydown": {
+          "iou": 0.48519460038366935,
+          "precision": 0.5734873473958396,
+          "recall": 0.7591221387223367,
+          "f1": 0.6533751203489824,
+          "true_positive_pixels": 329812,
+          "false_positive_pixels": 245287,
+          "false_negative_pixels": 104653,
+          "positive_pixels": 434465,
+          "predicted_positive_pixels": 575099,
+          "threshold": 0.5
+        },
+        "nutrient_deficiency": {
+          "iou": 0.33256536757448274,
+          "precision": 0.3622438589735951,
+          "recall": 0.8023387504997962,
+          "f1": 0.49913554061488735,
+          "true_positive_pixels": 407353,
+          "false_positive_pixels": 717174,
+          "false_negative_pixels": 100354,
+          "positive_pixels": 507707,
+          "predicted_positive_pixels": 1124527,
+          "threshold": 0.5
+        },
+        "water": {
+          "iou": 0.6301390678683562,
+          "precision": 0.7391389894538013,
+          "recall": 0.8103558540039285,
+          "f1": 0.7731108103462051,
+          "true_positive_pixels": 319311,
+          "false_positive_pixels": 112693,
+          "false_negative_pixels": 74727,
+          "positive_pixels": 394038,
+          "predicted_positive_pixels": 432004,
+          "threshold": 0.5
+        },
+        "weed_cluster": {
+          "iou": 0.22245960908975895,
+          "precision": 0.25895488798222815,
+          "recall": 0.6121743479603995,
+          "f1": 0.36395412565884605,
+          "true_positive_pixels": 124845,
+          "false_positive_pixels": 357266,
+          "false_negative_pixels": 79092,
+          "positive_pixels": 203937,
+          "predicted_positive_pixels": 482111,
+          "threshold": 0.5
+        },
+        "double_plant": {
+          "iou": 0.2050951089803496,
+          "precision": 0.347377984725022,
+          "recall": 0.3336583104372192,
+          "f1": 0.34037995416624645,
+          "true_positive_pixels": 48940,
+          "false_positive_pixels": 91944,
+          "false_negative_pixels": 97737,
+          "positive_pixels": 146677,
+          "predicted_positive_pixels": 140884,
+          "threshold": 0.5
+        },
+        "endrow": {
+          "iou": 0.17241552031109836,
+          "precision": 0.21756668237240998,
+          "recall": 0.4537925909946188,
+          "f1": 0.29412016017213455,
+          "true_positive_pixels": 37864,
+          "false_positive_pixels": 136170,
+          "false_negative_pixels": 45575,
+          "positive_pixels": 83439,
+          "predicted_positive_pixels": 174034,
+          "threshold": 0.5
+        },
+        "planter_skip": {
+          "iou": 0.4111016651031895,
+          "precision": 0.44729917228840727,
+          "recall": 0.8355278836987607,
+          "f1": 0.5826676777014885,
+          "true_positive_pixels": 28047,
+          "false_positive_pixels": 34656,
+          "false_negative_pixels": 5521,
+          "positive_pixels": 33568,
+          "predicted_positive_pixels": 62703,
+          "threshold": 0.5
+        },
+        "waterway": {
+          "iou": 0.3610304439610369,
+          "precision": 0.4272715167117937,
+          "recall": 0.6995857429114279,
+          "f1": 0.5305251554995669,
+          "true_positive_pixels": 67382,
+          "false_positive_pixels": 90321,
+          "false_negative_pixels": 28935,
+          "positive_pixels": 96317,
+          "predicted_positive_pixels": 157703,
+          "threshold": 0.5
+        }
+      },
+      "mean_iou_present_classes": 0.3525001729089927,
+      "score_thresholds": 0.5,
+      "probabilities_calibrated": false,
+      "loss": 0.07371604846169551,
+      "positive_tiles": {
+        "drydown": 22,
+        "nutrient_deficiency": 31,
+        "water": 30,
+        "weed_cluster": 31,
+        "double_plant": 30,
+        "endrow": 13,
+        "planter_skip": 27,
+        "waterway": 17
+      }
+    },
+    "epoch_seconds": 110.88741993904114,
+    "optimizer_steps": 4608
+  }
+]

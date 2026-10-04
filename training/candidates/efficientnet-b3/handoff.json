@@ -1,0 +1,219 @@
+{
+  "source_chat_id": "01a1032b-3903-7212-a9e9-1669802a5976",
+  "source_chat_title": "Build the image recognition program",
+  "architecture": "efficientnet_b3",
+  "status": "trained_and_verified_comparison_candidate",
+  "project": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon",
+  "source_data_manifest": {
+    "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\scale_v3_manifest.json",
+    "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+    "bytes": 18916720
+  },
+  "shared_data_seed_preprocessing_training_engine": true,
+  "recipe": {
+    "head": {
+      "training_images": 20311,
+      "validation_images": 5294,
+      "optimizer": "AdamW",
+      "learning_rate": 0.001,
+      "weight_decay": 0.01,
+      "label_smoothing": 0.05,
+      "dropout": 0.15,
+      "maximum_epochs": 30,
+      "patience": 5,
+      "minimum_epochs": 10,
+      "minimum_selection_improvement": 0.002,
+      "selection": "0.65 mean-source F1 + 0.20 macro F1 + 0.15 weak-class F1"
+    },
+    "backbone": {
+      "trainable": "Last two blocks, convolutional head, and classifier",
+      "frozen_batch_norm": true,
+      "optimizer": "AdamW",
+      "learning_rate": 3e-05,
+      "weight_decay": 0.03,
+      "label_smoothing": 0.05,
+      "dropout": 0.15,
+      "gradient_clip": 1.0,
+      "maximum_epochs": 6,
+      "patience": 2,
+      "minimum_selection_improvement": 0.002,
+      "sampling": "Same grouped parent rotation and weak-class replay as B1",
+      "augmentation": "70% canonical and 30% full-target scale views at 65-100%",
+      "selection": "0.5 source F1 + 0.3 far F1 + 0.2 full-context F1",
+      "weak_class_guard": "Each weak class allows at most 1pp loss from the head"
+    },
+    "context_geometry": "Full supplied annotated context contained in a 224-pixel canvas; no subsequent center crop during context training or validation",
+    "teacher": "B3 learns dataset labels independently; no model teacher targets"
+  },
+  "selected_epoch": 6,
+  "parameter_count": 10708528,
+  "split_counts": {
+    "train": 20311,
+    "val": 5294
+  },
+  "selected_validation": {
+    "accuracy": 0.9267094824329429,
+    "macro_f1": 0.8459019564617434,
+    "source_macro_f1": 0.8920674162185149,
+    "per_source": {
+      "agml": 0.9350780083871573,
+      "beans": 1.0,
+      "bracol_expert": 0.7304647768649755,
+      "bracol_leaf": 0.8794851864892651,
+      "bracol_symptom": 0.8859455622531784,
+      "coffeeleaf_own_field": 0.9665893900126,
+      "coffeeleaf_rust_and_leaf_miner": 0.9650957368031312,
+      "peru": 0.9501133786848072,
+      "rocole": 0.7158347064715195
+    },
+    "weak_macro_f1": 0.7302670445174155,
+    "old_class_f1": {
+      "cercospora": 0.8636363636363636,
+      "healthy": 0.9441860465116279,
+      "miner": 0.936986301369863,
+      "phoma": 0.835725677830941,
+      "rust": 0.9465219139525533,
+      "red_spider_mite": 0.3829787234042553,
+      "weevil_damage": 0.9643243243243244,
+      "unsupported": 0.9925373134328358
+    },
+    "old_native_accuracy": 0.926382529059528,
+    "far_macro_f1": 0.8552035591469732,
+    "context_macro_f1": 0.8969826829039428,
+    "selection_score": 0.881991312434138,
+    "stage": "partial_backbone",
+    "epoch": 6,
+    "training_loss": 0.5408315108882056,
+    "training_examples": 6469,
+    "seconds": 300.2885584998876,
+    "eligible": true
+  },
+  "compression_validation": {
+    "variant": "int8_weights",
+    "bytes": 11796544,
+    "parity": {
+      "n": 5294,
+      "maximum_probability_error": 0.20813310146331787,
+      "mean_absolute_probability_error": 0.002160013187676668,
+      "top1_disagreements": 23,
+      "accuracy_drop": -0.0003777861730260845,
+      "macro_f1_drop": 0.0014281985859748714,
+      "eligible": true,
+      "policy": "Validation only: <=1 percentage point accuracy and macro F1 loss relative to selected checkpoint"
+    },
+    "under_10_decimal_MB": false,
+    "deployment_eligible": false
+  },
+  "artifacts": {
+    "model": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\coffee-leaf-b3.tflite",
+      "sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+      "bytes": 11796544
+    },
+    "config": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\model-config-b3.json",
+      "sha256": "ca62871e4e796c75820a14c61552fd322aeaa1215d407c10345250aa3955aa6d",
+      "bytes": 3144
+    },
+    "checkpoint": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\best.safetensors",
+      "sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+      "bytes": 43236632
+    },
+    "training_report": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\training.json",
+      "sha256": "710e7de343747151789663c6af2de1cddcb109758b830515ea05631cb0a42e8a",
+      "bytes": 48827
+    },
+    "completion_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\completion_verification.json",
+      "sha256": "33d6a2b198569378ab504e3f1812702e50ef27d678de3004e090aa7a2120567f",
+      "bytes": 3506
+    },
+    "export_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\export_validation.json",
+      "sha256": "bb551e1ea016ceb98db097d8bd97e6537a7c77a008ecd657cda52703915e716c",
+      "bytes": 1151
+    },
+    "offline_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\offline_verification.json",
+      "sha256": "b2a98c253c752551ff8ee54e417843916a3862b040fd3293150263f83935abba",
+      "bytes": 638
+    },
+    "calibration": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\calibration.json",
+      "sha256": "5b15821df497bd00f13a359487f887ffdc1fe3c1f1ab60bb1133047c74f7a357",
+      "bytes": 1993
+    },
+    "brightness_policy": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\brightness-config.json",
+      "sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+      "bytes": 1893
+    },
+    "selected_validation_predictions": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\selected_validation.npz",
+      "sha256": "2beb96be549e9836abf270c05bc77113385b83f39e3dabaa9b07a3f302369b44",
+      "bytes": 2118352
+    }
+  },
+  "pytorch_loader": {
+    "module_path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_model.py",
+    "loader": "load_model",
+    "dataset": "B3Dataset"
+  },
+  "runtime_validation_cache": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\comparison_cache",
+  "deployment_eligible": false,
+  "deployment_note": "Validated comparison candidate exceeds the unchanged 10 MB app-artifact limit; not installed in app",
+  "size_limit_bytes": 10000000,
+  "installed_in_app": false,
+  "enabled_diagnoses": [
+    "cercospora",
+    "healthy",
+    "miner",
+    "phoma",
+    "rust",
+    "weevil_damage"
+  ],
+  "offline": {
+    "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+    "fresh_process": true,
+    "python_outbound_sockets_blocked": true,
+    "attempted_connections": 0,
+    "os_firewall_test": false,
+    "phone_device_tested": false,
+    "runtime_operations": [
+      "ADD",
+      "CONV_2D",
+      "DEPTHWISE_CONV_2D",
+      "DEQUANTIZE",
+      "FULLY_CONNECTED",
+      "LOGISTIC",
+      "MEAN",
+      "MUL",
+      "PAD",
+      "RESHAPE",
+      "SOFTMAX",
+      "SUB",
+      "TRANSPOSE"
+    ],
+    "custom_ops_present": false,
+    "samples": 3,
+    "predicted_indices": [
+      0,
+      4,
+      0
+    ],
+    "installed_in_app": false
+  },
+  "test_or_external_used_for_selection": false,
+  "heldout_and_external_comparison_pending": true,
+  "physical_phone_tested": false,
+  "comparison_instructions": [
+    "Compare all four frozen B0/B1/B2/B3 artifacts using identical held-out subsets, external rust, scans, and smaller-leaf probes.",
+    "Reuse caches only when the existing strict identities match. Preserve earlier reports.",
+    "Report B3 as a separate candidate exceeding the existing app size limit if deployment_eligible is false; do not silently relax the limit.",
+    "Measure four-model latency afresh after all training and evaluation workers stop. B3 training overlapped the B2 chat's work, so earlier latency may have competing CPU load.",
+    "Retain existing metric definitions, group-based uncertainty intervals, source-specific results, rejection coverage, weak-class details, and initialization/data comparison qualifications.",
+    "Do not select new checkpoints or retune thresholds using held-out or external images."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "samples": 40,
+  "maximum_probability_error": 0.010401368141174316,
+  "argmax_disagreements": 0,
+  "tflite_bytes": 8091596,
+  "desktop_cpu_latency_median_ms": 60.32729987055063,
+  "desktop_cpu_threads": 4,
+  "phone_benchmarked": false,
+  "input_shape": [
+    1,
+    224,
+    224,
+    3
+  ],
+  "output_shape": [
+    1,
+    8
+  ],
+  "input_type": "float32 raw RGB 0..255 NHWC",
+  "weight_storage": "float16",
+  "preprocessing": "shortest-side256 andcenter224 bicubic before rawRGB; normalization andcalibrated softmax inside graph"
+}

@@ -1,0 +1,31 @@
+{
+  "artifact_sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+  "fresh_process": true,
+  "python_outbound_sockets_blocked": true,
+  "attempted_connections": 0,
+  "os_firewall_test": false,
+  "phone_device_tested": false,
+  "runtime_operations": [
+    "ADD",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "DEQUANTIZE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "MEAN",
+    "MUL",
+    "PAD",
+    "RESHAPE",
+    "SOFTMAX",
+    "SUB",
+    "TRANSPOSE"
+  ],
+  "custom_ops_present": false,
+  "samples": 3,
+  "predicted_indices": [
+    0,
+    0,
+    2
+  ],
+  "app_load": "Bundled coffee-leaf-b1.tflite; loadTensorflowModel selected asset with CPU delegates []"
+}

@@ -1,0 +1,30 @@
+{
+  "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+  "checkpoint_sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+  "parameter_count": 10708528,
+  "bytes": 11796544,
+  "compression_candidates": [
+    {
+      "variant": "int8_weights",
+      "bytes": 11796544,
+      "parity": {
+        "n": 5294,
+        "maximum_probability_error": 0.20813310146331787,
+        "mean_absolute_probability_error": 0.002160013187676668,
+        "top1_disagreements": 23,
+        "accuracy_drop": -0.0003777861730260845,
+        "macro_f1_drop": 0.0014281985859748714,
+        "eligible": true,
+        "policy": "Validation only: <=1 percentage point accuracy and macro F1 loss relative to selected checkpoint"
+      },
+      "under_10_decimal_MB": false,
+      "deployment_eligible": false
+    }
+  ],
+  "deployment_eligible": false,
+  "size_limit_bytes": 10000000,
+  "installed_in_app": false,
+  "test_or_external_used_for_selection": false,
+  "phone_device_tested": false,
+  "export_recipe_sha256": "9f8a23239c0449ddef79760e7d1703879aceaca35cce7d6da8649f2bae3c5391"
+}

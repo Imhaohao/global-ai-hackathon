@@ -1,0 +1,9 @@
+{
+  "validation_samples": 64,
+  "maximum_probability_error": 1.7285346984863281e-06,
+  "top1_disagreements": 0,
+  "atol": 0.0001,
+  "rtol": 0.0001,
+  "checkpoint_sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+  "float32_artifact_sha256": "a4ca3f5abb668430cccf281caddaae4a3a962de0764dd01c7721ebf57a8d6102"
+}

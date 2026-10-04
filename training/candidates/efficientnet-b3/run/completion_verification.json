@@ -1,0 +1,97 @@
+{
+  "checked": 25605,
+  "split_counts": {
+    "train": 20311,
+    "val": 5294
+  },
+  "source_counts": {
+    "train": {
+      "agml": 1278,
+      "bracol_leaf": 964,
+      "bracol_symptom": 1462,
+      "rocole": 1072,
+      "beans": 1034,
+      "coffeeleaf_own_field": 5448,
+      "coffeeleaf_rust_and_leaf_miner": 2861,
+      "peru": 1105,
+      "bracol_expert": 5087
+    },
+    "val": {
+      "agml": 1021,
+      "bracol_leaf": 207,
+      "bracol_symptom": 324,
+      "rocole": 228,
+      "beans": 133,
+      "coffeeleaf_own_field": 1380,
+      "coffeeleaf_rust_and_leaf_miner": 628,
+      "peru": 168,
+      "bracol_expert": 1205
+    }
+  },
+  "mismatches": [],
+  "selected_checkpoint_validation_cache_check": {
+    "n": 96,
+    "max_absolute_logit_difference": 0.0,
+    "top1_differences": 0
+  },
+  "checkpoint_sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+  "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+  "selected_validation": {
+    "accuracy": 0.9267094824329429,
+    "macro_f1": 0.8459019564617434,
+    "source_macro_f1": 0.8920674162185149,
+    "per_source": {
+      "agml": 0.9350780083871573,
+      "beans": 1.0,
+      "bracol_expert": 0.7304647768649755,
+      "bracol_leaf": 0.8794851864892651,
+      "bracol_symptom": 0.8859455622531784,
+      "coffeeleaf_own_field": 0.9665893900126,
+      "coffeeleaf_rust_and_leaf_miner": 0.9650957368031312,
+      "peru": 0.9501133786848072,
+      "rocole": 0.7158347064715195
+    },
+    "weak_macro_f1": 0.7302670445174155,
+    "old_class_f1": {
+      "cercospora": 0.8636363636363636,
+      "healthy": 0.9441860465116279,
+      "miner": 0.936986301369863,
+      "phoma": 0.835725677830941,
+      "rust": 0.9465219139525533,
+      "red_spider_mite": 0.3829787234042553,
+      "weevil_damage": 0.9643243243243244,
+      "unsupported": 0.9925373134328358
+    },
+    "old_native_accuracy": 0.926382529059528,
+    "far_macro_f1": 0.8552035591469732,
+    "context_macro_f1": 0.8969826829039428,
+    "selection_score": 0.881991312434138,
+    "stage": "partial_backbone",
+    "epoch": 6,
+    "training_loss": 0.5408315108882056,
+    "training_examples": 6469,
+    "seconds": 300.2885584998876,
+    "eligible": true
+  },
+  "additional_validation_only_guard_audit": {
+    "old_macro_f1_loss_at_most_1pp": true,
+    "old_native_accuracy_loss_at_most_1pp": true,
+    "each_weak_class_loss_at_most_1pp": true,
+    "source_f1_gain_at_least_1pp": true,
+    "far_f1_gain_at_least_1_5pp": true
+  },
+  "guard_audit_note": "Additional broader B0-style guards audited after selection; no test data, checkpoint reselection, or further training used for this audit.",
+  "architecture": "efficientnet_b3",
+  "shared_recipe_unchanged": true,
+  "context_images_verified": 11446,
+  "orchestration_source_change": {
+    "original_hash": "c9ede75ea24d55d93538459078f284ae5272ed8d4b9ec95fc58c043a77dd90f2",
+    "current_hash": "ee5eb50f53c45ffe4815865b349e1b57a80c48daa7ef3292f684510459c5047c",
+    "reconstructed_hashes": [
+      "c9ede75ea24d55d93538459078f284ae5272ed8d4b9ec95fc58c043a77dd90f2",
+      "dddb567383a1125d32a5d44ec306e687f26ed1838ad79a896e3ccce67f4066e2"
+    ],
+    "matches_original": true,
+    "change": "Adds completed-run reuse checks and repeats the existing backbone history assignment. Active B3 loaded the earlier wrapper; training, selection and preprocessing engines are unchanged."
+  }
+}

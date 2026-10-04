@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+local-report/
+refreshed-report/
+.ruff_cache/
+.pytest_cache/
+*.sqlite
+*.sqlite-*
+*.log
+latest-training-state.pt

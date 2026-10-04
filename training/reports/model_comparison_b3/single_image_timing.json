@@ -1,0 +1,5582 @@
+{
+  "generated_at_utc": "2026-10-04T02:16:57.254745+00:00",
+  "method": {
+    "description": "Fresh single-image desktop response timing with every model already loaded",
+    "unique_images": 8,
+    "image_selection": "First example per class from the main comparator's seeded 64-image benchmark selection; no prediction-based selection",
+    "rounds": 3,
+    "repetitions_per_image": 12,
+    "timed_predictions_per_model": 96,
+    "warmup_responses_per_model": 8,
+    "invocation_orders": [
+      [
+        "b0",
+        "b1",
+        "b3",
+        "b2"
+      ],
+      [
+        "b1",
+        "b2",
+        "b0",
+        "b3"
+      ],
+      [
+        "b2",
+        "b3",
+        "b1",
+        "b0"
+      ],
+      [
+        "b3",
+        "b0",
+        "b2",
+        "b1"
+      ]
+    ],
+    "balance": "Each image uses all four Williams Latin-square orders in every round; model positions and directed adjacent pairs are balanced",
+    "total_includes": [
+      "Fresh local image open/decode and canonical resize/crop to float32 input",
+      "Shared current quality helper, including reopening the image for alpha-aware exposure",
+      "Input tensor transfer, model invocation, and output tensor retrieval",
+      "Exact shared per-class confidence, brightness, and blur decision gate"
+    ],
+    "inference_only": "interpreter.invoke() wall time inside the same response trial",
+    "excludes": [
+      "One-time model loading, tensor allocation, imports, and warmup",
+      "Artifact/image hashing, metadata validation, result checks, and report serialization",
+      "Camera capture, user selection, network, mobile bridge, and UI rendering"
+    ],
+    "filesystem_cache": "Images reopen every trial; the operating-system file cache is warm and is not flushed",
+    "preprocessing_note": "Measures the existing desktop evaluation helpers, including their configuration read and repeated image decoding; the mobile implementation can differ",
+    "inference_policy": "Every image invokes the model before the decision gate, including images that fail quality checks",
+    "num_threads": 4,
+    "torch_interop_threads": 1,
+    "input_shape": [
+      1,
+      224,
+      224,
+      3
+    ],
+    "input_dtype": "float32",
+    "clock": "time.perf_counter",
+    "host": "connor",
+    "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "logical_cpus": 16,
+    "physical_phone_benchmarked": false,
+    "qualification": "Desktop response measurements do not establish physical phone latency; repeated trials are not independent images"
+  },
+  "images": [
+    {
+      "path": "data/images/bracol_expert/1630_1.jpg",
+      "label": "cercospora",
+      "source": "bracol_expert",
+      "sha256": "bad3e3e2893a5067482e359a73691339fe96488315b7eec2f759fd9e00972d48",
+      "bytes": 5906,
+      "original_size_pixels": [
+        163,
+        126
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/bracol/classification/dataset/leaf/948.jpg",
+      "label": "healthy",
+      "source": "bracol_leaf",
+      "sha256": "46ee9bd6db13a01fdc817dfc7a23e3d9d98a6780a5ba98c797669327498257fe",
+      "bytes": 15056,
+      "original_size_pixels": [
+        512,
+        256
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/images/agml/41749.jpg",
+      "label": "miner",
+      "source": "agml",
+      "sha256": "f75c4d5906ea2ae14644bedc09faf5ade565a9643f362a7a77775c2b3f4a562e",
+      "bytes": 30668,
+      "original_size_pixels": [
+        128,
+        128
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/images/agml/7979.jpg",
+      "label": "phoma",
+      "source": "agml",
+      "sha256": "95fa6ca1f5f787f7c493ca7d02b7871deae24531a63fe52f0fc6a84eaadb3676",
+      "bytes": 42464,
+      "original_size_pixels": [
+        128,
+        128
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+      "label": "rust",
+      "source": "bracol_leaf",
+      "sha256": "55b01d7b1aba450bc39244e31e2dd99caa0f349bcc5a2095f7fd30f9b1f2b106",
+      "bytes": 14545,
+      "original_size_pixels": [
+        512,
+        256
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/images/rocole/C7P12E1.jpg",
+      "label": "red_spider_mite",
+      "source": "rocole",
+      "sha256": "d0c4599c7cac4cc351660d940924627a7422e34a037a71e9d30dd6cd18c5a75c",
+      "bytes": 76586,
+      "original_size_pixels": [
+        910,
+        272
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/images/coffeeleaf_co/COCO_Muy_A_101_13.jpg",
+      "label": "weevil_damage",
+      "source": "coffeeleaf_own_field",
+      "sha256": "a16a8de60bc445fb061608e08c20592b55f38f88bf7a2bd0015e775fe21ccba7",
+      "bytes": 1273,
+      "original_size_pixels": [
+        37,
+        32
+      ],
+      "original_format": "JPEG"
+    },
+    {
+      "path": "data/images/beans/bean_rust_test.2.jpg",
+      "label": "unsupported",
+      "source": "beans",
+      "sha256": "7a23bf1a453feae47c819f6d404ef7dc84bc071bd48a69a65a39adcadfd66e27",
+      "bytes": 100704,
+      "original_size_pixels": [
+        500,
+        500
+      ],
+      "original_format": "JPEG"
+    }
+  ],
+  "models": {
+    "b0": {
+      "total_response": {
+        "n": 96,
+        "mean_ms": 62.70574270456564,
+        "median_ms": 59.75749995559454,
+        "p90_ms": 72.90369994007051,
+        "minimum_ms": 54.74509997293353,
+        "maximum_ms": 89.35010014101863
+      },
+      "inference_only": {
+        "n": 96,
+        "mean_ms": 57.619721878533404,
+        "median_ms": 54.4483499834314,
+        "p90_ms": 68.20574996527284,
+        "minimum_ms": 51.65879987180233,
+        "maximum_ms": 80.67920012399554
+      },
+      "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "deployment": {
+        "role": "app_asset",
+        "artifact_location": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf.tflite",
+        "deployment_eligible": true
+      },
+      "invocation_positions": {
+        "1": 24,
+        "3": 24,
+        "4": 24,
+        "2": 24
+      },
+      "per_image": [
+        {
+          "image_index": 0,
+          "label": "cercospora",
+          "path": "data/images/bracol_expert/1630_1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 61.93738335665936,
+            "median_ms": 58.819549973122776,
+            "p90_ms": 69.63488005567342,
+            "minimum_ms": 55.63149997033179,
+            "maximum_ms": 69.82859992422163
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 57.89517498730371,
+            "median_ms": 54.947949945926666,
+            "p90_ms": 65.49611000809819,
+            "minimum_ms": 51.70319997705519,
+            "maximum_ms": 65.99120004102588
+          }
+        },
+        {
+          "image_index": 1,
+          "label": "healthy",
+          "path": "data/bracol/classification/dataset/leaf/948.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 60.27612499504661,
+            "median_ms": 57.152000023052096,
+            "p90_ms": 70.88179006241262,
+            "minimum_ms": 54.74509997293353,
+            "maximum_ms": 71.41599990427494
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 57.106475035349526,
+            "median_ms": 54.13349997252226,
+            "p90_ms": 67.78204999864101,
+            "minimum_ms": 51.879100035876036,
+            "maximum_ms": 68.35690001025796
+          }
+        },
+        {
+          "image_index": 2,
+          "label": "miner",
+          "path": "data/images/agml/41749.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 62.024141661822796,
+            "median_ms": 58.13169991597533,
+            "p90_ms": 73.23491000570357,
+            "minimum_ms": 56.167899863794446,
+            "maximum_ms": 78.40429991483688
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 58.221591636538506,
+            "median_ms": 54.228699882514775,
+            "p90_ms": 68.84499001316726,
+            "minimum_ms": 52.65460000373423,
+            "maximum_ms": 74.50789981521666
+          }
+        },
+        {
+          "image_index": 3,
+          "label": "phoma",
+          "path": "data/images/agml/7979.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 61.1590250240018,
+            "median_ms": 58.865650091320276,
+            "p90_ms": 70.11233994271606,
+            "minimum_ms": 56.628899881616235,
+            "maximum_ms": 72.4692998919636
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 57.21306668904921,
+            "median_ms": 54.607450030744076,
+            "p90_ms": 66.17864002473652,
+            "minimum_ms": 52.79999994672835,
+            "maximum_ms": 68.38459987193346
+          }
+        },
+        {
+          "image_index": 4,
+          "label": "rust",
+          "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 59.22486662166193,
+            "median_ms": 57.5816499767825,
+            "p90_ms": 63.712319964542985,
+            "minimum_ms": 56.04739999398589,
+            "maximum_ms": 66.91549997776747
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 56.08977499650791,
+            "median_ms": 54.61490002926439,
+            "p90_ms": 59.80934996623546,
+            "minimum_ms": 52.96930018812418,
+            "maximum_ms": 63.94729996100068
+          }
+        },
+        {
+          "image_index": 5,
+          "label": "red_spider_mite",
+          "path": "data/images/rocole/C7P12E1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 69.57994999053578,
+            "median_ms": 64.78599994443357,
+            "p90_ms": 79.19689994305372,
+            "minimum_ms": 63.63649992272258,
+            "maximum_ms": 81.53800014406443
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 59.35190831466267,
+            "median_ms": 54.48224989231676,
+            "p90_ms": 69.27157004829496,
+            "minimum_ms": 53.28350001946092,
+            "maximum_ms": 71.72730006277561
+          }
+        },
+        {
+          "image_index": 6,
+          "label": "weevil_damage",
+          "path": "data/images/coffeeleaf_co/COCO_Muy_A_101_13.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 60.50555832916871,
+            "median_ms": 57.028249953873456,
+            "p90_ms": 68.7770301476121,
+            "minimum_ms": 55.98239996470511,
+            "maximum_ms": 79.67250002548099
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 56.99370834433163,
+            "median_ms": 53.77780005801469,
+            "p90_ms": 65.2812599670142,
+            "minimum_ms": 52.41909995675087,
+            "maximum_ms": 74.93570004589856
+          }
+        },
+        {
+          "image_index": 7,
+          "label": "unsupported",
+          "path": "data/images/beans/bean_rust_test.2.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 66.93889165762812,
+            "median_ms": 63.63210000563413,
+            "p90_ms": 73.72115009929985,
+            "minimum_ms": 60.02389988861978,
+            "maximum_ms": 89.35010014101863
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 58.086075024524085,
+            "median_ms": 55.06665003485978,
+            "p90_ms": 65.08828008081764,
+            "minimum_ms": 51.65879987180233,
+            "maximum_ms": 80.67920012399554
+          }
+        }
+      ],
+      "trials": [
+        {
+          "total_response_ms": 58.34130011498928,
+          "inference_ms": 54.5002999715507,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 55.7305000256747,
+          "inference_ms": 52.52440017648041,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 60.07739994674921,
+          "inference_ms": 56.31130002439022,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 58.39510005898774,
+          "inference_ms": 54.414700018242,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 58.05159988813102,
+          "inference_ms": 55.04760006442666,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 63.872499857097864,
+          "inference_ms": 54.13009994663298,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 56.941800052300096,
+          "inference_ms": 53.827299969270825,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 61.48929987102747,
+          "inference_ms": 52.24890005774796,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 69.36379987746477,
+          "inference_ms": 65.45749981887639,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 67.25289998576045,
+          "inference_ms": 64.1465000808239,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 58.13739984296262,
+          "inference_ms": 54.113199934363365,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 56.628899881616235,
+          "inference_ms": 52.79999994672835,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 60.60629989951849,
+          "inference_ms": 57.3613999877125,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 81.53800014406443,
+          "inference_ms": 71.72730006277561,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 56.106199976056814,
+          "inference_ms": 52.6124001480639,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 89.35010014101863,
+          "inference_ms": 80.67920012399554,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 68.46350012347102,
+          "inference_ms": 64.48930012993515,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 55.79770007170737,
+          "inference_ms": 52.80730011872947,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 78.40429991483688,
+          "inference_ms": 74.50789981521666,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 58.061900082975626,
+          "inference_ms": 54.43580006249249,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 62.80799978412688,
+          "inference_ms": 59.69459982588887,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 69.6008000522852,
+          "inference_ms": 57.53220012411475,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 56.260500103235245,
+          "inference_ms": 52.85350000485778,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 63.059600070118904,
+          "inference_ms": 54.057600209489465,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 58.43350011855364,
+          "inference_ms": 54.26919995807111,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 54.74509997293353,
+          "inference_ms": 51.879100035876036,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 57.58949997834861,
+          "inference_ms": 53.941099904477596,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 62.372200191020966,
+          "inference_ms": 58.588999789208174,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 56.86810007318854,
+          "inference_ms": 53.99199994280934,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 63.63649992272258,
+          "inference_ms": 53.76719986088574,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 56.54209991917014,
+          "inference_ms": 53.144400008022785,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 62.876899959519506,
+          "inference_ms": 54.8314000479877,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 59.08160004764795,
+          "inference_ms": 55.26509997434914,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 56.957999942824244,
+          "inference_ms": 53.97180002182722,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 56.55040009878576,
+          "inference_ms": 52.85450001247227,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 59.28260018117726,
+          "inference_ms": 54.40909997560084,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 56.7588999401778,
+          "inference_ms": 53.45180002041161,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 63.660599989816546,
+          "inference_ms": 53.28350001946092,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 56.757699931040406,
+          "inference_ms": 53.267400013282895,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 66.26560003496706,
+          "inference_ms": 55.63260009512305,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 58.5574998985976,
+          "inference_ms": 54.63079991750419,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 71.41599990427494,
+          "inference_ms": 68.35690001025796,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 56.167899863794446,
+          "inference_ms": 52.65460000373423,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 63.98910004645586,
+          "inference_ms": 60.3389001917094,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 56.04739999398589,
+          "inference_ms": 52.96930018812418,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 65.08659990504384,
+          "inference_ms": 54.577199975028634,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 55.98239996470511,
+          "inference_ms": 52.41909995675087,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 66.20240001939237,
+          "inference_ms": 57.49769997783005,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 60.404400108382106,
+          "inference_ms": 55.37019995972514,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 58.43279999680817,
+          "inference_ms": 54.76729990914464,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 58.55860002338886,
+          "inference_ms": 54.98090013861656,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 72.4692998919636,
+          "inference_ms": 68.38459987193346,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 57.01019987463951,
+          "inference_ms": 54.102599853649735,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 79.2765999212861,
+          "inference_ms": 69.38780006021261,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 65.35910000093281,
+          "inference_ms": 62.14709999039769,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 62.27190000936389,
+          "inference_ms": 53.508699871599674,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 69.82859992422163,
+          "inference_ms": 65.99120004102588,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 56.77159992046654,
+          "inference_ms": 53.90719999559224,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 57.626800145953894,
+          "inference_ms": 53.68500016629696,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 57.25930002517998,
+          "inference_ms": 53.36450017057359,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 66.91549997776747,
+          "inference_ms": 63.94729996100068,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 77.27069989778101,
+          "inference_ms": 67.29899998754263,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 58.3084998652339,
+          "inference_ms": 54.89889997988939,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 60.32929988577962,
+          "inference_ms": 51.65879987180233,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 58.00499999895692,
+          "inference_ms": 54.01680013164878,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 57.211400009691715,
+          "inference_ms": 53.79130016081035,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 57.407099986448884,
+          "inference_ms": 53.717299830168486,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 56.71739997342229,
+          "inference_ms": 52.988900104537606,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 56.45029991865158,
+          "inference_ms": 53.28190000727773,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 63.78800002858043,
+          "inference_ms": 53.52630000561476,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 69.1568001639098,
+          "inference_ms": 65.62949996441603,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 64.20459994114935,
+          "inference_ms": 55.30190002173185,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 55.63149997033179,
+          "inference_ms": 51.70319997705519,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 60.6199000030756,
+          "inference_ms": 56.64470000192523,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 73.33809998817742,
+          "inference_ms": 68.86260001920164,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 59.4911000225693,
+          "inference_ms": 55.224700132384896,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 63.81279998458922,
+          "inference_ms": 59.822099981829524,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 78.47960013896227,
+          "inference_ms": 68.2254999410361,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 79.67250002548099,
+          "inference_ms": 74.93570004589856,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 73.7523001153022,
+          "inference_ms": 65.14160009101033,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 69.66500007547438,
+          "inference_ms": 65.50040002912283,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 71.28500007092953,
+          "inference_ms": 68.18599998950958,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 58.12599998898804,
+          "inference_ms": 54.344199830666184,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 70.79269993118942,
+          "inference_ms": 66.82750000618398,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 58.257600059732795,
+          "inference_ms": 55.224500130862,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 64.4853999838233,
+          "inference_ms": 54.38729980960488,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 57.114699855446815,
+          "inference_ms": 53.728300146758556,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 60.02389988861978,
+          "inference_ms": 51.86609993688762,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 57.47290002182126,
+          "inference_ms": 53.54809993878007,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 57.09260003641248,
+          "inference_ms": 54.2951999232173,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 72.30620016343892,
+          "inference_ms": 68.6864999588579,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 58.448700001463294,
+          "inference_ms": 54.77909999899566,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 57.11170006543398,
+          "inference_ms": 54.18219999410212,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 64.26410004496574,
+          "inference_ms": 54.37949998304248,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 57.86440009251237,
+          "inference_ms": 54.46089990437031,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 73.44079995527864,
+          "inference_ms": 64.60839998908341,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        }
+      ]
+    },
+    "b1": {
+      "total_response": {
+        "n": 96,
+        "mean_ms": 91.2751666692202,
+        "median_ms": 89.19690002221614,
+        "p90_ms": 104.60369987413287,
+        "minimum_ms": 79.67859995551407,
+        "maximum_ms": 136.97510003112257
+      },
+      "inference_only": {
+        "n": 96,
+        "mean_ms": 86.10445626254659,
+        "median_ms": 83.63654999993742,
+        "p90_ms": 96.8444999307394,
+        "minimum_ms": 76.40530006028712,
+        "maximum_ms": 132.06200022250414
+      },
+      "artifact_sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+      "deployment": {
+        "role": "app_asset",
+        "artifact_location": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b1.tflite",
+        "deployment_eligible": true
+      },
+      "invocation_positions": {
+        "2": 24,
+        "1": 24,
+        "3": 24,
+        "4": 24
+      },
+      "per_image": [
+        {
+          "image_index": 0,
+          "label": "cercospora",
+          "path": "data/images/bracol_expert/1630_1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 92.17881669367974,
+            "median_ms": 90.4151500435546,
+            "p90_ms": 96.11841004807502,
+            "minimum_ms": 81.29850006662309,
+            "maximum_ms": 136.97510003112257
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 87.97730835309873,
+            "median_ms": 86.52554999571294,
+            "p90_ms": 92.12176012806594,
+            "minimum_ms": 76.87820005230606,
+            "maximum_ms": 132.06200022250414
+          }
+        },
+        {
+          "image_index": 1,
+          "label": "healthy",
+          "path": "data/bracol/classification/dataset/leaf/948.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 88.37105834390968,
+            "median_ms": 83.20919994730502,
+            "p90_ms": 94.69003998674452,
+            "minimum_ms": 79.87309992313385,
+            "maximum_ms": 125.77629997394979
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 85.19789167136575,
+            "median_ms": 79.8499999800697,
+            "p90_ms": 91.34042989462614,
+            "minimum_ms": 76.92279992625117,
+            "maximum_ms": 122.31560004875064
+          }
+        },
+        {
+          "image_index": 2,
+          "label": "miner",
+          "path": "data/images/agml/41749.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 91.2825499738877,
+            "median_ms": 91.18949994444847,
+            "p90_ms": 100.1532998867333,
+            "minimum_ms": 81.54150005429983,
+            "maximum_ms": 105.64980003982782
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 87.17302502676223,
+            "median_ms": 87.23255002405494,
+            "p90_ms": 96.53968000784516,
+            "minimum_ms": 77.70890020765364,
+            "maximum_ms": 100.37220013327897
+          }
+        },
+        {
+          "image_index": 3,
+          "label": "phoma",
+          "path": "data/images/agml/7979.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 91.16424166131765,
+            "median_ms": 93.50389998871833,
+            "p90_ms": 100.37895985879004,
+            "minimum_ms": 80.85569995455444,
+            "maximum_ms": 100.93529988080263
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 87.20208341643836,
+            "median_ms": 88.91180017963052,
+            "p90_ms": 96.34054987691343,
+            "minimum_ms": 77.09770021028817,
+            "maximum_ms": 97.17330010607839
+          }
+        },
+        {
+          "image_index": 4,
+          "label": "rust",
+          "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 87.67668332438916,
+            "median_ms": 84.96254996862262,
+            "p90_ms": 95.79280002508312,
+            "minimum_ms": 79.67859995551407,
+            "maximum_ms": 109.1741998679936
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 84.55241667494799,
+            "median_ms": 81.30799990613014,
+            "p90_ms": 92.71280998364091,
+            "minimum_ms": 76.40530006028712,
+            "maximum_ms": 106.35769995860755
+          }
+        },
+        {
+          "image_index": 5,
+          "label": "red_spider_mite",
+          "path": "data/images/rocole/C7P12E1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 97.05624166720857,
+            "median_ms": 94.79495009873062,
+            "p90_ms": 108.99587993044406,
+            "minimum_ms": 87.7279001288116,
+            "maximum_ms": 111.45050008781254
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 86.5948000185502,
+            "median_ms": 84.05529998708516,
+            "p90_ms": 97.95387000776827,
+            "minimum_ms": 78.10689997859299,
+            "maximum_ms": 101.60399996675551
+          }
+        },
+        {
+          "image_index": 6,
+          "label": "weevil_damage",
+          "path": "data/images/coffeeleaf_co/COCO_Muy_A_101_13.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 91.15473332349211,
+            "median_ms": 92.69844996742904,
+            "p90_ms": 97.26274015847594,
+            "minimum_ms": 80.04019991494715,
+            "maximum_ms": 113.27530001290143
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 87.68378328143929,
+            "median_ms": 89.2136498587206,
+            "p90_ms": 93.56733988970518,
+            "minimum_ms": 76.8289000261575,
+            "maximum_ms": 109.71529991365969
+          }
+        },
+        {
+          "image_index": 7,
+          "label": "unsupported",
+          "path": "data/images/beans/bean_rust_test.2.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 91.31700836587697,
+            "median_ms": 87.28394994977862,
+            "p90_ms": 106.7407799884677,
+            "minimum_ms": 84.83640011399984,
+            "maximum_ms": 108.56800014153123
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 82.45434165777017,
+            "median_ms": 78.5859499592334,
+            "p90_ms": 95.50213008187711,
+            "minimum_ms": 76.60770020447671,
+            "maximum_ms": 98.69539993815124
+          }
+        }
+      ],
+      "trials": [
+        {
+          "total_response_ms": 95.90610000304878,
+          "inference_ms": 91.61380003206432,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 94.86289997585118,
+          "inference_ms": 91.53299988247454,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 91.6436999104917,
+          "inference_ms": 87.60019997134805,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 94.1900999750942,
+          "inference_ms": 90.27050016447902,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 82.32269994914532,
+          "inference_ms": 79.29209992289543,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 111.45050008781254,
+          "inference_ms": 101.60399996675551,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 91.67409990914166,
+          "inference_ms": 88.22159981355071,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 107.41639998741448,
+          "inference_ms": 98.69539993815124,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 81.63650007918477,
+          "inference_ms": 77.45189988054335,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 82.5084000825882,
+          "inference_ms": 79.36770003288984,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 100.6906998809427,
+          "inference_ms": 97.08480001427233,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 87.9188000690192,
+          "inference_ms": 84.18640005402267,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 93.50860002450645,
+          "inference_ms": 90.57270013727248,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 103.81619981490076,
+          "inference_ms": 93.8514000736177,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 96.06070001609623,
+          "inference_ms": 92.62540005147457,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 87.22549979574978,
+          "inference_ms": 78.14920018427074,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 82.09549984894693,
+          "inference_ms": 78.18559999577701,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 80.92790003865957,
+          "inference_ms": 77.80739990994334,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 82.31550012715161,
+          "inference_ms": 78.65160005167127,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 82.23860012367368,
+          "inference_ms": 78.36499996483326,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 79.67859995551407,
+          "inference_ms": 76.40530006028712,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 90.45620006509125,
+          "inference_ms": 79.15679994039237,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 95.60719993896782,
+          "inference_ms": 91.84219990856946,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 87.39030011929572,
+          "inference_ms": 78.72510002925992,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 88.84410001337528,
+          "inference_ms": 84.84499994665384,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 81.58480003476143,
+          "inference_ms": 78.70710012502968,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 81.54150005429983,
+          "inference_ms": 77.70890020765364,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 93.62590010277927,
+          "inference_ms": 88.5164001956582,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 86.5400000475347,
+          "inference_ms": 83.72039999812841,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 98.80030015483499,
+          "inference_ms": 89.21059989370406,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 82.20340008847415,
+          "inference_ms": 78.96399986930192,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.34240010380745,
+          "inference_ms": 79.20449995435774,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 82.06419995985925,
+          "inference_ms": 76.87820005230606,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 83.85719987563789,
+          "inference_ms": 80.2537000272423,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 90.73529997840524,
+          "inference_ms": 85.15130006708205,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 93.38189987465739,
+          "inference_ms": 89.30720016360283,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 96.0466000251472,
+          "inference_ms": 92.95059996657073,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 105.39119993336499,
+          "inference_ms": 95.20140010863543,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 97.3963001742959,
+          "inference_ms": 93.6719998717308,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 88.49200000986457,
+          "inference_ms": 79.91209998726845,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 96.14200005307794,
+          "inference_ms": 92.17820013873279,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 82.22790015861392,
+          "inference_ms": 79.140700167045,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 82.56289991550148,
+          "inference_ms": 78.71449994854629,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 80.85569995455444,
+          "inference_ms": 77.09770021028817,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 82.2004999499768,
+          "inference_ms": 79.03550006449223,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 88.92600005492568,
+          "inference_ms": 79.05320008285344,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 85.58979979716241,
+          "inference_ms": 82.19010010361671,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 108.56800014153123,
+          "inference_ms": 95.84120009094477,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 81.29850006662309,
+          "inference_ms": 76.94229995831847,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.42579987645149,
+          "inference_ms": 83.60449993051589,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 85.68920008838177,
+          "inference_ms": 82.16260001063347,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 100.93529988080263,
+          "inference_ms": 97.17330010607839,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 109.1741998679936,
+          "inference_ms": 106.35769995860755,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 89.4677999895066,
+          "inference_ms": 78.37080000899732,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 93.72280002571642,
+          "inference_ms": 90.20569990389049,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 85.14380012638867,
+          "inference_ms": 76.60770020447671,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 92.16960007324815,
+          "inference_ms": 88.25819985941052,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 125.77629997394979,
+          "inference_ms": 122.31560004875064,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 93.97349995560944,
+          "inference_ms": 89.907499961555,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 81.00280002690852,
+          "inference_ms": 77.30560004711151,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.23089990578592,
+          "inference_ms": 82.96749996952713,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 98.83839986287057,
+          "inference_ms": 88.95380003377795,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 94.24429992213845,
+          "inference_ms": 91.01760014891624,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 100.66019999794662,
+          "inference_ms": 92.45050000026822,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 95.32520011998713,
+          "inference_ms": 91.33720002137125,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 79.87309992313385,
+          "inference_ms": 76.92279992625117,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 90.71349981240928,
+          "inference_ms": 86.86490007676184,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 95.29069997370243,
+          "inference_ms": 91.3015000987798,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 91.36570012196898,
+          "inference_ms": 88.36499997414649,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 87.7279001288116,
+          "inference_ms": 78.10689997859299,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 80.04019991494715,
+          "inference_ms": 76.8289000261575,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 84.83640011399984,
+          "inference_ms": 76.62579999305308,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 136.97510003112257,
+          "inference_ms": 132.06200022250414,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 93.13430008478463,
+          "inference_ms": 89.60730000399053,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 105.64980003982782,
+          "inference_ms": 100.37220013327897,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 100.66759982146323,
+          "inference_ms": 96.60419984720647,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 83.69420003145933,
+          "inference_ms": 79.64849984273314,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 109.39639993011951,
+          "inference_ms": 98.25969999656081,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 113.27530001290143,
+          "inference_ms": 109.71529991365969,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 85.82849986851215,
+          "inference_ms": 77.0287998020649,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 81.70280000194907,
+          "inference_ms": 77.76920008473098,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 86.71290008351207,
+          "inference_ms": 83.66860006935894,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 94.55829998478293,
+          "inference_ms": 90.2241999283433,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 86.08229993842542,
+          "inference_ms": 82.32950000092387,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 80.66019997932017,
+          "inference_ms": 77.85370014607906,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 89.61439994163811,
+          "inference_ms": 79.15380015037954,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 82.57739990949631,
+          "inference_ms": 78.7565999198705,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 86.74470009282231,
+          "inference_ms": 78.44679988920689,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 91.98620007373393,
+          "inference_ms": 88.20610004477203,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 82.56120001897216,
+          "inference_ms": 79.44629993289709,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 95.31669993884861,
+          "inference_ms": 91.63359995000064,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 97.78120019473135,
+          "inference_ms": 93.96770014427602,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 80.69800003431737,
+          "inference_ms": 77.46000005863607,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 90.78960004262626,
+          "inference_ms": 78.21519998833537,
+          "predicted_label": "rust",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 81.46530017256737,
+          "inference_ms": 78.16599984653294,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.15590003319085,
+          "inference_ms": 77.76499981991947,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        }
+      ]
+    },
+    "b2": {
+      "total_response": {
+        "n": 96,
+        "mean_ms": 98.05058124523687,
+        "median_ms": 95.06775008048862,
+        "p90_ms": 110.09775009006262,
+        "minimum_ms": 84.65630002319813,
+        "maximum_ms": 151.15479985252023
+      },
+      "inference_only": {
+        "n": 96,
+        "mean_ms": 92.91921040373079,
+        "median_ms": 88.43474986497313,
+        "p90_ms": 106.13039997406304,
+        "minimum_ms": 81.48279995657504,
+        "maximum_ms": 146.43670013174415
+      },
+      "artifact_sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+      "deployment": {
+        "role": "app_asset",
+        "artifact_location": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b2.tflite",
+        "deployment_eligible": true
+      },
+      "invocation_positions": {
+        "4": 24,
+        "2": 24,
+        "1": 24,
+        "3": 24
+      },
+      "per_image": [
+        {
+          "image_index": 0,
+          "label": "cercospora",
+          "path": "data/images/bracol_expert/1630_1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 94.53712498846774,
+            "median_ms": 91.96930006146431,
+            "p90_ms": 104.62227985262871,
+            "minimum_ms": 87.18429994769394,
+            "maximum_ms": 105.20300013013184
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 90.1239249506034,
+            "median_ms": 87.33454998582602,
+            "p90_ms": 99.63629986159503,
+            "minimum_ms": 82.78620010241866,
+            "maximum_ms": 101.15360002964735
+          }
+        },
+        {
+          "image_index": 1,
+          "label": "healthy",
+          "path": "data/bracol/classification/dataset/leaf/948.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 92.97874168260023,
+            "median_ms": 91.39409998897463,
+            "p90_ms": 100.22499000187963,
+            "minimum_ms": 85.1585001219064,
+            "maximum_ms": 106.3844000454992
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 89.74605829765399,
+            "median_ms": 87.9008499905467,
+            "p90_ms": 97.2807998303324,
+            "minimum_ms": 82.02750002965331,
+            "maximum_ms": 102.47489996254444
+          }
+        },
+        {
+          "image_index": 2,
+          "label": "miner",
+          "path": "data/images/agml/41749.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 102.19128330936655,
+            "median_ms": 97.43674995843321,
+            "p90_ms": 119.81565991882235,
+            "minimum_ms": 86.84260002337396,
+            "maximum_ms": 135.73880004696548
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 98.27089162232976,
+            "median_ms": 93.71109993662685,
+            "p90_ms": 116.18591991718858,
+            "minimum_ms": 83.20909994654357,
+            "maximum_ms": 131.6709998063743
+          }
+        },
+        {
+          "image_index": 3,
+          "label": "phoma",
+          "path": "data/images/agml/7979.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 91.81495829640578,
+            "median_ms": 89.58954992704093,
+            "p90_ms": 98.09458998497576,
+            "minimum_ms": 87.42110012099147,
+            "maximum_ms": 100.370500003919
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 87.81449170783162,
+            "median_ms": 85.31010011211038,
+            "p90_ms": 94.21776998788118,
+            "minimum_ms": 83.48209992982447,
+            "maximum_ms": 96.3779001031071
+          }
+        },
+        {
+          "image_index": 4,
+          "label": "rust",
+          "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 95.88823335555692,
+            "median_ms": 89.32869997806847,
+            "p90_ms": 105.72277002502233,
+            "minimum_ms": 85.77070012688637,
+            "maximum_ms": 126.7040001694113
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 92.73874164015676,
+            "median_ms": 86.1704999115318,
+            "p90_ms": 102.62905990239233,
+            "minimum_ms": 82.48899993486702,
+            "maximum_ms": 123.49919998086989
+          }
+        },
+        {
+          "image_index": 5,
+          "label": "red_spider_mite",
+          "path": "data/images/rocole/C7P12E1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 104.23691667771588,
+            "median_ms": 100.36619997117668,
+            "p90_ms": 118.63358016125858,
+            "minimum_ms": 93.07119995355606,
+            "maximum_ms": 138.6530001182109
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 94.13655003299937,
+            "median_ms": 90.11790005024523,
+            "p90_ms": 108.51178008597344,
+            "minimum_ms": 83.0798998940736,
+            "maximum_ms": 127.91600008495152
+          }
+        },
+        {
+          "image_index": 6,
+          "label": "weevil_damage",
+          "path": "data/images/coffeeleaf_co/COCO_Muy_A_101_13.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 101.69065000566964,
+            "median_ms": 98.72715012170374,
+            "p90_ms": 109.91173009388149,
+            "minimum_ms": 84.65630002319813,
+            "maximum_ms": 151.15479985252023
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 98.07892500733335,
+            "median_ms": 95.38529999554157,
+            "p90_ms": 106.37245995458215,
+            "minimum_ms": 81.48279995657504,
+            "maximum_ms": 146.43670013174415
+          }
+        },
+        {
+          "image_index": 7,
+          "label": "unsupported",
+          "path": "data/images/beans/bean_rust_test.2.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 101.06674164611225,
+            "median_ms": 97.39919996354729,
+            "p90_ms": 115.0100500555709,
+            "minimum_ms": 90.18899989314377,
+            "maximum_ms": 123.77659999765456
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 92.44409997093801,
+            "median_ms": 88.918799883686,
+            "p90_ms": 106.41567991115153,
+            "minimum_ms": 82.06399995833635,
+            "maximum_ms": 113.97899989970028
+          }
+        }
+      ],
+      "trials": [
+        {
+          "total_response_ms": 95.2089000493288,
+          "inference_ms": 89.7415999788791,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 97.93029981665313,
+          "inference_ms": 95.03529989160597,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 135.73880004696548,
+          "inference_ms": 131.6709998063743,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 90.60289990156889,
+          "inference_ms": 85.80870018340647,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 102.54190000705421,
+          "inference_ms": 99.27979996427894,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 103.21870003826916,
+          "inference_ms": 92.87890000268817,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 100.55020009167492,
+          "inference_ms": 97.32039994560182,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 110.21080007776618,
+          "inference_ms": 101.65000008419156,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 99.11369998008013,
+          "inference_ms": 94.72249983809888,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 85.1585001219064,
+          "inference_ms": 82.02750002965331,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.81059994362295,
+          "inference_ms": 83.40250002220273,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 95.24529986083508,
+          "inference_ms": 91.47790004499257,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 85.77070012688637,
+          "inference_ms": 82.9432001337409,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 105.48259993083775,
+          "inference_ms": 95.74120002798736,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 90.06999991834164,
+          "inference_ms": 86.92079992033541,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 115.54330005310476,
+          "inference_ms": 106.94519989192486,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 101.18349990807474,
+          "inference_ms": 96.49189980700612,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 86.54199982993305,
+          "inference_ms": 83.64360011182725,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 88.96319987252355,
+          "inference_ms": 85.03099996596575,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 97.30249992571771,
+          "inference_ms": 93.51010015234351,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 88.27519998885691,
+          "inference_ms": 85.13459982350469,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 94.35890009626746,
+          "inference_ms": 84.3684000428766,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 98.65760011598468,
+          "inference_ms": 95.20730003714561,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 90.18899989314377,
+          "inference_ms": 82.06399995833635,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 104.96529983356595,
+          "inference_ms": 101.15360002964735,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 87.96040015295148,
+          "inference_ms": 84.92089994251728,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 90.53590008988976,
+          "inference_ms": 86.86799998395145,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 100.370500003919,
+          "inference_ms": 96.3779001031071,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 126.7040001694113,
+          "inference_ms": 123.49919998086989,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 93.24979991652071,
+          "inference_ms": 83.58030021190643,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.32509992457926,
+          "inference_ms": 82.72940013557673,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 94.92660011164844,
+          "inference_ms": 86.69470017775893,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 88.72970007359982,
+          "inference_ms": 84.92749999277294,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 94.5909998845309,
+          "inference_ms": 90.88080003857613,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 113.70879993773997,
+          "inference_ms": 109.4810999929905,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 88.22560007683933,
+          "inference_ms": 84.03040003031492,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.73220011405647,
+          "inference_ms": 83.52520014159381,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 97.5136999040842,
+          "inference_ms": 87.35690009780228,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 84.65630002319813,
+          "inference_ms": 81.48279995657504,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 92.91179990395904,
+          "inference_ms": 84.6031999681145,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 87.19940017908812,
+          "inference_ms": 82.78620010241866,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 100.4145999904722,
+          "inference_ms": 97.51999983564019,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 102.4805000051856,
+          "inference_ms": 98.83929998613894,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 88.57619995251298,
+          "inference_ms": 84.81150004081428,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 85.84129996597767,
+          "inference_ms": 82.48899993486702,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 108.99079986847937,
+          "inference_ms": 98.48839999176562,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 151.15479985252023,
+          "inference_ms": 146.43670013174415,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 103.06779993698001,
+          "inference_ms": 93.97609997540712,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 101.53510002419353,
+          "inference_ms": 96.64739994332194,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 95.51999997347593,
+          "inference_ms": 92.55559998564422,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 88.28389993868768,
+          "inference_ms": 84.38160014338791,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 88.03069987334311,
+          "inference_ms": 83.785800030455,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.5303999055177,
+          "inference_ms": 84.38529982231557,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 93.07119995355606,
+          "inference_ms": 83.26119999401271,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 98.79670012742281,
+          "inference_ms": 95.56329995393753,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 99.20539986342192,
+          "inference_ms": 90.73419985361397,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.66289986670017,
+          "inference_ms": 83.45200004987419,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 98.51850010454655,
+          "inference_ms": 95.12799978256226,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 92.39299991168082,
+          "inference_ms": 88.58289988711476,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 92.2321998514235,
+          "inference_ms": 88.28659984283149,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 106.07620002701879,
+          "inference_ms": 103.00119989551604,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 94.49899988248944,
+          "inference_ms": 84.42239998839796,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 105.04220006987453,
+          "inference_ms": 101.01510002277792,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 92.4543000292033,
+          "inference_ms": 83.77239992842078,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 87.18429994769394,
+          "inference_ms": 83.20949994958937,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 106.3844000454992,
+          "inference_ms": 102.47489996254444,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 109.36919995583594,
+          "inference_ms": 105.19319982267916,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 87.81399996951222,
+          "inference_ms": 84.18600005097687,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 87.80450001358986,
+          "inference_ms": 84.3340998981148,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 119.7050001937896,
+          "inference_ms": 109.57160010002553,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 109.98470010235906,
+          "inference_ms": 106.6006999462843,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 103.01249986514449,
+          "inference_ms": 94.65370001271367,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 105.20300013013184,
+          "inference_ms": 99.96839985251427,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 88.19720009341836,
+          "inference_ms": 84.81400017626584,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 109.67470007017255,
+          "inference_ms": 105.66010000184178,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 87.77590002864599,
+          "inference_ms": 83.48209992982447,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 90.38219996728003,
+          "inference_ms": 87.20639999955893,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 138.6530001182109,
+          "inference_ms": 127.91600008495152,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 109.25500001758337,
+          "inference_ms": 104.3183000292629,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 123.77659999765456,
+          "inference_ms": 113.97899989970028,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.8253998234868,
+          "inference_ms": 83.82449997588992,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 86.50670014321804,
+          "inference_ms": 83.61399988643825,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 86.84260002337396,
+          "inference_ms": 83.20909994654357,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 87.42110012099147,
+          "inference_ms": 83.72050011530519,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 100.70149996317923,
+          "inference_ms": 97.83590002916753,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 108.76950016245246,
+          "inference_ms": 98.9733999595046,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 87.4860999174416,
+          "inference_ms": 84.20709986239672,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 91.90979995764792,
+          "inference_ms": 83.15329998731613,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 88.63430004566908,
+          "inference_ms": 84.56199988722801,
+          "predicted_label": "phoma",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 88.02130003459752,
+          "inference_ms": 84.33809992857277,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 120.49419991672039,
+          "inference_ms": 116.93089990876615,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 98.18259999155998,
+          "inference_ms": 94.29639996960759,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 102.29870001785457,
+          "inference_ms": 99.23100005835295,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 93.33080006763339,
+          "inference_ms": 83.0798998940736,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 98.3090999070555,
+          "inference_ms": 95.14520014636219,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 95.59300006367266,
+          "inference_ms": 87.10339991375804,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        }
+      ]
+    },
+    "b3": {
+      "total_response": {
+        "n": 96,
+        "mean_ms": 125.23042915806097,
+        "median_ms": 122.93459998909384,
+        "p90_ms": 140.48065012320876,
+        "minimum_ms": 110.6556998565793,
+        "maximum_ms": 157.08059980534017
+      },
+      "inference_only": {
+        "n": 96,
+        "mean_ms": 120.11700728180585,
+        "median_ms": 118.08700009714812,
+        "p90_ms": 135.73035004083067,
+        "minimum_ms": 107.49009996652603,
+        "maximum_ms": 152.3233000189066
+      },
+      "artifact_sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+      "deployment": {
+        "role": "comparison_candidate",
+        "installed_in_app": false,
+        "deployment_eligible": false,
+        "artifact_location": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\coffee-leaf-b3.tflite",
+        "note": "Validated comparison candidate exceeds the unchanged 10 MB app-artifact limit; not installed in app",
+        "gates": "Candidate decisions apply the same app policy offline; model choice in the app is not implied"
+      },
+      "invocation_positions": {
+        "3": 24,
+        "4": 24,
+        "2": 24,
+        "1": 24
+      },
+      "per_image": [
+        {
+          "image_index": 0,
+          "label": "cercospora",
+          "path": "data/images/bracol_expert/1630_1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 124.5158999809064,
+            "median_ms": 118.38334996718913,
+            "p90_ms": 137.86044004373252,
+            "minimum_ms": 113.0105999764055,
+            "maximum_ms": 147.99849991686642
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 120.25984997550647,
+            "median_ms": 114.15660008788109,
+            "p90_ms": 133.6839299183339,
+            "minimum_ms": 108.71159983798862,
+            "maximum_ms": 144.14859982207417
+          }
+        },
+        {
+          "image_index": 1,
+          "label": "healthy",
+          "path": "data/bracol/classification/dataset/leaf/948.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 118.91935833652194,
+            "median_ms": 116.80779990274459,
+            "p90_ms": 130.02738999202847,
+            "minimum_ms": 111.26699997112155,
+            "maximum_ms": 139.09230008721352
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 115.78958330210298,
+            "median_ms": 113.78225008957088,
+            "p90_ms": 127.02209991402924,
+            "minimum_ms": 108.10059984214604,
+            "maximum_ms": 136.26389997079968
+          }
+        },
+        {
+          "image_index": 2,
+          "label": "miner",
+          "path": "data/images/agml/41749.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 123.01334996785347,
+            "median_ms": 124.15154988411814,
+            "p90_ms": 131.95067010819912,
+            "minimum_ms": 111.79169989190996,
+            "maximum_ms": 133.02730000577867
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 119.21574998026092,
+            "median_ms": 120.53824996110052,
+            "p90_ms": 128.1120701925829,
+            "minimum_ms": 108.25589997693896,
+            "maximum_ms": 128.844799939543
+          }
+        },
+        {
+          "image_index": 3,
+          "label": "phoma",
+          "path": "data/images/agml/7979.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 127.29394170067583,
+            "median_ms": 124.12685016170144,
+            "p90_ms": 141.3926201639697,
+            "minimum_ms": 113.23719983920455,
+            "maximum_ms": 143.61019991338253
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 123.23162500979379,
+            "median_ms": 120.41600001975894,
+            "p90_ms": 137.4101700494066,
+            "minimum_ms": 109.3937000259757,
+            "maximum_ms": 138.80059984512627
+          }
+        },
+        {
+          "image_index": 4,
+          "label": "rust",
+          "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 121.61730831333746,
+            "median_ms": 118.13309986609966,
+            "p90_ms": 142.2705200733617,
+            "minimum_ms": 110.6556998565793,
+            "maximum_ms": 146.40469988808036
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 118.5822583308133,
+            "median_ms": 115.10010005440563,
+            "p90_ms": 139.21276999171823,
+            "minimum_ms": 107.84640000201762,
+            "maximum_ms": 142.8843999747187
+          }
+        },
+        {
+          "image_index": 5,
+          "label": "red_spider_mite",
+          "path": "data/images/rocole/C7P12E1.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 127.151458330142,
+            "median_ms": 124.90459997206926,
+            "p90_ms": 134.81631996110082,
+            "minimum_ms": 119.52579999342561,
+            "maximum_ms": 144.99890012666583
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 117.13185002251218,
+            "median_ms": 114.57430012524128,
+            "p90_ms": 124.66221991926432,
+            "minimum_ms": 109.68889994546771,
+            "maximum_ms": 135.19680011086166
+          }
+        },
+        {
+          "image_index": 6,
+          "label": "weevil_damage",
+          "path": "data/images/coffeeleaf_co/COCO_Muy_A_101_13.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 132.3110749362968,
+            "median_ms": 131.61675003357232,
+            "p90_ms": 143.46998014952987,
+            "minimum_ms": 115.01599987968802,
+            "maximum_ms": 157.08059980534017
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 128.8023583086518,
+            "median_ms": 128.4362500300631,
+            "p90_ms": 140.04906993359327,
+            "minimum_ms": 111.67989997193217,
+            "maximum_ms": 152.3233000189066
+          }
+        },
+        {
+          "image_index": 7,
+          "label": "unsupported",
+          "path": "data/images/beans/bean_rust_test.2.jpg",
+          "total_response": {
+            "n": 12,
+            "mean_ms": 127.02104169875383,
+            "median_ms": 125.74699998367578,
+            "p90_ms": 133.06247014552355,
+            "minimum_ms": 116.18419992737472,
+            "maximum_ms": 155.8302000630647
+          },
+          "inference_only": {
+            "n": 12,
+            "mean_ms": 117.9227833248054,
+            "median_ms": 117.35855008009821,
+            "p90_ms": 124.11487991921604,
+            "minimum_ms": 107.49009996652603,
+            "maximum_ms": 144.81239998713136
+          }
+        }
+      ],
+      "trials": [
+        {
+          "total_response_ms": 116.35769996792078,
+          "inference_ms": 112.17260011471808,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 114.09400007687509,
+          "inference_ms": 111.21519980952144,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 117.32229986228049,
+          "inference_ms": 113.33279986865819,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 123.87220002710819,
+          "inference_ms": 120.04790012724698,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 120.15060009434819,
+          "inference_ms": 117.13919998146594,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 122.15319997631013,
+          "inference_ms": 112.13740007951856,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 115.01599987968802,
+          "inference_ms": 111.67989997193217,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 131.40509999357164,
+          "inference_ms": 121.42840004526079,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 113.0105999764055,
+          "inference_ms": 108.71159983798862,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 116.7081999592483,
+          "inference_ms": 113.87130012735724,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 124.30169992148876,
+          "inference_ms": 120.68419996649027,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 117.31990007683635,
+          "inference_ms": 113.23240003548563,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 114.0974999871105,
+          "inference_ms": 110.91829999350011,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 144.99890012666583,
+          "inference_ms": 135.19680011086166,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 122.86729994229972,
+          "inference_ms": 119.33539994060993,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 133.21620016358793,
+          "inference_ms": 124.23909991048276,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 117.11749993264675,
+          "inference_ms": 112.77870018966496,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 139.09230008721352,
+          "inference_ms": 136.26389997079968,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 121.62020010873675,
+          "inference_ms": 117.80180013738573,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 116.61569983698428,
+          "inference_ms": 112.45899996720254,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 120.12659991160035,
+          "inference_ms": 117.2572998329997,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 119.52579999342561,
+          "inference_ms": 109.68889994546771,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 119.3066998384893,
+          "inference_ms": 115.583699895069,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 120.48130016773939,
+          "inference_ms": 112.29449999518692,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 133.0206000711769,
+          "inference_ms": 129.10769996233284,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 114.28039986640215,
+          "inference_ms": 111.08689988031983,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 133.02730000577867,
+          "inference_ms": 128.844799939543,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 137.1052002068609,
+          "inference_ms": 133.03859997540712,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 128.0912000220269,
+          "inference_ms": 125.14550006017089,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 135.08699997328222,
+          "inference_ms": 124.94389992207289,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 130.9423001948744,
+          "inference_ms": 127.82500009052455,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 118.68020007386804,
+          "inference_ms": 109.84869999811053,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 1,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 131.46229996345937,
+          "inference_ms": 126.10209989361465,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 119.20040007680655,
+          "inference_ms": 116.0780000500381,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 131.48780004121363,
+          "inference_ms": 127.7976999990642,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 143.61019991338253,
+          "inference_ms": 138.80059984512627,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 122.16660007834435,
+          "inference_ms": 119.42810006439686,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 120.55279989726841,
+          "inference_ms": 110.6485000345856,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 126.10609992407262,
+          "inference_ms": 122.69989983178675,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 117.29150009341538,
+          "inference_ms": 109.203000087291,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 118.14190004952252,
+          "inference_ms": 114.23800000920892,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 117.22000013105571,
+          "inference_ms": 113.83380019105971,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 111.79169989190996,
+          "inference_ms": 108.25589997693896,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 113.23719983920455,
+          "inference_ms": 109.3937000259757,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 116.13959982059896,
+          "inference_ms": 113.06100012734532,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 119.91020012646914,
+          "inference_ms": 109.91600016131997,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 141.91280002705753,
+          "inference_ms": 138.12820008024573,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 124.65870007872581,
+          "inference_ms": 116.34490010328591,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 129.24899999052286,
+          "inference_ms": 125.17490005120635,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 130.8079999871552,
+          "inference_ms": 127.89319991134107,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 125.69979997351766,
+          "inference_ms": 121.86159985139966,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 124.07920020632446,
+          "inference_ms": 120.44750014320016,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 110.6556998565793,
+          "inference_ms": 107.84640000201762,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 132.3801998514682,
+          "inference_ms": 121.73839984461665,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 132.29119987227023,
+          "inference_ms": 129.04749996960163,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 130.85739989764988,
+          "inference_ms": 119.18179993517697,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 147.99849991686642,
+          "inference_ms": 144.14859982207417,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 111.36629991233349,
+          "inference_ms": 108.10059984214604,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 124.00139984674752,
+          "inference_ms": 120.39229995571077,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 120.16670010052621,
+          "inference_ms": 116.27730005420744,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 143.84600007906556,
+          "inference_ms": 140.77579998411238,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 122.48390004970133,
+          "inference_ms": 112.39330004900694,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 137.62029982171953,
+          "inference_ms": 134.32270009070635,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 126.83529988862574,
+          "inference_ms": 118.37220005691051,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 2,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 116.67410004884005,
+          "inference_ms": 112.53299983218312,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 116.90739984624088,
+          "inference_ms": 113.73069998808205,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 132.00210011564195,
+          "inference_ms": 128.14700021408498,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 141.869000159204,
+          "inference_ms": 137.89590005762875,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 113.0733999889344,
+          "inference_ms": 109.8628998734057,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 120.3215999994427,
+          "inference_ms": 110.61659990809858,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 134.12179984152317,
+          "inference_ms": 130.95879997126758,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 131.67889998294413,
+          "inference_ms": 122.99689999781549,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 1,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 118.62479988485575,
+          "inference_ms": 114.07520016655326,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 123.00190003588796,
+          "inference_ms": 119.18219993822277,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 125.8129000198096,
+          "inference_ms": 121.67789996601641,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 134.11740004085004,
+          "inference_ms": 129.62569994851947,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 146.40469988808036,
+          "inference_ms": 142.8843999747187,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 127.3252998944372,
+          "inference_ms": 116.75530020147562,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 157.08059980534017,
+          "inference_ms": 152.3233000189066,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 155.8302000630647,
+          "inference_ms": 144.81239998713136,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 2,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 114.13559992797673,
+          "inference_ms": 109.88339991308749,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 113.08640008792281,
+          "inference_ms": 109.9638999439776,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 113.08779986575246,
+          "inference_ms": 109.4176999758929,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 124.17450011707842,
+          "inference_ms": 120.38449989631772,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 113.18550002761185,
+          "inference_ms": 110.13230006210506,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 129.26750001497567,
+          "inference_ms": 119.42000011913478,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 126.82479992508888,
+          "inference_ms": 123.46139992587268,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 116.18419992737472,
+          "inference_ms": 107.49009996652603,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 3,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 138.39820004068315,
+          "inference_ms": 134.19239991344512,
+          "predicted_label": "cercospora",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 0,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 111.26699997112155,
+          "inference_ms": 108.25529997237027,
+          "predicted_label": "healthy",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 1,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 116.00519996136427,
+          "inference_ms": 112.37529991194606,
+          "predicted_label": "miner",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 2,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 131.36009988375008,
+          "inference_ms": 127.17640004120767,
+          "predicted_label": "phoma",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 3,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        },
+        {
+          "total_response_ms": 111.47030000574887,
+          "inference_ms": 108.53590001352131,
+          "predicted_label": "cercospora",
+          "accepted": true,
+          "state": "possible",
+          "image_index": 4,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 4
+        },
+        {
+          "total_response_ms": 131.81110005825758,
+          "inference_ms": 122.12709989398718,
+          "predicted_label": "red_spider_mite",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 5,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 2
+        },
+        {
+          "total_response_ms": 143.6430001631379,
+          "inference_ms": 140.26249991729856,
+          "predicted_label": "weevil_damage",
+          "accepted": true,
+          "state": "confident",
+          "image_index": 6,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 1
+        },
+        {
+          "total_response_ms": 117.13350005447865,
+          "inference_ms": 108.8613998144865,
+          "predicted_label": "unsupported",
+          "accepted": false,
+          "state": "unclear",
+          "image_index": 7,
+          "round": 3,
+          "repetition": 4,
+          "model_position": 3
+        }
+      ]
+    }
+  },
+  "identity_before": {
+    "b0_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf.tflite",
+      "sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "bytes": 8091596
+    },
+    "b0_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config.json",
+      "sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368",
+      "bytes": 2567
+    },
+    "b0_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet\\best.safetensors",
+      "sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+      "bytes": 16272336
+    },
+    "b1_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b1.tflite",
+      "sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+      "bytes": 7324120
+    },
+    "b1_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config-b1.json",
+      "sha256": "06f6dfa8539db4a9fd82dcfaa371c37c8ba5efdeb61b9a11e79d81e1ffb0b4f7",
+      "bytes": 2952
+    },
+    "b1_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet_b1\\best.safetensors",
+      "sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+      "bytes": 26388856
+    },
+    "b2_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b2.tflite",
+      "sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+      "bytes": 8573416
+    },
+    "b2_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config-b2.json",
+      "sha256": "524ab5e7aca53339fcf8201de17fd71b27c1a97e52f27906b9782b40f410a649",
+      "bytes": 2939
+    },
+    "b2_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet_b2\\best.safetensors",
+      "sha256": "eb6a5d4daac75046befce1250bc9278d4c1d2ccfa8ccf0fe2f4302cb918e8dd8",
+      "bytes": 31166288
+    },
+    "b3_artifact": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\coffee-leaf-b3.tflite",
+      "sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+      "bytes": 11796544
+    },
+    "b3_config": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\model-config-b3.json",
+      "sha256": "ca62871e4e796c75820a14c61552fd322aeaa1215d407c10345250aa3955aa6d",
+      "bytes": 3144
+    },
+    "b3_checkpoint": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\best.safetensors",
+      "sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+      "bytes": 43236632
+    },
+    "brightness": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\brightness-config.json",
+      "sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+      "bytes": 1893
+    },
+    "b0_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\manifest.json",
+      "sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+      "bytes": 9207106
+    },
+    "b1_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\scale_v3_manifest.json",
+      "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+      "bytes": 18916720
+    },
+    "b2_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\scale_v3_manifest.json",
+      "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+      "bytes": 18916720
+    },
+    "previous_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\comparison.json",
+      "sha256": "7b099fe988b3aff3cd0e3d69a9ac73fe2658b4a07014b64b6d27ba60e8851466",
+      "bytes": 547850
+    },
+    "previous_b0_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\b0_comparison.json",
+      "sha256": "7f4e1bcca507b9b03df45b4fba55c63e7c68c35c37dbde356204ff3bc5059b04",
+      "bytes": 184232
+    },
+    "previous_b1_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\b1_comparison.json",
+      "sha256": "8df48abee3119ec66a4f386c99c3938663cc74798803bed7fdde84663ba1f79f",
+      "bytes": 182576
+    },
+    "b3_training": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\training.json",
+      "sha256": "710e7de343747151789663c6af2de1cddcb109758b830515ea05631cb0a42e8a",
+      "bytes": 48827
+    },
+    "b3_completion_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\completion_verification.json",
+      "sha256": "33d6a2b198569378ab504e3f1812702e50ef27d678de3004e090aa7a2120567f",
+      "bytes": 3506
+    },
+    "b3_export_validation": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\export_validation.json",
+      "sha256": "bb551e1ea016ceb98db097d8bd97e6537a7c77a008ecd657cda52703915e716c",
+      "bytes": 1151
+    },
+    "b3_offline_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\offline_verification.json",
+      "sha256": "b2a98c253c752551ff8ee54e417843916a3862b040fd3293150263f83935abba",
+      "bytes": 638
+    },
+    "b3_float32_conversion_parity": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\float32_conversion_parity.json",
+      "sha256": "aa1f2aabc120eee1cb3e8bd8a97567a78d515c492d35583c7b7a19b3115d7f3d",
+      "bytes": 346
+    },
+    "b3_compression_validation": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\compression_validation.json",
+      "sha256": "cce5b27a3e633b454007646ed79bc3c0e41378567e409b21000e7aa9573e8546",
+      "bytes": 574
+    },
+    "b3_run_identity": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\run_identity.json",
+      "sha256": "fbe56354e31050479aad4f493c2851b3ce7445485cc90b1ad0414291a0752c03",
+      "bytes": 1663
+    },
+    "b3_temperature": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\temperature.json",
+      "sha256": "589257d09d60f4620105c66f80eb5c26e32643a9b984ad741f9cf396747a0a63",
+      "bytes": 130
+    },
+    "b3_calibration": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\calibration.json",
+      "sha256": "5b15821df497bd00f13a359487f887ffdc1fe3c1f1ab60bb1133047c74f7a357",
+      "bytes": 1993
+    },
+    "b3_orchestration_change_audit": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\orchestration_change_audit.json",
+      "sha256": "a3d386ce0468648edc3d21356af92b65c731fc3e042730c556005b86ccdad9d3",
+      "bytes": 588
+    },
+    "b3_b3_model.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_model.py",
+      "sha256": "d2d0671b696230867e5f0b75474e769fd6f4b0538a204173e244445f9c0400c9",
+      "bytes": 3457
+    },
+    "b3_b3_train.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_train.py",
+      "sha256": "98fd710a236396a330ec220690443c09d104933f212c8f7f55c611d619cdc160",
+      "bytes": 2940
+    },
+    "b3_b3_verify.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_verify.py",
+      "sha256": "deff3f3f14870a0ecbf06b8432e7fef791183406d0a144f6accda4efc6c8ed02",
+      "bytes": 2182
+    },
+    "b3_export_b3.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\export_b3.py",
+      "sha256": "5083d4aa515d2c51331c5dee1319286ba0aa45344ff214542e3107b5e478350c",
+      "bytes": 4820
+    },
+    "b3_verify_b3_offline.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\verify_b3_offline.py",
+      "sha256": "44ceff0e54110f744a8ed957d2e4149ba7b3375def941da65c7330156c7ea0f0",
+      "bytes": 1961
+    },
+    "b3_provenance": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\pretrained\\provenance.json",
+      "sha256": "c0523e0b934475e1b252e7c610271812a723e0fbe41b355706ada63caaebc977",
+      "bytes": 752
+    }
+  },
+  "identity_after": {
+    "b0_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf.tflite",
+      "sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "bytes": 8091596
+    },
+    "b0_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config.json",
+      "sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368",
+      "bytes": 2567
+    },
+    "b0_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet\\best.safetensors",
+      "sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+      "bytes": 16272336
+    },
+    "b1_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b1.tflite",
+      "sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+      "bytes": 7324120
+    },
+    "b1_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config-b1.json",
+      "sha256": "06f6dfa8539db4a9fd82dcfaa371c37c8ba5efdeb61b9a11e79d81e1ffb0b4f7",
+      "bytes": 2952
+    },
+    "b1_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet_b1\\best.safetensors",
+      "sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+      "bytes": 26388856
+    },
+    "b2_artifact": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\coffee-leaf-b2.tflite",
+      "sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+      "bytes": 8573416
+    },
+    "b2_config": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\model-config-b2.json",
+      "sha256": "524ab5e7aca53339fcf8201de17fd71b27c1a97e52f27906b9782b40f410a649",
+      "bytes": 2939
+    },
+    "b2_checkpoint": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\efficientnet_b2\\best.safetensors",
+      "sha256": "eb6a5d4daac75046befce1250bc9278d4c1d2ccfa8ccf0fe2f4302cb918e8dd8",
+      "bytes": 31166288
+    },
+    "b3_artifact": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\coffee-leaf-b3.tflite",
+      "sha256": "5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4",
+      "bytes": 11796544
+    },
+    "b3_config": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\model-config-b3.json",
+      "sha256": "ca62871e4e796c75820a14c61552fd322aeaa1215d407c10345250aa3955aa6d",
+      "bytes": 3144
+    },
+    "b3_checkpoint": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\best.safetensors",
+      "sha256": "a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433",
+      "bytes": 43236632
+    },
+    "brightness": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\assets\\model\\brightness-config.json",
+      "sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+      "bytes": 1893
+    },
+    "b0_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\manifest.json",
+      "sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+      "bytes": 9207106
+    },
+    "b1_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\scale_v3_manifest.json",
+      "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+      "bytes": 18916720
+    },
+    "b2_manifest": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\data\\scale_v3_manifest.json",
+      "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+      "bytes": 18916720
+    },
+    "previous_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\comparison.json",
+      "sha256": "7b099fe988b3aff3cd0e3d69a9ac73fe2658b4a07014b64b6d27ba60e8851466",
+      "bytes": 547850
+    },
+    "previous_b0_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\b0_comparison.json",
+      "sha256": "7f4e1bcca507b9b03df45b4fba55c63e7c68c35c37dbde356204ff3bc5059b04",
+      "bytes": 184232
+    },
+    "previous_b1_comparison.json": {
+      "path": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\runs\\model_comparison\\b1_comparison.json",
+      "sha256": "8df48abee3119ec66a4f386c99c3938663cc74798803bed7fdde84663ba1f79f",
+      "bytes": 182576
+    },
+    "b3_training": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\training.json",
+      "sha256": "710e7de343747151789663c6af2de1cddcb109758b830515ea05631cb0a42e8a",
+      "bytes": 48827
+    },
+    "b3_completion_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\completion_verification.json",
+      "sha256": "33d6a2b198569378ab504e3f1812702e50ef27d678de3004e090aa7a2120567f",
+      "bytes": 3506
+    },
+    "b3_export_validation": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\export_validation.json",
+      "sha256": "bb551e1ea016ceb98db097d8bd97e6537a7c77a008ecd657cda52703915e716c",
+      "bytes": 1151
+    },
+    "b3_offline_verification": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\offline_verification.json",
+      "sha256": "b2a98c253c752551ff8ee54e417843916a3862b040fd3293150263f83935abba",
+      "bytes": 638
+    },
+    "b3_float32_conversion_parity": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\float32_conversion_parity.json",
+      "sha256": "aa1f2aabc120eee1cb3e8bd8a97567a78d515c492d35583c7b7a19b3115d7f3d",
+      "bytes": 346
+    },
+    "b3_compression_validation": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\compression_validation.json",
+      "sha256": "cce5b27a3e633b454007646ed79bc3c0e41378567e409b21000e7aa9573e8546",
+      "bytes": 574
+    },
+    "b3_run_identity": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\run_identity.json",
+      "sha256": "fbe56354e31050479aad4f493c2851b3ce7445485cc90b1ad0414291a0752c03",
+      "bytes": 1663
+    },
+    "b3_temperature": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\temperature.json",
+      "sha256": "589257d09d60f4620105c66f80eb5c26e32643a9b984ad741f9cf396747a0a63",
+      "bytes": 130
+    },
+    "b3_calibration": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\calibration.json",
+      "sha256": "5b15821df497bd00f13a359487f887ffdc1fe3c1f1ab60bb1133047c74f7a357",
+      "bytes": 1993
+    },
+    "b3_orchestration_change_audit": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\run\\orchestration_change_audit.json",
+      "sha256": "a3d386ce0468648edc3d21356af92b65c731fc3e042730c556005b86ccdad9d3",
+      "bytes": 588
+    },
+    "b3_b3_model.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_model.py",
+      "sha256": "d2d0671b696230867e5f0b75474e769fd6f4b0538a204173e244445f9c0400c9",
+      "bytes": 3457
+    },
+    "b3_b3_train.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_train.py",
+      "sha256": "98fd710a236396a330ec220690443c09d104933f212c8f7f55c611d619cdc160",
+      "bytes": 2940
+    },
+    "b3_b3_verify.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\b3_verify.py",
+      "sha256": "deff3f3f14870a0ecbf06b8432e7fef791183406d0a144f6accda4efc6c8ed02",
+      "bytes": 2182
+    },
+    "b3_export_b3.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\export_b3.py",
+      "sha256": "5083d4aa515d2c51331c5dee1319286ba0aa45344ff214542e3107b5e478350c",
+      "bytes": 4820
+    },
+    "b3_verify_b3_offline.py": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\verify_b3_offline.py",
+      "sha256": "44ceff0e54110f744a8ed957d2e4149ba7b3375def941da65c7330156c7ea0f0",
+      "bytes": 1961
+    },
+    "b3_provenance": {
+      "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\can-you-find-the-chat-where\\outputs\\efficientnet-b3\\pretrained\\provenance.json",
+      "sha256": "c0523e0b934475e1b252e7c610271812a723e0fbe41b355706ada63caaebc977",
+      "bytes": 752
+    }
+  },
+  "source_code_sha256": {
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\benchmark_single_image.py": "ad2ca08e56ad7969acd9255de1b51341897b5d07b1d76da6780552c9665ea929",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\compare_models_b3.py": "1dd92930f0cc1b09f57a64f3eacbc1ab7bec77a4dfc2b235fafdde72bba962d5",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\compare_models.py": "08dd6ea701d6d0f056072cf1636a382dde14580086b3c6dea2f6ffcd1d7c54a6",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\compare_models_b2.py": "5cb6daee6c74e97056c326e586f5509966a80377dadd5e88aa340d5e172d676c",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\compare_model_runtime.py": "72737c77bdebd38747bc845e97c9c220a9ccf44b68e254362eefafd99456c1a7",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\export_mobile.py": "0694c74b2178cdfd4f17af7af5be81fb8e8a867da742b684bda4064d0572b650",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\calibrate_brightness.py": "b56ae305f927896c51f81532dd6f5e112ed9ca1cc86e24106c6cb3ebad4458c1",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\evaluate_additional.py": "424c50a7f3ec183dd0bce0b5559bee2770da6197c14624de39ad1ec92e01559c",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\training\\models\\huyt\\config.json": "dbeeab4ea20a889f6cdab51bd36350621fcfa4c1006c0f87616f48b0f2b1fe8d",
+    "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\mobile\\src\\diagnosis\\imageQuality.ts": "0534c6aefde19424cebc730e7a3c7f396ab36f9dcd5afa58375c6c14ea276cd2"
+  },
+  "completed_comparison": {
+    "path": "C:\\Users\\leeco\\Documents\\Codex\\2026-10-03\\create-a-scheduled-task-called-weekday\\outputs\\model-comparison-all-four\\comparison.json",
+    "sha256": "e9990542780fab69b8bd479a785c8c347ffddf2330dcb5885f479b4c66588897"
+  },
+  "frozen_inputs_and_comparison_unchanged": true,
+  "library_versions": {
+    "ai-edge-litert": "2.1.2",
+    "numpy": "2.2.6",
+    "pillow": "12.3.0",
+    "torch": "2.14.1+cpu",
+    "torchvision": "0.29.1+cpu"
+  }
+}

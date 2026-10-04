@@ -1,0 +1,16 @@
+{
+  "checkpoint": "models\\agriculture-pilot",
+  "model_version": "15405397497cc1e4",
+  "synthetic": true,
+  "domain_validated": false,
+  "accuracy_evaluation": false,
+  "dates": 4,
+  "status": "stale_imagery",
+  "cloudy_frame_coverage": 0.0,
+  "pending_alerts": 0,
+  "delivery": {
+    "sent": 0,
+    "mode": "dry-run"
+  },
+  "live_mode_rejected_before_provider_access": true
+}

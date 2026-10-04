@@ -1,0 +1,32 @@
+{
+  "initial_checkpoint_sha256": "020fc708cbac41cf5a58d9cc3c3cf161156f34c8290411aa72e3bb574f9895d7",
+  "metadata_source": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\satellite-hotspots\\models\\agriculture-pilot\\training-summary.json",
+  "metadata_source_sha256": "18d240a819be75783d9310c2010c28fb107a4d2bf30b6ff8e3091d45f402a96d",
+  "warm_start_from_partial_checkpoint": true,
+  "optimizer_state_restored": false,
+  "scheduler_state_restored": false,
+  "platform": "Windows continuation",
+  "device": "cpu",
+  "torch_version": "2.14.1+cpu",
+  "field_counts": {
+    "train": 1950,
+    "val": 192,
+    "test": 256
+  },
+  "sample_manifest_sha256": "8f9f6985d9591a37758d487d52d8b4d532409a83b5bc559c68199eb149e7a717",
+  "reference_checkpoint_sha256": "15405397497cc1e4b13c19afb368308222070c28ba5a65b7fbefc98c730ef0bd",
+  "arguments": {
+    "data": "..\\work\\data\\agriculture-expanded",
+    "initial": "models\\agriculture-expanded",
+    "output": "models\\agriculture-windows-20261003",
+    "epochs": 3,
+    "min_epochs": 2,
+    "patience": 2,
+    "batch_size": 8,
+    "lr": 2e-05,
+    "seed": 20261003,
+    "metadata_source": "models\\agriculture-pilot\\training-summary.json",
+    "reference": "models\\agriculture-pilot",
+    "threads": 4
+  }
+}

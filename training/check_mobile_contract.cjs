@@ -1,5 +1,4 @@
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
 const path = require('node:path');
 const esbuild = require('../node_modules/esbuild');
 const destination = path.join(__dirname, 'runs/efficientnet/mobileDecision.cjs');
@@ -21,6 +20,5 @@ const invalid = new Float32Array(8); invalid[0] = NaN;
 assert.throws(() => pickMostLikely(invalid));
 assert.equal(passesQuality(new Float32Array(224*224*3)), false);
 assert.equal(passesQuality(new Float32Array(224*224*3).fill(255)), false);
-const fixtures = JSON.parse(fs.readFileSync(path.join(__dirname, 'runs/efficientnet/quality_fixtures.json'), 'utf8'));
-for (const fixture of fixtures) assert.equal(passesQuality(Float32Array.from(fixture.rgb)), fixture.expected);
 console.log('Mobile label mapping, class gates, disabled/unsupported outputs, invalid output, darkness and uniform-image rejection passed.');
+require('./check_brightness.cjs');

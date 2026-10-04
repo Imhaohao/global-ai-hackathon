@@ -1,0 +1,183 @@
+{
+  "model_version": "15405397497cc1e4",
+  "checkpoint_sha256": "15405397497cc1e4b13c19afb368308222070c28ba5a65b7fbefc98c730ef0bd",
+  "base_model": "nvidia/mit-b0",
+  "base_revision": "80983a413c30d36a39c20203974ae7807835e2b4",
+  "classes": [
+    "drydown",
+    "nutrient_deficiency",
+    "water",
+    "weed_cluster",
+    "double_plant",
+    "endrow",
+    "planter_skip",
+    "waterway"
+  ],
+  "channels": [
+    "red",
+    "green",
+    "blue",
+    "nir"
+  ],
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406,
+      0.5
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225,
+      0.25
+    ]
+  },
+  "input_size": 256,
+  "seed": 17,
+  "optimizer_steps": 128,
+  "epochs": 4,
+  "learning_rate": 0.0001,
+  "train_tiles": 128,
+  "validation_tiles": 64,
+  "elapsed_seconds": 24.227647066116333,
+  "initial_validation": {
+    "loss": 0.6948311366140842,
+    "classes": {
+      "drydown": {
+        "iou": 0.005985691490241669,
+        "precision": 0.02465984287095095,
+        "recall": 0.007842318173488629,
+        "positive_pixels": 507503,
+        "predicted_positive_pixels": 161396
+      },
+      "nutrient_deficiency": {
+        "iou": 0.08611141876176764,
+        "precision": 0.08785120069393561,
+        "recall": 0.8130226448899955,
+        "positive_pixels": 313669,
+        "predicted_positive_pixels": 2902863
+      },
+      "water": {
+        "iou": 0.013930995528957064,
+        "precision": 0.014568296980617415,
+        "recall": 0.2415356345110639,
+        "positive_pixels": 90881,
+        "predicted_positive_pixels": 1506765
+      },
+      "weed_cluster": {
+        "iou": 0.04854152082053414,
+        "precision": 0.05110276434005279,
+        "recall": 0.4920031705013084,
+        "positive_pixels": 184198,
+        "predicted_positive_pixels": 1773407
+      },
+      "double_plant": {
+        "iou": 0.01624474008998941,
+        "precision": 0.017071932725391693,
+        "recall": 0.2510852422080361,
+        "positive_pixels": 66575,
+        "predicted_positive_pixels": 979151
+      },
+      "endrow": {
+        "iou": 0.018380402265329544,
+        "precision": 0.018392791245867318,
+        "recall": 0.964648958230473,
+        "positive_pixels": 70889,
+        "predicted_positive_pixels": 3717924
+      },
+      "planter_skip": {
+        "iou": 0.0018213962406744058,
+        "precision": 0.001822207817815481,
+        "recall": 0.8035178892664402,
+        "positive_pixels": 5003,
+        "predicted_positive_pixels": 2206115
+      },
+      "waterway": {
+        "iou": 0.0023693607145770126,
+        "precision": 0.0023722850169503526,
+        "recall": 0.6577802565532627,
+        "positive_pixels": 8965,
+        "predicted_positive_pixels": 2485789
+      }
+    },
+    "mean_iou_present_classes": 0.02417319073900886,
+    "score_threshold": 0.5,
+    "threshold_calibrated": false
+  },
+  "best_validation": {
+    "epoch": 4,
+    "training_loss": 0.5971871595829725,
+    "validation": {
+      "loss": 0.4252705089747906,
+      "classes": {
+        "drydown": {
+          "iou": 0.3135142026310837,
+          "precision": 0.32281560309794965,
+          "recall": 0.915831039422427,
+          "positive_pixels": 507503,
+          "predicted_positive_pixels": 1439791
+        },
+        "nutrient_deficiency": {
+          "iou": 0.147949686693697,
+          "precision": 0.17225341867595909,
+          "recall": 0.5118612295126391,
+          "positive_pixels": 313669,
+          "predicted_positive_pixels": 932086
+        },
+        "water": {
+          "iou": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "positive_pixels": 90881,
+          "predicted_positive_pixels": 0
+        },
+        "weed_cluster": {
+          "iou": 0.1564170396691734,
+          "precision": 0.15850828466359795,
+          "recall": 0.9222141391328896,
+          "positive_pixels": 184198,
+          "predicted_positive_pixels": 1071679
+        },
+        "double_plant": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "positive_pixels": 66575,
+          "predicted_positive_pixels": 8
+        },
+        "endrow": {
+          "iou": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "positive_pixels": 70889,
+          "predicted_positive_pixels": 0
+        },
+        "planter_skip": {
+          "iou": 0.20205161342433667,
+          "precision": 0.20205161342433667,
+          "recall": 1.0,
+          "positive_pixels": 5003,
+          "predicted_positive_pixels": 24761
+        },
+        "waterway": {
+          "iou": 0.03066952719097427,
+          "precision": 0.030671209026225957,
+          "recall": 0.9982152816508645,
+          "positive_pixels": 8965,
+          "predicted_positive_pixels": 291772
+        }
+      },
+      "mean_iou_present_classes": 0.10632525870115812,
+      "score_threshold": 0.5,
+      "threshold_calibrated": false
+    }
+  },
+  "training_domain": "Agriculture-Vision US aerial RGB+NIR; image values scaled /255",
+  "coffee_validated": false,
+  "satellite_validated": false,
+  "disease_or_pest_labels": false,
+  "production_ready": false,
+  "status": "pilot research checkpoint",
+  "license": "NVIDIA SegFormer research/evaluation-only; Agriculture-Vision custom terms"
+}

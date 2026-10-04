@@ -1,0 +1,70 @@
+{
+  "base_model": "nvidia/mit-b0",
+  "base_revision": "80983a413c30d36a39c20203974ae7807835e2b4",
+  "license": "NVIDIA SegFormer research/evaluation-only; Agriculture-Vision custom terms",
+  "model_version": "020fc708cbac41cf",
+  "checkpoint_sha256": "020fc708cbac41cf5a58d9cc3c3cf161156f34c8290411aa72e3bb574f9895d7",
+  "initial_checkpoint_sha256": "020fc708cbac41cf5a58d9cc3c3cf161156f34c8290411aa72e3bb574f9895d7",
+  "metadata_source": "C:\\Users\\leeco\\Desktop\\global-ai-hackathon\\satellite-hotspots\\models\\agriculture-pilot\\training-summary.json",
+  "metadata_source_sha256": "18d240a819be75783d9310c2010c28fb107a4d2bf30b6ff8e3091d45f402a96d",
+  "warm_start_from_partial_checkpoint": true,
+  "optimizer_state_restored": false,
+  "scheduler_state_restored": false,
+  "initial_checkpoint": "020fc708cbac41cf",
+  "classes": [
+    "drydown",
+    "nutrient_deficiency",
+    "water",
+    "weed_cluster",
+    "double_plant",
+    "endrow",
+    "planter_skip",
+    "waterway"
+  ],
+  "channels": [
+    "red",
+    "green",
+    "blue",
+    "nir"
+  ],
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406,
+      0.5
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225,
+      0.25
+    ]
+  },
+  "input_size": 256,
+  "seed": 20261003,
+  "train_tiles": 4096,
+  "validation_tiles": 192,
+  "test_tiles": 256,
+  "field_counts": {
+    "train": 1950,
+    "val": 192,
+    "test": 256
+  },
+  "optimizer_steps": 1024,
+  "epochs_completed": 2,
+  "selected_epoch": 0,
+  "elapsed_seconds": 943.9464638233185,
+  "learning_rate_encoder": 2e-05,
+  "learning_rate_decoder": 0.0001,
+  "loss": "Masked positive-weighted BCE (sqrt imbalance, cap 8) + 0.5 Dice on batch-positive classes",
+  "checkpoint_selection": "Maximum validation mean foreground IoU at 0.5; starting weights retained unless improved",
+  "training_domain": "Agriculture-Vision US aerial RGB+NIR; JPEG digital numbers /255",
+  "locked_test_mean_iou_fixed_0_5": 0.35969911894728934,
+  "locked_test_mean_iou_validation_selected": 0.3644862509869981,
+  "coffee_validated": false,
+  "satellite_validated": false,
+  "disease_or_pest_labels": false,
+  "production_ready": false,
+  "status": "Windows warm-start research checkpoint"
+}
