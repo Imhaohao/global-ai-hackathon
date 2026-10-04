@@ -63,6 +63,14 @@ export function copyIntoFolder(sourceUri: string, ...segments: string[]): string
   return destination.uri;
 }
 
+export function deleteFile(uri: string): void {
+  try {
+    new File(uri).delete();
+  } catch {
+    // A leftover temporary file is harmless and the system clears the cache folder.
+  }
+}
+
 export function deleteEverything(): void {
   if (activeAccountId && activeFolder.exists) activeFolder.delete();
 }

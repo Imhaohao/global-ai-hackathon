@@ -5,6 +5,7 @@ import {
   CheckCircle,
   Gear,
   ImageSquare,
+  MapTrifold,
   Plant,
   Translate,
   Warning,
@@ -49,6 +50,7 @@ type CaptureScreenProps = {
   isFinishing?: boolean;
   onOpenSettings: () => void;
   onOpenSeedCheck?: () => void;
+  onOpenMap: () => void;
   onSwitchLanguage: () => void;
 };
 
@@ -267,7 +269,7 @@ function PhotoGuide({ strings, modelId, modelLoading, isChecking, onSelectModel 
 }
 
 export function CaptureScreen(props: CaptureScreenProps) {
-  const { strings, photos, check, problem, onOpenSeedCheck } = props;
+  const { strings, photos, check, problem, onOpenSeedCheck, onOpenMap } = props;
   return (
     <View className="flex-1">
       <ScrollView contentContainerClassName="flex-grow gap-6 px-5 pb-4 pt-2">
@@ -276,11 +278,10 @@ export function CaptureScreen(props: CaptureScreenProps) {
         {photos.length === 0 ? (
           <View className="flex-1 justify-center gap-5">
             <BotanicalImage />
-            {onOpenSeedCheck && (
-              <View className="items-center">
-                <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />
-              </View>
-            )}
+            <View className="flex-row flex-wrap items-center justify-center gap-3">
+              <PillButton label={strings.mapTitle} icon={MapTrifold} onPress={onOpenMap} />
+              {onOpenSeedCheck && <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />}
+            </View>
           </View>
         ) : (
           <LeafSlots

@@ -10,7 +10,7 @@ This is a research prototype. Dataset accuracy does not establish field accuracy
 2. [Step 1: Buy and audit planting material](#step-1-buy-and-audit-planting-material)
 3. [Step 2: Classify coffee plant images](#step-2-classify-coffee-plant-images)
 4. [Step 3: Deliver actionable help and trusted inputs](#step-3-deliver-actionable-help-and-trusted-inputs)
-5. [Step 4: Future work, map disease hotspots and trends](#step-4-future-work-map-disease-hotspots-and-trends)
+5. [Step 4: Map disease hotspots and trends](#step-4-map-disease-hotspots-and-trends)
 6. [Pitch and demo materials](#pitch-and-demo-materials)
 7. [The hackathon](#the-hackathon)
 8. [Getting started](#getting-started)
@@ -27,7 +27,7 @@ The execution sequence is: buy and audit seeds or seedlings, then classify coffe
 | 1. Buy and audit planting material | Helps the farmer check that seed is genuine and traceable before planting | `shared/src/seedCheck.ts`, `mobile/src/screens/SeedCheckScreen.tsx`, the SMS paths in `backend/`, `bridge/` and `hub/` | The KEPHIS 1393 seed packet check is built. |
 | 2. Classify coffee plant images | Offline photo classification with image-quality checks, an uncertainty route and a six-leaf vote | `mobile/`, `training/`, `shared/src/plantVote.ts` | Built. A research prototype that is not yet validated on a phone. |
 | 3. Deliver actionable help and trusted inputs | Action card, verified contacts, referral to an extension officer, SMS and voice channels in Swahili and English | `shared/`, `backend/`, `hub/`, `bridge/`, `mobile/src/screens/` | Built, with some setup left (see the status tables) |
-| 4. Map disease hotspots and trends | Color-coded map, timeline and review priorities from accumulated phone observations | `satellite-hotspots/` (separate component), observation storage in `mobile/src/storage/` | Future work. Only a synthetic preview and an overhead-imagery prototype exist. |
+| 4. Map disease hotspots and trends | Color-coded map, timeline and review priorities from accumulated phone observations | `shared/src/hotspots.ts`, `mobile/src/hotspots/`, `mobile/src/screens/HotspotMapScreen.tsx`, observation storage in `mobile/src/storage/`, plus the separate `satellite-hotspots/` component | The farm map screen is built: colored circles sized by sightings, filters, a weekly trend chart and tap-to-open sightings with photos. It has not been run on a phone. Phone data is real only as farmers collect it, so the preview uses labelled simulated sightings. |
 
 ### What we are building
 
@@ -583,9 +583,9 @@ Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamByte
 
 The current three-part build plan, written so an agent with no context can start, is [docs/build-plan.md](docs/build-plan.md). It supersedes the earlier plans in this file.
 
-## Step 4: Future work, map disease hotspots and trends
+## Step 4: Map disease hotspots and trends
 
-This step is beyond the hackathon. The immediate advice in Steps 2 and 3 does not depend on it.
+The immediate advice in Steps 2 and 3 does not depend on this step. The farm map is the first version of it. The longer-term parts of the plan, such as plant identifiers for repeat visits and adviser corrections feeding model improvement, are still ahead.
 
 ### The plan
 
@@ -601,11 +601,36 @@ A new case at (3,3) after a case at (5,5) is a new observation. It is not proof 
 
 The future-work milestone is a working hotspot map, trend graphs, timeline and explainable review priorities, with unobserved areas, uncertain locations and differences in inspection effort kept visible. Any hackathon preview uses clearly labelled simulated observations and does not imply that longitudinal farm data already exists.
 
+### The farm map in the app
+
+The home screen has a **Farm map** button. The screen draws a schematic, north-up map from the GPS positions saved with each check. It needs no internet and no map tiles, so it works offline on any phone.
+
+| What you see | How it works |
+|---|---|
+| One circle for each group of sightings | Sightings of the same disease within 25 m of each other form one group. The group sits at the average position of its sightings. |
+| Color shows the disease | Each disease has its own color from `mobile/src/colors.json` (`disease-rust`, `disease-cercospora` and so on). Healthy checks are drawn as small hollow rings. |
+| A bigger circle means more sightings close together | The circle's area grows with the number of sightings, up to a limit, and the count is printed inside it. |
+| Tap a circle | A list opens with every sighting in that group. Each row shows the disease and time. Open a row to see the time, the location (with its GPS accuracy), the disease found, the farm section and thumbnails of the leaf photos. |
+| Filters | Disease chips (show or hide each disease) and a date range (7, 30 or 90 days, or all time). |
+| Trend chart | Sightings per week for the last 8 weeks, stacked by disease. It is labelled as what was recorded and not as the speed of spread. |
+| Scale bar and north arrow | The map is a schematic. The scale bar shows the real distance. |
+
+How the plan's cautions are handled:
+- An empty area is labelled as not checked, and not as healthy.
+- A recheck of the same tree within 30 minutes and 15 m counts once, and the screen says how many repeat checks were merged.
+- Checks with no saved location, or with no clear answer, are not drawn. The screen shows how many were left out.
+- Circle size is the number of recorded sightings, not a severity score. The classifier does not estimate severity.
+
+**Storage on cheap phones.** Each leaf photo is saved as a 320 px JPEG thumbnail of roughly 20 to 40 KB, and not at full camera size. Six photos per check come to about 150 to 250 KB, so 1,000 checks take roughly 200 MB. The full-size photo is not kept. The map itself reads a few hundred bytes per check. Checks saved before this change keep their full-size photos.
+
+Code: grouping, layout, filters and trend counts are plain functions in `shared/src/hotspots.ts` with tests in `hotspots.test.ts`. The screen and drawing code are in `mobile/src/screens/HotspotMapScreen.tsx` and `mobile/src/hotspots/`. In a development build, the empty map offers a clearly labelled preview with simulated sightings, which are never saved.
+
 ### What exists now
 
 | Piece | Where | State |
 |---|---|---|
-| Per-photo record: capture time, GPS with accuracy, farm section, model version | `mobile/src/storage/observations.ts`, `deviceLocation.ts`, `FarmSectionPicker.tsx` | Built. This is the data the map will need. |
+| Per-photo record: capture time, GPS with accuracy, farm section, model version, leaf thumbnails | `mobile/src/storage/observations.ts`, `deviceLocation.ts`, `FarmSectionPicker.tsx` | Built. This is the data the map reads. |
+| Color-coded map with filters, trend chart and tap-to-open sightings | `shared/src/hotspots.ts`, `mobile/src/hotspots/`, `HotspotMapScreen.tsx` | Built. Not yet run on a phone. |
 | Repeat-observation and rain context | `shared/src/plantVote.ts`, `rain.ts` | Built for the action card and case summary |
 | Consent, export and delete of stored observations | `mobile/src/storage/dataControls.ts`, `SettingsScreen.tsx` | Built |
 | Overhead-imagery hotspot prototype | `satellite-hotspots/` | Separate, synthetic-data prototype (below) |

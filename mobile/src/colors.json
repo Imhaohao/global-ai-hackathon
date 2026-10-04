@@ -13,5 +13,11 @@
   "watch": "#8A5200",
   "watch-soft": "#FBEFD9",
   "sick": "#A3271B",
-  "sick-soft": "#F8E2DF"
+  "sick-soft": "#F8E2DF",
+  "disease-rust": "#D55E00",
+  "disease-cercospora": "#7A3E9D",
+  "disease-miner": "#0072B2",
+  "disease-phoma": "#CC79A7",
+  "disease-mites": "#0F8B8D",
+  "disease-weevil": "#A67C00"
 }

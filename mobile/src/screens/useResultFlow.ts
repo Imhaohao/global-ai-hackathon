@@ -44,7 +44,7 @@ export function useResultFlow({ settings, updateSettings, language, wetDays }: R
       const location = locationAllowed(settings) ? await readCurrentLocation() : null;
       if (!isCurrentAccount()) return;
       const card = buildActionCard({ kind: 'plant', verdict: check.verdict }, { language, wetDays });
-      const observation = createObservation(check, location);
+      const observation = await createObservation(check, location);
       if (isCurrentAccount()) setResult({ observation, card, photoUris: photos.map((photo) => photo.uri) });
     },
     [isCurrentAccount, language, settings, wetDays],
