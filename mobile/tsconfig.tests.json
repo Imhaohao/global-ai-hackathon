@@ -4,6 +4,11 @@
     "types": ["node"],
     "noEmit": true
   },
-  "include": ["src/auth/**/*.test.ts"],
+  "include": [
+    "src/auth/**/*.test.ts",
+    "src/runtime/**/*.test.ts",
+    "src/storage/**/*.test.ts",
+    "src/screens/**/*.test.ts"
+  ],
   "exclude": []
 }

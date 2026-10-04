@@ -100,9 +100,10 @@ type ProblemLeafRowProps = {
   photo: LeafPhoto;
   reading: LeafReading;
   onRetake: () => void;
+  disabled: boolean;
 };
 
-function ProblemLeafRow({ strings, number, photo, reading, onRetake }: ProblemLeafRowProps) {
+function ProblemLeafRow({ strings, number, photo, reading, onRetake, disabled }: ProblemLeafRowProps) {
   const reason = reading.qualityIssue
     ? getQualityGuidance(strings, reading.qualityIssue).body
     : leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
@@ -121,6 +122,7 @@ function ProblemLeafRow({ strings, number, photo, reading, onRetake }: ProblemLe
           icon={ArrowCounterClockwise}
           variant="quiet"
           onPress={onRetake}
+          disabled={disabled}
         />
       </View>
     </View>
@@ -132,9 +134,10 @@ type ProblemLeavesProps = {
   photos: LeafPhoto[];
   readings: LeafReading[];
   onRetake: (index: number) => void;
+  disabled: boolean;
 };
 
-function ProblemLeaves({ strings, photos, readings, onRetake }: ProblemLeavesProps) {
+function ProblemLeaves({ strings, photos, readings, onRetake, disabled }: ProblemLeavesProps) {
   const problemIndexes = readings
     .map((reading, index) => (leafProblemOf(reading) ? index : -1))
     .filter((index) => index >= 0);
@@ -149,6 +152,7 @@ function ProblemLeaves({ strings, photos, readings, onRetake }: ProblemLeavesPro
           photo={photos[index]}
           reading={readings[index]}
           onRetake={() => onRetake(index)}
+          disabled={disabled}
         />
       ))}
     </View>
@@ -173,8 +177,8 @@ type ActionsProps = Pick<
 >;
 
 function CaptureActions({ strings, photos, check, isChecking, isFinishing = false, canCheck, onTakeLeaf, onFinish }: ActionsProps) {
-  const canAddLeaf = canCheck && !isChecking && photos.length < MAX_LEAVES_PER_PLANT;
-  const canFinish = !isChecking && check !== null && check.verdict.kind !== 'retake';
+  const canAddLeaf = canCheck && !isChecking && !isFinishing && photos.length < MAX_LEAVES_PER_PLANT;
+  const canFinish = !isChecking && !isFinishing && check !== null && check.verdict.kind !== 'retake';
   const cameraLabel = photos.length === 0 ? strings.takePhoto : strings.addAnotherLeaf;
   return (
     <View className="gap-3 bg-paper pb-6 pt-3">
@@ -224,6 +228,7 @@ function CaptureStatus({ strings, photos, check, isChecking, isFinishing, onTake
           photos={photos}
           readings={check.readings}
           onRetake={(index) => onTakeLeaf('camera', index)}
+          disabled={isFinishing ?? false}
         />
       )}
     </>
@@ -242,7 +247,7 @@ function CaptureToolbar({ strings, onOpenSettings, onSwitchLanguage }: Pick<Capt
   );
 }
 
-function PhotoGuide({ strings, modelId, modelLoading, isChecking, onSelectModel }: Pick<CaptureScreenProps, 'strings' | 'modelId' | 'modelLoading' | 'isChecking' | 'onSelectModel'>) {
+function PhotoGuide({ strings, modelId, modelLoading, isChecking, isFinishing, onSelectModel }: Pick<CaptureScreenProps, 'strings' | 'modelId' | 'modelLoading' | 'isChecking' | 'isFinishing' | 'onSelectModel'>) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <View className="gap-3">
@@ -253,7 +258,7 @@ function PhotoGuide({ strings, modelId, modelLoading, isChecking, onSelectModel 
       {isOpen && (
         <View className="gap-4">
           <Body>{strings.captureTip}</Body>
-          <ModelSelector modelId={modelId} strings={strings} disabled={isChecking} loading={modelLoading} onSelect={onSelectModel} />
+          <ModelSelector modelId={modelId} strings={strings} disabled={isChecking || (isFinishing ?? false)} loading={modelLoading} onSelect={onSelectModel} />
         </View>
       )}
     </View>
@@ -290,7 +295,13 @@ export function CaptureScreen(props: CaptureScreenProps) {
         {props.modelLoading && <CheckingNotice strings={{ ...strings, checking: strings.modelLoading }} />}
         {problem && <ProblemNotice strings={strings} problem={problem} />}
         {problem === 'modelFailed' && (
-          <Button label={strings.retryModel} icon={ArrowCounterClockwise} variant="secondary" onPress={props.onRetryModel} />
+          <Button
+            label={strings.retryModel}
+            icon={ArrowCounterClockwise}
+            variant="secondary"
+            onPress={props.onRetryModel}
+            disabled={props.isFinishing}
+          />
         )}
         <CaptureActions {...props} />
       </ScrollView>

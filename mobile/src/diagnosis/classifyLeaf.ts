@@ -36,14 +36,22 @@ async function preparePhoto(photo: LeafPhoto, config: ModelConfig) {
       width: MODEL_INPUT_SIZE,
       height: MODEL_INPUT_SIZE,
     });
-  const image = await context.renderAsync();
-  const saved = await image.saveAsync({ format: SaveFormat.JPEG, compress: 1, base64: true });
-  const exposureImage = await image.saveAsync({ format: SaveFormat.PNG, base64: true });
-  if (!saved.base64 || !exposureImage.base64) throw new Error('Image manipulator returned no base64 data');
-  const decoded = jpeg.decode(base64ToBytes(saved.base64), { useTArray: true, formatAsRGBA: true });
-  const input = rgbaToRgbFloatTensor(decoded.data);
-  const exposure = decodeExposurePng(base64ToBytes(exposureImage.base64));
-  return { input, qualityIssue: qualityIssueFor(input, exposure, config.calibration.quality.minimum_edge_variance) };
+  try {
+    const image = await context.renderAsync();
+    try {
+      const saved = await image.saveAsync({ format: SaveFormat.JPEG, compress: 1, base64: true });
+      const exposureImage = await image.saveAsync({ format: SaveFormat.PNG, base64: true });
+      if (!saved.base64 || !exposureImage.base64) throw new Error('Image manipulator returned no base64 data');
+      const decoded = jpeg.decode(base64ToBytes(saved.base64), { useTArray: true, formatAsRGBA: true });
+      const input = rgbaToRgbFloatTensor(decoded.data);
+      const exposure = decodeExposurePng(base64ToBytes(exposureImage.base64));
+      return { input, qualityIssue: qualityIssueFor(input, exposure, config.calibration.quality.minimum_edge_variance) };
+    } finally {
+      image.release();
+    }
+  } finally {
+    context.release();
+  }
 }
 
 export async function classifyLeaf(model: TfliteModel, photo: LeafPhoto, config: ModelConfig = modelConfig): Promise<Diagnosis> {

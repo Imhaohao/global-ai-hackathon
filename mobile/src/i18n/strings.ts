@@ -143,6 +143,10 @@ const NEW_LINES = {
   seedDetails: draftLine('About results', 'Kuhusu matokeo'),
 
   consentTitle: draftLine('Before you start', 'Kabla ya kuanza'),
+  consentLogin: draftLine(
+    'Signing in sends your phone number and verification code through Convex to Twilio Verify.',
+    'Kuingia hutuma namba yako ya simu na nambari ya uthibitisho kupitia seva yetu hadi Twilio Verify.',
+  ),
   consentPhotos: draftLine('Your photos stay on this phone.', 'Picha zako zinabaki kwenye simu hii.'),
   consentLocation: draftLine(
     'Each check saves where you were, so the officer knows which part of the farm.',
@@ -217,6 +221,10 @@ const NEW_LINES = {
   exportData: draftLine('Export my data', 'Hamisha data yangu'),
   exportingData: draftLine('Preparing export…', 'Inatayarisha data…'),
   exportFailed: draftLine('Could not export. Try again.', 'Imeshindwa kuhamisha. Jaribu tena.'),
+  deleteFailed: draftLine(
+    'Could not delete all saved data. Try again.',
+    'Imeshindwa kufuta data zote. Jaribu tena.',
+  ),
   deleteAll: draftLine("Delete this account's data", 'Futa data za akaunti hii'),
   deleteConfirmTitle: draftLine("Delete this account's data?", 'Ufute data za akaunti hii?'),
   deleteConfirmBody: draftLine(

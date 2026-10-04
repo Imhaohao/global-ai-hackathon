@@ -55,7 +55,8 @@ export function useCaptureFlow(model: TfliteModel | undefined, scenario: DevScen
   );
 
   const startOver = useCallback(() => {
-    if (!busy.current) setState(EMPTY_CAPTURE);
+    requestId.current += 1;
+    setState(EMPTY_CAPTURE);
   }, []);
   const isBusy = useCallback(() => busy.current, []);
 

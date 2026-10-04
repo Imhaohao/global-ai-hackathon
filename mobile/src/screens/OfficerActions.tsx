@@ -1,5 +1,5 @@
 import { ArrowCounterClockwise, PaperPlaneTilt, Phone } from 'phosphor-react-native';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Linking, View } from 'react-native';
 
 import type { ActionCard } from '../../../shared/src/contract.ts';
@@ -23,10 +23,12 @@ function OfficerPhonePrompt({
   strings,
   onSubmit,
   onCancel,
+  disabled,
 }: {
   strings: Strings;
   onSubmit: (phone: string) => void;
   onCancel: () => void;
+  disabled: boolean;
 }) {
   const [typed, setTyped] = useState('');
   return (
@@ -44,17 +46,25 @@ function OfficerPhonePrompt({
       <Button
         label={strings.saveAndSend}
         icon={PaperPlaneTilt}
-        disabled={!isPlausiblePhone(typed)}
+        disabled={disabled || !isPlausiblePhone(typed)}
         onPress={() => onSubmit(normalizePhone(typed))}
       />
-      <Button label={strings.cancel} icon={ArrowCounterClockwise} variant="quiet" onPress={onCancel} />
+      <Button
+        label={strings.cancel}
+        icon={ArrowCounterClockwise}
+        variant="quiet"
+        onPress={onCancel}
+        disabled={disabled}
+      />
     </View>
   );
 }
 
 function sendNotice(strings: Strings, result: OfficerSendResult | null): string | null {
+  if (result === 'sent') return strings.smsSent;
   if (result === 'opened') return strings.sentToOfficer;
-  return result === 'unavailable' ? strings.smsUnavailable : null;
+  if (result === 'unavailable') return strings.smsUnavailable;
+  return result === 'error' ? strings.smsFailed : null;
 }
 
 function verifiedContactPhone(card: ActionCard): string | undefined {
@@ -65,12 +75,24 @@ export function OfficerActions(props: OfficerActionsProps) {
   const { strings, card, savedOfficerPhone, onSaveOfficerPhone, onSendCase, onCheckAnother } = props;
   const [isAskingForPhone, setIsAskingForPhone] = useState(false);
   const [result, setResult] = useState<OfficerSendResult | null>(null);
+  const [isSending, setIsSending] = useState(false);
+  const sendingRef = useRef(false);
   const callablePhone = verifiedContactPhone(card);
   const knownPhone = savedOfficerPhone ?? callablePhone;
 
   const send = async (phone: string) => {
+    if (sendingRef.current) return;
+    sendingRef.current = true;
+    setIsSending(true);
     setIsAskingForPhone(false);
-    setResult(await onSendCase(phone));
+    try {
+      setResult(await onSendCase(phone));
+    } catch {
+      setResult('error');
+    } finally {
+      sendingRef.current = false;
+      setIsSending(false);
+    }
   };
   const saveAndSend = (phone: string) => {
     onSaveOfficerPhone(phone);
@@ -79,7 +101,14 @@ export function OfficerActions(props: OfficerActionsProps) {
   const pressSend = () => (knownPhone ? send(knownPhone) : setIsAskingForPhone(true));
 
   if (isAskingForPhone) {
-    return <OfficerPhonePrompt strings={strings} onSubmit={saveAndSend} onCancel={() => setIsAskingForPhone(false)} />;
+    return (
+      <OfficerPhonePrompt
+        strings={strings}
+        onSubmit={saveAndSend}
+        onCancel={() => setIsAskingForPhone(false)}
+        disabled={isSending}
+      />
+    );
   }
   const notice = sendNotice(strings, result);
   return (
@@ -89,7 +118,9 @@ export function OfficerActions(props: OfficerActionsProps) {
           <Body className="text-healthy">{notice}</Body>
         </View>
       )}
-      {card.needsPerson && <Button label={strings.sendToOfficer} icon={PaperPlaneTilt} onPress={pressSend} />}
+      {card.needsPerson && (
+        <Button label={strings.sendToOfficer} icon={PaperPlaneTilt} onPress={pressSend} disabled={isSending} />
+      )}
       {callablePhone && (
         <Button
           label={fillTemplate(strings.callOfficer, { name: card.contact.name })}

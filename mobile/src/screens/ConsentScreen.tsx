@@ -28,6 +28,7 @@ export function ConsentScreen({ strings, onChoose, onSwitchLanguage }: ConsentSc
       <StepPager
         strings={strings}
         steps={[
+          strings.consentLogin,
           strings.consentPhotos,
           strings.consentLocation,
           strings.consentNothingLeaves,

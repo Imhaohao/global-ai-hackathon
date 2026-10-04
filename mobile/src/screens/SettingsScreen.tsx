@@ -26,7 +26,7 @@ type SettingsScreenProps = {
   onUpdateSettings: (changes: Partial<AppSettings>) => void;
   onToggleLocation: (enabled: boolean) => void;
   onExport: () => Promise<boolean>;
-  onDeleteAll: () => void;
+  onDeleteAll: () => boolean;
   onBack: () => void;
   onSignOut: () => Promise<void>;
 };
@@ -157,6 +157,7 @@ function DataControls({
   onDeleteAll,
 }: Pick<SettingsScreenProps, 'strings' | 'savedCheckCount' | 'onExport' | 'onDeleteAll'>) {
   const [exportFailed, setExportFailed] = useState(false);
+  const [deleteFailed, setDeleteFailed] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const exportPending = useRef(false);
   const exportData = async () => {
@@ -178,6 +179,7 @@ function DataControls({
       <Muted>{fillTemplate(strings.savedChecks, { count: savedCheckCount })}</Muted>
       <View accessibilityLiveRegion="polite">
         {exportFailed && <Body className="text-sick">{strings.exportFailed}</Body>}
+        {deleteFailed && <Body className="text-sick">{strings.deleteFailed}</Body>}
       </View>
       <Button
         label={isExporting ? strings.exportingData : strings.exportData}
@@ -190,7 +192,11 @@ function DataControls({
         label={strings.deleteAll}
         icon={Trash}
         variant="secondary"
-        onPress={() => confirmDeleteAll(strings, onDeleteAll)}
+        onPress={() =>
+          confirmDeleteAll(strings, () => {
+            setDeleteFailed(!onDeleteAll());
+          })
+        }
       />
     </View>
   );

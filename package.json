@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint shared backend/src backend/convex bridge/src",
     "typecheck": "tsc -p shared && tsc -p backend && tsc -p backend/convex && tsc -p bridge",
-    "test": "tsx --test shared/src/*.test.ts shared/src/localModel/*.test.ts backend/src/*.test.ts bridge/src/*.test.ts mobile/src/auth/*.test.ts",
+    "test": "tsx --test shared/src/*.test.ts shared/src/localModel/*.test.ts backend/src/*.test.ts bridge/src/*.test.ts mobile/src/auth/*.test.ts mobile/src/runtime/*.test.ts mobile/src/storage/*.test.ts mobile/src/screens/*.test.ts mobile/tests/classifyLeaf.test.cjs",
     "eval:local-model": "tsx shared/src/localModel/evalLocalModel.ts"
   },
   "devDependencies": {

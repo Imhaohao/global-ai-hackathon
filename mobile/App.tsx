@@ -98,22 +98,38 @@ function AuthenticatedApp({
   };
 
   const chooseConsent = async (choice: Exclude<ConsentChoice, 'pending'>) => {
-    updateSettings({ consent: choice });
-    if (choice === 'withLocation') await askForLocationPermission();
+    resultFlow.cancelPendingFinish();
+    if (choice === 'withLocation') {
+      const granted = await askForLocationPermission();
+      updateSettings({ consent: granted ? 'withLocation' : 'withoutLocation' });
+      if (!granted) forgetWetDays();
+    } else {
+      updateSettings({ consent: choice });
+      forgetWetDays();
+    }
   };
 
   const toggleLocation = async (enabled: boolean) => {
-    updateSettings({ consent: enabled ? 'withLocation' : 'withoutLocation' });
-    if (enabled) await askForLocationPermission();
+    resultFlow.cancelPendingFinish();
+    if (enabled) {
+      const granted = await askForLocationPermission();
+      updateSettings({ consent: granted ? 'withLocation' : 'withoutLocation' });
+      if (!granted) forgetWetDays();
+    } else {
+      updateSettings({ consent: 'withoutLocation' });
+      forgetWetDays();
+    }
   };
 
   const deleteAll = () => {
-    deleteAllData();
-    resetToDefaults();
     forgetWetDays();
     capture.startOver();
     resultFlow.clearResult();
+    const deleted = deleteAllData();
+    if (!deleted) return false;
+    resetToDefaults();
     setIsInSettings(false);
+    return true;
   };
 
   const finishAndShowAdvice = () => {
@@ -126,10 +142,14 @@ function AuthenticatedApp({
   };
 
   const selectModel = (selected: ModelId) => {
-    if (capture.isBusy() || selected === modelId) return;
+    if (capture.isBusy() || resultFlow.isFinishing || selected === modelId) return;
     capture.startOver();
     resultFlow.clearResult();
     setModelId(selected);
+  };
+
+  const retryModel = () => {
+    if (!resultFlow.isFinishing) retry();
   };
 
   const modelProblem: CaptureProblem | undefined = leafModel.state === 'error' ? 'modelFailed' : undefined;
@@ -196,9 +216,10 @@ function AuthenticatedApp({
         modelId={modelId}
         modelLoading={leafModel.state === 'loading'}
         onSelectModel={selectModel}
-        onRetryModel={retry}
+        onRetryModel={retryModel}
         onTakeLeaf={capture.takeLeaf}
         onFinish={finishAndShowAdvice}
+        isFinishing={resultFlow.isFinishing}
         onOpenSettings={() => setIsInSettings(true)}
         onOpenSeedCheck={seedCopy ? () => setIsInSeedCheck(true) : undefined}
         onSwitchLanguage={switchLanguage}

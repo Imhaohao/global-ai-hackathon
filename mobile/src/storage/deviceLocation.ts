@@ -18,8 +18,12 @@ function timeoutAfter(milliseconds: number): Promise<null> {
 }
 
 export async function askForLocationPermission(): Promise<boolean> {
-  const permission = await Location.requestForegroundPermissionsAsync();
-  return permission.granted;
+  try {
+    const permission = await Location.requestForegroundPermissionsAsync();
+    return permission.granted;
+  } catch {
+    return false;
+  }
 }
 
 async function hasLocationPermission(): Promise<boolean> {
