@@ -75,3 +75,10 @@ export const ALERTS = { farms: 3, days: 7 };
 
 // Kenya Agricultural Sector Extension Policy, December 2023, page 8 (docs/research-sources.md line 21).
 export const EXTENSION_TARGET = { farmers: 600, year: 2029 };
+
+// Global Findex 2024: con9b.9 (docs/evidence.md line 27) and con26d.9 rural daily internet use 33.7%
+// (https://api.worldbank.org/v2/country/KEN/indicator/con26d.9?format=json&source=28), so 66 in 100 are not online daily.
+export const ACCESS = { basicPhone: 38, notDailyOnline: 66 };
+
+// The external rust race: README.md line 360 for B2's AUROC; the Astra AUROC and both times are the team's benchmark.
+export const RACE = { images: 1119, oursSeconds: 105, astraSeconds: 3519, oursAuroc: "0.778", astraAuroc: "0.776" };

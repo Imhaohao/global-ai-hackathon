@@ -1,13 +1,14 @@
+import type { CSSProperties } from "react";
 import { OffthreadVideo, staticFile } from "remotion";
 
-type PhoneProps = { src: string; height: number; startFrom?: number; playbackRate?: number; className?: string };
+type PhoneProps = { src: string; height: number; startFrom?: number; playbackRate?: number; className?: string; videoStyle?: CSSProperties };
 
 const ASPECT = 600 / 1304;
 const BEZEL = 12;
 const SCREEN_RADIUS = 46;
 
 /** An iPhone-proportioned frame around a real screen recording. Outer radius = screen radius + bezel. */
-export function Phone({ src, height, startFrom = 0, playbackRate = 1, className }: PhoneProps) {
+export function Phone({ src, height, startFrom = 0, playbackRate = 1, className, videoStyle }: PhoneProps) {
   const screenHeight = height - BEZEL * 2;
   const screenWidth = screenHeight * ASPECT;
   return (
@@ -23,7 +24,7 @@ export function Phone({ src, height, startFrom = 0, playbackRate = 1, className 
       }}
     >
       <div className="relative size-full overflow-hidden bg-black" style={{ borderRadius: SCREEN_RADIUS }}>
-        <OffthreadVideo src={staticFile(src)} muted startFrom={Math.round(startFrom * 30)} playbackRate={playbackRate} className="absolute inset-0 size-full object-cover" />
+        <OffthreadVideo src={staticFile(src)} muted startFrom={Math.round(startFrom * 30)} playbackRate={playbackRate} className="absolute inset-0 size-full object-cover" style={videoStyle} />
       </div>
     </div>
   );

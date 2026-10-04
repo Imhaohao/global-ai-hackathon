@@ -4,13 +4,13 @@ export const FPS = 30;
 export const FRAME = { width: 1920, height: 1080 };
 
 export type Word = { text: string; start: number; end: number };
-export type BeatId = "hook" | "data" | "biology" | "bench" | "sms" | "seed" | "hotspots" | "close";
+export type BeatId = "problem" | "hub" | "scan" | "biology" | "race" | "officer" | "close";
 
-const VOICE_START = 12;
-const GAP = 10;
-const END_HOLD = 72;
+const VOICE_START = 15;
+const GAP = 8;
+const END_HOLD = 54;
 /** Extra silent frames after a line, where a dense picture needs a moment longer than the words. */
-const EXTRA: Partial<Record<BeatId, number>> = { data: 24, biology: 14, bench: 8, sms: 6, seed: 12 };
+const EXTRA: Partial<Record<BeatId, number>> = { problem: 14, hub: 6, scan: 14, biology: 12, race: 20, officer: 8 };
 
 export type Beat = { id: BeatId; from: number; speechFrames: number; words: Word[] };
 
@@ -47,3 +47,6 @@ export function wordAt(id: BeatId, text: string, occurrence = 0): number {
   if (!word) throw new Error(`Word "${text}" not found in beat ${id}`);
   return Math.round(word.start * FPS);
 }
+
+/** A word's start in absolute composition frames. */
+export const at = (id: BeatId, text: string, occurrence = 0) => beat(id).from + wordAt(id, text, occurrence);
