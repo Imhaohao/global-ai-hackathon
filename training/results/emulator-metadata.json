@@ -1,0 +1,105 @@
+{
+  "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+  "emulator_profile": "Pixel 2 (Edited) API 33",
+  "android_version": "13",
+  "api_level": 33,
+  "configured_ram_mib": 2048,
+  "guest_memory_kib": 2009304,
+  "cpu_architecture": "arm64-v8a",
+  "virtual_cpu_count": 4,
+  "host_cpu": "Apple M5 Pro",
+  "emulator_version": "31.3.14.0 (build 9322596)",
+  "app_build": "Expo SDK 57 Android debug development build, Hermes, CPU delegates []",
+  "photos": [
+    {
+      "path": "training/data/images/cercospora/00000.jpg",
+      "gallery_name": "leaf-speed-cercospora-00000.jpg",
+      "sha256": "b8f9b2449f82391d6b952e8a78b05c1001d96858805b612fd4390ef1875766be",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        113,
+        256
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    },
+    {
+      "path": "training/data/images/healthy/00000.jpg",
+      "gallery_name": "leaf-speed-healthy-00000.jpg",
+      "sha256": "f9100742bfe4aa5e559186d8d843061b0ac85af5a1a5936b9107dc6f958a6595",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        128,
+        128
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    },
+    {
+      "path": "training/data/images/miner/00000.jpg",
+      "gallery_name": "leaf-speed-miner-00000.jpg",
+      "sha256": "ddf3f0bc8b474d892406c8501893f9779ffee6631540bd14b3816a4999b503f8",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        128,
+        128
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    },
+    {
+      "path": "training/data/images/phoma/00000.jpg",
+      "gallery_name": "leaf-speed-phoma-00000.jpg",
+      "sha256": "d0d700aef9c974a4ba2c41cdfeb6a4087b05bca12f916c28e47a0472eb353dc0",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        128,
+        128
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    },
+    {
+      "path": "training/data/images/rust/00000.jpg",
+      "gallery_name": "leaf-speed-rust-00000.jpg",
+      "sha256": "207558a3d4cf9648420972773dc4cf45b00a8cb59e0888a27ca9338aad1d85eb",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        128,
+        128
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    },
+    {
+      "path": "training/data/images/rust/00001.jpg",
+      "gallery_name": "leaf-speed-rust-00001.jpg",
+      "sha256": "85b1468b63edcd5ad79d865158174b6eecab75df0a203e8c585d28e491708c62",
+      "source": "Project-AgML/arabica_coffee_leaf_disease_classification",
+      "source_url": "https://huggingface.co/datasets/Project-AgML/arabica_coffee_leaf_disease_classification",
+      "license": "CC BY 4.0",
+      "credit": "Jepkoech, Mugo, Kenduiywo and Chebet (2021), Arabica coffee leaf images dataset, Data in Brief 36, 107142",
+      "pixel_size": [
+        128,
+        128
+      ],
+      "use": "Speed fixtures from earlier AGML extraction; not accuracy or field-validation evidence"
+    }
+  ],
+  "selection_method": "Six previously extracted, publicly licensed AGML coffee-leaf photos; fixed before timing collection",
+  "model_load_ms": null,
+  "model_load_note": "Not measured as native-only allocation; Metro asset fetch is not model initialization",
+  "responsiveness": "not measured",
+  "model_config_signature": "d3b0ec73dc9a48b8cd7a203f86240be72faebaf42c693782b23acd340018d24e",
+  "model_config_signature_method": "SHA256 of model-config.json parsed and serialized with sorted keys"
+}

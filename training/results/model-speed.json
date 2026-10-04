@@ -1,0 +1,15 @@
+{
+  "status": "not_measured",
+  "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+  "model_config_signature": "d3b0ec73dc9a48b8cd7a203f86240be72faebaf42c693782b23acd340018d24e",
+  "metadata_path": "training/results/emulator-metadata.json",
+  "controlled_sample_count": 0,
+  "median_ms": null,
+  "p90_ms": null,
+  "slowest_ms": null,
+  "model_load_ms": null,
+  "responsiveness": "not measured",
+  "android_build_install": "succeeded",
+  "gallery_photos_prepared": 6,
+  "blocker": "Computer-use tool cannot bind Android emulator; user authorization for adb UI automation is pending. Existing uncontrolled log entries excluded."
+}
