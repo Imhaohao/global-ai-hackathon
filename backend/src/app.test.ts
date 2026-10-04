@@ -310,3 +310,14 @@ test("photo advisor tells the farmer to describe the leaf when Claude is unreach
     console.error = originalError;
   }
 });
+
+test("advisor answers the SEED command with the KEPHIS steps without calling Claude", async () => {
+  let clientBuilt = 0;
+  const advisor = createClaudeAdvisor(() => {
+    clientBuilt++;
+    throw new Error("Claude must not be called for SEED");
+  }, new InMemoryConversationHistory());
+  const reply = await advisor.advise("+1", "SEED");
+  assert.match(reply, /Text the code to 1393/);
+  assert.equal(clientBuilt, 0);
+});

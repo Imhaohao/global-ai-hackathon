@@ -3,6 +3,7 @@ import type { AppLanguage } from "../contract.ts";
 import { DISEASES } from "../diseases.ts";
 import { DISEASES_IN_SWAHILI } from "../diseases.sw.ts";
 import { looksLikeKikuyu, UNSUPPORTED_LANGUAGE_REPLY } from "../languageGuard.ts";
+import { seedCheckReplyFor } from "../seedCheck.ts";
 import { COMPLIANCE_OVERHEAD_CHARS } from "../smsCompliance.ts";
 import { buildOfflineReply, ENGLISH_WORDING, SWAHILI_WORDING } from "../smsReply.ts";
 import { matchWithModelHelp } from "./assistedMatch.ts";
@@ -33,6 +34,8 @@ function replyWithDecision(match: AssistedMatch, language: AppLanguage): string 
 }
 
 export async function answerWithLocalModel(model: LocalModel | null, message: string): Promise<LocalModelAnswer> {
+  const seedCheckReply = seedCheckReplyFor(message);
+  if (seedCheckReply) return { reply: seedCheckReply, report: unsure("seed check command"), match: { kind: "noMatch" } };
   if (looksLikeKikuyu(message)) {
     return { reply: UNSUPPORTED_LANGUAGE_REPLY, report: unsure("message looks like Kikuyu"), match: { kind: "noMatch" } };
   }

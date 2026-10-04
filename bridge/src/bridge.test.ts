@@ -170,3 +170,9 @@ test("an iPhone HEIC photo is converted to a JPEG no wider than 1024 px with mac
   assert.match(info, /pixelWidth: 1024/);
   assert.match(info, /pixelHeight: 768/);
 });
+
+test("the bridge answers SEED offline with the KEPHIS steps", async () => {
+  const answer = await askLeafDoctor("+1", "seed", undefined);
+  assert.equal(answer.source, "offline");
+  assert.match(answer.reply, /Text the code to 1393/);
+});

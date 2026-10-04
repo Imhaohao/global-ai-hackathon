@@ -228,3 +228,14 @@ test("a Kikuyu message gets the unsupported-language reply without calling the m
   assert.equal(answer.reply, UNSUPPORTED_LANGUAGE_REPLY);
   assert.equal(answer.report.status, "unsure");
 });
+
+test("the SEED command gets the KEPHIS steps on the hub without calling the model", async () => {
+  const model: LocalModel = {
+    modelId: "should-not-run",
+    complete: async () => {
+      throw new Error("the model must not be called for SEED");
+    },
+  };
+  const answer = await answerWithLocalModel(model, "mbegu");
+  assert.match(answer.reply, /Text the code to 1393/);
+});

@@ -1,11 +1,11 @@
-import { buildOfflineReply, DEFAULT_BACKEND_URL, DISEASES, matchSymptoms } from "../../shared/src/index.ts";
+import { buildOfflineReply, DEFAULT_BACKEND_URL, DISEASES, matchSymptoms, seedCheckReplyFor } from "../../shared/src/index.ts";
 
 export type AnswerSource = "online" | "offline";
 
 const ONLINE_TIMEOUT_MS = 15_000;
 
 function offlineAnswer(question: string): string {
-  return buildOfflineReply(matchSymptoms(question, DISEASES), DISEASES);
+  return seedCheckReplyFor(question) ?? buildOfflineReply(matchSymptoms(question, DISEASES), DISEASES);
 }
 
 async function askBackend(backendUrl: string, token: string, from: string, text: string): Promise<string> {

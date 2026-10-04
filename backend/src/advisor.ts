@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { buildOfflineReply, DISEASES, fitToSms, matchSymptoms } from "../../shared/src/index.ts";
+import { buildOfflineReply, DISEASES, fitToSms, matchSymptoms, seedCheckReplyFor } from "../../shared/src/index.ts";
 import type { DiseaseInfo } from "../../shared/src/index.ts";
 import type { ConversationHistory } from "./conversationStore.ts";
 
@@ -58,6 +58,8 @@ export function replyText(response: Anthropic.Beta.Messages.BetaMessage): string
 export function createClaudeAdvisor(createClient: () => Anthropic, store: ConversationHistory): Advisor {
   return {
     async advise(phone, question) {
+      const seedCheckReply = seedCheckReplyFor(question);
+      if (seedCheckReply) return seedCheckReply;
       try {
         const response = await createClient().beta.messages.create({
           model: MODEL,
