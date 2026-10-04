@@ -1,4 +1,4 @@
-import { ArrowClockwise, ArrowRight, ChatCircleDots, Translate } from 'phosphor-react-native';
+import { ArrowClockwise, ArrowRight, Translate } from 'phosphor-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
@@ -6,9 +6,10 @@ import { AuthApiError, AuthNetworkError, type AuthApi } from '../auth/authApi';
 import { secondsRemaining } from '../auth/resendCooldown';
 import { isCanonicalPhone, type AuthSession } from '../auth/session';
 import { Button } from '../components/Button';
-import { PillButton } from '../components/PillButton';
+import { BotanicalImage } from '../components/BotanicalImage';
+import { IconButton } from '../components/IconButton';
 import { TextField } from '../components/TextField';
-import { Body, SectionHeading, Title } from '../components/Typography';
+import { Muted, SectionHeading, Title } from '../components/Typography';
 import { STRINGS, fillTemplate, type Language } from '../i18n/strings';
 import { colors } from '../theme';
 
@@ -106,16 +107,16 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
     <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
         className="flex-1"
-        contentContainerClassName="flex-grow justify-center gap-8 px-5 py-8"
+        contentContainerClassName="flex-grow justify-center gap-6 px-5 py-4"
         keyboardShouldPersistTaps="handled"
       >
         <View className="items-end">
-          <PillButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
+          <IconButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
         </View>
+        <BotanicalImage compact />
         <View className="gap-3">
-          <ChatCircleDots size={36} weight="duotone" color={colors.accent} />
           <Title>{step === 'phone' ? strings.authTitle : strings.authCodeTitle}</Title>
-          {step === 'phone' ? <Body>{strings.authPhoneHint}</Body> : <Body>{fillTemplate(strings.authCodeHint, { phone })}</Body>}
+          {step === 'code' && <Muted>{fillTemplate(strings.authCodeHint, { phone })}</Muted>}
         </View>
         {step === 'phone' ? (
           <PhoneForm
@@ -192,6 +193,7 @@ function PhoneForm({
           editable={!pending}
           placeholder="+254712345678"
         />
+        <Muted>{hint}</Muted>
       </View>
       <Button
         label={resendSeconds > 0 ? cooldownLabel : buttonLabel}

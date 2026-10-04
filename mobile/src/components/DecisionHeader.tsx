@@ -5,7 +5,7 @@ import type { FarmDecision } from '../../../shared/src/contract.ts';
 import type { Urgency } from '../../../shared/src/types.ts';
 import type { Severity } from '../diagnosis/conditions';
 import { colors } from '../theme';
-import { Title } from './Typography';
+import { Body, Title } from './Typography';
 
 const ICON_BY_DECISION: Record<FarmDecision, Icon> = {
   spray: SprayBottle,
@@ -32,10 +32,14 @@ type DecisionHeaderProps = { decision: FarmDecision; urgency: Urgency; headline:
 export function DecisionHeader({ decision, urgency, headline }: DecisionHeaderProps) {
   const IconComponent = ICON_BY_DECISION[decision];
   const style = STYLE_BY_SEVERITY[SEVERITY_BY_URGENCY[urgency]];
+  const separator = headline.indexOf(': ');
+  const subject = separator < 0 ? headline : headline.slice(0, separator);
+  const action = separator < 0 ? undefined : headline.slice(separator + 2);
   return (
     <View className={`gap-4 rounded-card p-5 ${style.container}`}>
-      <IconComponent size={64} weight="duotone" color={style.color} />
-      <Title>{headline}</Title>
+      <IconComponent size={48} weight="duotone" color={style.color} />
+      <Title>{subject}</Title>
+      {action && <Body>{action}</Body>}
     </View>
   );
 }

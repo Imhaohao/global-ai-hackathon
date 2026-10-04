@@ -1,4 +1,4 @@
-import { CalendarCheck, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
+import { Camera, CalendarCheck, Question, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
 import { useEffect, useRef } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -7,7 +7,8 @@ import { DecisionHeader } from '../components/DecisionHeader';
 import { Disclosure } from '../components/Disclosure';
 import { LeafSlots } from '../components/LeafSlots';
 import { PillButton } from '../components/PillButton';
-import { Body, Muted, SectionHeading } from '../components/Typography';
+import { StepPager } from '../components/StepPager';
+import { Body, Muted } from '../components/Typography';
 import { useKeyboardHeight } from '../components/useKeyboardHeight';
 import { useReadAloud } from '../components/useReadAloud';
 import { MODEL_NAMES, type ModelId } from '../diagnosis/modelConfig';
@@ -33,21 +34,6 @@ type ActionCardScreenProps = {
   onSendCase: (phone: string) => Promise<OfficerSendResult>;
   onCheckAnother: () => void;
 };
-
-function StepList({ steps }: { steps: string[] }) {
-  return (
-    <View className="gap-4">
-      {steps.map((step, index) => (
-        <View key={step} className="flex-row gap-4">
-          <View className="h-9 w-9 items-center justify-center rounded-full bg-accent">
-            <Text className="text-base font-bold text-on-accent">{index + 1}</Text>
-          </View>
-          <Body className="flex-1">{step}</Body>
-        </View>
-      ))}
-    </View>
-  );
-}
 
 function RecheckRow({ text }: { text: string }) {
   return (
@@ -75,10 +61,53 @@ function ReadAloudButton({ strings, card }: { strings: Strings; card: ActionCard
 function WhatElseCouldItBe({ strings, items }: { strings: Strings; items: string[] }) {
   if (items.length === 0) return null;
   return (
-    <Disclosure title={strings.whatElse}>
+    <Disclosure title={strings.whatElse} icon={Question}>
       {items.map((item) => (
         <Body key={item}>{item}</Body>
       ))}
+    </Disclosure>
+  );
+}
+
+function CaseDetails({
+  strings,
+  modelName,
+  photoUris,
+  observation,
+  farmSections,
+  onChooseFarmSection,
+  onAddFarmSection,
+}: {
+  strings: Strings;
+  modelName: string;
+  photoUris: string[];
+  observation: Observation;
+  farmSections: string[];
+  onChooseFarmSection: (section: string | undefined) => void;
+  onAddFarmSection: (name: string) => void;
+}) {
+  return (
+    <Disclosure title={strings.caseDetails} icon={Camera}>
+      {photoUris.length > 0 && (
+        <LeafSlots
+            photoUris={photoUris}
+            readings={observation.check.readings}
+            verdict={observation.check.verdict}
+            slotCount={photoUris.length}
+            strings={strings}
+            accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photoUris.length, max: photoUris.length })}
+          />
+      )}
+      <FarmSectionPicker
+        strings={strings}
+        sections={farmSections}
+        selected={observation.farmSection}
+        onChoose={onChooseFarmSection}
+        onAdd={onAddFarmSection}
+      />
+      <Muted>
+        {strings.modelUsed} {modelName}
+      </Muted>
     </Disclosure>
   );
 }
@@ -102,30 +131,17 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
     >
       <DecisionHeader decision={card.decision} urgency={card.urgency} headline={card.headline} />
       <ReadAloudButton strings={strings} card={card} />
-      <Muted>{strings.modelUsed} {MODEL_NAMES[props.modelId]}</Muted>
-      {card.doNow.length > 0 && (
-        <View className="gap-4">
-          <SectionHeading>{strings.whatToDo}</SectionHeading>
-          <StepList steps={card.doNow} />
-        </View>
-      )}
+      <StepPager steps={card.doNow} strings={strings} />
       <RecheckRow text={recheckText} />
       <WhatElseCouldItBe strings={strings} items={card.whatElseCouldItBe} />
-      {photoUris.length > 0 && (
-        <LeafSlots
-          photoUris={photoUris}
-          readings={observation.check.readings}
-          verdict={observation.check.verdict}
-          slotCount={photoUris.length}
-          accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photoUris.length, max: photoUris.length })}
-        />
-      )}
-      <FarmSectionPicker
+      <CaseDetails
         strings={strings}
-        sections={props.farmSections}
-        selected={observation.farmSection}
-        onChoose={props.onChooseFarmSection}
-        onAdd={props.onAddFarmSection}
+        modelName={MODEL_NAMES[props.modelId]}
+        photoUris={photoUris}
+        observation={observation}
+        farmSections={props.farmSections}
+        onChooseFarmSection={props.onChooseFarmSection}
+        onAddFarmSection={props.onAddFarmSection}
       />
       <OfficerActions
         strings={strings}

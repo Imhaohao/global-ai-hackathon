@@ -8,19 +8,22 @@ import {
   Plant,
   Translate,
   Warning,
+  Info,
   WifiSlash,
 } from 'phosphor-react-native';
+import { useState } from 'react';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
+import { MAX_LEAVES_PER_PLANT } from '../../../shared/src/plantVote.ts';
+import { BotanicalImage } from '../components/BotanicalImage';
+import { IconButton } from '../components/IconButton';
 import { Button } from '../components/Button';
 import { ModelSelector } from '../components/ModelSelector';
 import { LeafSlots } from '../components/LeafSlots';
 import { PillButton } from '../components/PillButton';
 import { Body, Muted, Title } from '../components/Typography';
-import { Viewfinder } from '../components/Viewfinder';
 import type { LeafPhoto } from '../diagnosis/classifyLeaf';
-import { MAX_LEAVES_PER_PLANT } from '../diagnosis/diagnosePlant';
 import type { ModelId } from '../diagnosis/modelConfig';
 import { getQualityGuidance } from '../diagnosis/qualityGuidance';
 import type { PhotoSource } from '../diagnosis/pickLeafPhoto';
@@ -43,6 +46,7 @@ type CaptureScreenProps = {
   onRetryModel: () => void;
   onTakeLeaf: (source: PhotoSource, replaceIndex?: number) => void;
   onFinish: () => void;
+  isFinishing?: boolean;
   onOpenSettings: () => void;
   onOpenSeedCheck?: () => void;
   onSwitchLanguage: () => void;
@@ -73,7 +77,7 @@ const HEALTHY_TONE: VerdictTone = {
 
 function verdictTitle(strings: Strings, verdict: PlantVerdict): string {
   if (verdict.kind === 'answer') {
-    return fillTemplate(strings.leavesAgreeTitle, { agreeing: verdict.agreeing, usable: verdict.usable });
+    return strings.leavesReady;
   }
   if (verdict.kind === 'needsPerson' && verdict.reason === 'leavesDisagree') return strings.leavesDisagreeTitle;
   return strings.retakeTitle;
@@ -88,19 +92,19 @@ function VerdictPanel({ strings, verdict }: { strings: Strings; verdict: PlantVe
         <ToneIcon size={28} weight="fill" color={tone.color} />
         <Text className={`flex-1 text-lg font-semibold ${tone.text}`}>{verdictTitle(strings, verdict)}</Text>
       </View>
-      {verdict.kind === 'retake' && <Body className={tone.text}>{strings.retakeBody}</Body>}
     </View>
   );
 }
 
 type ProblemLeafRowProps = {
   strings: Strings;
+  number: number;
   photo: LeafPhoto;
   reading: LeafReading;
   onRetake: () => void;
 };
 
-function ProblemLeafRow({ strings, photo, reading, onRetake }: ProblemLeafRowProps) {
+function ProblemLeafRow({ strings, number, photo, reading, onRetake }: ProblemLeafRowProps) {
   const reason = reading.qualityIssue
     ? getQualityGuidance(strings, reading.qualityIssue).body
     : leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
@@ -115,11 +119,14 @@ function ProblemLeafRow({ strings, photo, reading, onRetake }: ProblemLeafRowPro
         <Muted className="text-ink">{reason}</Muted>
         <Pressable
           accessibilityRole="button"
+          accessibilityLabel={fillTemplate(strings.retakeLeafNumber, { number })}
           onPress={onRetake}
           className="min-h-11 flex-row items-center gap-2 self-start"
         >
           <ArrowCounterClockwise size={20} weight="bold" color={colors.accent} />
-          <Text className="text-base font-semibold text-accent">{strings.retakeLeaf}</Text>
+          <Text className="text-base font-semibold text-accent">
+            {fillTemplate(strings.retakeLeafNumber, { number })}
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -144,6 +151,7 @@ function ProblemLeaves({ strings, photos, readings, onRetake }: ProblemLeavesPro
         <ProblemLeafRow
           key={index}
           strings={strings}
+          number={index + 1}
           photo={photos[index]}
           reading={readings[index]}
           onRetake={() => onRetake(index)}
@@ -167,49 +175,50 @@ function CheckingNotice({ strings }: { strings: Strings }) {
 
 type ActionsProps = Pick<
   CaptureScreenProps,
-  'strings' | 'photos' | 'check' | 'isChecking' | 'canCheck' | 'onTakeLeaf' | 'onFinish'
+  'strings' | 'photos' | 'check' | 'isChecking' | 'isFinishing' | 'canCheck' | 'onTakeLeaf' | 'onFinish'
 >;
 
-function CaptureActions({ strings, photos, check, isChecking, canCheck, onTakeLeaf, onFinish }: ActionsProps) {
+function CaptureActions({ strings, photos, check, isChecking, isFinishing = false, canCheck, onTakeLeaf, onFinish }: ActionsProps) {
   const canAddLeaf = canCheck && !isChecking && photos.length < MAX_LEAVES_PER_PLANT;
   const canFinish = !isChecking && check !== null && check.verdict.kind !== 'retake';
   const cameraLabel = photos.length === 0 ? strings.takePhoto : strings.addAnotherLeaf;
-  const cameraVariant = canFinish ? 'secondary' : 'primary';
   return (
-    <View className="gap-2 bg-paper px-5 pb-6 pt-3">
-      {canFinish && <Button label={strings.seeAdvice} icon={ArrowRight} onPress={onFinish} />}
+    <View className="gap-3 bg-paper px-5 pb-6 pt-3">
+      {canFinish && (
+        <Button
+          label={isFinishing ? strings.checking : strings.seeAdvice}
+          icon={ArrowRight}
+          onPress={onFinish}
+          disabled={isFinishing}
+        />
+      )}
       {photos.length < MAX_LEAVES_PER_PLANT && (
-        <>
-          <Button
-            label={cameraLabel}
-            icon={Camera}
-            variant={cameraVariant}
-            onPress={() => onTakeLeaf('camera')}
-            disabled={!canAddLeaf}
-          />
-          <Button
+        <View className="flex-row items-center gap-3">
+          <View className="flex-1">
+            <Button
+              label={cameraLabel}
+              icon={Camera}
+              variant={canFinish ? 'secondary' : 'primary'}
+              onPress={() => onTakeLeaf('camera')}
+              disabled={!canAddLeaf}
+            />
+          </View>
+          <IconButton
             label={strings.choosePhoto}
             icon={ImageSquare}
-            variant="quiet"
             onPress={() => onTakeLeaf('library')}
             disabled={!canAddLeaf}
           />
-        </>
-      )}
-      {photos.length === 0 && (
-        <View className="flex-row items-center justify-center gap-2">
-          <WifiSlash size={18} color={colors['ink-muted']} />
-          <Muted>{strings.worksOffline}</Muted>
         </View>
       )}
     </View>
   );
 }
 
-type StatusProps = Pick<CaptureScreenProps, 'strings' | 'photos' | 'check' | 'isChecking' | 'onTakeLeaf'>;
+type StatusProps = Pick<CaptureScreenProps, 'strings' | 'photos' | 'check' | 'isChecking' | 'isFinishing' | 'onTakeLeaf'>;
 
-function CaptureStatus({ strings, photos, check, isChecking, onTakeLeaf }: StatusProps) {
-  if (isChecking) return <CheckingNotice strings={strings} />;
+function CaptureStatus({ strings, photos, check, isChecking, isFinishing, onTakeLeaf }: StatusProps) {
+  if (isChecking || isFinishing) return <CheckingNotice strings={strings} />;
   if (!check) return null;
   const hasProblemLeaves = check.verdict.kind !== 'answer';
   return (
@@ -227,46 +236,64 @@ function CaptureStatus({ strings, photos, check, isChecking, onTakeLeaf }: Statu
   );
 }
 
-function FirstLeafGuide({ strings, onOpenSeedCheck }: Pick<CaptureScreenProps, 'strings' | 'onOpenSeedCheck'>) {
+function CaptureToolbar({ strings, onOpenSettings, onSwitchLanguage }: Pick<CaptureScreenProps, 'strings' | 'onOpenSettings' | 'onSwitchLanguage'>) {
   return (
-    <>
-      <Viewfinder compact />
-      <Muted>{strings.captureTip}</Muted>
-      {onOpenSeedCheck && (
-        <View className="items-start">
-          <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />
+    <View className="flex-row items-center justify-between">
+      <IconButton label={strings.settingsTitle} icon={Gear} onPress={onOpenSettings} />
+      <View accessible accessibilityLabel={strings.worksOffline}>
+        <WifiSlash size={24} color={colors['ink-muted']} />
+      </View>
+      <IconButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
+    </View>
+  );
+}
+
+function PhotoGuide({ strings, modelId, modelLoading, isChecking, onSelectModel }: Pick<CaptureScreenProps, 'strings' | 'modelId' | 'modelLoading' | 'isChecking' | 'onSelectModel'>) {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <View className="gap-3">
+      <View className="flex-row items-center justify-between gap-3">
+        <Title className="flex-1">{strings.captureTitle}</Title>
+        <IconButton label={strings.photoGuide} icon={Info} expanded={isOpen} onPress={() => setIsOpen(!isOpen)} />
+      </View>
+      {isOpen && (
+        <View className="gap-4">
+          <Body>{strings.captureTip}</Body>
+          <ModelSelector modelId={modelId} strings={strings} disabled={isChecking} loading={modelLoading} onSelect={onSelectModel} />
         </View>
       )}
-    </>
+    </View>
   );
 }
 
 export function CaptureScreen(props: CaptureScreenProps) {
-  const { strings, photos, check, problem, onOpenSettings, onOpenSeedCheck, onSwitchLanguage } = props;
+  const { strings, photos, check, problem, onOpenSeedCheck } = props;
   return (
     <View className="flex-1">
-      <ScrollView contentContainerClassName="gap-5 px-5 pb-4 pt-2">
-        <View className="flex-row items-center justify-between">
-          <PillButton label={strings.settingsTitle} icon={Gear} onPress={onOpenSettings} />
-          <PillButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
-        </View>
-        <Title>{strings.captureTitle}</Title>
-        <LeafSlots
-          photoUris={photos.map((photo) => photo.uri)}
-          readings={check?.readings ?? []}
-          verdict={check?.verdict ?? null}
-          slotCount={MAX_LEAVES_PER_PLANT}
-          accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photos.length, max: MAX_LEAVES_PER_PLANT })}
-        />
-        {photos.length === 0 && <FirstLeafGuide strings={strings} onOpenSeedCheck={onOpenSeedCheck} />}
-        <ModelSelector
-          modelId={props.modelId}
-          strings={strings}
-          disabled={props.isChecking}
-          loading={props.modelLoading}
-          onSelect={props.onSelectModel}
-        />
+      <ScrollView contentContainerClassName="flex-grow gap-6 px-5 pb-4 pt-2">
+        <CaptureToolbar {...props} />
+        <PhotoGuide {...props} />
+        {photos.length === 0 ? (
+          <View className="flex-1 justify-center gap-5">
+            <BotanicalImage />
+            {onOpenSeedCheck && (
+              <View className="items-center">
+                <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />
+              </View>
+            )}
+          </View>
+        ) : (
+          <LeafSlots
+            photoUris={photos.map((photo) => photo.uri)}
+            readings={check?.readings ?? []}
+            verdict={check?.verdict ?? null}
+            slotCount={MAX_LEAVES_PER_PLANT}
+            strings={strings}
+            accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photos.length, max: MAX_LEAVES_PER_PLANT })}
+          />
+        )}
         <CaptureStatus {...props} />
+        {props.modelLoading && <CheckingNotice strings={{ ...strings, checking: strings.modelLoading }} />}
         {problem && <ProblemNotice strings={strings} problem={problem} />}
         {problem === 'modelFailed' && (
           <Button label={strings.retryModel} icon={ArrowCounterClockwise} variant="secondary" onPress={props.onRetryModel} />

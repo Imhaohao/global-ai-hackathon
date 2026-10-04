@@ -1,10 +1,11 @@
-import { ArrowLeft, DownloadSimple, MapPin, SignOut, Trash, X } from 'phosphor-react-native';
-import { useState } from 'react';
+import { ArrowLeft, Database, DownloadSimple, MapPin, Plant, SignOut, Trash, UserCircle, Wrench, X } from 'phosphor-react-native';
+import { useRef, useState } from 'react';
 import { Alert, Pressable, ScrollView, Switch, Text, View } from 'react-native';
 
 import { Button } from '../components/Button';
 import { Chip } from '../components/Chip';
-import { PillButton } from '../components/PillButton';
+import { Disclosure } from '../components/Disclosure';
+import { IconButton } from '../components/IconButton';
 import { TextField } from '../components/TextField';
 import { Body, Muted, SectionHeading, Title } from '../components/Typography';
 import { useKeyboardHeight } from '../components/useKeyboardHeight';
@@ -114,17 +115,14 @@ function FarmSectionsEditor({
 }
 
 function DevScenarioPicker({
-  strings,
   selected,
   onSelect,
 }: {
-  strings: Strings;
   selected: DevScenario;
   onSelect: (scenario: DevScenario) => void;
 }) {
   return (
     <View className="gap-3">
-      <SectionHeading>{strings.devVerdictTitle}</SectionHeading>
       <View className="flex-row flex-wrap gap-2">
         {DEV_SCENARIOS.map((scenario) => (
           <Chip key={scenario} label={scenario} selected={scenario === selected} onPress={() => onSelect(scenario)} />
@@ -148,12 +146,33 @@ function DataControls({
   onDeleteAll,
 }: Pick<SettingsScreenProps, 'strings' | 'savedCheckCount' | 'onExport' | 'onDeleteAll'>) {
   const [exportFailed, setExportFailed] = useState(false);
-  const exportData = async () => setExportFailed(!(await onExport()));
+  const [isExporting, setIsExporting] = useState(false);
+  const exportPending = useRef(false);
+  const exportData = async () => {
+    if (exportPending.current) return;
+    exportPending.current = true;
+    setIsExporting(true);
+    setExportFailed(false);
+    try {
+      setExportFailed(!(await onExport()));
+    } catch {
+      setExportFailed(true);
+    } finally {
+      exportPending.current = false;
+      setIsExporting(false);
+    }
+  };
   return (
     <View className="gap-3">
       <Muted>{fillTemplate(strings.savedChecks, { count: savedCheckCount })}</Muted>
       {exportFailed && <Body className="text-sick">{strings.exportFailed}</Body>}
-      <Button label={strings.exportData} icon={DownloadSimple} variant="secondary" onPress={exportData} />
+      <Button
+        label={isExporting ? strings.exportingData : strings.exportData}
+        icon={DownloadSimple}
+        variant="secondary"
+        onPress={exportData}
+        disabled={isExporting}
+      />
       <Button
         label={strings.deleteAll}
         icon={Trash}
@@ -173,34 +192,40 @@ export function SettingsScreen(props: SettingsScreenProps) {
       contentContainerStyle={{ paddingBottom: 32 + keyboardHeight }}
       keyboardShouldPersistTaps="handled"
     >
-      <View className="items-start">
-        <PillButton label={strings.back} icon={ArrowLeft} onPress={props.onBack} />
-      </View>
+      <IconButton label={strings.back} icon={ArrowLeft} onPress={props.onBack} />
       <Title>{strings.settingsTitle}</Title>
-      <View className="gap-2 rounded-control bg-surface p-4 shadow-sm">
-        <SectionHeading>{strings.authSignedInAs}</SectionHeading>
-        <Body>{props.accountPhone}</Body>
-        <SignOutControl strings={strings} onSignOut={props.onSignOut} />
-      </View>
-      <LocationSwitch strings={strings} enabled={locationAllowed(settings)} onToggle={props.onToggleLocation} />
-      <OfficerNumberField
-        strings={strings}
-        savedPhone={settings.officerPhone}
-        onSave={(phone) => onUpdateSettings({ officerPhone: phone })}
-      />
-      <FarmSectionsEditor
-        strings={strings}
-        sections={settings.farmSections}
-        onChange={(farmSections) => onUpdateSettings({ farmSections })}
-      />
-      <DataControls
-        strings={strings}
-        savedCheckCount={props.savedCheckCount}
-        onExport={props.onExport}
-        onDeleteAll={props.onDeleteAll}
-      />
+      <Disclosure title={strings.accountSettings} icon={UserCircle}>
+        <View className="gap-2">
+          <SectionHeading>{strings.authSignedInAs}</SectionHeading>
+          <Body>{props.accountPhone}</Body>
+          <SignOutControl strings={strings} onSignOut={props.onSignOut} />
+        </View>
+      </Disclosure>
+      <Disclosure title={strings.farmSettings} icon={Plant}>
+        <LocationSwitch strings={strings} enabled={locationAllowed(settings)} onToggle={props.onToggleLocation} />
+        <OfficerNumberField
+          strings={strings}
+          savedPhone={settings.officerPhone}
+          onSave={(phone) => onUpdateSettings({ officerPhone: phone })}
+        />
+        <FarmSectionsEditor
+          strings={strings}
+          sections={settings.farmSections}
+          onChange={(farmSections) => onUpdateSettings({ farmSections })}
+        />
+      </Disclosure>
+      <Disclosure title={strings.dataSettings} icon={Database}>
+        <DataControls
+          strings={strings}
+          savedCheckCount={props.savedCheckCount}
+          onExport={props.onExport}
+          onDeleteAll={props.onDeleteAll}
+        />
+      </Disclosure>
       {__DEV__ && (
-        <DevScenarioPicker strings={strings} selected={props.devScenario} onSelect={props.onChangeDevScenario} />
+        <Disclosure title={strings.devVerdictTitle} icon={Wrench}>
+          <DevScenarioPicker selected={props.devScenario} onSelect={props.onChangeDevScenario} />
+        </Disclosure>
       )}
     </ScrollView>
   );

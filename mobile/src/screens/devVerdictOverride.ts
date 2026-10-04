@@ -1,7 +1,7 @@
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
 import type { DiseaseKey } from '../../../shared/src/types.ts';
 import type { LeafPhoto } from '../diagnosis/classifyLeaf';
-import { MAX_LEAVES_PER_PLANT, MIN_AGREEING_LEAVES } from '../diagnosis/diagnosePlant';
+import { MAX_LEAVES_PER_PLANT, MIN_AGREEING_LEAVES } from '../../../shared/src/plantVote.ts';
 
 export type DevScenario = 'off' | 'clear' | 'unclear' | 'disagree';
 

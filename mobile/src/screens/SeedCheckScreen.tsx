@@ -1,8 +1,10 @@
-import { ArrowLeft, ChatText, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
+import { ArrowLeft, ChatText, Info, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import type { SeedCheckCopy } from '../../../shared/src/seedCheck.ts';
+import { Disclosure } from '../components/Disclosure';
+import { StepPager } from '../components/StepPager';
 import { Button } from '../components/Button';
 import { PillButton } from '../components/PillButton';
 import { SeedPacketSticker } from '../components/SeedPacketSticker';
@@ -17,27 +19,6 @@ type SeedCheckScreenProps = {
   phone: string;
   onBack: () => void;
 };
-
-function NumberedStep({ number, text }: { number: number; text: string }) {
-  return (
-    <View className="flex-row items-start gap-4">
-      <View className="h-10 w-10 items-center justify-center rounded-full bg-accent">
-        <Text className="text-lg font-bold text-on-accent">{number}</Text>
-      </View>
-      <Body className="flex-1 pt-1">{text}</Body>
-    </View>
-  );
-}
-
-function StepList({ steps }: { steps: string[] }) {
-  return (
-    <View className="gap-5 rounded-card bg-surface p-5 shadow-sm">
-      {steps.map((step, index) => (
-        <NumberedStep key={step} number={index + 1} text={step} />
-      ))}
-    </View>
-  );
-}
 
 function ReadStepsAloud({ strings, steps }: { strings: Strings; steps: string[] }) {
   const readAloud = useReadAloud(steps.join(' '), strings.speechLanguage);
@@ -57,7 +38,7 @@ function TypeTheNumberYourself({ strings, phone }: { strings: Strings; phone: st
   return (
     <View accessibilityLiveRegion="polite" className="items-center gap-2 rounded-card bg-watch-soft p-5">
       <Body className="text-center text-watch">{strings.seedCheckSmsUnavailable}</Body>
-      <Text selectable className="text-6xl font-bold text-ink">
+      <Text selectable className="text-2xl font-bold text-ink">
         {phone}
       </Text>
     </View>
@@ -74,7 +55,7 @@ export function SeedCheckScreen({ strings, copy, phone, onBack }: SeedCheckScree
       </View>
       <Title>{strings.seedCheckTitle}</Title>
       <SeedPacketSticker />
-      <StepList steps={copy.steps} />
+      <StepPager steps={copy.steps} strings={strings} />
       <ReadStepsAloud strings={strings} steps={copy.steps} />
       <Button
         label={fillTemplate(strings.seedCheckTextButton, { phone })}
@@ -82,10 +63,10 @@ export function SeedCheckScreen({ strings, copy, phone, onBack }: SeedCheckScree
         onPress={textTheCode}
       />
       {isSmsUnavailable && <TypeTheNumberYourself strings={strings} phone={phone} />}
-      <View className="gap-3">
+      <Disclosure title={strings.seedDetails} icon={Info}>
         <Muted>{copy.result}</Muted>
         <Muted>{copy.coverage}</Muted>
-      </View>
+      </Disclosure>
     </ScrollView>
   );
 }
