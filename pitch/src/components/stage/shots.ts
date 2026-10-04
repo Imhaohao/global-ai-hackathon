@@ -86,6 +86,11 @@ export const shots = {
   officer: shot({ cameraPosition: add(motorbike, [3.4, 1.7, 3.6]), cameraTarget: add(motorbike, [-0.2, 0.75, -0.2]), fov: 30 }, { mist: 0.2, frameShift: -0.18 }, closeFog),
   officerPhone: shot({ cameraPosition: add(officerScreen.centre, [1.55, 0.5, 1.15]), cameraTarget: add(officerScreen.centre, [-0.1, -0.22, 0]), fov: 30 }, { mist: 0, frameShift: -0.2, sway: 0.15 }, closeFog),
   map: shot({ cameraPosition: [2, 74, 22], cameraTarget: [0, 0, -4], fov: 34 }, { pins: 1, mist: 0.2, frameShift: 0.2, sway: 0.3 }, { fogNear: 90, fogFar: 320 }),
+  gap: shot({ cameraPosition: [-30, 6, 92], cameraTarget: [-2, 16, -10], fov: 34 }, { mist: 0.8, rustGlow: 0.4, frameShift: -0.2, sway: 1 }, { fogNear: 60, fogFar: 260 }),
+  bushRight: shot(bushCamera, { rustGlow: 0.6, mist: 0, frameShift: 0.26, sway: 0.3 }, closeFog),
+  officerRight: shot({ cameraPosition: add(motorbike, [3.4, 1.7, 3.6]), cameraTarget: add(motorbike, [-0.2, 0.75, -0.2]), fov: 30 }, { mist: 0.2, frameShift: 0.26 }, closeFog),
+  officerPhoneRight: shot({ cameraPosition: add(officerScreen.centre, [1.55, 0.5, 1.15]), cameraTarget: add(officerScreen.centre, [-0.1, -0.22, 0]), fov: 30 }, { mist: 0, frameShift: 0.26, sway: 0.15 }, closeFog),
+  featureRight: shot(featureCamera, { mist: 0, frameShift: 0.26, sway: 0.15 }, { ...closeFog, featureScreen: "sent" }),
   closing: shot({ cameraPosition: [-30, 6, 92], cameraTarget: [-2, 16, -10], fov: 34 }, { mist: 1, rustGlow: 0.4, frameShift: 0, sway: 1 }, { fogNear: 60, fogFar: 260 }),
 } satisfies Record<string, Shot>;
 

@@ -35,7 +35,7 @@ export function TitleForeground() {
     <div className="deck-gutter relative flex h-full items-end justify-between gap-deck-gap">
       <motion.div aria-hidden variants={fadeReveal(1.2)} className="paper-wash-low pointer-events-none absolute inset-0" />
       <p className="display-headline relative text-lede text-ink">
-        <MaskedLines lines={["What is wrong with this", "coffee leaf? Ask from", "any phone."]} delay={1.6} />
+        <MaskedLines lines={["Crop disease help that", "works on a flip phone,", "with no internet."]} delay={1.6} />
       </p>
       <motion.p variants={fadeReveal(2.2)} className="relative text-caption text-ink-muted">
         Hack-Nation Global AI Hackathon 7, October 2026

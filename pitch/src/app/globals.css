@@ -73,6 +73,8 @@
   --spacing-deck-title: 19vh;
   --spacing-deck-bar: 5.2vh;
   --spacing-deck-labels: 7vh;
+  --spacing-deck-screen: 62vh;
+  --spacing-deck-copy: min(38vw, 68vh);
   --spacing-deck-marker: 2.2vh;
   --spacing-deck-marker-centre: 1.1vh;
   --spacing-deck-timeline: 21vh;
@@ -146,6 +148,10 @@
 
 @utility paper-wash {
   background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 93%, transparent) 0%, color-mix(in srgb, var(--color-paper) 84%, transparent) 42%, color-mix(in srgb, var(--color-paper) 40%, transparent) 56%, transparent 68%);
+}
+
+@utility paper-wash-wide {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 94%, transparent) 0%, color-mix(in srgb, var(--color-paper) 88%, transparent) 60%, color-mix(in srgb, var(--color-paper) 30%, transparent) 78%, transparent 90%);
 }
 
 @utility paper-wash-low {

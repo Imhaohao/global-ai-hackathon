@@ -15,7 +15,7 @@ export function ClosingSlide({ step }: SlideProps) {
   );
 }
 
-const dataSources: FactKey[] = ["ruralPopulation", "ruralBasicPhoneMain", "extensionTarget", "nuruField", "phoneAdviceYield", "zeroShotBanana", "eudrLarge", "faoMappingCost", "kenyaGeoMapping", "othayaPopulation"];
+const dataSources: FactKey[] = ["ruralDailyInternet", "ruralElectricity", "ruralBasicPhoneMain", "extensionTarget", "nuruField", "phoneAdviceYield", "zeroShotBanana", "eudrLarge", "faoMappingCost", "kenyaGeoMapping", "othayaPopulation"];
 
 function Credits() {
   return (
@@ -40,7 +40,7 @@ function Credits() {
             </li>
           ))}
         </ul>
-        <p className="text-fineprint text-ink-muted">Product figures come from this repository: PROGRESS.md, README.md and the shared/ code. Phone screens on the stage are mockups drawn from hub/ and shared/ code; none is a screenshot.</p>
+        <p className="text-fineprint text-ink-muted">Product figures come from this repository: PROGRESS.md, README.md and the shared/ code. Phone screens on the 3D stage are mockups drawn from hub/ and shared/ code. App screens on slides are Android emulator screenshots from docs/screens.</p>
       </section>
     </motion.div>
   );
@@ -52,7 +52,7 @@ export function ClosingForeground({ step }: SlideProps) {
     <div className="deck-gutter relative flex h-full items-end">
       <motion.div aria-hidden variants={fadeReveal(1)} className="paper-wash-low pointer-events-none absolute inset-0" />
       <p className="display-headline relative text-lede text-ink">
-        <MaskedLines lines={["We built this so any phone", "can reach a person who", "knows coffee."]} delay={1.4} />
+        <MaskedLines lines={["A small model works where", "she farms, and a person", "is one text away."]} delay={1.4} />
       </p>
     </div>
   );

@@ -35,7 +35,7 @@ export function NoorSlide({ step }: SlideProps) {
   );
 }
 
-function Figure({ value, decimals, suffix, label, delay }: { value: number; decimals: number; suffix: string; label: string; delay: number }) {
+export function Figure({ value, decimals, suffix, label, delay }: { value: number; decimals: number; suffix: string; label: string; delay: number }) {
   return (
     <motion.div variants={fadeReveal(delay, 18)} className="flex flex-col gap-deck-hairline">
       <p className="display-headline text-figure text-ink">
@@ -49,7 +49,7 @@ function Figure({ value, decimals, suffix, label, delay }: { value: number; deci
 const FARMERS_PER_OFFICER = facts.extensionTarget.value;
 const DOT_COLUMNS = 40;
 
-function OfficerField() {
+export function OfficerField() {
   const dots = Array.from({ length: FARMERS_PER_OFFICER + 1 }, (_, index) => index);
   return (
     <div role="img" aria-label="600 grey dots for farmers and one green dot for the extension officer" className="grid w-deck-column gap-deck-dot" style={{ gridTemplateColumns: `repeat(${DOT_COLUMNS}, minmax(0, 1fr))` }}>
@@ -68,28 +68,6 @@ function OfficerField() {
   );
 }
 
-export function ReachSlide({ step }: SlideProps) {
-  return (
-    <StepSwap step={step}>
-      {step === 0 ? (
-        <CopyColumn side="right" source={sourceLine("ruralPopulation", "agricultureEmployment")}>
-          <Headline lines={["Kenya still lives", "off the land."]} />
-          <div className="flex gap-deck-gap">
-            <Figure value={facts.ruralPopulation.value} decimals={1} suffix="%" label="of Kenyans live in rural areas (2025)" delay={0.5} />
-            <Figure value={facts.agricultureEmployment.value} decimals={1} suffix="%" label="of working Kenyans work in farming (2025)" delay={0.7} />
-          </div>
-        </CopyColumn>
-      ) : (
-        <CopyColumn side="right" source={`${facts.extensionTarget.source}. Quoted: "the ratio of extension staff to farmer has not improved."`}>
-          <Headline lines={["One officer for", "every 600 farmers"]} />
-          <OfficerField />
-          <Lede delay={1.6}>That is Kenya&apos;s target for 2029. Its 2023 extension policy says today&apos;s ratio has not improved.</Lede>
-        </CopyColumn>
-      )}
-    </StepSwap>
-  );
-}
-
 type PhoneSegment = { key: string; label: string; share: number; className: string };
 
 const ruralPhones: PhoneSegment[] = [
@@ -103,7 +81,7 @@ const placedPhones = ruralPhones.map((segment, index) => {
   return { ...segment, left: segment.key === "none" ? facts.ruralPhoneOwnership.value : before };
 });
 
-function PhoneBar() {
+export function PhoneBar() {
   const placed = placedPhones;
   return (
     <div className="flex w-deck-column flex-col gap-deck-hairline">
@@ -133,32 +111,22 @@ function PhoneBar() {
   );
 }
 
-export function PhonesSlide() {
-  return (
-    <CopyColumn side="right" source={`${facts.ruralBasicPhoneMain.source} (${facts.ruralBasicPhoneMain.year}). Bar shows each rural adult's main phone.`}>
-      <Headline lines={["About four in ten", "rural adults text", "on a basic phone."]} />
-      <PhoneBar />
-      <Lede delay={1.8}>So the main way in is SMS. The app is for the days a smartphone is home.</Lede>
-    </CopyColumn>
-  );
-}
-
 const statementLines = [
   "Because of this tool, Noor",
   "will find out what is wrong",
-  "with a sick coffee leaf and",
-  "reach a verified person",
-  "about it within a day of",
-  "seeing the spots, which she",
-  "would otherwise do late",
-  "or not at all.",
+  "with a sick coffee leaf, from",
+  "any phone and with no internet,",
+  "and reach a verified person",
+  "about it within a day of seeing",
+  "the spots, which she would",
+  "otherwise do late or not at all.",
 ];
 
 type Because = { lead: string; detail: string; source: string };
 
 const becauseRows: Because[] = [
-  { lead: "Officers are stretched.", detail: "Kenya targets one extension officer per 600 farmers by 2029 and says the ratio has not improved.", source: sourceLine("extensionTarget") },
-  { lead: "Many farmers only have SMS.", detail: "38.4% of rural adults use a basic text phone as their main phone.", source: sourceLine("ruralBasicPhoneMain") },
+  { lead: "The internet does not reach most of the slope.", detail: "Only 33.7% of rural adults go online every day, and 38.4% use a basic text phone as their main phone.", source: sourceLine("ruralDailyInternet", "ruralBasicPhoneMain") },
+  { lead: "Local help is stretched.", detail: "Kenya targets one extension officer per 600 farmers by 2029 and says the ratio has not improved.", source: sourceLine("extensionTarget") },
   { lead: "Trained apps can beat guessing.", detail: "A cassava diagnosis app was right 65% of the time in the field, against 40-58% for extension agents and 18-31% for farmers.", source: sourceLine("nuruField") },
   { lead: "Advice alone is not enough.", detail: "Phone-only farm advice moved yields 4%, with a confidence interval from -3% to 10%, so the answer must also reach a person.", source: sourceLine("phoneAdviceYield") },
 ];

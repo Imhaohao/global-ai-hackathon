@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, CheckCircle, PaperPlaneTilt, Phone, Question, WarningOctagon } from "@phosphor-icons/react";
+import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { facts } from "@/lib/facts";
@@ -9,7 +9,7 @@ import { copy } from "@/lib/productCopy";
 import { SmsFlow, type FlowFocus } from "../SmsFlow";
 import { fadeReveal } from "../primitives";
 import type { SlideProps } from "../slides";
-import { BuildStateChip, CopyColumn, Headline, Lede } from "./parts";
+import { BuildStateChip, CopyColumn, emulatorNote, Headline, Lede, ScreensLayout } from "./parts";
 import { StepSwap } from "./StorySlides";
 
 function Quote({ original, english, delay = 0.7 }: { original: string; english: string; delay?: number }) {
@@ -23,23 +23,20 @@ function Quote({ original, english, delay = 0.7 }: { original: string; english: 
   );
 }
 
-const smsSteps: { focus: FlowFocus; lines: string[]; body: ReactNode | null; source?: string }[] = [
+const smsSteps: { focus: FlowFocus; lines: string[]; body: ReactNode | null; source?: string; state?: "built" | "emulator" }[] = [
   {
     focus: "sent",
-    lines: ["Noor texts the", "cooperative's number."],
+    lines: ["A flip phone", "is enough."],
     body: <Quote original={copy.farmerMessage} english="Leaves have yellow spots and orange powder under the leaf. (An example message.)" />,
-  },
-  {
-    focus: "online",
-    lines: ["A phone at the", "cooperative answers."],
-    body: null,
-    source: "With signal, the hub forwards the text to the backend; Claude may only draft from the disease list in shared/src/diseases.ts.",
+    source: "Noor texts the Leaf Doctor number, which reaches a hub phone at the local officer's station or cooperative.",
+    state: "built",
   },
   {
     focus: "offline",
-    lines: ["No signal, still", "an answer."],
+    lines: ["The hub answers", "with no signal."],
     body: null,
-    source: `The 2-billion-parameter model only fills in fields; rules choose the disease. ${facts.hubEmulatorSeconds.display} per text, measured on an Android emulator, not yet on a real phone.`,
+    source: `The on-device model only fills in fields; rules choose the disease. ${facts.hubEmulatorSeconds.display} per text on an Android emulator, not yet on a real phone.`,
+    state: "emulator",
   },
   {
     focus: "reply",
@@ -47,17 +44,24 @@ const smsSteps: { focus: FlowFocus; lines: string[]; body: ReactNode | null; sou
     body: <Quote original={copy.confirmFirstSwahili} english={copy.confirmFirstEnglish} delay={0.5} />,
     source: "Reply text: SWAHILI_WORDING.confirmFirst in shared/src/smsReply.ts. Swahili wording still needs a native speaker's review.",
   },
+  {
+    focus: "photo",
+    lines: ["With signal,", "a photo works too."],
+    body: null,
+    source: "A phone that sends MMS can text a leaf photo. Claude reads it on the online backend (/ask-image), so photos need a connection and never work offline over SMS. With signal, the hub can also hand texts to the backend.",
+    state: "built",
+  },
 ];
 
 export function SmsSlide({ step }: SlideProps) {
   const current = smsSteps[Math.min(step, smsSteps.length - 1)];
-  const side = current.focus === "online" || current.focus === "offline" ? "left" : "right";
+  const side = current.focus === "offline" || current.focus === "photo" ? "left" : "right";
   return (
     <StepSwap step={step}>
       <CopyColumn side={side} source={current.source}>
         <Headline lines={current.lines} />
         {current.body ?? <SmsFlow focus={current.focus} />}
-        {step === 0 && <BuildStateChip state="built" delay={1.1} />}
+        {current.state && <BuildStateChip state={current.state} delay={1.1} />}
       </CopyColumn>
     </StepSwap>
   );
@@ -109,36 +113,6 @@ function SixLeaves({ showReading }: { showReading: boolean }) {
   );
 }
 
-function ActionCardMock() {
-  return (
-    <motion.div
-      variants={{ enter: { opacity: 0, y: 40 }, present: { opacity: 1, y: 0, transition: { duration: 0.9, ease: easeDrawn, delay: 0.3 } }, exit: { opacity: 0 } }}
-      className="flex w-deck-card flex-col gap-2 rounded-phone bg-paper-raised p-5 surface-raised"
-      aria-label="Action card mockup"
-    >
-      <p className="flex items-center gap-2 self-start rounded-full bg-unclear-soft px-3 py-1 text-caption font-semibold text-unclear">
-        <WarningOctagon weight="fill" className="icon-em" />
-        Act soon
-      </p>
-      <p className="display-headline text-lede text-ink">{copy.card.headline}</p>
-      <p className="rounded-md bg-leaf-soft px-3 py-2 text-fineprint text-ink">{copy.card.rainLine}</p>
-      <ol className="flex flex-col gap-2">
-        {copy.card.firstSteps.map((stepText, index) => (
-          <li key={stepText} className="grid grid-cols-[1.6em_1fr] gap-2 text-fineprint text-ink">
-            <span className="flex aspect-square items-center justify-center rounded-full bg-leaf font-bold text-on-leaf">{index + 1}</span>
-            <span>{stepText}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="text-fineprint text-ink-muted">3 more steps, then check again in 7 days.</p>
-      <p className="flex items-center justify-center gap-2 rounded-md bg-leaf px-3 py-2 text-caption font-semibold text-on-leaf">
-        <Phone weight="bold" className="icon-em" />
-        Call your field officer
-      </p>
-    </motion.div>
-  );
-}
-
 export function ScanSlide({ step }: SlideProps) {
   return (
     <StepSwap step={step}>
@@ -147,48 +121,20 @@ export function ScanSlide({ step }: SlideProps) {
           <Headline lines={step === 0 ? ["At the weekend, her", "daughter scans", "six leaves."] : ["Each leaf gets", "its own reading."]} />
           {step === 0 && <Lede>The family smartphone runs a 7.7 MB leaf model offline, one photo per leaf.</Lede>}
           <SixLeaves showReading={step === 1} />
-          {step === 0 && <BuildStateChip state="inProgress" delay={1.2} />}
+          {step === 0 && <BuildStateChip state="emulator" delay={1.2} />}
         </CopyColumn>
       ) : (
-        <CopyColumn side="right" source="Card text is buildActionCard output in shared/src/actionCard.ts for a rust result with 4 wet days in the last 7.">
-          <Headline lines={["Then one card", "says what to do."]} />
-          <ActionCardMock />
-        </CopyColumn>
+        <ScreensLayout
+          lines={["Then one card", "says what to do."]}
+          lede="When at least three clear leaves agree, the card names the disease, lists cheap steps first and sets a date to check again."
+          state="emulator"
+          screens={[
+            { name: "03-three-leaves-agree", alt: "App screen: Check one coffee tree, three photos taken, 3 of 3 clear leaves agree." },
+            { name: "04-action-card-after-clear-plant", alt: "Action card: Coffee leaf rust, clean up and prune, five numbered steps, check again on Sat 10 Oct." },
+          ]}
+        />
       )}
     </StepSwap>
-  );
-}
-
-function CaseRows() {
-  return (
-    <dl className="grid w-deck-column grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-body">
-      {copy.caseFields.map(([key, value], index) => (
-        <motion.div key={key} variants={fadeReveal(0.4 + index * 0.1, 8)} className="contents">
-          <dt className="text-ink-muted">{key}</dt>
-          <dd className="figures-tabular text-ink">{value}</dd>
-        </motion.div>
-      ))}
-    </dl>
-  );
-}
-
-function UnsureCard() {
-  return (
-    <motion.div variants={fadeReveal(0.5, 20)} className="flex w-deck-card flex-col gap-3 rounded-phone bg-paper-raised p-5 surface-raised">
-      <p className="flex items-center gap-2 self-start rounded-full bg-possible-soft px-3 py-1 text-caption font-semibold text-possible">
-        <Question weight="bold" className="icon-em" />
-        Not sure
-      </p>
-      <p className="display-headline text-lede text-ink">{copy.unsure.headline}</p>
-      <p className="text-caption text-ink-muted">{copy.unsure.doNow}</p>
-      <motion.p
-        className="flex items-center justify-center gap-2 rounded-md bg-leaf px-3 py-2 text-caption font-semibold text-on-leaf"
-        variants={{ enter: { scale: 1 }, present: { scale: [1, 1, 0.96, 1], transition: { duration: 0.5, times: [0, 0.6, 0.8, 1], delay: 1.6 } }, exit: { opacity: 0 } }}
-      >
-        <PaperPlaneTilt weight="bold" className="icon-em" />
-        Send to the field officer
-      </motion.p>
-    </motion.div>
   );
 }
 
@@ -196,16 +142,20 @@ export function PersonSlide({ step }: SlideProps) {
   return (
     <StepSwap step={step}>
       {step === 0 ? (
-        <CopyColumn side="right">
-          <Headline lines={["Not sure means", "a person looks."]} />
-          <UnsureCard />
-        </CopyColumn>
+        <ScreensLayout
+          lines={["Not sure means", "a person looks."]}
+          lede="When the leaves disagree or are too unclear, the app stops guessing and offers to send the case to her field officer."
+          state="emulator"
+          screens={[{ name: "07-action-card-needs-person", alt: "Action card: The app is not sure. Show these leaves to your field officer. Send to field officer button." }]}
+        />
       ) : (
-        <CopyColumn side="right" source="Example case. Text from formatCaseSummarySms in shared/src/caseSummary.ts; rain from NASA POWER daily data.">
-          <Headline lines={["The officer gets", "the case by SMS."]} />
-          <CaseRows />
-          <BuildStateChip state="inProgress" delay={1.4} />
-        </CopyColumn>
+        <ScreensLayout
+          lines={["The officer gets", "the case by SMS."]}
+          lede="One tap opens her messages app with the case already written: date, result and how many leaves were clear. It goes as a plain SMS, so it needs no data."
+          state="emulator"
+          note={`${emulatorNote} The empty message history is cropped out of this one.`}
+          screens={[{ name: "08-sms-opens-with-case-summary", alt: "Messages app with a drafted SMS: Leaf Doctor case, 2026-10-03, result not sure, leaves disagree, 3 of 3 leaves clear." }]}
+        />
       )}
     </StepSwap>
   );

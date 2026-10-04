@@ -2,7 +2,8 @@ import type { ComponentType } from "react";
 import type { ShotName } from "@/components/stage/shots";
 import { ClosingForeground, ClosingSlide } from "./slides/ClosingSlide";
 import { EvidenceSlide, LimitsSlide, MapSlide, RegistrySlide } from "./slides/EvidenceSlides";
-import { NoorSlide, PhonesSlide, ReachSlide, StatementSlide } from "./slides/StorySlides";
+import { GapSlide, InternetSlide, LocalFitSlide, LocalSlide, SmallModelSlide } from "./slides/AccessSlides";
+import { NoorSlide, StatementSlide } from "./slides/StorySlides";
 import { GuardrailsSlide, PersonSlide, ScanSlide, SmsSlide } from "./slides/SystemSlides";
 import { TitleForeground, TitleSlide } from "./slides/TitleSlide";
 
@@ -24,14 +25,17 @@ export type SlideDefinition = {
 export const slides: SlideDefinition[] = [
   { id: "title", title: "Leaf Doctor", layer: "behindStage", shots: ["title"], Content: TitleSlide, Foreground: TitleForeground },
   { id: "noor", title: "Noor's morning", layer: "overStage", shots: ["morning", "morningRust"], Content: NoorSlide },
-  { id: "reach", title: "Who farms, and who helps", layer: "overStage", shots: ["aerial", "aerial"], Content: ReachSlide },
-  { id: "phones", title: "Which phones farmers use", layer: "overStage", shots: ["featureIdle"], Content: PhonesSlide },
+  { id: "gap", title: "The access gap", layer: "overStage", shots: ["gap"], Content: GapSlide },
+  { id: "internet", title: "Barrier one: no reliable internet", layer: "overStage", shots: ["aerial", "featureIdle"], Content: InternetSlide },
+  { id: "local", title: "Barrier two: advice has to fit locally", layer: "overStage", shots: ["cooperative", "cooperative"], Content: LocalSlide },
   { id: "statement", title: "Problem statement", layer: "overStage", shots: ["leaf", "leaf"], Content: StatementSlide },
-  { id: "sms", title: "How a text gets answered", layer: "overStage", shots: ["featureSent", "hub", "hub", "featureReply"], Content: SmsSlide },
-  { id: "scan", title: "The six-leaf scan", layer: "overStage", shots: ["bush", "bushScan", "bushScan"], Content: ScanSlide },
-  { id: "person", title: "When the app is not sure", layer: "overStage", shots: ["officer", "officerPhone"], Content: PersonSlide },
-  { id: "guardrails", title: "Guardrails", layer: "overStage", shots: ["cooperative"], Content: GuardrailsSlide },
-  { id: "evidence", title: "Evidence so far", layer: "overStage", shots: ["rows", "rows", "rows"], Content: EvidenceSlide },
+  { id: "small", title: "A small model where the farmer is", layer: "overStage", shots: ["bush", "hub"], Content: SmallModelSlide },
+  { id: "sms", title: "Flip phone, no problem", layer: "overStage", shots: ["featureSent", "hub", "featureReply", "cooperative"], Content: SmsSlide },
+  { id: "scan", title: "The six-leaf scan", layer: "overStage", shots: ["bush", "bushScan", "bushRight"], Content: ScanSlide },
+  { id: "person", title: "When the app is not sure", layer: "overStage", shots: ["officerRight", "officerPhoneRight"], Content: PersonSlide },
+  { id: "localfit", title: "Built for local remedies", layer: "overStage", shots: ["cooperative", "featureRight"], Content: LocalFitSlide },
+  { id: "guardrails", title: "Guardrails", layer: "overStage", shots: ["morning"], Content: GuardrailsSlide },
+  { id: "evidence", title: "Evidence so far", layer: "overStage", shots: ["rows", "rows"], Content: EvidenceSlide },
   { id: "map", title: "The cooperative's rust map", layer: "overStage", shots: ["map"], Content: MapSlide },
   { id: "registry", title: "Scale", layer: "overStage", shots: ["aerial", "aerial"], Content: RegistrySlide },
   { id: "limits", title: "Known limits", layer: "overStage", shots: ["morning"], Content: LimitsSlide },

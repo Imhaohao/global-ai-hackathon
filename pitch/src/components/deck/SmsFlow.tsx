@@ -4,16 +4,16 @@ import { motion, useAnimationFrame, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { easeDrawn } from "@/lib/motion";
 
-export type FlowFocus = "sent" | "online" | "offline" | "reply";
+export type FlowFocus = "sent" | "online" | "offline" | "reply" | "photo";
 
 type FlowNode = { id: string; x: number; y: number; title: string; lines: string[] };
 
 const NODE = { width: 320, height: 104 };
 
 const nodes: FlowNode[] = [
-  { id: "noor", x: 10, y: 10, title: "Noor's basic phone", lines: ["Texts what the leaf looks like"] },
-  { id: "hub", x: 10, y: 228, title: "Hub phone at the cooperative", lines: ["Android with its own SIM"] },
-  { id: "online", x: 440, y: 118, title: "Online", lines: ["Backend on Convex. Claude drafts", "from a fixed disease list"] },
+  { id: "noor", x: 10, y: 10, title: "Noor's phone", lines: ["A text, or a photo by MMS"] },
+  { id: "hub", x: 10, y: 228, title: "Hub phone, officer's station", lines: ["Android with its own SIM"] },
+  { id: "online", x: 440, y: 118, title: "Online backend", lines: ["Claude, fixed disease list;", "reads MMS photos"] },
   { id: "offline", x: 440, y: 338, title: "No signal", lines: ["Qwen3.5-2B on the hub reads the", "Swahili; rules pick the disease"] },
   { id: "reply", x: 10, y: 446, title: "Reply SMS to Noor", lines: ["Approved Swahili that asks", "her to confirm"] },
 ];
@@ -23,6 +23,8 @@ const edges = {
   online: "M 330 262 C 390 262 380 170 440 170",
   offline: "M 330 296 C 390 296 380 390 440 390",
   reply: "M 170 332 L 170 446",
+  photo: "M 330 50 C 470 50 600 60 600 118",
+  photoBack: "M 640 222 C 680 380 520 498 330 498",
 };
 
 type EdgeName = keyof typeof edges;
@@ -32,6 +34,7 @@ const activeEdges: Record<FlowFocus, EdgeName[]> = {
   online: ["sent", "online", "reply"],
   offline: ["sent", "offline", "reply"],
   reply: ["reply"],
+  photo: ["photo", "photoBack"],
 };
 
 const activeNodes: Record<FlowFocus, string[]> = {
@@ -39,6 +42,7 @@ const activeNodes: Record<FlowFocus, string[]> = {
   online: ["hub", "online"],
   offline: ["hub", "offline"],
   reply: ["offline", "reply"],
+  photo: ["noor", "online", "reply"],
 };
 
 function TravellingDot({ path }: { path: string }) {

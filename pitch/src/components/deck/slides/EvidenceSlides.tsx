@@ -1,6 +1,6 @@
 "use client";
 
-import { AddressBook, BatteryWarning, Cpu, EyeSlash, Ruler, Translate, type Icon } from "@phosphor-icons/react";
+import { BatteryWarning, Cpu, EyeSlash, Image as ImageIcon, Ruler, Translate, type Icon } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import { facts, sourceLine } from "@/lib/facts";
 import { easeDrawn } from "@/lib/motion";
@@ -108,11 +108,11 @@ function LeafModelBar() {
 }
 
 const vlmBars = [
-  { label: "General model, no training on the crop", detail: "zero-shot Gemini 2.5 Pro", value: facts.zeroShotBanana.value, fill: "bg-ink-faint" },
-  { label: "Model fine-tuned on the crop", detail: "same test, in-domain", value: facts.fineTunedBanana.value, fill: "bg-leaf" },
+  { label: "General model, never trained on the crop", detail: "Used as it comes, with no crop examples", value: facts.zeroShotBanana.value, fill: "bg-ink-faint" },
+  { label: "Model fine-tuned on the crop", detail: "Same test, images like its training data", value: facts.fineTunedBanana.value, fill: "bg-leaf" },
 ];
 
-function VlmBars() {
+export function VlmBars() {
   return (
     <div className="flex w-deck-column flex-col gap-deck-rise">
       {vlmBars.map((bar, index) => (
@@ -153,13 +153,6 @@ export function EvidenceSlide({ step }: SlideProps) {
             On 4,571 held-out test images it was right <span className="font-bold text-ink">{facts.leafRawAccuracy.display}</span> of the time. Its confidence rules answered {facts.leafAccepted.display} of images, and {facts.leafAcceptedCorrect.display} of those answers were right.
           </Lede>
           <LeafModelBar />
-        </CopyColumn>
-      )}
-      {step === 2 && (
-        <CopyColumn side="right" source={`${sourceLine("zeroShotBanana")}. Out-of-domain, the fine-tuned model scored 83.28%.`}>
-          <Headline lines={["Why not ask a", "general model?"]} />
-          <Lede delay={0.3}>On banana disease, a general model guessed right less than half the time. So we cut zero-shot diagnosis.</Lede>
-          <VlmBars />
         </CopyColumn>
       )}
     </StepSwap>
@@ -249,10 +242,10 @@ type Limit = { icon: Icon; text: string; unmeasured: boolean };
 const limits: Limit[] = [
   { icon: EyeSlash, text: "The leaf model cannot see coffee berry disease, berry borer or wilt. Such a leaf comes back unclear, or wrongly confident.", unmeasured: false },
   { icon: Ruler, text: `Field accuracy is unknown. On a separate rust stress set the leaf model scored AUROC ${facts.leafRustStressAuroc.display}, no better than chance, and it has not run on a real phone.`, unmeasured: true },
-  { icon: Translate, text: "Kikuyu, likely Noor's home language, is untested. The Swahili wording still needs a native speaker's review.", unmeasured: true },
-  { icon: BatteryWarning, text: "The hub phone belongs to the cooperative. If it is off or out of credit, Noor gets no answer.", unmeasured: false },
+  { icon: ImageIcon, text: "Photo diagnosis by MMS runs on the online backend. With no signal, Noor can only describe the leaf in words.", unmeasured: false },
+  { icon: Translate, text: "Kikuyu texts go to a person, because our model cannot read Kikuyu. The guard was tested on news sentences, not farmer texts, and the Swahili wording still needs a native speaker's review.", unmeasured: true },
+  { icon: BatteryWarning, text: "The hub phone belongs to the officer's station or cooperative. If it is off or out of credit, Noor gets no answer.", unmeasured: false },
   { icon: Cpu, text: "The 2B model needs about 4 GB of RAM, and its speed on a real phone is unmeasured. Phones with 2 GB fall back to keyword rules.", unmeasured: true },
-  { icon: AddressBook, text: "The verified contact list must be rechecked by a person before anyone relies on it.", unmeasured: false },
 ];
 
 export function LimitsSlide() {
