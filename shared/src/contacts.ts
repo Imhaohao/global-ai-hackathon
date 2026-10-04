@@ -1,6 +1,7 @@
 import type { Contact } from "./contract.ts";
 
 export const COOPERATIVE_OFFICER_ID = "cooperative-field-officer";
+export const KALRO_HEADQUARTERS_ID = "kalro-headquarters";
 
 export const COOPERATIVE_OFFICER: Contact = {
   id: COOPERATIVE_OFFICER_ID,
@@ -16,7 +17,7 @@ const KALRO_CONTACT_SOURCE = "https://www.kalro.org/contact-us";
 
 export const KNOWN_CONTACTS: Contact[] = [
   {
-    id: "kalro-headquarters",
+    id: KALRO_HEADQUARTERS_ID,
     name: "KALRO headquarters",
     role: "Kenya Agricultural and Livestock Research Organisation, general line",
     phone: "+254722206986",
@@ -58,4 +59,8 @@ export function verifiedContacts(contacts: Contact[] = KNOWN_CONTACTS): Contact[
 export function contactsForFarmer(savedOfficerPhone?: string): Contact[] {
   const officerPhone = savedOfficerPhone?.trim() ?? "";
   return [...verifiedContacts(), { ...COOPERATIVE_OFFICER, phone: officerPhone }];
+}
+
+export function verifiedContact(id: string, contacts: Contact[] = KNOWN_CONTACTS): Contact | undefined {
+  return verifiedContacts(contacts).find((contact) => contact.id === id && contact.phone);
 }

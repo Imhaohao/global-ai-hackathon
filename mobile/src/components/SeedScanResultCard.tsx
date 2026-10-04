@@ -14,10 +14,40 @@ const LOOK_BY_KIND: Record<ResultKind, { icon: Icon; container: string; title: s
   unknown: { icon: Question, container: 'bg-watch-soft', title: 'text-watch', color: colors.watch },
 };
 
-function copyFor(result: SeedScanResult, strings: Strings, phone: string) {
-  if (result.kind === 'genuine') return { title: strings.seedGenuineTitle, body: strings.seedGenuineBody };
-  if (result.kind === 'recalled') return { title: strings.seedRecalledTitle, body: strings.seedRecalledBody };
-  return { title: strings.seedUnknownTitle, body: fillTemplate(strings.seedUnknownBody, { phone }) };
+function copyFor(kind: ResultKind, strings: Strings, phone: string) {
+  if (kind === 'genuine') {
+    return { title: strings.seedGenuineTitle, steps: [strings.seedGenuineStep1, strings.seedGenuineStep2] };
+  }
+  if (kind === 'recalled') {
+    return {
+      title: strings.seedRecalledTitle,
+      steps: [strings.seedRecalledStep1, strings.seedRecalledStep2, strings.seedRecalledStep3, strings.seedRecalledStep4],
+    };
+  }
+  return {
+    title: strings.seedUnknownTitle,
+    steps: [
+      strings.seedUnknownStep1,
+      strings.seedUnknownStep2,
+      fillTemplate(strings.seedUnknownStep3, { phone }),
+      strings.seedUnknownStep4,
+    ],
+  };
+}
+
+function NumberedSteps({ steps, numberColor }: { steps: string[]; numberColor: string }) {
+  return (
+    <View className="gap-3">
+      {steps.map((step, index) => (
+        <View key={step} className="flex-row gap-3">
+          <Text className="w-6 text-lg font-bold" style={{ color: numberColor, fontVariant: ['tabular-nums'] }}>
+            {index + 1}
+          </Text>
+          <Body className="flex-1">{step}</Body>
+        </View>
+      ))}
+    </View>
+  );
 }
 
 function PacketDetails({ packet, strings }: { packet: SeedPacket; strings: Strings }) {
@@ -44,7 +74,7 @@ type SeedScanResultCardProps = { result: SeedScanResult; strings: Strings; phone
 
 export function SeedScanResultCard({ result, strings, phone }: SeedScanResultCardProps) {
   const look = LOOK_BY_KIND[result.kind];
-  const copy = copyFor(result, strings, phone);
+  const copy = copyFor(result.kind, strings, phone);
   const IconComponent = look.icon;
   return (
     <View accessibilityLiveRegion="assertive" className={`gap-4 rounded-card p-5 ${look.container}`}>
@@ -56,7 +86,7 @@ export function SeedScanResultCard({ result, strings, phone }: SeedScanResultCar
           {copy.title}
         </Text>
       </View>
-      <Body>{copy.body}</Body>
+      <NumberedSteps steps={copy.steps} numberColor={look.color} />
       {result.kind !== 'unknown' && <PacketDetails packet={result.packet} strings={strings} />}
     </View>
   );

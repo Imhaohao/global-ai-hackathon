@@ -197,6 +197,7 @@ function AuthenticatedApp({
           strings={strings}
           copy={seedCopy}
           phone={seedContact.phone}
+          officerPhone={settings.officerPhone}
           onBack={() => setIsInSeedCheck(false)}
         />
       );

@@ -1,12 +1,13 @@
-import { ArrowCounterClockwise, PaperPlaneTilt, Phone } from 'phosphor-react-native';
+import { ArrowCounterClockwise, ChatText, PaperPlaneTilt, Phone } from 'phosphor-react-native';
 import { useRef, useState } from 'react';
 import { Linking, View } from 'react-native';
 
+import { KALRO_HEADQUARTERS_ID, verifiedContact } from '../../../shared/src/contacts.ts';
 import type { ActionCard } from '../../../shared/src/contract.ts';
 import { Button } from '../components/Button';
 import { TextField } from '../components/TextField';
 import { Body, Muted, SectionHeading } from '../components/Typography';
-import { fillTemplate, type Strings } from '../i18n/strings';
+import type { Strings } from '../i18n/strings';
 import { isPlausiblePhone, normalizePhone } from './officerPhone';
 import type { OfficerSendResult } from './sendCaseToOfficer';
 
@@ -16,7 +17,6 @@ type OfficerActionsProps = {
   savedOfficerPhone?: string;
   onSaveOfficerPhone: (phone: string) => void;
   onSendCase: (phone: string) => Promise<OfficerSendResult>;
-  onCheckAnother: () => void;
 };
 
 function OfficerPhonePrompt({
@@ -67,18 +67,36 @@ function sendNotice(strings: Strings, result: OfficerSendResult | null): string 
   return result === 'error' ? strings.smsFailed : null;
 }
 
-function verifiedContactPhone(card: ActionCard): string | undefined {
-  return card.contact.verified && card.contact.phone ? card.contact.phone : undefined;
+function isDelivered(result: OfficerSendResult | null): boolean {
+  return result === 'sent' || result === 'opened';
+}
+
+export function cardNeedsHelp(card: ActionCard): boolean {
+  return card.needsPerson || (card.condition !== null && card.condition !== 'healthy');
+}
+
+function callPhone(phone: string) {
+  return Linking.openURL(`tel:${phone}`);
+}
+
+function CallButtons({ strings, officerPhone }: { strings: Strings; officerPhone?: string }) {
+  const kalro = verifiedContact(KALRO_HEADQUARTERS_ID);
+  return (
+    <>
+      {officerPhone && (
+        <Button label={strings.callYourOfficer} icon={Phone} variant="secondary" onPress={() => callPhone(officerPhone)} />
+      )}
+      {kalro && <Button label={strings.callKalro} icon={Phone} variant="secondary" onPress={() => callPhone(kalro.phone)} />}
+    </>
+  );
 }
 
 export function OfficerActions(props: OfficerActionsProps) {
-  const { strings, card, savedOfficerPhone, onSaveOfficerPhone, onSendCase, onCheckAnother } = props;
+  const { strings, card, savedOfficerPhone, onSaveOfficerPhone, onSendCase } = props;
   const [isAskingForPhone, setIsAskingForPhone] = useState(false);
   const [result, setResult] = useState<OfficerSendResult | null>(null);
   const [isSending, setIsSending] = useState(false);
   const sendingRef = useRef(false);
-  const callablePhone = verifiedContactPhone(card);
-  const knownPhone = savedOfficerPhone ?? callablePhone;
 
   const send = async (phone: string) => {
     if (sendingRef.current) return;
@@ -98,8 +116,9 @@ export function OfficerActions(props: OfficerActionsProps) {
     onSaveOfficerPhone(phone);
     return send(phone);
   };
-  const pressSend = () => (knownPhone ? send(knownPhone) : setIsAskingForPhone(true));
+  const pressSend = () => (savedOfficerPhone ? send(savedOfficerPhone) : setIsAskingForPhone(true));
 
+  if (!cardNeedsHelp(card)) return null;
   if (isAskingForPhone) {
     return (
       <OfficerPhonePrompt
@@ -113,28 +132,25 @@ export function OfficerActions(props: OfficerActionsProps) {
   const notice = sendNotice(strings, result);
   return (
     <View className="gap-3">
+      <SectionHeading>{strings.helpNowTitle}</SectionHeading>
       {notice && (
-        <View accessibilityLiveRegion="polite" className="rounded-control bg-healthy-soft p-4">
-          <Body className="text-healthy">{notice}</Body>
+        <View accessibilityLiveRegion="polite" className={`rounded-control p-4 ${isDelivered(result) ? 'bg-healthy-soft' : 'bg-watch-soft'}`}>
+          <Body className={isDelivered(result) ? 'text-healthy' : 'text-watch'}>{notice}</Body>
         </View>
       )}
-      {card.needsPerson && (
-        <Button label={strings.sendToOfficer} icon={PaperPlaneTilt} onPress={pressSend} disabled={isSending} />
-      )}
-      {callablePhone && (
-        <Button
-          label={fillTemplate(strings.callOfficer, { name: card.contact.name })}
-          icon={Phone}
-          variant="secondary"
-          onPress={() => Linking.openURL(`tel:${callablePhone}`)}
-        />
-      )}
-      <Button
-        label={strings.checkAnotherTree}
-        icon={ArrowCounterClockwise}
-        variant={card.needsPerson ? 'quiet' : 'primary'}
-        onPress={onCheckAnother}
-      />
+      <Button label={strings.sendToOfficer} icon={ChatText} onPress={pressSend} disabled={isSending} />
+      <CallButtons strings={strings} officerPhone={savedOfficerPhone} />
     </View>
+  );
+}
+
+export function CheckAnotherButton({ strings, card, onPress }: { strings: Strings; card: ActionCard; onPress: () => void }) {
+  return (
+    <Button
+      label={strings.checkAnotherTree}
+      icon={ArrowCounterClockwise}
+      variant={cardNeedsHelp(card) ? 'quiet' : 'primary'}
+      onPress={onPress}
+    />
   );
 }

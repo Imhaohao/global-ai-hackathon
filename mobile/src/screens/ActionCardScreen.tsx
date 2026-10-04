@@ -14,8 +14,10 @@ import { useReadAloud } from '../components/useReadAloud';
 import { MODEL_NAMES, type ModelId } from '../diagnosis/modelConfig';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
+import { whatToBuy } from '../../../shared/src/whatToBuy.ts';
+import { WhatToBuy } from '../components/WhatToBuy';
 import { FarmSectionPicker } from './FarmSectionPicker';
-import { OfficerActions } from './OfficerActions';
+import { CheckAnotherButton, OfficerActions } from './OfficerActions';
 import { formatRecheckDate } from './recheckDate';
 import type { OfficerSendResult } from './sendCaseToOfficer';
 
@@ -134,6 +136,14 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
       <DecisionHeader decision={card.decision} urgency={card.urgency} headline={card.headline} />
       <ReadAloudButton strings={strings} card={card} />
       <StepPager steps={card.doNow} strings={strings} />
+      <WhatToBuy advice={whatToBuy(card)} strings={strings} />
+      <OfficerActions
+        strings={strings}
+        card={card}
+        savedOfficerPhone={props.savedOfficerPhone}
+        onSaveOfficerPhone={props.onSaveOfficerPhone}
+        onSendCase={props.onSendCase}
+      />
       <RecheckRow text={recheckText} />
       <WhatElseCouldItBe strings={strings} items={card.whatElseCouldItBe} />
       <CaseDetails
@@ -145,14 +155,7 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
         onChooseFarmSection={props.onChooseFarmSection}
         onAddFarmSection={props.onAddFarmSection}
       />
-      <OfficerActions
-        strings={strings}
-        card={card}
-        savedOfficerPhone={props.savedOfficerPhone}
-        onSaveOfficerPhone={props.onSaveOfficerPhone}
-        onSendCase={props.onSendCase}
-        onCheckAnother={props.onCheckAnother}
-      />
+      <CheckAnotherButton strings={strings} card={card} onPress={props.onCheckAnother} />
     </ScrollView>
   );
 }

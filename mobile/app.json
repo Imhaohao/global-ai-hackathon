@@ -38,7 +38,7 @@
       [
         "expo-image-picker",
         {
-          "cameraPermission": "Leaf Doctor uses the camera to take a photo of a coffee leaf. The photo stays on your phone.",
+          "cameraPermission": "Leaf Doctor uses the camera to take a photo of a coffee leaf or to scan the barcode on a seed packet. Photos stay on your phone.",
           "photosPermission": "Leaf Doctor opens your photos so you can check a leaf picture you already took. Photos stay on your phone.",
           "microphonePermission": false
         }

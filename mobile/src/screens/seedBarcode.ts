@@ -1,8 +1,8 @@
 export type SeedPacket = { variety: string; lot: string; packedOn: string };
 
 export type SeedScanResult =
-  | { kind: 'genuine'; packet: SeedPacket }
-  | { kind: 'recalled'; packet: SeedPacket }
+  | { kind: 'genuine'; code: string; packet: SeedPacket }
+  | { kind: 'recalled'; code: string; packet: SeedPacket }
   | { kind: 'unknown'; code: string };
 
 type RegisteredPacket = { status: 'genuine' | 'recalled'; packet: SeedPacket };
@@ -29,5 +29,5 @@ export function lookUpSeedBarcode(scanned: string): SeedScanResult {
   const code = scanned.trim().toUpperCase();
   const registered = DEMO_SEED_REGISTRY[code];
   if (!registered) return { kind: 'unknown', code };
-  return { kind: registered.status, packet: registered.packet };
+  return { kind: registered.status, code, packet: registered.packet };
 }
