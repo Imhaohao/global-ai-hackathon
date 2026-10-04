@@ -1,4 +1,4 @@
-import { ArrowLeft, ChatText, Info, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
+import { ArrowLeft, Barcode, ChatText, Info, SpeakerHigh, SpeakerSlash } from 'phosphor-react-native';
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -7,10 +7,13 @@ import { Disclosure } from '../components/Disclosure';
 import { StepPager } from '../components/StepPager';
 import { Button } from '../components/Button';
 import { PillButton } from '../components/PillButton';
+import { SeedBarcodeScanner } from '../components/SeedBarcodeScanner';
 import { SeedPacketSticker } from '../components/SeedPacketSticker';
+import { SeedScanResultCard } from '../components/SeedScanResultCard';
 import { Body, Muted, Title } from '../components/Typography';
 import { useReadAloud } from '../components/useReadAloud';
 import { fillTemplate, type Strings } from '../i18n/strings';
+import { lookUpSeedBarcode, type SeedScanResult } from './seedBarcode';
 import { openSeedCodeMessage } from './textSeedCode';
 
 type SeedCheckScreenProps = {
@@ -45,21 +48,43 @@ function TypeTheNumberYourself({ strings, phone }: { strings: Strings; phone: st
   );
 }
 
-export function SeedCheckScreen({ strings, copy, phone, onBack }: SeedCheckScreenProps) {
+type ScanState = { kind: 'idle' } | { kind: 'scanning' } | { kind: 'scanned'; result: SeedScanResult };
+
+function ScanSection({ strings, phone }: { strings: Strings; phone: string }) {
+  const [scan, setScan] = useState<ScanState>({ kind: 'idle' });
+  const startScanning = () => setScan({ kind: 'scanning' });
+  if (scan.kind === 'scanning') {
+    return (
+      <SeedBarcodeScanner
+        strings={strings}
+        onScanned={(data) => setScan({ kind: 'scanned', result: lookUpSeedBarcode(data) })}
+        onCancel={() => setScan({ kind: 'idle' })}
+      />
+    );
+  }
+  if (scan.kind === 'scanned') {
+    return (
+      <View className="gap-4">
+        <SeedScanResultCard result={scan.result} strings={strings} phone={phone} />
+        <Button label={strings.seedScanAnother} icon={Barcode} onPress={startScanning} />
+      </View>
+    );
+  }
+  return <Button label={strings.seedScanButton} icon={Barcode} onPress={startScanning} />;
+}
+
+function TextCodeSection({ strings, copy, phone }: Omit<SeedCheckScreenProps, 'onBack'>) {
   const [isSmsUnavailable, setIsSmsUnavailable] = useState(false);
   const textTheCode = async () => setIsSmsUnavailable((await openSeedCodeMessage(phone)) === 'unavailable');
   return (
-    <ScrollView contentContainerClassName="gap-6 px-5 pb-8 pt-2">
-      <View className="items-start">
-        <PillButton label={strings.back} icon={ArrowLeft} onPress={onBack} />
-      </View>
-      <Title>{strings.seedCheckTitle}</Title>
+    <>
       <SeedPacketSticker />
       <StepPager steps={copy.steps} strings={strings} />
       <ReadStepsAloud strings={strings} steps={copy.steps} />
       <Button
         label={fillTemplate(strings.seedCheckTextButton, { phone })}
         icon={ChatText}
+        variant="secondary"
         onPress={textTheCode}
       />
       {isSmsUnavailable && <TypeTheNumberYourself strings={strings} phone={phone} />}
@@ -67,6 +92,19 @@ export function SeedCheckScreen({ strings, copy, phone, onBack }: SeedCheckScree
         <Muted>{copy.result}</Muted>
         <Muted>{copy.coverage}</Muted>
       </Disclosure>
+    </>
+  );
+}
+
+export function SeedCheckScreen({ strings, copy, phone, onBack }: SeedCheckScreenProps) {
+  return (
+    <ScrollView contentContainerClassName="gap-6 px-5 pb-8 pt-2">
+      <View className="items-start">
+        <PillButton label={strings.back} icon={ArrowLeft} onPress={onBack} />
+      </View>
+      <Title>{strings.seedCheckTitle}</Title>
+      <ScanSection strings={strings} phone={phone} />
+      <TextCodeSection strings={strings} copy={copy} phone={phone} />
     </ScrollView>
   );
 }
