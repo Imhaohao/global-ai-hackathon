@@ -1,5 +1,5 @@
 import type { IconProps } from 'phosphor-react-native';
-import { useId, useMemo } from 'react';
+import { useCallback, useId, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated, {
   useAnimatedProps,
@@ -8,6 +8,7 @@ import Animated, {
   useFrameCallback,
   useReducedMotion,
   useSharedValue,
+  type FrameInfo,
   type SharedValue,
 } from 'react-native-reanimated';
 import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
@@ -25,9 +26,16 @@ const VIEW_BOX = `0 0 ${LEAF_BOX} ${LEAF_BOX}`;
 export function useLeafClock(speed = 1, frozenAt = 2.4): SharedValue<number> {
   const reduceMotion = useReducedMotion();
   const clock = useSharedValue(frozenAt);
-  useFrameCallback((frame) => {
-    clock.value = frozenAt + (frame.timeSinceFirstFrame / 1000) * speed;
-  }, !reduceMotion);
+  // useFrameCallback re-registers whenever the callback identity changes, restarting its frame timer, so keep the
+  // callback stable and accumulate per-frame deltas rather than reading time since the first frame.
+  const advance = useCallback(
+    (frame: FrameInfo) => {
+      'worklet';
+      clock.set(clock.get() + ((frame.timeSincePreviousFrame ?? 0) / 1000) * speed);
+    },
+    [clock, speed],
+  );
+  useFrameCallback(advance, !reduceMotion);
   return clock;
 }
 
