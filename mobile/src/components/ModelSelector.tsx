@@ -1,9 +1,10 @@
 import { CheckCircle } from 'phosphor-react-native';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import { MODEL_IDS, MODEL_NAMES, type ModelId } from '../diagnosis/modelConfig';
 import type { Strings } from '../i18n/strings';
 import { colors } from '../theme';
+import { LeafLoader } from './leaf/Leaf';
 import { Muted } from './Typography';
 import { CONTROL_FOCUS_STYLE, useControlFocus } from './useControlFocus';
 
@@ -65,7 +66,7 @@ export function ModelSelector({ modelId, strings, disabled, loading, onSelect }:
       </View>
       {loading && (
         <View accessibilityLiveRegion="polite" className="flex-row items-center gap-2">
-          <ActivityIndicator size="small" color={colors.accent} />
+          <LeafLoader size={28} label={strings.modelLoading} />
           <Muted>{strings.modelLoading}</Muted>
         </View>
       )}

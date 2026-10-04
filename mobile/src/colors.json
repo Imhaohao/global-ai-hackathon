@@ -20,5 +20,10 @@
   "disease-miner": "#0072B2",
   "disease-phoma": "#CC79A7",
   "disease-mites": "#0F8B8D",
-  "disease-weevil": "#A67C00"
+  "disease-weevil": "#A67C00",
+  "leaf-top": "#1F5A3A",
+  "leaf-under": "#3E7E54",
+  "leaf-sheen": "#4E9466",
+  "leaf-vein": "#A8CDA2",
+  "wind": "#9DB8A6"
 }

@@ -1,7 +1,7 @@
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from 'expo-camera';
 import { Gear, X } from 'phosphor-react-native';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Linking, View } from 'react-native';
+import { Linking, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -13,7 +13,7 @@ import Animated, {
 
 import type { Strings } from '../i18n/strings';
 import { SEED_BARCODE_TYPES } from '../screens/seedBarcode';
-import { colors } from '../theme';
+import { LeafLoader } from './leaf/Leaf';
 import { Button } from './Button';
 import { Body } from './Typography';
 
@@ -102,7 +102,7 @@ export function SeedBarcodeScanner({ strings, onScanned, onCancel }: SeedBarcode
           </>
         ) : (
           <View className="flex-1 items-center justify-center">
-            <ActivityIndicator color={colors['on-accent']} />
+            <LeafLoader label={strings.loading} />
           </View>
         )}
       </View>

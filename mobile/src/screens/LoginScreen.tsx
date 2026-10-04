@@ -6,7 +6,7 @@ import { AuthApiError, AuthNetworkError, type AuthApi } from '../auth/authApi';
 import { secondsRemaining } from '../auth/resendCooldown';
 import { isCanonicalPhone, type AuthSession } from '../auth/session';
 import { Button } from '../components/Button';
-import { BotanicalImage } from '../components/BotanicalImage';
+import { WindHero } from '../components/leaf/WindHero';
 import { IconButton } from '../components/IconButton';
 import { TextField } from '../components/TextField';
 import { Muted, SectionHeading, Title } from '../components/Typography';
@@ -121,17 +121,21 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated, 
     <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
         className="flex-1"
-        contentContainerClassName="flex-grow justify-center gap-6 px-5 py-4"
+        contentContainerClassName="flex-grow gap-6 px-5 pb-6 pt-2"
         keyboardShouldPersistTaps="handled"
       >
         <View className="items-end">
           <IconButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
         </View>
-        <BotanicalImage compact />
-        <View className="gap-3">
-          <Title key={step}>{step === 'phone' ? strings.authTitle : strings.authCodeTitle}</Title>
-          {step === 'code' && <Muted>{fillTemplate(strings.authCodeHint, { phone })}</Muted>}
-        </View>
+        <WindHero>
+          <Title key={step} className="text-6xl">{strings.authTitle}</Title>
+        </WindHero>
+        {step === 'code' && (
+          <View className="gap-3">
+            <SectionHeading>{strings.authCodeTitle}</SectionHeading>
+            <Muted>{fillTemplate(strings.authCodeHint, { phone })}</Muted>
+          </View>
+        )}
         {step === 'phone' ? (
           <PhoneForm
             inputRef={inputRef}

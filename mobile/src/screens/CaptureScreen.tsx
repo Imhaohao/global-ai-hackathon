@@ -5,24 +5,21 @@ import {
   CheckCircle,
   Gear,
   ImageSquare,
-  MapTrifold,
-  Plant,
   Translate,
   Warning,
   Info,
   WifiSlash,
 } from 'phosphor-react-native';
 import { useState } from 'react';
-import { ActivityIndicator, Image, Linking, ScrollView, Text, View } from 'react-native';
+import { Image, Linking, ScrollView, Text, View } from 'react-native';
 
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
 import { MAX_LEAVES_PER_PLANT } from '../../../shared/src/plantVote.ts';
-import { BotanicalImage } from '../components/BotanicalImage';
 import { IconButton } from '../components/IconButton';
+import { LeafEmblem, LeafIcon, LeafLoader } from '../components/leaf/Leaf';
 import { Button } from '../components/Button';
 import { ModelSelector } from '../components/ModelSelector';
 import { LeafSlots } from '../components/LeafSlots';
-import { PillButton } from '../components/PillButton';
 import { Body, Muted, Title } from '../components/Typography';
 import type { LeafPhoto } from '../diagnosis/classifyLeaf';
 import type { ModelId } from '../diagnosis/modelConfig';
@@ -48,9 +45,7 @@ type CaptureScreenProps = {
   onTakeLeaf: (source: PhotoSource, replaceIndex?: number) => void;
   onFinish: () => void;
   isFinishing?: boolean;
-  onOpenSettings: () => void;
-  onOpenSeedCheck?: () => void;
-  onOpenMap: () => void;
+  onGoHome: () => void;
   onSwitchLanguage: () => void;
 };
 
@@ -167,7 +162,7 @@ function CheckingNotice({ strings }: { strings: Strings }) {
       accessibilityLiveRegion="polite"
       className="flex-row items-center gap-3 rounded-control bg-surface p-4 shadow-sm"
     >
-      <ActivityIndicator color={colors.accent} />
+      <LeafLoader size={36} label={strings.checking} />
       <Body>{strings.checking}</Body>
     </View>
   );
@@ -237,10 +232,10 @@ function CaptureStatus({ strings, photos, check, isChecking, isFinishing, onTake
   );
 }
 
-function CaptureToolbar({ strings, onOpenSettings, onSwitchLanguage }: Pick<CaptureScreenProps, 'strings' | 'onOpenSettings' | 'onSwitchLanguage'>) {
+function CaptureToolbar({ strings, onGoHome, onSwitchLanguage }: Pick<CaptureScreenProps, 'strings' | 'onGoHome' | 'onSwitchLanguage'>) {
   return (
     <View className="flex-row items-center justify-between">
-      <IconButton label={strings.settingsTitle} icon={Gear} onPress={onOpenSettings} />
+      <IconButton label={strings.goHome} icon={LeafIcon} onPress={onGoHome} />
       <View accessible accessibilityLabel={strings.worksOffline}>
         <WifiSlash size={24} color={colors['ink-muted']} />
       </View>
@@ -268,7 +263,7 @@ function PhotoGuide({ strings, modelId, modelLoading, isChecking, isFinishing, o
 }
 
 export function CaptureScreen(props: CaptureScreenProps) {
-  const { strings, photos, check, problem, onOpenSeedCheck, onOpenMap } = props;
+  const { strings, photos, check, problem } = props;
   return (
     <View className="flex-1">
       <ScrollView contentContainerClassName="flex-grow gap-6 px-5 pb-4 pt-2">
@@ -276,10 +271,8 @@ export function CaptureScreen(props: CaptureScreenProps) {
         <PhotoGuide {...props} />
         {photos.length === 0 ? (
           <View className="flex-1 justify-center gap-5">
-            <BotanicalImage />
-            <View className="flex-row flex-wrap items-center justify-center gap-3">
-              <PillButton label={strings.mapTitle} icon={MapTrifold} onPress={onOpenMap} />
-              {onOpenSeedCheck && <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />}
+            <View className="items-center">
+              <LeafEmblem size={240} />
             </View>
           </View>
         ) : (

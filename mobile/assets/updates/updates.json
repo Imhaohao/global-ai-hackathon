@@ -1,0 +1,91 @@
+[
+  {
+    "id": "kcm-auction-close-new-coffee-year",
+    "kind": "market",
+    "headline": "Last coffee sale of the season averaged Sh38,140 per 50-kg bag",
+    "summary": "That is about Sh117 per kg of cherry before milling, marketing and other deductions. The new coffee year began on 1 October.",
+    "source": "Kenya News Agency (Nairobi Coffee Exchange results)",
+    "sourceUrl": "https://www.kenyanews.go.ke/coffee-auction-closes-with-sh841m-payout-as-new-season-begins/",
+    "publishedOn": "2026-10-01",
+    "photo": {
+      "file": "kcm-auction-close-new-coffee-year.jpg",
+      "credit": "Kamweti wa Mutu, CC BY-SA 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Kenyan_farmers_sorting_coffee_cherries.jpg"
+    }
+  },
+  {
+    "id": "kmd-october-2026-monthly-forecast",
+    "kind": "weather",
+    "headline": "Above-average rain forecast for coffee counties in October",
+    "summary": "KMD expects above-average rain in Nyeri, Kirinyaga, Murang'a, Kiambu, Embu and Meru this month, with heavy falls in several places. September was mostly dry.",
+    "source": "Kenya Meteorological Department (KMSA)",
+    "sourceUrl": "https://meteo.go.ke/our-products/monthly-forecast/october-2026-monthly-weather-forecast/",
+    "publishedOn": "2026-09-30",
+    "dateNote": "Date is the issue date printed on the forecast PDF (30th September 2026); the web page itself shows only the validity period 1-31 Oct 2026.",
+    "photo": {
+      "file": "kmd-october-2026-monthly-forecast.jpg",
+      "credit": "Lebu Ayiga, CC BY 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Coffee_plantation_near_Kawaida_Falls,_Cianda,_Kiambu_County_01.jpg"
+    }
+  },
+  {
+    "id": "el-nino-fungal-disease-watch",
+    "kind": "disease",
+    "headline": "Wet El Nino weather raises fungal disease risk: check plants often",
+    "summary": "Long wet spells and high humidity favour fungal diseases. Inspect plants regularly for early signs of infection and stay alert for pests such as armyworm and locusts.",
+    "source": "aak-GROW / CropLife Kenya (reported by The Star)",
+    "sourceUrl": "https://www.the-star.co.ke/news/2026-09-22-farmers-urged-to-step-up-pest-surveillance-during-el-nino",
+    "publishedOn": "2026-09-22",
+    "dateNote": "Industry advice reported by a newspaper, not a government notice; the article does not mention coffee by name.",
+    "photo": {
+      "file": "el-nino-fungal-disease-watch.jpg",
+      "credit": "Michael.C.Wright, CC BY-SA 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Coffee-leaf-rust-defoliation.jpg"
+    }
+  },
+  {
+    "id": "cri-new-coffee-variety",
+    "kind": "disease",
+    "headline": "Researchers screening new coffee crosses for disease resistance",
+    "summary": "Kalro's Coffee Research Institute is screening new Arabica-Robusta crosses. Of today's varieties, Ruiru 11 and Batian offer the strongest disease resistance.",
+    "source": "KALRO Coffee Research Institute (reported by The Star)",
+    "sourceUrl": "https://www.the-star.co.ke/counties/central/2026-09-08-researchers-develop-coffee-variety-to-withstand-climate-change",
+    "publishedOn": "2026-09-08",
+    "dateNote": "Research news reported by a newspaper quoting a Coffee Research Institute scientist; no new variety is released yet.",
+    "photo": {
+      "file": "cri-new-coffee-variety.jpg",
+      "credit": "Kihara wa kigo, CC BY-SA 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Coffee_berries_in_Kisii_Kenya.jpg"
+    }
+  },
+  {
+    "id": "kmd-ond-2026-short-rains-outlook",
+    "kind": "weather",
+    "headline": "Short rains start mid-October and look wetter than normal",
+    "summary": "KMD expects rain in Nyeri, Kirinyaga, Murang'a, Kiambu, Meru and Embu from the 2nd-3rd week of October, continuing into January, with above-average totals.",
+    "source": "Kenya Meteorological Department (KMSA)",
+    "sourceUrl": "https://meteo.go.ke/our-products/seasonal-forecast/october-november-decemberond-national-climate-outlook-forum-ncof13/",
+    "publishedOn": "2026-08-26",
+    "dateNote": "Date is the issue date printed on the NCOF13 statement PDF (26th Aug 2026); the web page shows only the season dates.",
+    "photo": {
+      "file": "kmd-ond-2026-short-rains-outlook.jpg",
+      "credit": "niking_7, CC BY-SA 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Children_playing_as_rain_approaches.jpg"
+    }
+  },
+  {
+    "id": "cri-copper-spray-before-rains",
+    "kind": "disease",
+    "headline": "Spray copper fungicide before the rains to curb coffee berry disease",
+    "summary": "A Coffee Research Institute pathologist says berry disease thrives in cool, wet weather. Use copper sprays before the rains at the right dose, and prune to open the canopy.",
+    "source": "KALRO Coffee Research Institute (reported by Kenya News Agency)",
+    "sourceUrl": "https://www.kenyanews.go.ke/farmers-urged-to-effectively-tackle-coffee-diseases-for-increased-production/",
+    "publishedOn": "2025-04-13",
+    "dateNote": "Older than the other items (about 18 months) but the advice applies to the coming short rains. Spoken at a Murang'a farmers' open day.",
+    "photo": {
+      "file": "cri-copper-spray-before-rains.jpg",
+      "credit": "Shirleen.Kay, CC BY-SA 4.0",
+      "pageUrl": "https://commons.wikimedia.org/wiki/File:Small_Scale_Coffee_Farming_in_Kenya.jpg"
+    }
+  }
+]

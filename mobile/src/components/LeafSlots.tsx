@@ -1,10 +1,11 @@
-import { Check, Leaf, MinusCircle, WarningCircle, type Icon } from 'phosphor-react-native';
+import { Check, MinusCircle, WarningCircle, type Icon } from 'phosphor-react-native';
 import { Image, View } from 'react-native';
 
 import type { LeafReading, PlantVerdict } from '../../../shared/src/contract.ts';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { leafMarkOf, type LeafMark } from '../screens/leafMarks';
 import { colors } from '../theme';
+import { LeafIcon } from './leaf/Leaf';
 
 const MARK_ICON: Record<LeafMark, Icon> = {
   agrees: Check,
@@ -89,7 +90,7 @@ export function LeafSlots({ photoUris, readings, verdict, slotCount, accessibili
                 accessible={false}
               />
             ) : (
-              <Leaf size={22} weight="duotone" color={colors['ink-muted']} />
+              <LeafIcon size={22} color={colors['ink-muted']} />
             )}
             {mark && <LeafMarkBadge mark={mark} accessibilityLabel={label} />}
           </View>

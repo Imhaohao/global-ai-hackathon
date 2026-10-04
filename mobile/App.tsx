@@ -1,7 +1,6 @@
 import './global.css';
 import './src/nativewindInterop';
 
-import { ActivityIndicator, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +10,7 @@ import { seedCheckContact, seedCheckCopy } from '../shared/src/seedCheck.ts';
 import { createDemoAuth } from './src/auth/demoAuthApi';
 import type { AuthSession } from './src/auth/session';
 import { useAuthSession } from './src/auth/useAuthSession';
+import { LeafLoadingScreen } from './src/components/leaf/Leaf';
 import { DEFAULT_MODEL_ID, type ModelId } from './src/diagnosis/modelConfig';
 import { useLeafModel } from './src/diagnosis/useLeafModel';
 import { STRINGS, type Language } from './src/i18n/strings';
@@ -19,6 +19,7 @@ import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
 import { ConsentScreen } from './src/screens/ConsentScreen';
 import type { DevScenario } from './src/screens/devVerdictOverride';
+import { HomeScreen } from './src/screens/HomeScreen';
 import { HotspotMapScreen } from './src/screens/HotspotMapScreen';
 import { LanguagePickerScreen } from './src/screens/LanguagePickerScreen';
 import { SeedCheckScreen } from './src/screens/SeedCheckScreen';
@@ -33,7 +34,6 @@ import { loadLanguagePreference, saveLanguagePreference } from './src/storage/la
 import { listObservations } from './src/storage/observations';
 import { useAppSettings } from './src/storage/useAppSettings';
 import { useWetDays } from './src/storage/useWetDays';
-import { colors } from './src/theme';
 
 const DEMO_AUTH = createDemoAuth();
 const AUTH_API = DEMO_AUTH.api;
@@ -56,9 +56,7 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-paper">
         <StatusBar style="dark" />
         {auth.state.status === 'restoring' ? (
-          <View className="flex-1 items-center justify-center">
-            <ActivityIndicator color={colors.accent} />
-          </View>
+          <LeafLoadingScreen label={STRINGS[loginLanguage].loading} />
         ) : auth.state.status === 'signedOut' && (savedLanguage === null || isPickingLanguage) ? (
           <LanguagePickerScreen
             strings={STRINGS[loginLanguage]}
@@ -108,6 +106,7 @@ function AuthenticatedApp({
   const [isInSettings, setIsInSettings] = useState(false);
   const [isInSeedCheck, setIsInSeedCheck] = useState(false);
   const [isInMap, setIsInMap] = useState(false);
+  const [isInCapture, setIsInCapture] = useState(false);
   const [devScenario, setDevScenario] = useState<DevScenario>('off');
   const [modelId, setModelId] = useState<ModelId>(DEFAULT_MODEL_ID);
   const { load: leafModel, config, retry } = useLeafModel(modelId);
@@ -248,6 +247,19 @@ function AuthenticatedApp({
         />
       );
     }
+    if (!isInCapture) {
+      return (
+        <HomeScreen
+          strings={strings}
+          language={language}
+          onCheckTree={() => setIsInCapture(true)}
+          onOpenMap={() => setIsInMap(true)}
+          onOpenSeedCheck={seedCopy ? () => setIsInSeedCheck(true) : undefined}
+          onOpenSettings={() => setIsInSettings(true)}
+          onSwitchLanguage={switchLanguage}
+        />
+      );
+    }
     return (
       <CaptureScreen
         strings={strings}
@@ -263,9 +275,7 @@ function AuthenticatedApp({
         onTakeLeaf={capture.takeLeaf}
         onFinish={finishAndShowAdvice}
         isFinishing={resultFlow.isFinishing}
-        onOpenSettings={() => setIsInSettings(true)}
-        onOpenSeedCheck={seedCopy ? () => setIsInSeedCheck(true) : undefined}
-        onOpenMap={() => setIsInMap(true)}
+        onGoHome={() => setIsInCapture(false)}
         onSwitchLanguage={switchLanguage}
       />
     );
