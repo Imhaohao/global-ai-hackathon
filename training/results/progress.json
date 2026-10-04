@@ -2,17 +2,17 @@
   "scope": "model-plan.md",
   "tasks": {
     "quality_contract": "Committed 8459181; all mobile checks passed",
-    "model": "Original checkpoint and exact split restored; fixed-calibration B0 evaluation reproduced the original metrics with unchanged model/config hashes. Published B1/B2/B3 experiments remain separate; B0 is the app default.",
-    "data_card": "Updated from reproduced evaluation, 896 words; legacy B0 gate results distinguished from newer brightness and alternative models.",
+    "model": "Original checkpoint and exact split restored; fixed-calibration B0 evaluation reproduced with unchanged model/config hashes. B0 frozen and verified; B1 is the app default. B1/B2/B3 comparison evidence remains separate.",
+    "data_card": "Finalized for frozen B0; original quality-gate results distinguished from the current blur-only app policy and separate alternative-model reports.",
     "emulator_speed": "App built and installed; six credited gallery fixtures and summary command ready. User requested manual gallery execution; automated collection stopped with zero controlled samples."
   },
   "push_authorized": false,
   "checks": {
-    "mobile_typecheck": "passed after concurrent UI changes settled",
-    "mobile_lint": "passed after concurrent UI changes settled",
-    "mobile_contract": "passed",
+    "mobile_typecheck": "passed at cutoff; app and test tsconfigs",
+    "mobile_lint": "passed at cutoff",
+    "mobile_contract": "passed at cutoff",
     "repository_tests": {
-      "passed": 179,
+      "passed": 359,
       "failed": 0
     },
     "python_complexity_max_15": "passed for all files changed in this task",
@@ -44,13 +44,35 @@
     "metro_8087": "stopped",
     "benchmark_worktree": "archived"
   },
-  "planned_freeze": "2026-10-04T12:00:00-07:00; not established by this run",
-  "overall_status": "Current implementation, source restoration and reproduced B0 evidence complete; user-requested manual gallery timing and scheduled noon freeze remain pending",
+  "planned_freeze": "2026-10-04T12:00:00-07:00; actual identity verification recorded in freeze.verified_at",
+  "overall_status": "B0 freeze, source restoration, reproduced evidence and final documents complete; manual gallery benchmark remains ready to run with timings not measured.",
   "training_input_restoration": "training/results/input-restoration.json",
   "freeze_follow_up": {
     "automation_id": "freeze-leaf-doctor-model-evidence",
     "scheduled_local": "2026-10-04T12:00:00-07:00",
     "mode": "one-time thread heartbeat",
-    "status": "scheduled; freeze not yet established"
+    "status": "completed; B0 identities verified at 2026-10-04T12:03:06-07:00"
+  },
+  "freeze": {
+    "scope": "B0 deployed-v1 artifact and saved calibration",
+    "scheduled_at": "2026-10-04T12:00:00-07:00",
+    "verified_at": "2026-10-04T12:03:06-07:00",
+    "status": "frozen; identities match reproduced evaluation",
+    "version": "deployed-v1",
+    "artifact_bytes": 8091596,
+    "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+    "model_config_sha256": "c9a875d610b97ba6013d03aef300dbc86ac3f5a166a7be3e008cdd62213f7308",
+    "calibration_sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
+    "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+    "manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+    "evaluation_path": "training/results/final-evaluation.json",
+    "evaluation_sha256": "6448f2146d76650bb172658bfc6d830ff1a08118efe057c3b0a777d36f84919d",
+    "evaluated_at_utc": "2026-10-04T03:25:33.391209+00:00",
+    "identity_verification": "Bundled model/config, committed and runtime calibration/checkpoint/manifest copies match the fixed-calibration report; parsed calibration values also match.",
+    "evaluation_rerun_required": false,
+    "app_default": "b1",
+    "comparison_evidence": "B1/B2/B3 reports remain separate; B0 results use its original saved quality gate, not the current blur-only app policy.",
+    "manual_timing": "No emulator-logcat.txt exists; zero controlled samples; emulator timings remain not measured.",
+    "frozen_at": "2026-10-04T12:03:06-07:00"
   }
 }

@@ -2,7 +2,7 @@
 
 No controlled speed result is available. The development app was built and installed, and six credited photos were added to the gallery. At the user’s request, repeated gallery checks are ready for manual execution. An earlier launch encountered a Hermes `TextDecoder` error in `fast-png`; no uncontrolled log lines were counted as benchmark samples.
 
-This is a snapshot of the current model on 3 October 2026, before the plan's 4 October noon cutoff. A later model change would require another measurement.
+B0 was frozen unchanged; its model, config, calibration and checkpoint identities were verified on 4 October 2026 at 12:03:06 Pacific ([record](../training/results/progress.json)). B1 is the app default; this benchmark requires selecting B0. No manual timing log was present at the cutoff check.
 
 | Model | Value |
 |---|---|

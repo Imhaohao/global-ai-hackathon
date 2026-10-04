@@ -2,7 +2,7 @@
 
 ## Model
 
-The bundled model starts from [`Huyt/arabica-coffee-leaf-disease-efficientnet-b0`](https://huggingface.co/Huyt/arabica-coffee-leaf-disease-efficientnet-b0) at revision `252d26841543befab22880876f8ca91543230aab`. A checkpoint is saved model weights; fine-tuning adapts them to coffee-leaf classes. It has 4,017,796 learned parameters. The current `coffee-leaf.tflite` file is 8,091,596 bytes (7.72 MiB), stores weights as float16, keeps input, output, and computation in float32, and has SHA256 `19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda`. The desktop verifier blocked sockets and saw zero attempts; this is not a phone test. B1 is now the app default; this card describes B0, which stays selectable, and B1/B2 have separate reports. The planned freeze is 4 October 2026 at noon Pacific.
+The bundled model starts from [`Huyt/arabica-coffee-leaf-disease-efficientnet-b0`](https://huggingface.co/Huyt/arabica-coffee-leaf-disease-efficientnet-b0) at revision `252d26841543befab22880876f8ca91543230aab`. Fine-tuning adapts saved model weights to coffee-leaf classes. It has 4,017,796 learned parameters. The current `coffee-leaf.tflite` file is 8,091,596 bytes (7.72 MiB), stores weights as float16, keeps input, output, and computation in float32, and has SHA256 `19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda`. The desktop verifier blocked sockets and saw zero attempts; this is not a phone test. B1 is the app default; this card describes selectable B0. B0 was frozen unchanged and verified on 4 October 2026 at 12:03:06 Pacific ([record](../training/results/progress.json)).
 
 ## Data used
 
@@ -26,7 +26,7 @@ The data contains 14,119 train, 3,921 validation, 4,571 test, and 941 external e
 
 ## Results
 
-B0 was rerun locally with its saved thresholds. [`training/results/final-evaluation.json`](../training/results/final-evaluation.json) records the reproduced results and input hashes. TFLite used CPU; the PyTorch checkpoint comparison used the Mac GPU. These figures use the original quality gate; the app’s newer brightness gate and B1/B2 options have separate reports. Raw accuracy is correctness over all images. Accepted coverage is the share passing thresholds; accepted accuracy is correctness among accepted images.
+B0 was rerun locally with its saved thresholds. [`training/results/final-evaluation.json`](../training/results/final-evaluation.json) records the reproduced results and input hashes. TFLite used CPU; the PyTorch checkpoint comparison used the Mac GPU. These figures use the original quality gate; the current app uses blur-only screening, and B1/B2/B3 comparisons have separate reports. Raw accuracy is correctness over all images. Accepted coverage is the share passing thresholds; accepted accuracy is correctness among accepted images.
 
 | Evaluation | Raw accuracy | Accepted coverage | Accuracy after acceptance |
 |---|---:|---:|---:|
