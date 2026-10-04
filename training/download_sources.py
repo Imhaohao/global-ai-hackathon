@@ -1,9 +1,9 @@
 import concurrent.futures
 import json
 import time
-from pathlib import Path
 import urllib.request
 import zipfile
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MODEL_REV = "252d26841543befab22880876f8ca91543230aab"
@@ -38,6 +38,23 @@ def fetch(url, dest):
     raise RuntimeError(f"Download failed after five attempts: {url}")
 
 
+def extract_bracol(archive, destination):
+    destination = Path(destination).resolve()
+    with zipfile.ZipFile(archive) as bundle:
+        for info in bundle.infolist():
+            relative = Path(*Path(info.filename.replace("\\", "/")).parts[1:])
+            allowed = relative.parts[:2] == (
+                "classification",
+                "dataset",
+            ) or relative.name in ["LICENSE", "README.md"]
+            if not allowed or info.is_dir():
+                continue
+            target = (destination / relative).resolve()
+            target.relative_to(destination)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(bundle.read(info))
+
+
 def main():
     jobs = [
         (
@@ -67,18 +84,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         for result in executor.map(lambda job: fetch(*job), jobs):
             pass
-    with zipfile.ZipFile(archive) as zf:
-        for info in zf.infolist():
-            relative = Path(*Path(info.filename).parts[1:])
-            allowed = str(relative).startswith(
-                "classification\\dataset"
-            ) or relative.name in ["LICENSE", "README.md"]
-            if not allowed or info.is_dir():
-                continue
-            target = (ROOT / "data" / "bracol" / relative).resolve()
-            target.relative_to((ROOT / "data" / "bracol").resolve())
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(zf.read(info))
+    extract_bracol(archive, ROOT / "data" / "bracol")
     revisions = {
         "model": MODEL_REV,
         "agml": DATA_REV,

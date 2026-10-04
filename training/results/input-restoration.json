@@ -1,0 +1,19 @@
+{
+  "status": "restored",
+  "verified_at_utc": "2026-10-04T03:21:11.873997+00:00",
+  "source_revision": "6ff450637a35a6388e1d096eaf93e2acc48e84ca",
+  "manifest_source": "training/manifests/manifest.json",
+  "manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+  "checkpoint_source": "training/checkpoints/efficientnet/best.safetensors",
+  "checkpoint_sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+  "image_count": 23552,
+  "split_counts": {
+    "test": 4571,
+    "train": 14119,
+    "val": 3921,
+    "external": 941
+  },
+  "image_byte_verification": "Every original manifest path and SHA256 matched the reconstructed pinned-source manifest before restoring original ordering and group IDs",
+  "dependency_check": "pip check passed; native macOS PyTorch 2.14.1 and torchvision 0.29.1 use the Linux CPU lock versions without the +cpu build suffix",
+  "artifact_changed": false
+}
