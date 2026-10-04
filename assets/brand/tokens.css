@@ -1,0 +1,78 @@
+/*
+  Leaf Doctor brand tokens. Shared by the pitch deck (pitch/) and the reel.
+  Light only: the deck is projected on a paper-coloured stage.
+  Contrast on --brand-paper (#ECE9E1), measured with the WCAG formula:
+    ink 14.65, ink-muted 6.31, leaf 7.57, rust-deep 4.65, watch 5.27, sick 6.05,
+    ink-faint 2.95 (decoration and large type only), rust 2.64 (light and marks only, never text or fills).
+*/
+:root {
+  /* Surfaces: the morning-mist paper the slope sits on */
+  --brand-paper: #ece9e1;
+  --brand-paper-raised: #f7f5f0;
+  --brand-paper-sunken: #e0dcd2;
+  --brand-rule: #cdc8bc;
+
+  /* Ink */
+  --brand-ink: #191813;
+  --brand-ink-muted: #57534a;
+  --brand-ink-faint: #8c877c;
+
+  /* One calm accent: the coffee leaf green the product app already uses */
+  --brand-leaf: #1f5135;
+  --brand-leaf-pressed: #163c27;
+  --brand-leaf-soft: #dce8df;
+  --brand-on-leaf: #ffffff;
+
+  /* The hot accent: rust spores. Light, glow and small marks only. */
+  --brand-rust: #f0641e;
+  --brand-rust-glow: #ffb347;
+  --brand-rust-deep: #b4420e;
+
+  /* Kenyan highland red soil, for terrain and earth marks */
+  --brand-soil: #8a3b22;
+
+  /* Result states, matching mobile/src/colors.json */
+  --brand-state-confident: #1f7a3f;
+  --brand-state-possible: #8a5200;
+  --brand-state-unclear: #a3271b;
+  --brand-state-confident-soft: #e3f1e7;
+  --brand-state-possible-soft: #fbefd9;
+  --brand-state-unclear-soft: #f8e2df;
+
+  /* Feature-phone screen */
+  --brand-lcd: #c8d2b4;
+  --brand-lcd-ink: #1e2418;
+
+  /* Type families (see fonts.ts) */
+  --brand-font-display: "Archivo", "Arial Narrow", ui-sans-serif, sans-serif;
+  --brand-font-body: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --brand-font-data: "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Display width axis (Archivo wdth 62-125). Condensed for posters, normal for text. */
+  --brand-display-width-poster: 68;
+  --brand-display-width-headline: 82;
+  --brand-display-width-text: 100;
+
+  /* Weights */
+  --brand-weight-body: 400;
+  --brand-weight-strong: 700;
+  --brand-weight-display: 800;
+  --brand-weight-poster: 900;
+
+  /* Radii: concentric pairs (outer = inner + padding) are built from these */
+  --brand-radius-sm: 6px;
+  --brand-radius-md: 12px;
+  --brand-radius-lg: 20px;
+  --brand-radius-phone: 28px;
+
+  /* Easing */
+  --brand-ease-drawn: cubic-bezier(0.16, 1, 0.3, 1);
+  --brand-ease-sweep: cubic-bezier(0.65, 0, 0.35, 1);
+  --brand-ease-exit: cubic-bezier(0.5, 0, 0.75, 0);
+  --brand-ease-ui: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Durations */
+  --brand-duration-exit: 320ms;
+  --brand-duration-enter: 900ms;
+  --brand-duration-camera: 950ms;
+}
