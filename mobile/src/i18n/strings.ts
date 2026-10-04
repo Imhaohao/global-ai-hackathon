@@ -215,6 +215,8 @@ const NEW_LINES = {
   ),
   authSendCode: draftLine('Send code', 'Tuma nambari ya siri'),
   authSendingCode: draftLine('Sending code…', 'Inatuma nambari ya siri…'),
+  authLogIn: draftLine('Log in', 'Ingia'),
+  authLoggingIn: draftLine('Logging in…', 'Inaingia…'),
   authCodeTitle: draftLine('Enter your code', 'Weka nambari yako ya siri'),
   authCodeHint: draftLine('We sent a code to {phone}.', 'Tumetuma nambari ya siri kwa {phone}.'),
   authCodeLabel: draftLine('Text message code', 'Nambari ya siri ya ujumbe mfupi'),

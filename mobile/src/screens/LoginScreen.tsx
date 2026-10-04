@@ -10,7 +10,7 @@ import { BotanicalImage } from '../components/BotanicalImage';
 import { IconButton } from '../components/IconButton';
 import { TextField } from '../components/TextField';
 import { Muted, SectionHeading, Title } from '../components/Typography';
-import { STRINGS, fillTemplate, type Language } from '../i18n/strings';
+import { STRINGS, fillTemplate, type Language, type Strings } from '../i18n/strings';
 
 type LoginScreenProps = {
   api: AuthApi;
@@ -141,7 +141,7 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated, 
             hint={strings.authPhoneHint}
             onChange={setPhoneInput}
             onSubmit={() => void requestCode(false)}
-            buttonLabel={pending ? strings.authSendingCode : strings.authSendCode}
+            buttonLabel={phoneButtonLabel(strings, pending, Boolean(signInWithoutCode))}
             pending={pending}
             resendSeconds={resendSeconds}
             cooldownLabel={fillTemplate(strings.authTryAgainIn, { seconds: resendSeconds })}
@@ -293,6 +293,11 @@ function CodeForm({
       </View>
     </View>
   );
+}
+
+function phoneButtonLabel(strings: Strings, pending: boolean, signsInDirectly: boolean): string {
+  if (signsInDirectly) return pending ? strings.authLoggingIn : strings.authLogIn;
+  return pending ? strings.authSendingCode : strings.authSendCode;
 }
 
 function canonicalizePhone(input: string): string | null {
