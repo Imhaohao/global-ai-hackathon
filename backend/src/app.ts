@@ -108,7 +108,7 @@ export function createApp(deps: AppDependencies): Hono {
     const from = params.From ?? "";
     const question = (params.Body ?? "").trim().slice(0, MAX_QUESTION_CHARS);
     const media = inboundMedia(params);
-    const isQuestion = media !== null || (question.length > 0 && !isCarrierKeyword(question));
+    const isQuestion = !isCarrierKeyword(question) && (media !== null || question.length > 0);
     if (from && isQuestion && (await deps.rateLimit.allow(from, MAX_REPLIES_PER_WINDOW))) {
       await deps.queueSmsReply(from, question, media);
     }

@@ -1,8 +1,11 @@
 import { v } from "convex/values";
 import { evaluateReply } from "../../shared/src/index.ts";
-import { appendExchange, freshTurns } from "../src/conversationStore.ts";
+import { appendExchange, freshTurns, IDLE_RESET_MS } from "../src/conversationStore.ts";
+import { internal } from "./_generated/api";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "./_generated/server";
 import { turnValidator } from "./schema";
+
+const IDLE_CLEANUP_BATCH_SIZE = 100;
 
 function sessionFor(ctx: QueryCtx | MutationCtx, phone: string) {
   return ctx.db
@@ -55,5 +58,26 @@ export const claimReplySlot = internalMutation({
       });
     }
     return decision.allowed;
+  },
+});
+
+export const deleteIdleSessions = internalMutation({
+  args: {},
+  returns: v.number(),
+  handler: async (ctx) => {
+    const cutoff = Date.now() - IDLE_RESET_MS;
+    const sessions = await ctx.db
+      .query("phoneSessions")
+      .withIndex("by_last_active", (q) => q.lt("lastActiveAt", cutoff))
+      .take(IDLE_CLEANUP_BATCH_SIZE);
+    let deleted = 0;
+    for (const session of sessions) {
+      await ctx.db.delete(session._id);
+      deleted += 1;
+    }
+    if (sessions.length === IDLE_CLEANUP_BATCH_SIZE) {
+      await ctx.scheduler.runAfter(0, internal.phoneSessions.deleteIdleSessions, {});
+    }
+    return deleted;
   },
 });

@@ -1,5 +1,5 @@
 import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { PermissionsAndroid } from "react-native";
 
@@ -8,6 +8,10 @@ import type { IncomingSms } from "../modules/sms-gateway";
 import type { FarmerReport, LocalModel } from "../../shared/src/localModel/index.ts";
 import { answerQuestion, type AnswerSource } from "./answerQuestion";
 import { createReplyGuard } from "./replyGuard";
+import { secureSmsPreferences } from "./smsPreferences";
+import type { SmsPreferences } from "./smsPreferences";
+import { createSmsPreferenceState } from "./smsPreferenceState";
+import { handleCarrierSms, handleQuestionSms } from "./smsHandler";
 
 const KEEP_AWAKE_TAG = "leaf-doctor-hub";
 const MAX_EXCHANGES_SHOWN = 50;
@@ -22,7 +26,7 @@ export interface Exchange {
   receivedAt: number;
 }
 
-export type HubProblem = "permission-denied" | "send-failed" | null;
+export type HubProblem = "permission-denied" | "send-failed" | "storage-failed" | null;
 
 async function requestSmsPermissions(): Promise<boolean> {
   const results = await PermissionsAndroid.requestMultiple([
@@ -32,33 +36,59 @@ async function requestSmsPermissions(): Promise<boolean> {
   return Object.values(results).every((result) => result === PermissionsAndroid.RESULTS.GRANTED);
 }
 
-export function useSmsHub(localModelRef: RefObject<LocalModel | null>, hubTokenRef: RefObject<string | null>) {
+export function useSmsHub(
+  localModelRef: RefObject<LocalModel | null>,
+  hubTokenRef: RefObject<string | null>,
+  preferences: SmsPreferences = secureSmsPreferences,
+) {
   const [listening, setListening] = useState(false);
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const [problem, setProblem] = useState<HubProblem>(null);
   const subscriptionRef = useRef<{ remove: () => void } | null>(null);
   const shouldReplyRef = useRef(createReplyGuard());
+  const preferenceState = useMemo(() => createSmsPreferenceState(preferences), [preferences]);
+  const repliedSendersRef = useRef(new Set<string>());
 
-  const handleSms = useCallback(async (sms: IncomingSms) => {
-    if (!shouldReplyRef.current(sms.from, sms.body, sms.receivedAt)) return;
-    const answer = await answerQuestion(sms.from, sms.body, localModelRef.current, hubTokenRef.current);
-    try {
-      await sendSms(sms.from, answer.reply);
-      setProblem(null);
-    } catch {
-      setProblem("send-failed");
-    }
+  const loadPreferences = useCallback(async (): Promise<boolean> => {
+    const loaded = await preferenceState.load();
+    if (!loaded) setProblem("storage-failed");
+    return loaded;
+  }, [preferenceState]);
+
+  const setOptedOut = useCallback(async (sender: string, optedOut: boolean): Promise<boolean> => {
+    const saved = await preferenceState.setOptedOut(sender, optedOut);
+    if (!saved) setProblem("storage-failed");
+    return saved;
+  }, [preferenceState]);
+
+  const recordExchange = useCallback((sms: IncomingSms, reply: string, source: AnswerSource, modelReading: FarmerReport | null) => {
     const exchange: Exchange = {
       id: `${sms.receivedAt}-${sms.from}`,
       from: sms.from,
       question: sms.body,
-      reply: answer.reply,
-      source: answer.source,
-      modelReading: answer.modelReading,
+      reply,
+      source,
+      modelReading,
       receivedAt: sms.receivedAt,
     };
     setExchanges((previous) => [exchange, ...previous].slice(0, MAX_EXCHANGES_SHOWN));
-  }, [localModelRef, hubTokenRef]);
+  }, []);
+
+  const handleSms = useCallback(async (sms: IncomingSms) => {
+    if (!preferenceState.isLoaded() && !(await loadPreferences())) return;
+    if (await handleCarrierSms(sms, setOptedOut, sendSms, recordExchange, setProblem)) return;
+    await handleQuestionSms(
+      sms,
+      () => preferenceState.isBlocked(sms.from),
+      () => shouldReplyRef.current(sms.from, sms.body, sms.receivedAt),
+      () => answerQuestion(sms.from, sms.body, localModelRef.current, hubTokenRef.current),
+      () => !repliedSendersRef.current.has(sms.from.trim()),
+      () => repliedSendersRef.current.add(sms.from.trim()),
+      sendSms,
+      recordExchange,
+      setProblem,
+    );
+  }, [loadPreferences, localModelRef, hubTokenRef, recordExchange, setOptedOut, preferenceState]);
 
   const stop = useCallback(() => {
     subscriptionRef.current?.remove();
@@ -72,11 +102,12 @@ export function useSmsHub(localModelRef: RefObject<LocalModel | null>, hubTokenR
       setProblem("permission-denied");
       return;
     }
+    if (!(await loadPreferences())) return;
     setProblem(null);
     await activateKeepAwakeAsync(KEEP_AWAKE_TAG);
     subscriptionRef.current = addSmsListener((sms) => void handleSms(sms));
     setListening(true);
-  }, [handleSms]);
+  }, [handleSms, loadPreferences]);
 
   useEffect(() => stop, [stop]);
 

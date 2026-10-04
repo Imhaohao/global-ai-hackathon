@@ -9,10 +9,14 @@ export interface ConversationHistory {
 }
 
 const MAX_TURNS = 8;
-const IDLE_RESET_MS = 24 * 60 * 60 * 1000;
+export const IDLE_RESET_MS = 24 * 60 * 60 * 1000;
+
+export function isIdle(lastActiveAt: number, now: number): boolean {
+  return now - lastActiveAt > IDLE_RESET_MS;
+}
 
 export function freshTurns(turns: Turn[], lastActiveAt: number, now: number): Turn[] {
-  return now - lastActiveAt > IDLE_RESET_MS ? [] : turns;
+  return isIdle(lastActiveAt, now) ? [] : turns;
 }
 
 export function appendExchange(turns: Turn[], question: string, answer: string): Turn[] {
@@ -28,7 +32,12 @@ export class InMemoryConversationHistory implements ConversationHistory {
 
   async history(phone: string): Promise<Turn[]> {
     const conversation = this.conversations.get(phone);
-    return conversation ? freshTurns(conversation.turns, conversation.lastActiveAt, this.now()) : [];
+    if (!conversation) return [];
+    if (isIdle(conversation.lastActiveAt, this.now())) {
+      this.conversations.delete(phone);
+      return [];
+    }
+    return conversation.turns;
   }
 
   async append(phone: string, question: string, answer: string): Promise<void> {

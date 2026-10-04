@@ -3,7 +3,7 @@ import { test } from "node:test";
 import type Anthropic from "@anthropic-ai/sdk";
 import twilio from "twilio";
 import { evaluateReply } from "../../shared/src/index.ts";
-import { createClaudeAdvisor, type Advisor } from "./advisor.ts";
+import { createClaudeAdvisor, ONLINE_PROCESSING_NOTICE, type Advisor } from "./advisor.ts";
 import { createApp, type AppDependencies, type ReplyRateLimit } from "./app.ts";
 import { InMemoryConversationHistory } from "./conversationStore.ts";
 import { createPhotoAdvisor, parsePhotoReading, PHOTO_UNAVAILABLE_REPLY } from "./photoAdvisor.ts";
@@ -164,6 +164,19 @@ test("carrier keywords like STOP and HELP get no bot reply", async () => {
   assert.equal(queued.length, 0);
 });
 
+test("carrier keywords with an attached photo are still filtered before queueing", async () => {
+  const { app, queued } = buildApp();
+  const params = {
+    From: "+15550004445",
+    Body: "STOP",
+    NumMedia: "1",
+    MediaUrl0: "https://api.twilio.com/media/ME2",
+    MediaContentType0: "image/jpeg",
+  };
+  assert.equal((await app.fetch(twilioRequest(params))).status, 200);
+  assert.equal(queued.length, 0);
+});
+
 test("compliance pages carry the statements Twilio reviewers check for", async () => {
   const { app } = buildApp();
   const privacy = await (await app.fetch(new Request(`${BASE_URL}/privacy`))).text();
@@ -321,7 +334,7 @@ test("photo advisor tells the farmer to describe the leaf when Claude is unreach
       throw new Error("ANTHROPIC_API_KEY is missing");
     }, new InMemoryConversationHistory());
     const reply = await advisor.advisePhoto("+1", { base64: "aGVsbG8=", mediaType: "image/jpeg", caption: "" });
-    assert.equal(reply, PHOTO_UNAVAILABLE_REPLY);
+    assert.equal(reply, `${ONLINE_PROCESSING_NOTICE} ${PHOTO_UNAVAILABLE_REPLY}`);
   } finally {
     console.error = originalError;
   }

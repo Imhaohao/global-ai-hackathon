@@ -25,5 +25,5 @@ export default defineSchema({
     turns: v.array(turnValidator),
     lastActiveAt: v.number(),
     recentReplyTimes: v.array(v.number()),
-  }).index("by_phone", ["phone"]),
+  }).index("by_phone", ["phone"]).index("by_last_active", ["lastActiveAt"]),
 });

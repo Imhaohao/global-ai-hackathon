@@ -1,13 +1,27 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { buildOfflineReply, DISEASES, fitToSms, matchSymptoms, seedCheckReplyFor } from "../../shared/src/index.ts";
-import type { DiseaseInfo } from "../../shared/src/index.ts";
-import type { ConversationHistory } from "./conversationStore.ts";
+import {
+  buildRuleBasedReply,
+  COMPLIANCE_OVERHEAD_CHARS,
+  DISEASES,
+  seedCheckReplyFor,
+} from "../../shared/src/index.ts";
+import type { AppLanguage, DiseaseInfo } from "../../shared/src/index.ts";
+import { matchWithModelHelp } from "../../shared/src/localModel/assistedMatch.ts";
+import {
+  FARMER_REPORT_SCHEMA,
+  validateFarmerReport,
+} from "../../shared/src/localModel/parseFarmerMessage.ts";
+import type { FarmerReport } from "../../shared/src/localModel/parseFarmerMessage.ts";
+import { firstJsonObject, unsure } from "../../shared/src/localModel/localModel.ts";
+import type { TaskResult } from "../../shared/src/localModel/localModel.ts";
+import type { ConversationHistory, Turn } from "./conversationStore.ts";
 
 export interface Advisor {
   advise(phone: string, question: string): Promise<string>;
 }
 
 export const MODEL = "claude-sonnet-5-5";
+export const ONLINE_PROCESSING_NOTICE = "Twilio, Convex and Anthropic process your messages and photos to write and deliver the answer. Processing locations are not yet verified.";
 
 export function describeDisease(disease: DiseaseInfo): string {
   return [
@@ -31,19 +45,39 @@ export const CONDITION_NOTES = `Conditions you know:
 
 ${Object.values(DISEASES).map(describeDisease).join("\n\n")}`;
 
-export const SYSTEM_PROMPT = `You are Leaf Doctor, a coffee plant advisor that smallholder farmers reach by SMS or phone from basic phones. Many have little schooling and have never used AI.
+export const SYSTEM_PROMPT = `You are Leaf Doctor's message-reading step. You receive one message from a coffee farmer. Do not write advice or a treatment recommendation.
 
 Reply rules:
 ${STYLE_RULES}
-- If the description fits one condition below, name it and give the two or three most useful steps from its list.
-- If it could be two conditions, ask ONE simple question that tells them apart (use the "How to tell apart" line).
-- If it does not match any condition, say you are not sure and ask what colour the spots are, whether they are on top or underneath, and whether there is powder, rings, or tunnels.
-- If the question is not about coffee plants, say you can only help with coffee leaves.
+- Return only JSON matching the schema supplied by the caller. Translate the farmer's leaf description into symptomsInEnglish without adding signs the farmer did not mention.
 
 ${CONDITION_NOTES}`;
 
-function offlineAnswer(question: string): string {
-  return buildOfflineReply(matchSymptoms(question, DISEASES), DISEASES);
+export function parseAdvisorReport(text: string | null): TaskResult<FarmerReport> {
+  if (!text) return unsure("advisor did not return a report");
+  const json = firstJsonObject(text);
+  if (!json) return unsure("advisor did not return JSON");
+  try {
+    return validateFarmerReport(JSON.parse(json));
+  } catch {
+    return unsure("advisor returned invalid JSON");
+  }
+}
+
+function languageForReport(report: TaskResult<FarmerReport>): AppLanguage {
+  return report.status === "ok" && (report.value.language === "sw" || report.value.language === "mixed") ? "sw" : "en";
+}
+
+function replyFromReport(question: string, report: TaskResult<FarmerReport>, isFirstOnlineReply: boolean): string {
+  const match = matchWithModelHelp(question, report, DISEASES);
+  const notice = isFirstOnlineReply ? ONLINE_PROCESSING_NOTICE : "";
+  const reservedChars = COMPLIANCE_OVERHEAD_CHARS + (notice ? notice.length + 1 : 0);
+  const policyReply = buildRuleBasedReply(match, languageForReport(report), reservedChars);
+  return notice ? `${notice} ${policyReply}` : policyReply;
+}
+
+function offlineAnswer(question: string, isFirstOnlineReply: boolean): string {
+  return replyFromReport(question, unsure("no online report"), isFirstOnlineReply);
 }
 
 export function replyText(response: Anthropic.Beta.Messages.BetaMessage): string | null {
@@ -60,25 +94,29 @@ export function createClaudeAdvisor(createClient: () => Anthropic, store: Conver
     async advise(phone, question) {
       const seedCheckReply = seedCheckReplyFor(question);
       if (seedCheckReply) return seedCheckReply;
+      let turns: Turn[] = [];
       try {
+        turns = await store.history(phone);
         const response = await createClient().beta.messages.create({
           model: MODEL,
           max_tokens: 4000,
           betas: ["server-side-fallback-2026-07-01"],
           fallbacks: "default",
-          output_config: { effort: "low" },
+          output_config: {
+            effort: "low",
+            format: { type: "json_schema", schema: FARMER_REPORT_SCHEMA },
+          },
           cache_control: { type: "ephemeral" },
           system: SYSTEM_PROMPT,
-          messages: [...(await store.history(phone)), { role: "user", content: question }],
+          messages: [...turns, { role: "user", content: question }],
         });
-        const answer = replyText(response);
-        if (!answer) return offlineAnswer(question);
-        const smsAnswer = fitToSms(answer);
+        const report = parseAdvisorReport(replyText(response));
+        const smsAnswer = replyFromReport(question, report, turns.length === 0);
         await store.append(phone, question, smsAnswer);
         return smsAnswer;
       } catch (error) {
         console.error("Claude request failed, using offline matcher:", error);
-        return offlineAnswer(question);
+        return offlineAnswer(question, turns.length === 0);
       }
     },
   };

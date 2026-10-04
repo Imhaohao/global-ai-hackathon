@@ -12,8 +12,30 @@ const CARRIER_KEYWORDS = new Set([
   "start", "unstop", "help", "info",
 ]);
 
+export type CarrierCommand = "stop" | "start" | "help";
+
+export const CARRIER_REPLIES: Record<CarrierCommand, string> = {
+  stop: "You have been unsubscribed. You will not receive any more messages from this number. Reply START to resubscribe.",
+  start: "You have been resubscribed and will receive messages again. Reply HELP for help.",
+  help: "Leaf Doctor answers coffee leaf questions by SMS. Reply STOP to opt out. Message and data rates may apply.",
+};
+
+function normalizedCarrierKeyword(text: string): string {
+  return text.trim().toLowerCase().replace(/[^a-z]/g, "");
+}
+
+export function carrierCommandFor(text: string): CarrierCommand | null {
+  const keyword = normalizedCarrierKeyword(text);
+  if (["stop", "stopall", "unsubscribe", "cancel", "end", "quit", "revoke", "optout"].includes(keyword)) {
+    return "stop";
+  }
+  if (["start", "unstop"].includes(keyword)) return "start";
+  if (["help", "info"].includes(keyword)) return "help";
+  return null;
+}
+
 export function isCarrierKeyword(text: string): boolean {
-  return CARRIER_KEYWORDS.has(text.trim().toLowerCase().replace(/[^a-z]/g, ""));
+  return CARRIER_KEYWORDS.has(normalizedCarrierKeyword(text));
 }
 
 export function formatOutgoingSms(reply: string, isFirstReply: boolean): string {

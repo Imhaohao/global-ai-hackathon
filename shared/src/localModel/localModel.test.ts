@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { DISEASES } from "../diseases.ts";
+import { buildRuleBasedReply } from "../advicePolicy.ts";
 import { UNSUPPORTED_LANGUAGE_REPLY } from "../languageGuard.ts";
 import { matchSymptoms } from "../matchSymptoms.ts";
 import { formatOutgoingSms } from "../smsCompliance.ts";
-import { buildOfflineReply } from "../smsReply.ts";
 import { answerWithLocalModel } from "./answerWithLocalModel.ts";
 import { matchWithModelHelp } from "./assistedMatch.ts";
 import { checkProductLabel } from "./checkProductLabel.ts";
@@ -179,8 +179,9 @@ test("a Swahili message the model translated gets a Swahili confirm-first questi
 test("without a model the hub answers as before, plus one decision line from the action card", async () => {
   const answer = await answerWithLocalModel(null, "orange powder under my leaves");
   assert.equal(answer.report.status, "unsure");
-  const diagnosis = buildOfflineReply(matchSymptoms("orange powder under my leaves", DISEASES), DISEASES);
-  assert.equal(answer.reply, `${diagnosis} Decision: prune and clean up. Check again in 7 days.`);
+  const diagnosis = buildRuleBasedReply(matchSymptoms("orange powder under my leaves", DISEASES), "en", 0);
+  assert.equal(answer.reply.includes(diagnosis), true);
+  assert.match(answer.reply, /Decision: prune and clean up\. Check again in 7 days\.$/);
 });
 
 test("the decision line survives the brand prefix and opt-out footer for every confident match", async () => {

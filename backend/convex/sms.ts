@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { v } from "convex/values";
-import { createClaudeAdvisor, type Advisor } from "../src/advisor.ts";
+import { createClaudeAdvisor, ONLINE_PROCESSING_NOTICE, type Advisor } from "../src/advisor.ts";
 import { isSupportedImageType, maskPhone } from "../src/app.ts";
 import { bytesToBase64 } from "../src/base64.ts";
 import { createPhotoAdvisor, MAX_IMAGE_BASE64_CHARS, type PhotoAdvisor } from "../src/photoAdvisor.ts";
@@ -43,9 +43,22 @@ async function downloadTwilioMedia(credentials: TwilioCredentials, url: string):
   return { base64: bytesToBase64(new Uint8Array(await response.arrayBuffer())), mediaType };
 }
 
-async function photoReply(ctx: ActionCtx, credentials: TwilioCredentials, from: string, question: string, mediaUrl: string) {
+function disclosureForFallback(reply: string, isFirstReply: boolean): string {
+  return isFirstReply ? `${ONLINE_PROCESSING_NOTICE} ${reply}` : reply;
+}
+
+async function photoReply(
+  ctx: ActionCtx,
+  credentials: TwilioCredentials,
+  from: string,
+  question: string,
+  mediaUrl: string,
+  isFirstReply: boolean,
+) {
   const { base64, mediaType } = await downloadTwilioMedia(credentials, mediaUrl);
-  if (!isSupportedImageType(mediaType) || base64.length > MAX_IMAGE_BASE64_CHARS) return UNSUPPORTED_PHOTO_REPLY;
+  if (!isSupportedImageType(mediaType) || base64.length > MAX_IMAGE_BASE64_CHARS) {
+    return disclosureForFallback(UNSUPPORTED_PHOTO_REPLY, isFirstReply);
+  }
   return photoAdvisorFor(ctx).advisePhoto(from, { base64, mediaType, caption: question });
 }
 
@@ -75,7 +88,8 @@ export const replyBySms = internalAction({
     };
     const isFirstReply = (await ctx.runQuery(internal.phoneSessions.history, { phone: from })).length === 0;
     const answer = mediaUrl
-      ? await photoReply(ctx, credentials, from, question, mediaUrl).catch(() => UNSUPPORTED_PHOTO_REPLY)
+      ? await photoReply(ctx, credentials, from, question, mediaUrl, isFirstReply)
+        .catch(() => disclosureForFallback(UNSUPPORTED_PHOTO_REPLY, isFirstReply))
       : await advisorFor(ctx).advise(from, question);
     const reply = formatOutgoingSms(answer, isFirstReply);
     try {

@@ -32,8 +32,9 @@ export const privacyPolicyPage = page(
 <p>When you text ${BRAND_NAME}, we receive your phone number, the text of your messages, the time they were sent, and any photo of a leaf you send.</p>
 <p>When you sign in to the mobile app, Twilio Verify receives your phone number and verification code. After a successful verification, we save your number with an account ID, a hash of your session token, and its expiry time. We also record sign-in attempt times to limit repeated requests.</p>
 <h2>How we use it</h2>
-<p>We use your messages only to answer your coffee plant questions. We keep up to the last eight messages of a conversation for 24 hours so that follow-up answers make sense, and we record when we last replied to your number so we can limit replies to 5 every 10 minutes.</p>
+<p>We use your messages only to answer your coffee plant questions. We keep up to the last eight messages so that follow-up answers make sense. An hourly cleanup removes conversations after 24 hours without activity, once the updated backend is deployed. We also record reply times to limit replies to 5 every 10 minutes.</p>
 <p>To write answers, the text of your messages and any leaf photos are processed by our AI provider (Anthropic), and messages are delivered through our SMS provider (Twilio). They process this data only to provide the service to us. We do not keep your photos after answering; we only note that a photo was sent.</p>
+<p>Convex hosts the backend and conversation store. The providers' processing locations and account retention settings have not been verified. A notice in the first answer does not obtain consent before processing. The online SMS, photo, sign-in and voice paths need an appropriate notice and consent process before use with real farmers.</p>
 <p>Mobile sessions expire after 30 days. Signing out clears the saved session from your phone and revokes it on the server when connected. Checks and photos saved in the mobile app stay on your phone and are kept separately for each account.</p>
 <h2>Sharing</h2>
 <p>We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes.</p>

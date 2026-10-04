@@ -7,6 +7,7 @@ import type { HubProblem } from "../useSmsHub";
 const PROBLEM_MESSAGES: Record<Exclude<HubProblem, null>, string> = {
   "permission-denied": "Allow SMS access for this app in Android Settings, then tap Start listening again.",
   "send-failed": "A reply did not send. Check that this phone has a SIM card and airtime.",
+  "storage-failed": "SMS preferences could not be loaded or saved. Replies are paused. Check storage and restart the app. A STOP without confirmation must be retried.",
 };
 
 export function ProblemBanner({ problem }: { problem: HubProblem }) {
