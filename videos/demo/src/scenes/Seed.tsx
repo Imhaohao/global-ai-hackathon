@@ -6,7 +6,7 @@ import { Recording, cutStart, type RecordingCut } from "../components/Recording"
 import { Facts, Place, Stage } from "../components/Stage";
 import { Stat } from "../components/Stat";
 import { Tag } from "../components/Tag";
-import { PHONE_SCREEN_HEIGHT, rest, zoomAt } from "../lib/focus";
+import { PHONE_SCREEN_HEIGHT, crop } from "../lib/focus";
 import { leave, progress } from "../lib/ease";
 import { SCENES, cue } from "../timeline";
 
@@ -24,7 +24,9 @@ const cutAt = (index: number) => cutStart(SEED_CUTS, index);
 export const SEED_SCAN_AT = 18;
 
 const SO = local(cue("seed", "So"));
-const CAMERA = [rest(cutAt(0) + 70), zoomAt(cutAt(0) + 88, { x: 201, y: 250 }, 1.3, PHONE_AT), zoomAt(cutAt(2) - 4, { x: 201, y: 250 }, 1.3, PHONE_AT), zoomAt(cutAt(2) + 14, { x: 201, y: 494 }, 1.5, PHONE_AT)];
+const VERDICT = { x: 201, y: 330 };
+const KEPHIS_STEP = { x: 201, y: 520 };
+const CAMERA = [crop(0, VERDICT, 1.7), crop(20, VERDICT, 2.05), crop(cutAt(2) - 4, VERDICT, 2.05), crop(cutAt(2) + 14, KEPHIS_STEP, 2.4)];
 
 /** One study's fake-seed figure, then the seed check: a demo barcode registry and the real KEPHIS 1393 text. */
 export function Seed() {

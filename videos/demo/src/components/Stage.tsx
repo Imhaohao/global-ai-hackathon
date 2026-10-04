@@ -22,7 +22,7 @@ export function Place({ x, y = 0, children }: { x: number; y?: number; children:
 }
 
 /** The column of facts to the right of a phone shot. */
-export function Facts({ children, left = 1040, width = 780 }: { children: ReactNode; left?: number; width?: number }) {
+export function Facts({ children, left = 1170, width = 690 }: { children: ReactNode; left?: number; width?: number }) {
   return (
     <div className="absolute flex flex-col gap-6" style={{ left, top: 0, bottom: 0, justifyContent: "center", width }}>
       {children}

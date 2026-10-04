@@ -5,7 +5,7 @@ import { Phone } from "../components/Phone";
 import { Facts, Place, Stage } from "../components/Stage";
 import { Tag } from "../components/Tag";
 import { Thread, type Bubble } from "../components/Thread";
-import { PHONE_SCREEN_HEIGHT, zoomAt } from "../lib/focus";
+import { PHONE_SCREEN_HEIGHT, crop } from "../lib/focus";
 import { SCENES, cue } from "../timeline";
 import { FERTILIZER_EXCHANGE, REPLY_PREFIX, SHOP_REPLIES } from "./shopReplies";
 
@@ -26,7 +26,7 @@ export const SHOP_BUBBLES: Bubble[] = [
 ];
 
 const BUBBLE_AREA = { x: 201, y: 330 };
-const CAMERA = [zoomAt(0, BUBBLE_AREA, 1.45, PHONE_AT)];
+const CAMERA = [crop(0, BUBBLE_AREA, 1.85), crop(24, BUBBLE_AREA, 2.05)];
 
 /** SHOP: the bot asks for a town and lists agrovets with what to ask for, continuing the real thread. */
 export function Shop() {

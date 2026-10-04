@@ -28,3 +28,12 @@ export function zoomAt(at: number, point: Offset, zoom: number, phoneAt: Offset 
   const restY = phoneAt.y + (point.y - SCREEN.height / 2) * PIXELS_PER_POINT;
   return focus(at, point, zoom, phoneAt, { x: restX, y: restY });
 }
+
+/** Where a cropped-in phone's subject sits: left of centre, clear of the facts column on the right. */
+const CROP_TARGET: Offset = { x: -330, y: 0 };
+const PHONE_LEFT: Offset = { x: -380, y: 0 };
+
+/** A tight crop on a point of the phone screen, so the real UI fills most of the frame height. */
+export function crop(at: number, point: Offset, zoom: number, targetX = CROP_TARGET.x): CameraKey {
+  return focus(at, point, zoom, PHONE_LEFT, { x: targetX, y: CROP_TARGET.y });
+}

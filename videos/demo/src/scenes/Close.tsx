@@ -4,7 +4,7 @@ import { Footage } from "../components/Footage";
 import { Phone } from "../components/Phone";
 import { Facts, Place, Stage } from "../components/Stage";
 import { Words } from "../components/Words";
-import { PHONE_SCREEN_HEIGHT, rest, zoomAt } from "../lib/focus";
+import { PHONE_SCREEN_HEIGHT, crop } from "../lib/focus";
 import { progress } from "../lib/ease";
 import { SCENES, cue } from "../timeline";
 
@@ -12,6 +12,10 @@ const start = SCENES.close.from;
 const local = (abs: number) => abs - start;
 const PHONE_AT = { x: -380, y: 0 };
 const PHONE_SHOT = local(cue("close", "And")) - 4;
+/** The guardrail lines are long, so this phone sits further left than the others. */
+const LEFT = -400;
+const NOT_SURE = { x: 201, y: 205 };
+const GET_HELP = { x: 201, y: 640 };
 const SURE = local(cue("close", "sure"));
 const PERSON = local(cue("close", "person"));
 
@@ -30,16 +34,16 @@ export function Close() {
         <Sequence from={-PHONE_SHOT} layout="none">
           <AbsoluteFill style={{ opacity: progress(frame, PHONE_SHOT, 8) }}>
             <Stage backdrop="images/backdrop-farm.jpg">
-              <Camera keys={[rest(PHONE_SHOT), zoomAt(SURE + 6, { x: 201, y: 190 }, 1.3, PHONE_AT), zoomAt(PERSON - 2, { x: 201, y: 190 }, 1.3, PHONE_AT), zoomAt(PERSON + 14, { x: 201, y: 715 }, 1.35, PHONE_AT)]}>
+              <Camera keys={[crop(PHONE_SHOT, NOT_SURE, 1.7, LEFT), crop(PHONE_SHOT + 18, NOT_SURE, 2.45, LEFT), crop(PERSON - 4, NOT_SURE, 2.45, LEFT), crop(PERSON + 14, GET_HELP, 2.35, LEFT)]}>
                 <Place x={PHONE_AT.x}>
                   <Phone screenHeight={PHONE_SCREEN_HEIGHT}>
                     <Img src={staticFile("images/app-not-sure.png")} className="absolute inset-0 size-full" />
                   </Phone>
                 </Place>
               </Camera>
-              <Facts>
-                <Words text="Not sure?" at={SURE - 4} className="display-poster text-headline text-on-night" />
-                <Words text="Ask a person." at={PERSON - 4} className="display-poster text-headline text-on-night rust-glow" />
+              <Facts left={1170} width={740}>
+                <Words text="Not sure?" at={SURE - 4} className="display-poster text-headline whitespace-nowrap text-on-night" />
+                <Words text="Ask a person." at={PERSON - 4} className="display-poster text-headline whitespace-nowrap text-on-night rust-glow" />
               </Facts>
             </Stage>
           </AbsoluteFill>

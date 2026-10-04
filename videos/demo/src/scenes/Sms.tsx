@@ -7,7 +7,7 @@ import { Recording, cutStart, type RecordingCut } from "../components/Recording"
 import { Facts, Place, Stage } from "../components/Stage";
 import { Tag } from "../components/Tag";
 import { Words } from "../components/Words";
-import { PHONE_SCREEN_HEIGHT, rest, zoomAt } from "../lib/focus";
+import { PHONE_SCREEN_HEIGHT, crop } from "../lib/focus";
 import { leave, progress } from "../lib/ease";
 import { SCENES, cue } from "../timeline";
 
@@ -32,7 +32,17 @@ export const SMS_TYPING = [
   [cutAt(2), cutAt(3)],
 ] as const;
 
-const CAMERA = [rest(cutAt(1)), zoomAt(cutAt(1) + 16, { x: 160, y: 410 }, 1.4, PHONE_AT), zoomAt(cutAt(2) - 2, { x: 160, y: 410 }, 1.4, PHONE_AT), rest(cutAt(2) + 8), rest(cutAt(3) + 6), zoomAt(cutAt(3) + 22, { x: 150, y: 400 }, 1.4, PHONE_AT)];
+const COMPOSER = { x: 201, y: 520 };
+const REPLY = { x: 190, y: 400 };
+const CAMERA = [
+  crop(cutAt(0), COMPOSER, 1.45),
+  crop(cutAt(1) - 4, COMPOSER, 1.65),
+  crop(cutAt(1) + 12, REPLY, 2.15),
+  crop(cutAt(2) - 2, REPLY, 2.15),
+  crop(cutAt(2) + 10, COMPOSER, 1.65),
+  crop(cutAt(3) - 2, COMPOSER, 1.65),
+  crop(cutAt(3) + 12, REPLY, 2.15),
+];
 
 /** No smartphone? A real basic phone, then the real text conversation with the Leaf Doctor bot. */
 export function Sms() {
@@ -61,7 +71,7 @@ export function Sms() {
                 </Place>
               </Camera>
               <Facts>
-                <Words text="Text it." at={Math.max(local(cue("sms", "Text")), SMS_PHONE_AT_LOCAL + 4)} className="display-poster text-poster text-on-night" />
+                <Words text="Text it." at={Math.max(local(cue("sms", "Text")), SMS_PHONE_AT_LOCAL + 4)} className="display-poster text-headline whitespace-nowrap text-on-night" />
                 <Tag icon={<ChatText size={44} weight="bold" />} from={local(cue("sms", "advice"))} to={local(SCENES.sms.to) + 4}>
                   A real conversation with the bot
                 </Tag>

@@ -8,7 +8,7 @@ import { Ripple } from "../components/Ripple";
 import { Facts, Place, Stage } from "../components/Stage";
 import { Tag } from "../components/Tag";
 import { Wordmark } from "../components/Wordmark";
-import { PHONE_SCREEN_HEIGHT, focus, rest, zoomAt } from "../lib/focus";
+import { PHONE_SCREEN_HEIGHT, crop, focus } from "../lib/focus";
 import { leave, progress } from "../lib/ease";
 import { SCENES, cue } from "../timeline";
 
@@ -32,11 +32,13 @@ const NEXT_AT = cutAt(3) + 20;
 
 const CAMERA = [
   focus(PHONE_SHOT, { x: 201, y: 400 }, 2.35, PHONE_AT),
-  rest(PHONE_SHOT + 26),
-  rest(cutAt(2) + 4),
-  zoomAt(cutAt(2) + 22, { x: 201, y: 150 }, 1.3, PHONE_AT),
-  zoomAt(cutAt(3) + 6, { x: 201, y: 300 }, 1.25, PHONE_AT),
-  zoomAt(local(cue("scan", "steps")) + 4, { x: 190, y: 585 }, 1.45, PHONE_AT),
+  crop(PHONE_SHOT + 26, { x: 201, y: 560 }, 1.6),
+  crop(cutAt(1) - 2, { x: 201, y: 560 }, 1.6),
+  crop(cutAt(1) + 12, { x: 201, y: 320 }, 2.05),
+  crop(cutAt(2) + 2, { x: 201, y: 320 }, 2.05),
+  crop(cutAt(2) + 20, { x: 201, y: 330 }, 2.2),
+  crop(local(cue("scan", "steps")) - 2, { x: 201, y: 330 }, 2.2),
+  crop(local(cue("scan", "steps")) + 16, { x: 201, y: 470 }, 2.5),
 ];
 
 function Meet() {
