@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@expo/metro-runtime": "~57.0.16",
     "@kayahr/text-encoding": "^2.2.0",
+    "@litertjs/core": "^2.5.3",
     "@rapideditor/country-coder": "^5.6.1",
     "babel-preset-expo": "~57.0.0",
     "eslint-config-expo": "~57.0.2",
     "expo": "~57.0.26",
+    "expo-asset": "~57.0.18",
     "expo-build-properties": "~57.0.22",
     "expo-camera": "~57.0.6",
     "expo-dev-client": "~57.0.19",
@@ -26,12 +29,14 @@
     "nativewind": "^4.2.7",
     "phosphor-react-native": "^3.0.6",
     "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-native": "0.86.3",
     "react-native-fast-tflite": "^3.0.1",
     "react-native-nitro-modules": "^0.37.1",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-svg": "15.15.4",
+    "react-native-web": "^0.21.2",
     "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
@@ -46,7 +51,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "lint": "expo lint",
-    "typecheck": "tsc --noEmit && tsc -p tsconfig.tests.json"
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.tests.json",
+    "export:web": "EXPO_UNSTABLE_METRO_OPTIMIZE_GRAPH=1 EXPO_UNSTABLE_TREE_SHAKING=1 expo export -p web"
   },
   "private": true
 }

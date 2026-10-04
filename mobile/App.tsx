@@ -1,4 +1,5 @@
 import './global.css';
+import './src/nativewindInterop';
 
 import { ActivityIndicator, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';

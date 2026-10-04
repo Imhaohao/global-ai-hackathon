@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./App.tsx', './src/**/*.{ts,tsx}'],
+  content: ['./App.tsx', './src/**/*.{ts,tsx}', './web/**/*.{ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
@@ -8,6 +8,8 @@ module.exports = {
       borderRadius: {
         control: '20px',
         card: '28px',
+        screen: '44px',
+        device: '56px',
       },
     },
   },

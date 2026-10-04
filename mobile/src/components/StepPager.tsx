@@ -1,11 +1,12 @@
 import { ArrowLeft, ArrowRight, Check } from 'phosphor-react-native';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { AccessibilityInfo, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
 import { Button } from './Button';
 import { IconButton } from './IconButton';
+import { moveScreenReaderFocus } from './screenReaderFocus';
 import { Body } from './Typography';
 
 export function StepPager({ steps, strings, lastStepActions }: { steps: string[]; strings: Strings; lastStepActions?: ReactNode }) {
@@ -19,7 +20,7 @@ export function StepPager({ steps, strings, lastStepActions }: { steps: string[]
     previousIndex.current = currentIndex;
     const instruction = instructionRef.current;
     if (!indexChanged || instruction === null) return;
-    AccessibilityInfo.sendAccessibilityEvent(instruction, 'focus');
+    moveScreenReaderFocus(instruction);
   }, [currentIndex]);
 
   if (steps.length === 0) return null;

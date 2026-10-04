@@ -1,5 +1,7 @@
 import { useRef, type ReactNode } from 'react';
-import { AccessibilityInfo, Text } from 'react-native';
+import { Text } from 'react-native';
+
+import { moveScreenReaderFocus } from './screenReaderFocus';
 
 type TextProps = { children: ReactNode; className?: string };
 
@@ -11,7 +13,7 @@ export function Title({ children, className = '' }: TextProps) {
     const title = titleRef.current;
     if (hasFocusedTitle.current || title === null) return;
     hasFocusedTitle.current = true;
-    AccessibilityInfo.sendAccessibilityEvent(title, 'focus');
+    moveScreenReaderFocus(title);
   }
 
   return (
