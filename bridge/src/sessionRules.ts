@@ -10,6 +10,7 @@ export type BridgeDecision =
   | { kind: "ignore" };
 
 const KEYWORD_PREFIX = new RegExp(`^${KEYWORD}\\b[\\s:,.!-]*`, "i");
+const ALERTS_COMMAND = /^alerts\b/i;
 const END_WORDS = /^(stop|end|quit|cancel|unsubscribe)[.!]*$/i;
 
 export function isInSession(lastActiveAt: number | undefined, now: number): boolean {
@@ -22,6 +23,7 @@ export function decideIncoming(text: string, lastActiveAt: number | undefined, n
   const inSession = isInSession(lastActiveAt, now);
   if (inSession && END_WORDS.test(trimmed)) return { kind: "end" };
 
+  if (ALERTS_COMMAND.test(trimmed)) return { kind: "answer", question: trimmed };
   if (KEYWORD_PREFIX.test(trimmed)) {
     const question = trimmed.replace(KEYWORD_PREFIX, "").trim();
     return question ? { kind: "answer", question } : { kind: "welcome" };

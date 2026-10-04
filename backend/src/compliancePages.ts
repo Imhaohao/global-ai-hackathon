@@ -36,6 +36,7 @@ export const privacyPolicyPage = page(
 <p>To write answers, the text of your messages and any leaf photos are processed by our AI provider (Anthropic), and messages are delivered through our SMS provider (Twilio). They process this data only to provide the service to us. We do not keep your photos after answering; we only note that a photo was sent.</p>
 <p>Convex hosts the backend and conversation store. The providers' processing locations and account retention settings have not been verified. A notice in the first answer does not obtain consent before processing. The online SMS, photo, sign-in and voice paths need an appropriate notice and consent process before use with real farmers.</p>
 <p>Mobile sessions expire after 30 days. Signing out clears the saved session from your phone and revokes it on the server when connected. Checks and photos saved in the mobile app stay on your phone and are kept separately for each account.</p>
+<p>If you text ALERTS and your area, we save your number and area. When you then describe or photograph a leaf disease, we also save which disease it was and when, but not your message. We use this only to count how many farms in your area report the same disease, so a cooperative officer can decide whether to warn the area. The officer sees counts, never your number. We delete these reports after 14 days, and we delete your number, area and reports when you text ALERTS OFF or STOP.</p>
 <h2>Sharing</h2>
 <p>We do not sell or share your SMS opt-in data or personal information with third parties for marketing purposes.</p>
 <h2>Your choices</h2>
@@ -48,8 +49,8 @@ export const termsPage = page(
 <p class="updated">${BRAND_NAME} by ${REGISTERED_BRAND}, last updated ${LAST_UPDATED}</p>
 <p>${OPERATED_BY} These terms cover the ${BRAND_NAME} coffee plant advice line provided by ${REGISTERED_BRAND}.</p>
 <h2>SMS Terms</h2>
-<p><strong>Program:</strong> ${SENDER_NAME} answers questions about coffee leaf diseases. You start every conversation by texting ${SMS_NUMBER_DISPLAY}. We only reply to messages you send and never send marketing messages.</p>
-<p><strong>Message frequency:</strong> one reply per message you send, at most 5 replies every 10 minutes.</p>
+<p><strong>Program:</strong> ${SENDER_NAME} answers questions about coffee leaf diseases. You start every conversation by texting ${SMS_NUMBER_DISPLAY}. We reply to messages you send and never send marketing messages. If you text ALERTS and your area, we also send area disease alerts after a cooperative officer approves them.</p>
+<p><strong>Message frequency:</strong> one reply per message you send, at most 5 replies every 10 minutes. Area alerts: at most one per disease per area each week. Text ALERTS OFF to stop alerts only.</p>
 <p><strong>Cost:</strong> ${BRAND_NAME} is free. Message and data rates may apply from your mobile carrier.</p>
 <p><strong>Opt out:</strong> reply STOP to stop all messages. Reply START to resume.</p>
 <p><strong>Help:</strong> reply HELP, or email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>.</p>

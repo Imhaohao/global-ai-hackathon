@@ -25,6 +25,7 @@ function inMemoryRateLimit(): ReplyRateLimit {
 }
 
 function buildApp(overrides: Partial<AppDependencies> = {}) {
+  const alertsLeft: string[] = [];
   const queued: { from: string; question: string; media?: { url: string; contentType: string } }[] = [];
   const photos: { phone: string; caption: string; mediaType: string }[] = [];
   const advisor: Advisor = { advise: async () => "Rust. Spray copper." };
@@ -43,9 +44,17 @@ function buildApp(overrides: Partial<AppDependencies> = {}) {
     twilioAuthToken: AUTH_TOKEN,
     publicBaseUrl: BASE_URL,
     hubToken: HUB_TOKEN,
+    alerts: {
+      officerView: async () => ({}),
+      approve: async () => null,
+      dismiss: async () => false,
+      claimHubDeliveries: async () => [],
+      finishHubDelivery: async () => false,
+      leave: async (phone, channel) => void alertsLeft.push(`${phone} ${channel}`),
+    },
     ...overrides,
   });
-  return { app, queued, photos };
+  return { app, queued, photos, alertsLeft };
 }
 
 function twilioRequest(params: Record<string, string>, signature?: string): Request {
@@ -349,4 +358,11 @@ test("advisor answers the SEED command with the KEPHIS steps without calling Cla
   const reply = await advisor.advise("+1", "SEED");
   assert.match(reply, /Text the code to 1393/);
   assert.equal(clientBuilt, 0);
+});
+
+test("STOP to the Twilio number also takes the farmer off area alerts", async () => {
+  const { app, queued, alertsLeft } = buildApp();
+  await app.fetch(twilioRequest({ From: "+15550004444", Body: "Stop" }));
+  assert.deepEqual(alertsLeft, ["+15550004444 twilio"]);
+  assert.equal(queued.length, 0);
 });

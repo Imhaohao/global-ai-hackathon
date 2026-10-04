@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { test } from "node:test";
+import { claimQueuedAlerts } from "./alertOutbox.ts";
 import { askLeafDoctor } from "./askLeafDoctor.ts";
 import { textFromAttributedBody } from "./attributedBody.ts";
 import { MessagesDb } from "./messagesDb.ts";
@@ -82,7 +83,10 @@ test("reads only new incoming one-to-one messages from a Messages-shaped databas
   const messages = new MessagesDb(path);
   assert.equal(messages.latestRowId(), 6);
   const fresh = messages.messagesAfter(1);
+  const services = [messages.latestServiceFor("+15550001111"), messages.latestServiceFor("+19999999999")];
   messages.close();
+
+  assert.deepEqual(services, ["SMS", null]);
 
   assert.deepEqual(fresh.map((m) => [m.rowId, m.text, m.isGroupChat, m.service, m.attachments.length]), [
     [2, "LEAF orange powder", false, "SMS", 0],
@@ -175,4 +179,16 @@ test("the bridge answers SEED offline with the KEPHIS steps", async () => {
   const answer = await askLeafDoctor("+1", "seed", undefined);
   assert.equal(answer.source, "offline");
   assert.match(answer.reply, /Text the code to 1393/);
+});
+
+test("ALERTS texts reach the server without the LEAF keyword, even outside a conversation", () => {
+  assert.deepEqual(decideIncoming("ALERTS Karima", undefined, 1_000), { kind: "answer", question: "ALERTS Karima" });
+  assert.deepEqual(decideIncoming("alerts off", undefined, 1_000), { kind: "answer", question: "alerts off" });
+  assert.deepEqual(decideIncoming("LEAF alerts Mahiga", undefined, 1_000), { kind: "answer", question: "alerts Mahiga" });
+});
+
+test("claimed area alerts with missing fields are dropped before anything is sent", async (context) => {
+  const deliveries = [{ id: "d1", phone: "+1", body: "Rust near you" }, { id: "d2", phone: "+2" }, { id: 3, phone: "+3", body: "x" }];
+  context.mock.method(globalThis, "fetch", async () => Response.json({ deliveries }));
+  assert.deepEqual(await claimQueuedAlerts("token", "https://leaf.example.test"), [deliveries[0]]);
 });

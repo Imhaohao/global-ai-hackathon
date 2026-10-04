@@ -47,6 +47,16 @@ const ATTACHMENTS_SQL = `
   JOIN message_attachment_join maj ON maj.attachment_id = a.ROWID
   WHERE maj.message_id = ? AND a.filename IS NOT NULL`;
 
+const LATEST_SERVICE_SQL = `
+  SELECT COALESCE(c.service_name, m.service) AS service
+  FROM message m
+  JOIN handle h ON h.ROWID = m.handle_id
+  LEFT JOIN chat_message_join cmj ON cmj.message_id = m.ROWID
+  LEFT JOIN chat c ON c.ROWID = cmj.chat_id
+  WHERE h.id = ? AND m.is_from_me = 0
+  ORDER BY m.ROWID DESC
+  LIMIT 1`;
+
 const OBJECT_REPLACEMENT = /\uFFFC/g;
 
 function cleanText(text: string | null): string | null {
@@ -76,6 +86,11 @@ export class MessagesDb {
       isGroupChat: row.style === GROUP_CHAT_STYLE,
       attachments: this.imageAttachments(row.rowId),
     }));
+  }
+
+  latestServiceFor(handle: string): string | null {
+    const row = this.db.prepare(LATEST_SERVICE_SQL).get(handle) as { service: string | null } | undefined;
+    return row?.service ?? null;
   }
 
   private imageAttachments(messageRowId: number): MessageAttachment[] {

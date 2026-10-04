@@ -9,7 +9,9 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
+import type * as neighbourAlerts from "../neighbourAlerts.js";
 import type * as phoneSessions from "../phoneSessions.js";
 import type * as sms from "../sms.js";
 
@@ -21,7 +23,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  crons: typeof crons;
   http: typeof http;
+  neighbourAlerts: typeof neighbourAlerts;
   phoneSessions: typeof phoneSessions;
   sms: typeof sms;
 }>;
