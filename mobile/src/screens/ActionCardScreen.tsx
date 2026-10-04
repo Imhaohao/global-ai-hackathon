@@ -38,7 +38,9 @@ type ActionCardScreenProps = {
 function RecheckRow({ text }: { text: string }) {
   return (
     <View className="flex-row items-center gap-3">
-      <CalendarCheck size={28} weight="duotone" color={colors.accent} />
+      <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <CalendarCheck size={28} weight="duotone" color={colors.accent} />
+      </View>
       <Text className="flex-1 text-lg font-semibold text-ink">{text}</Text>
     </View>
   );
@@ -120,7 +122,7 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
   const scrollRef = useRef<ScrollView>(null);
   const keyboardHeight = useKeyboardHeight();
   useEffect(() => {
-    if (keyboardHeight > 0) scrollRef.current?.scrollToEnd({ animated: true });
+    if (keyboardHeight > 0) scrollRef.current?.scrollToEnd({ animated: false });
   }, [keyboardHeight]);
   return (
     <ScrollView

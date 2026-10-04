@@ -1,11 +1,27 @@
-import type { ReactNode } from 'react';
-import { Text } from 'react-native';
+import { useRef, type ReactNode } from 'react';
+import { AccessibilityInfo, Text } from 'react-native';
 
 type TextProps = { children: ReactNode; className?: string };
 
 export function Title({ children, className = '' }: TextProps) {
+  const titleRef = useRef<Text | null>(null);
+  const hasFocusedTitle = useRef(false);
+
+  function focusTitleOnInitialLayout() {
+    const title = titleRef.current;
+    if (hasFocusedTitle.current || title === null) return;
+    hasFocusedTitle.current = true;
+    AccessibilityInfo.sendAccessibilityEvent(title, 'focus');
+  }
+
   return (
-    <Text accessibilityRole="header" className={`text-4xl font-bold leading-tight text-ink ${className}`}>
+    <Text
+      ref={titleRef}
+      accessible
+      accessibilityRole="header"
+      onLayout={focusTitleOnInitialLayout}
+      className={`text-4xl font-bold leading-tight text-ink ${className}`}
+    >
       {children}
     </Text>
   );

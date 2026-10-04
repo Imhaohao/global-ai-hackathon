@@ -134,6 +134,8 @@ const NEW_LINES = {
   leavesReady: draftLine('Ready for advice', 'Tayari kwa ushauri'),
   nextStep: draftLine('Next', 'Endelea'),
   previousStep: draftLine('Previous', 'Rudi'),
+  stepCount: draftLine('Step {number} of {count}', 'Hatua {number} kati ya {count}'),
+  officerInvalidPhone: draftLine('Enter a phone number with 7 to 15 digits.', 'Weka namba ya simu yenye tarakimu 7 hadi 15.'),
   caseDetails: draftLine('Check details', 'Maelezo ya ukaguzi'),
   accountSettings: draftLine('Account', 'Akaunti'),
   farmSettings: draftLine('Farm', 'Shamba'),

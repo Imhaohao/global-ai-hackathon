@@ -1,12 +1,14 @@
-import { Image, View } from 'react-native';
+import { Image, useWindowDimensions, View } from 'react-native';
 
 const COFFEE_BRANCH = require('../../assets/coffee-branch.jpg');
 
 export function BotanicalImage({ compact = false }: { compact?: boolean }) {
+  const { width } = useWindowDimensions();
+  const imageWidth = Math.min(width - 40, compact ? 208 : 384);
   return (
     <View
-      className={`w-full self-center overflow-hidden rounded-card bg-botanical ${compact ? 'max-w-52' : 'max-w-sm'}`}
-      style={{ aspectRatio: 1.2 }}
+      className="self-center overflow-hidden rounded-card bg-botanical"
+      style={{ width: imageWidth, height: imageWidth / 1.2 }}
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
     >

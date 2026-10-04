@@ -12,7 +12,7 @@ import {
   WifiSlash,
 } from 'phosphor-react-native';
 import { useState } from 'react';
-import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Linking, ScrollView, Text, View } from 'react-native';
 
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
 import { MAX_LEAVES_PER_PLANT } from '../../../shared/src/plantVote.ts';
@@ -57,9 +57,7 @@ function ProblemNotice({ strings, problem }: { strings: Strings; problem: Captur
     <View accessibilityLiveRegion="polite" className="gap-3 rounded-control bg-sick-soft p-4">
       <Body className="text-sick">{strings[problem]}</Body>
       {problem === 'cameraBlocked' && (
-        <Pressable accessibilityRole="link" onPress={() => Linking.openSettings()} className="min-h-11 justify-center">
-          <Text className="text-lg font-semibold text-sick underline">{strings.openSettings}</Text>
-        </Pressable>
+        <Button label={strings.openSettings} icon={Gear} variant="secondary" onPress={() => Linking.openSettings()} />
       )}
     </View>
   );
@@ -114,20 +112,16 @@ function ProblemLeafRow({ strings, number, photo, reading, onRetake }: ProblemLe
         source={{ uri: photo.uri }}
         className="h-16 w-16 rounded-control bg-hairline"
         accessibilityIgnoresInvertColors
+        accessible={false}
       />
       <View className="flex-1 gap-2">
         <Muted className="text-ink">{reason}</Muted>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={fillTemplate(strings.retakeLeafNumber, { number })}
+        <Button
+          label={fillTemplate(strings.retakeLeafNumber, { number })}
+          icon={ArrowCounterClockwise}
+          variant="quiet"
           onPress={onRetake}
-          className="min-h-11 flex-row items-center gap-2 self-start"
-        >
-          <ArrowCounterClockwise size={20} weight="bold" color={colors.accent} />
-          <Text className="text-base font-semibold text-accent">
-            {fillTemplate(strings.retakeLeafNumber, { number })}
-          </Text>
-        </Pressable>
+        />
       </View>
     </View>
   );
@@ -183,7 +177,7 @@ function CaptureActions({ strings, photos, check, isChecking, isFinishing = fals
   const canFinish = !isChecking && check !== null && check.verdict.kind !== 'retake';
   const cameraLabel = photos.length === 0 ? strings.takePhoto : strings.addAnotherLeaf;
   return (
-    <View className="gap-3 bg-paper px-5 pb-6 pt-3">
+    <View className="gap-3 bg-paper pb-6 pt-3">
       {canFinish && (
         <Button
           label={isFinishing ? strings.checking : strings.seeAdvice}
@@ -298,8 +292,8 @@ export function CaptureScreen(props: CaptureScreenProps) {
         {problem === 'modelFailed' && (
           <Button label={strings.retryModel} icon={ArrowCounterClockwise} variant="secondary" onPress={props.onRetryModel} />
         )}
+        <CaptureActions {...props} />
       </ScrollView>
-      <CaptureActions {...props} />
     </View>
   );
 }

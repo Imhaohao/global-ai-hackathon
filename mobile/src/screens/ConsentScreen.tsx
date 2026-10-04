@@ -21,7 +21,9 @@ export function ConsentScreen({ strings, onChoose, onSwitchLanguage }: ConsentSc
       <View className="items-end">
         <IconButton label={strings.switchLanguage} icon={Translate} onPress={onSwitchLanguage} />
       </View>
-      <ShieldCheck size={72} weight="duotone" color={colors.accent} />
+      <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <ShieldCheck size={72} weight="duotone" color={colors.accent} />
+      </View>
       <Title>{strings.consentTitle}</Title>
       <StepPager
         strings={strings}

@@ -1,7 +1,8 @@
 import type { Icon } from 'phosphor-react-native';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { colors } from '../theme';
+import { CONTROL_FOCUS_STYLE, useControlFocus } from './useControlFocus';
 
 type IconButtonProps = {
   label: string;
@@ -12,6 +13,7 @@ type IconButtonProps = {
 };
 
 export function IconButton({ label, icon: IconComponent, onPress, disabled = false, expanded }: IconButtonProps) {
+  const focus = useControlFocus();
   return (
     <Pressable
       accessibilityRole="button"
@@ -19,9 +21,14 @@ export function IconButton({ label, icon: IconComponent, onPress, disabled = fal
       accessibilityState={{ disabled, expanded }}
       disabled={disabled}
       onPress={onPress}
-      className={`h-14 w-14 items-center justify-center rounded-control bg-surface active:bg-hairline ${disabled ? 'opacity-40' : ''}`}
+      onFocus={focus.onFocus}
+      onBlur={focus.onBlur}
+      style={focus.isFocused ? CONTROL_FOCUS_STYLE : undefined}
+      className={`h-14 w-14 items-center justify-center rounded-control bg-surface active:bg-hairline ${focus.isFocused ? 'bg-healthy-soft' : ''} ${disabled ? 'opacity-50' : ''}`}
     >
-      <IconComponent size={28} weight="regular" color={colors.accent} />
+      <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <IconComponent size={28} weight="regular" color={colors.accent} />
+      </View>
     </Pressable>
   );
 }

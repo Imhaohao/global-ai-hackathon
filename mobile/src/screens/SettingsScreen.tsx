@@ -1,6 +1,6 @@
 import { ArrowLeft, Database, DownloadSimple, MapPin, Plant, SignOut, Trash, UserCircle, Wrench, X } from 'phosphor-react-native';
 import { useRef, useState } from 'react';
-import { Alert, Pressable, ScrollView, Switch, Text, View } from 'react-native';
+import { Alert, ScrollView, Switch, Text, View } from 'react-native';
 
 import { Button } from '../components/Button';
 import { Chip } from '../components/Chip';
@@ -42,9 +42,12 @@ function LocationSwitch({
 }) {
   return (
     <View className="min-h-14 flex-row items-center gap-3 rounded-control bg-surface px-4 py-2 shadow-sm">
-      <MapPin size={26} weight="duotone" color={colors.accent} />
+      <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <MapPin size={26} weight="duotone" color={colors.accent} />
+      </View>
       <Text className="flex-1 text-lg text-ink">{strings.saveLocation}</Text>
       <Switch
+        hitSlop={8}
         value={enabled}
         onValueChange={onToggle}
         trackColor={{ true: colors.accent, false: colors.hairline }}
@@ -65,9 +68,15 @@ function OfficerNumberField({
   onSave: (phone?: string) => void;
 }) {
   const [typed, setTyped] = useState(savedPhone ?? '');
+  const [invalid, setInvalid] = useState(false);
   const commit = () => {
     if (typed.trim() === '') return onSave(undefined);
-    if (isPlausiblePhone(typed)) onSave(normalizePhone(typed));
+    if (!isPlausiblePhone(typed)) {
+      setInvalid(true);
+      return;
+    }
+    setInvalid(false);
+    onSave(normalizePhone(typed));
   };
   return (
     <View className="gap-2">
@@ -76,8 +85,13 @@ function OfficerNumberField({
         accessibilityLabel={strings.officerNumberLabel}
         placeholder={strings.officerPhonePlaceholder}
         keyboardType="phone-pad"
+        autoComplete="tel"
         value={typed}
-        onChangeText={setTyped}
+        onChangeText={(value) => {
+          setTyped(value);
+          setInvalid(false);
+        }}
+        error={invalid ? strings.officerInvalidPhone : undefined}
         onBlur={commit}
       />
     </View>
@@ -99,14 +113,11 @@ function FarmSectionsEditor({
       {sections.map((section) => (
         <View key={section} className="min-h-14 flex-row items-center gap-3 rounded-control bg-surface pl-4 shadow-sm">
           <Body className="flex-1">{section}</Body>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={fillTemplate(strings.removeFarmSection, { name: section })}
+          <IconButton
+            label={fillTemplate(strings.removeFarmSection, { name: section })}
+            icon={X}
             onPress={() => onChange(sections.filter((existing) => existing !== section))}
-            className="h-14 w-14 items-center justify-center"
-          >
-            <X size={22} weight="bold" color={colors['ink-muted']} />
-          </Pressable>
+          />
         </View>
       ))}
       <NewSectionForm strings={strings} onAdd={(name) => onChange([...sections, name])} />
@@ -165,7 +176,9 @@ function DataControls({
   return (
     <View className="gap-3">
       <Muted>{fillTemplate(strings.savedChecks, { count: savedCheckCount })}</Muted>
-      {exportFailed && <Body className="text-sick">{strings.exportFailed}</Body>}
+      <View accessibilityLiveRegion="polite">
+        {exportFailed && <Body className="text-sick">{strings.exportFailed}</Body>}
+      </View>
       <Button
         label={isExporting ? strings.exportingData : strings.exportData}
         icon={DownloadSimple}
@@ -249,7 +262,9 @@ function SignOutControl({ strings, onSignOut }: { strings: Strings; onSignOut: (
 
   return (
     <View className="gap-2">
-      {failed ? <Body className="text-sick">{strings.authSignOutFailed}</Body> : null}
+      <View accessibilityLiveRegion="polite">
+        {failed ? <Body className="text-sick">{strings.authSignOutFailed}</Body> : null}
+      </View>
       <Button
         label={pending ? strings.authSigningOut : strings.authSignOut}
         icon={SignOut}

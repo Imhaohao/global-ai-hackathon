@@ -1,6 +1,6 @@
 import { ArrowClockwise, ArrowRight, Translate } from 'phosphor-react-native';
-import { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
+import { useEffect, useRef, useState, type RefObject } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, View, type TextInput } from 'react-native';
 
 import { AuthApiError, AuthNetworkError, type AuthApi } from '../auth/authApi';
 import { secondsRemaining } from '../auth/resendCooldown';
@@ -11,7 +11,6 @@ import { IconButton } from '../components/IconButton';
 import { TextField } from '../components/TextField';
 import { Muted, SectionHeading, Title } from '../components/Typography';
 import { STRINGS, fillTemplate, type Language } from '../i18n/strings';
-import { colors } from '../theme';
 
 type LoginScreenProps = {
   api: AuthApi;
@@ -33,6 +32,16 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const inFlight = useRef(false);
+  const inputRef = useRef<TextInput>(null);
+
+  const reportError = (message: string) => {
+    setError(message);
+    inputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    if (error && !pending) inputRef.current?.focus();
+  }, [error, pending]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -51,7 +60,7 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
     if (inFlight.current) return;
     const canonicalPhone = canonicalizePhone(resend ? phone : phoneInput);
     if (!canonicalPhone) {
-      setError(strings.authInvalidPhone);
+      reportError(strings.authInvalidPhone);
       return;
     }
     inFlight.current = true;
@@ -65,7 +74,7 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
       setCode('');
       setStep('code');
     } catch (cause) {
-      setError(errorMessage(cause, strings.authInvalidPhone, strings.authIncorrectCode, strings.authRateLimited, strings.authUnavailable));
+      reportError(errorMessage(cause, strings.authInvalidPhone, strings.authIncorrectCode, strings.authRateLimited, strings.authUnavailable));
       if (cause instanceof AuthApiError && cause.retryAfterSeconds) {
         setResendDeadline(Date.now() + cause.retryAfterSeconds * 1000);
       }
@@ -79,7 +88,7 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
     if (inFlight.current) return;
     const normalizedCode = code.replace(/\s/g, '');
     if (!/^\d{4,10}$/.test(normalizedCode)) {
-      setError(strings.authInvalidCode);
+      reportError(strings.authInvalidCode);
       return;
     }
     inFlight.current = true;
@@ -88,7 +97,7 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
     try {
       await onAuthenticated(await api.verifyCode(phone, normalizedCode));
     } catch (cause) {
-      setError(errorMessage(cause, strings.authInvalidPhone, strings.authIncorrectCode, strings.authRateLimited, strings.authUnavailable));
+      reportError(errorMessage(cause, strings.authInvalidPhone, strings.authIncorrectCode, strings.authRateLimited, strings.authUnavailable));
     } finally {
       inFlight.current = false;
       setPending(false);
@@ -115,11 +124,13 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
         </View>
         <BotanicalImage compact />
         <View className="gap-3">
-          <Title>{step === 'phone' ? strings.authTitle : strings.authCodeTitle}</Title>
+          <Title key={step}>{step === 'phone' ? strings.authTitle : strings.authCodeTitle}</Title>
           {step === 'code' && <Muted>{fillTemplate(strings.authCodeHint, { phone })}</Muted>}
         </View>
         {step === 'phone' ? (
           <PhoneForm
+            inputRef={inputRef}
+            error={error}
             value={phoneInput}
             label={strings.authPhoneLabel}
             hint={strings.authPhoneHint}
@@ -133,6 +144,8 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
           />
         ) : (
           <CodeForm
+            inputRef={inputRef}
+            error={error}
             strings={strings}
             code={code}
             pending={pending}
@@ -143,17 +156,14 @@ export function LoginScreen({ api, language, onSwitchLanguage, onAuthenticated }
             onChangePhone={changePhone}
           />
         )}
-        {error ? (
-          <Text accessibilityRole="alert" className="text-base leading-normal text-sick">
-            {error}
-          </Text>
-        ) : null}
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 function PhoneForm({
+  inputRef,
+  error,
   value,
   label,
   hint,
@@ -165,6 +175,8 @@ function PhoneForm({
   cooldownLabel,
   onRequest,
 }: {
+  inputRef: RefObject<TextInput | null>;
+  error: string;
   value: string;
   label: string;
   hint: string;
@@ -181,10 +193,11 @@ function PhoneForm({
       <View className="gap-2">
         <SectionHeading>{label}</SectionHeading>
         <TextField
+          inputRef={inputRef}
           accessibilityLabel={label}
           accessibilityHint={hint}
+          error={error}
           autoComplete="tel"
-          textContentType="telephoneNumber"
           keyboardType="phone-pad"
           value={value}
           onChangeText={onChange}
@@ -206,6 +219,8 @@ function PhoneForm({
 }
 
 function CodeForm({
+  inputRef,
+  error,
   strings,
   code,
   pending,
@@ -215,6 +230,8 @@ function CodeForm({
   onResend,
   onChangePhone,
 }: {
+  inputRef: RefObject<TextInput | null>;
+  error: string;
   strings: (typeof STRINGS)['en'];
   code: string;
   pending: boolean;
@@ -229,10 +246,12 @@ function CodeForm({
       <View className="gap-2">
         <SectionHeading>{strings.authCodeLabel}</SectionHeading>
         <TextField
+          inputRef={inputRef}
           accessibilityLabel={strings.authCodeLabel}
+          accessibilityHint={strings.authInvalidCode}
+          error={error}
           keyboardType="number-pad"
-          autoComplete="sms-otp"
-          textContentType="oneTimeCode"
+          autoComplete={Platform.OS === 'ios' ? 'one-time-code' : 'sms-otp'}
           autoCapitalize="none"
           maxLength={10}
           value={code}
@@ -250,31 +269,22 @@ function CodeForm({
         disabled={pending}
       />
       <View className="items-start gap-2">
-        <Pressable
-          accessibilityRole="button"
-          accessibilityState={{ disabled: resendSeconds > 0 || pending }}
-          disabled={resendSeconds > 0 || pending}
-          onPress={onResend}
-          className="min-h-11 justify-center"
-        >
-          <Text className={`text-base font-medium ${resendSeconds > 0 || pending ? 'text-ink-muted opacity-60' : 'text-ink'}`}>
-            {resendSeconds > 0
+        <Button
+          label={resendSeconds > 0
               ? fillTemplate(strings.authResendIn, { seconds: resendSeconds })
               : strings.authResendCode}
-          </Text>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityState={{ disabled: pending }}
+          variant="quiet"
+          icon={ArrowClockwise}
+          disabled={resendSeconds > 0 || pending}
+          onPress={onResend}
+        />
+        <Button
+          label={strings.authChangePhone}
+          variant="quiet"
+          icon={ArrowClockwise}
           disabled={pending}
           onPress={onChangePhone}
-          className={`min-h-11 flex-row items-center gap-2 rounded-full bg-surface px-4 py-2 shadow-sm ${pending ? 'opacity-40' : ''}`}
-        >
-          <ArrowClockwise size={20} color={colors.accent} />
-          <Text className="min-w-0 text-base font-medium text-ink" style={{ flexShrink: 1 }}>
-            {strings.authChangePhone}
-          </Text>
-        </Pressable>
+        />
       </View>
     </View>
   );
