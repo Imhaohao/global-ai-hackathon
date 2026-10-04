@@ -190,7 +190,7 @@ export function SlopeStage({ shot, still, onReady }: { shot: ShotName; still: bo
       {!lost && (
         <Canvas
           key={generation}
-          shadows
+          shadows="percentage"
           dpr={[1, 1.75]}
           gl={{ antialias: true, alpha: true, toneMapping: NoToneMapping }}
           camera={{ fov: framing.fov, near: 0.05, far: 900, position: framing.cameraPosition }}
