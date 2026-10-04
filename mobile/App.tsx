@@ -6,11 +6,13 @@ import { useState } from 'react';
 import { useTensorflowModel } from 'react-native-fast-tflite';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { seedCheckContact, seedCheckCopy } from '../shared/src/seedCheck.ts';
 import { STRINGS, type Language } from './src/i18n/strings';
 import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
 import { ConsentScreen } from './src/screens/ConsentScreen';
 import type { DevScenario } from './src/screens/devVerdictOverride';
+import { SeedCheckScreen } from './src/screens/SeedCheckScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { useCaptureFlow } from './src/screens/useCaptureFlow';
 import { useResultFlow } from './src/screens/useResultFlow';
@@ -31,12 +33,15 @@ export default function App() {
   const { settings, update: updateSettings, resetToDefaults } = useAppSettings();
   const [language, setLanguage] = useState<Language>(settings.language ?? deviceLanguage());
   const [isInSettings, setIsInSettings] = useState(false);
+  const [isInSeedCheck, setIsInSeedCheck] = useState(false);
   const [devScenario, setDevScenario] = useState<DevScenario>('off');
   const leafModel = useTensorflowModel(COFFEE_LEAF_MODEL, []);
   const { wetDays, forgetWetDays } = useWetDays(locationAllowed(settings));
   const capture = useCaptureFlow(leafModel.state === 'loaded' ? leafModel.model : undefined, devScenario);
   const resultFlow = useResultFlow({ settings, updateSettings, language, wetDays });
   const strings = STRINGS[language];
+  const seedContact = seedCheckContact();
+  const seedCopy = seedCheckCopy(language, seedContact);
 
   const switchLanguage = () => {
     const next = language === 'en' ? 'sw' : 'en';
@@ -94,6 +99,16 @@ export default function App() {
         />
       );
     }
+    if (isInSeedCheck && seedContact && seedCopy) {
+      return (
+        <SeedCheckScreen
+          strings={strings}
+          copy={seedCopy}
+          phone={seedContact.phone}
+          onBack={() => setIsInSeedCheck(false)}
+        />
+      );
+    }
     if (resultFlow.result) {
       return (
         <ActionCardScreen
@@ -123,6 +138,7 @@ export default function App() {
         onTakeLeaf={capture.takeLeaf}
         onFinish={finishAndShowAdvice}
         onOpenSettings={() => setIsInSettings(true)}
+        onOpenSeedCheck={seedCopy ? () => setIsInSeedCheck(true) : undefined}
         onSwitchLanguage={switchLanguage}
       />
     );

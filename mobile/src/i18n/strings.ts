@@ -173,6 +173,12 @@ const NEW_LINES = {
   ),
   deleteConfirm: draftLine('Delete', 'Futa'),
   savedChecks: draftLine('{count} saved checks', 'Ukaguzi {count} umehifadhiwa'),
+  seedCheckTitle: draftLine('Check a seed packet', 'Kagua pakiti ya mbegu'),
+  seedCheckTextButton: draftLine('Text the code to {phone}', 'Tuma namba kwa {phone}'),
+  seedCheckSmsUnavailable: draftLine(
+    'This phone cannot send text messages. Type the code into a message to this number:',
+    'Simu hii haiwezi kutuma ujumbe mfupi. Andika namba ya siri kwenye ujumbe kwenda namba hii:',
+  ),
   devVerdictTitle: draftLine('Test answer (development only)', 'Jibu la majaribio (maendeleo tu)'),
 };
 

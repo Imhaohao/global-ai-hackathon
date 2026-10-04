@@ -5,6 +5,7 @@ import {
   CheckCircle,
   Gear,
   ImageSquare,
+  Plant,
   Translate,
   Warning,
   WifiSlash,
@@ -36,6 +37,7 @@ type CaptureScreenProps = {
   onTakeLeaf: (source: PhotoSource, replaceIndex?: number) => void;
   onFinish: () => void;
   onOpenSettings: () => void;
+  onOpenSeedCheck?: () => void;
   onSwitchLanguage: () => void;
 };
 
@@ -216,17 +218,22 @@ function CaptureStatus({ strings, photos, check, isChecking, onTakeLeaf }: Statu
   );
 }
 
-function FirstLeafGuide({ strings }: { strings: Strings }) {
+function FirstLeafGuide({ strings, onOpenSeedCheck }: Pick<CaptureScreenProps, 'strings' | 'onOpenSeedCheck'>) {
   return (
     <>
       <Viewfinder compact />
       <Muted>{strings.captureTip}</Muted>
+      {onOpenSeedCheck && (
+        <View className="items-start">
+          <PillButton label={strings.seedCheckTitle} icon={Plant} onPress={onOpenSeedCheck} />
+        </View>
+      )}
     </>
   );
 }
 
 export function CaptureScreen(props: CaptureScreenProps) {
-  const { strings, photos, check, problem, onOpenSettings, onSwitchLanguage } = props;
+  const { strings, photos, check, problem, onOpenSettings, onOpenSeedCheck, onSwitchLanguage } = props;
   return (
     <View className="flex-1">
       <ScrollView contentContainerClassName="gap-5 px-5 pb-4 pt-2">
@@ -242,7 +249,7 @@ export function CaptureScreen(props: CaptureScreenProps) {
           slotCount={MAX_LEAVES_PER_PLANT}
           accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photos.length, max: MAX_LEAVES_PER_PLANT })}
         />
-        {photos.length === 0 && <FirstLeafGuide strings={strings} />}
+        {photos.length === 0 && <FirstLeafGuide strings={strings} onOpenSeedCheck={onOpenSeedCheck} />}
         <CaptureStatus {...props} />
         {problem && <ProblemNotice strings={strings} problem={problem} />}
       </ScrollView>
