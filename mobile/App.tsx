@@ -57,12 +57,12 @@ export default function App() {
         <StatusBar style="dark" />
         {auth.state.status === 'restoring' ? (
           <LeafLoadingScreen label={STRINGS[loginLanguage].loading} />
-        ) : auth.state.status === 'signedOut' && (savedLanguage === null || isPickingLanguage) ? (
+        ) : auth.state.status === 'signedOut' && isPickingLanguage ? (
           <LanguagePickerScreen
             strings={STRINGS[loginLanguage]}
             selected={loginLanguage}
             onChoose={chooseLanguage}
-            onBack={savedLanguage === null ? undefined : () => setIsPickingLanguage(false)}
+            onBack={() => setIsPickingLanguage(false)}
           />
         ) : auth.state.status === 'signedOut' ? (
           <LoginScreen

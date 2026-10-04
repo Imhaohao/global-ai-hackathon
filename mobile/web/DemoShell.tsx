@@ -14,7 +14,8 @@ const SIDE_BY_SIDE_MIN_WIDTH = 900;
 const SOURCE_URL = 'https://github.com/Imhaohao/global-ai-hackathon';
 
 const TRY_IT_STEPS = [
-  'Pick a language, then type any phone number. The demo signs you in without sending a code.',
+  'Type any phone number and tap Log in. The demo signs you in without sending a code.',
+  'Pick a language. The translate button at the top right of the sign-in screen changes it before you sign in.',
   'Read the six consent cards and agree.',
   'Tap Take photo and add three sample leaves of one kind, or use photos of your own.',
   'Tap See advice to get the action card.',
