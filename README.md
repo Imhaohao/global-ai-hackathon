@@ -10,7 +10,7 @@ This is a research prototype. Dataset accuracy does not establish field accuracy
 2. [Step 1: Buy and audit planting material](#step-1-buy-and-audit-planting-material)
 3. [Step 2: Classify coffee plant images](#step-2-classify-coffee-plant-images)
 4. [Step 3: Deliver actionable help and trusted inputs](#step-3-deliver-actionable-help-and-trusted-inputs)
-5. [Step 4: Future work, map disease hotspots and trends](#step-4-future-work-map-disease-hotspots-and-trends)
+5. [Step 4: Map disease hotspots and trends](#step-4-map-disease-hotspots-and-trends)
 6. [Pitch and demo materials](#pitch-and-demo-materials)
 7. [The hackathon](#the-hackathon)
 8. [Getting started](#getting-started)
@@ -27,7 +27,7 @@ The execution sequence is: buy and audit seeds or seedlings, then classify coffe
 | 1. Buy and audit planting material | Helps the farmer check that seed is genuine and traceable before planting | `shared/src/seedCheck.ts`, `mobile/src/screens/SeedCheckScreen.tsx`, the SMS paths in `backend/`, `bridge/` and `hub/` | The KEPHIS 1393 seed packet check is built. |
 | 2. Classify coffee plant images | Offline photo classification with image-quality checks, an uncertainty route and a six-leaf vote | `mobile/`, `training/`, `shared/src/plantVote.ts` | Built. A research prototype that is not yet validated on a phone. |
 | 3. Deliver actionable help and trusted inputs | Action card, verified contacts, referral to an extension officer, SMS and voice channels in Swahili and English | `shared/`, `backend/`, `hub/`, `bridge/`, `mobile/src/screens/` | Built, with some setup left (see the status tables) |
-| 4. Map disease hotspots and trends | Color-coded map, timeline and review priorities from accumulated phone observations | `satellite-hotspots/` (separate component), observation storage in `mobile/src/storage/` | Future work. Only a synthetic preview and an overhead-imagery prototype exist. |
+| 4. Map disease hotspots and trends | Color-coded map, timeline and review priorities from accumulated phone observations | `shared/src/hotspots.ts`, `mobile/src/hotspots/`, `mobile/src/screens/HotspotMapScreen.tsx`, observation storage in `mobile/src/storage/`, plus the separate `satellite-hotspots/` component | The farm map screen is built: colored circles sized by sightings, filters, a weekly trend chart and tap-to-open sightings with photos. It has not been run on a phone. Phone data is real only as farmers collect it, so the preview uses labelled simulated sightings. |
 
 ### What we are building
 
@@ -211,8 +211,6 @@ To measure and report as found, even if the number is worse than hoped:
 
 Not covered: coffee berry disease, coffee berry borer and coffee wilt are not classes in the training set. The images come from a few datasets and not from Noor's slope, and the Swahili test messages are synthetic. The model report below gives the final training sources and counts.
 
-The detailed model report follows. It was written by the model team and is kept as written, with its headings moved down one level.
-
 ### Local coffee-leaf model
 
 See the [model data card](docs/data-card.md) and the [reproduced B0 evaluation](training/results/final-evaluation.json). The original checkpoint and exact split were restored from the published artifacts; all 23,552 image hashes matched. B0 was rerun with its saved thresholds and unchanged model/config hashes. These figures describe the original quality gate; the newer brightness policy and B1/B2/B3 comparisons are reported separately below.
@@ -223,17 +221,11 @@ The current bundled model version is `deployed-v1` with **4,017,796 parameters**
 
 #### Data and training
 
-`training/sources.json` records sources, pinned revisions, licenses, inclusion/exclusion decisions and source/class/split counts. Five training families are used: AGML Arabica, BRACOL, RoCoLe, CoffeeLeaf-CO (including its Silva derivative subset), and Makerere Beans as unsupported non-coffee examples. The preparation retains **23,552 distinct examples**, including evaluation-only material: 14,119 train, 3,921 validation, 4,571 test and 941 external. All training examples contribute to the classifier stage. The last-backbone stage rotates one crop per parent and label each epoch to reduce correlated crop dominance. This is 30 classifier epochs followed by three partial-backbone epochs; validation selected epoch two. A further 35-epoch source-balanced/distilled classifier candidate scored lower on mean per-source validation macro F1 (0.8104 versus 0.8648) and was not selected.
+`training/sources.json` records sources, pinned revisions, licenses, inclusion/exclusion decisions and source/class/split counts. Five training families are used: AGML Arabica, BRACOL, RoCoLe, CoffeeLeaf-CO (including its Silva derivative subset), and Makerere Beans as unsupported non-coffee examples. The preparation retains **23,552 distinct examples**, including evaluation-only material: 14,119 train, 3,921 validation, 4,571 test and 941 external. All training examples contribute to the classifier stage. The last-backbone stage rotates one crop per parent and label each epoch to reduce correlated crop dominance. This is 30 classifier epochs followed by three partial-backbone epochs; validation selected epoch two.
 
 Exact hashes, perceptual hashes, parent images and available plant IDs form 6,174 groups. No group crosses partitions. AGML was used by the original pretrained model; those tests must not be described as entirely unseen. CoffeeLeaf empty annotations are not treated as healthy. Dataset crop counts are not counts of independent plants. The 1,120-image RGB rust collection is a previously inspected development stress test, not training data. Its NoRust class is a binary negative, not a healthy diagnosis. The separate 100-image PG26038 set contains flatbed scans of 50 paired leaves; Mycena citricolor is unsupported, not cercospora. Both external collections were audited for exact and near matches to train/validation and known pretraining-exposed groups, with no matches found.
 
 AGML provenance includes field-origin digital-camera images from one plantation in Mutira, Kirinyaga County, Kenya. Those images are pretraining-exposed source material, not prospective Kenyan-farm validation; independent smartphone validation remains outstanding.
-
-#### Results and limits
-
-The reproduced B0 report for the deployed FP16 runtime, with the saved calibration before the brightness-v1 update below, scored **91.05% raw accuracy** across the 4,571 internal test images. Its frozen per-class confidence and image-quality rules accepted **81.49%**; **93.10%** of accepted predictions were correct. On sources new to fine-tuning, raw accuracy was **89.53%**, accepted coverage was **74.25%**, and accepted accuracy was **91.57%**; cercospora precision was **50.00%**. All 128 held-out bean images were rejected. These are dataset results, not established field accuracy.
-
-External results remain poor: the rust development collection scored **AUROC 0.491**, rust recall **52.66%** and specificity **43.59%** at its own validation-selected binary threshold. The original model's AUROC was 0.420. All 100 untouched external scans were rejected; raw supported-class accuracy was 20%. Synthetic severe blur was rejected only 28.7% of the time, although severe darkness was always rejected in the 223-image quality check. This model is a research prototype and needs representative phone-camera validation before field reliance.
 
 Output order is `cercospora, healthy, miner, phoma, rust, red_spider_mite, weevil_damage, unsupported`. Mite predictions are disabled because validation evidence was insufficient; the unsupported class is always rejected. Weevil means possible chewing damage, not confirmed insect identification. Scores are model scores, not probabilities of a confirmed diagnosis. The JSON beside the model supplies the final thresholds. They were chosen on deployed-runtime validation predictions, never on the final photo sample.
 
@@ -262,7 +254,7 @@ The app now uses `mobile/assets/model/brightness-config.json` for exposure scree
 
 Brightness is measured on a lossless PNG of the same 224-pixel crop, weighted by alpha so transparent backgrounds contribute nothing. Opaque photographs still include their background; this change does not locate the leaf. Mean luminance below **40.3341** prompts the user to increase light. Mean luminance above **199.9971**, together with more than **9.2554%** of pixels at grayscale 250 or higher, prompts the user to reduce harsh light or flash. Both messages appear in English and Swahili with a retake button. Brightness guidance takes precedence over blur guidance, and unclear results continue hiding disease advice.
 
-After freezing the limits, **3,776 of 3,788** normal supported validation images passed the brightness check. All 3,788 synthetic images darkened to 10% were flagged; 3,195 of 3,788 brightened 4× were flagged. The 100 transparent scans pass the corrected brightness check, but their poor disease predictions remain unresolved. These are exposure-screening results, not updated end-to-end accuracy or phone-validation results. Earlier acceptance/precision numbers above describe the original gate and must not be attributed to this update.
+After freezing the limits, **3,776 of 3,788** normal supported validation images passed the brightness check. All 3,788 synthetic images darkened to 10% were flagged; 3,195 of 3,788 brightened 4× were flagged. These are exposure-screening results, not updated end-to-end accuracy or phone-validation results.
 
 Run `training/.venv/Scripts/python.exe training/calibrate_brightness.py` to reproduce the limits and evidence in `training/runs/brightness_v1/`. Run `node --experimental-transform-types training/check_mobile_contract.cjs` for class-gate, exposure, transparency, decoder, localization and mocked classifier integration checks. Native resize/color handling and the extra PNG encoding still require a physical-phone check.
 
@@ -293,19 +285,11 @@ For a single local photo, run `training/.venv/Scripts/python.exe training/infer.
 
 #### Additional data and scale experiments
 
-The validated model and its app integration were pushed in commit `aa836a0fffdc9c58065d557923211a6d2ecbf865` after syncing the latest repository. The merged code passed 39 tests, root/mobile lint and type checks, and the mobile model contract checks. Mobile lint retains the existing bundled-asset `require()` warning. There were no unresolved merges or case/Unicode filename collisions.
-
 The subsequent local experiments considered 29 registered sources. They admitted 1,498 Peru photos (one corrupt image excluded) and 7,364 crops from expert-reviewed BRACOL annotations. BRACOL crops are additional annotations of existing photographs, not new independent plants; all inherit their original parent groups and splits. The resulting candidate manifest has 20,311 training, 5,294 validation, 5,868 test and 941 external rows. Sampling rotates grouped examples rather than using every correlated crop in each epoch. Empty annotations are never relabelled healthy. The entire augmented Uganda source was excluded after transformed overlap was found; Xinzhai remains unused pending taxonomy and overlap checks, and its downloaded archive contains no mite class. Source details are in `training/sources.json`.
-
-`training/train_scale.py` ran six conservative epochs with scale/context augmentation. `training/train_scale_balanced.py` then restarted from the published incumbent, ran four epochs at learning rate 0.000003, used 70% original-view replay and 30% full-target padded scale views, and sampled more distinct weak-class examples. Both froze BatchNorm statistics and most backbone weights, used weight decay, dropout, label smoothing, and validation-based selection with patience two. Correct, confident teacher outputs were a regularizer only; no source labels were replaced by model predictions. Context enlargement is confined to the padded branch in the follow-up, avoiding the center-crop loss found by the annotation coverage audit. Original canonical app crops may still trim elongated targets.
-
-Neither run passed the replacement criteria. The follow-up's final mean per-source validation F1 on the smaller-leaf probe rose from 0.5212 to 0.6582, but original-view Cercospora F1 fell from 0.8683 to 0.8323 and mite F1 from 0.4308 to 0.4068. Healthy F1 rose from 0.8618 to 0.8929. The published app model and calibration therefore remain unchanged. These are validation results, not new test or field-accuracy claims; no test predictions were used for candidate selection. Training has stopped at the planned limits. Distance variability is not solved by these experiments.
 
 Local histories and audits are under `training/runs/scale_v2/` and `training/runs/scale_v3/`. `training/audit_context_coverage.py` traces all context views to their original annotation index, category, box and preprocessing coverage. `training/prepare_expert_data.py` creates the reviewed-crop manifest without changing earlier splits. `training/report_scale_experiments.py --output C:/path/to/report` exports the comparison and source/label audits.
 
 #### Choosing between EfficientNet-B0 and EfficientNet-B1
-
-The capture screen offers B0 (the default original model) and B1 (experimental). Only the selected model is loaded, selection is disabled while a photo is being processed, and results identify the model used. Loading failures offer retry or switching models. Both use the same brightness feedback and input crop, with separate validation-calibrated disease-confidence thresholds. Both assets are bundled for offline use.
 
 B1 starts from Apache-2.0 ImageNet weights `timm/efficientnet_b1.ft_in1k` at revision `1d6ddfd0ad535646fdb05bc3834913d93816152e`. It has 6,523,432 parameters and uses 224-pixel input, consistent with that checkpoint's training resolution and the existing app contract. Its classifier sees all **20,311 vetted training images**, including Peru and reviewed BRACOL crops. The same 5,294 validation images guide selection. Evaluation-only sources and unresolved datasets remain excluded. This compares the delivered models: B0 has coffee-specific pretraining and the original corpus, while B1 has ImageNet pretraining and the expanded corpus. The results cannot isolate the effect of architecture alone.
 
@@ -322,35 +306,6 @@ training/.venv/Scripts/python.exe training/compare_models.py --output-dir C:/pat
 ```
 
 Training overwrites the B1 research run; archive any research results you need before rerunning it. Export publishes only `coffee-leaf-b1.tflite` and `model-config-b1.json`. B0's model and calibration stay unchanged. The B1 export uses per-channel INT8 convolution-weight storage with float32 computation; this is a size optimization, not a claim of integer inference or faster execution. Full validation must retain accuracy and macro F1 within one percentage point of the chosen checkpoint before publication. The comparison evaluates both actual app exports on identical test images, checks checkpoint/runtime parity, applies the shared current brightness rules, and measures fresh desktop CPU latency. Physical-phone performance, native preprocessing and field accuracy still require device validation.
-
-##### Completed B0/B1 comparison
-
-The frozen app exports were evaluated on the same 5,868 test images. The table uses the current shared brightness policy and each model's own frozen validation confidence thresholds. The original 4,571-image subset is also retained for continuity with the earlier report.
-
-| Metric | B0 | B1 |
-| --- | ---: | ---: |
-| Original test accuracy (4,571 images) | 91.05% | 93.96% |
-| Expanded test accuracy (5,868 images) | 86.79% | 93.27% |
-| Expanded test macro F1 | 0.7614 | 0.8640 |
-| Accuracy among accepted expanded-test predictions | 88.09% | 94.16% |
-| Expanded-test acceptance coverage | 80.11% | 79.38% |
-| Unsupported expanded-test images falsely accepted | 38 / 202 | 0 / 202 |
-| Synthetic smaller-leaf macro F1 (1,495 images) | 0.5682 | 0.7721 |
-| External rust AUROC (1,119 images) | 0.4917 | 0.7421 |
-| External rust recall at frozen binary cutoff | 52.66% | 15.82% |
-| External rust specificity at frozen binary cutoff | 43.75% | 99.63% |
-| Supported external scan accuracy (60 images) | 20.00% | 31.67% |
-| Accuracy among accepted scans | 9 / 55 (16.36%) | 19 / 55 (34.55%) |
-| Bundled model size (decimal MB) | 8.09 | 7.32 |
-| Fresh matched desktop CPU median | 87.1 ms | 121.2 ms |
-
-B1 is the stronger overall research candidate. Its expanded-test accuracy gain is 6.48 percentage points, with a paired recorded-group bootstrap 95% interval of +4.27 to +8.95 points. The gain on the original test is 2.91 points (+1.56 to +4.30). Groups are parent/capture proxies, not guaranteed independent plants. All eight classes improved on the expanded test, including Cercospora F1 from 0.6773 to 0.7867, healthy from 0.7329 to 0.9547, and mites from 0.3191 to 0.4828. B0 retains an advantage on original-test Phoma F1 (0.8947 versus 0.8392). Mite diagnoses remain disabled in both apps because neither passes the validation precision/evidence requirement.
-
-External imaging is still unreliable. B1 ranks external rust better, but its validation-selected binary cutoff of 0.16 detects only 134 of 847 rust images. The actual multiclass app accepts just 22 of those 847 images as rust; AUROC is not diagnosis accuracy. Its 55 accepted scans contain only 19 correct diagnoses and 13 unsupported false accepts. Neither model is ready for field reliance. These previously inspected external collections were not used to select checkpoints, compression or thresholds. The expanded-source overlap audit conservatively removes one possible rust near-match, leaving 1,119 images; the original 100 scans remain. Synthetic smaller-leaf improvements do not establish accuracy on genuine distant phone photographs.
-
-The B1 app asset is 7,324,120 bytes with SHA256 `28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75`. Its uncompressed conversion matched the checkpoint on 64 class-balanced validation images with no top-label changes and maximum probability error 0.00000668. Compression changed 30 of 5,294 validation top labels, with +0.094 percentage points accuracy and -0.021 points macro F1. Across all 5,868 held-out images, B1 checkpoint/app outputs differ on 45 top labels, 37 acceptance decisions and 77 confidence states; maximum probability difference is 0.2485. The table therefore uses the actual app export, not checkpoint results. B0 parity on the same expanded test is 10 top-label, 11 acceptance and 21 confidence-state differences.
-
-Both model identities, configurations and the brightness policy stayed unchanged throughout evaluation. Fresh-process B1 inference passed with Python outbound socket calls blocked and zero attempted connections; this is not an operating-system firewall or physical-phone test. The fresh latency benchmark alternates the models over the same 64 images for 128 timed invocations each with four CPU threads, excludes image decoding/preprocessing, and runs after training and other inference jobs finish. Full evidence, class/source breakdowns, confusion matrices, manifest audits and paired intervals are in `training/runs/model_comparison/comparison.json`. App TypeScript, lint, six model-selection tests, the 39-test shared/backend suite, brightness contracts and the Android JavaScript/asset export passed. The Android export contains both model files; no native phone build was tested.
 
 #### EfficientNet-B2 experiment
 
@@ -414,8 +369,6 @@ All four frozen exports were evaluated on the same images with the same current 
 | Parameters (millions) | 4.02 | 6.52 | 7.71 | 10.71 |
 
 B2 has the highest measured aggregate test accuracy, macro F1 and synthetic smaller-leaf macro F1. Its accuracy advantage over B1 is 0.82 percentage points, but the descriptive paired 95% interval is -0.02 to +1.64 points, so this run does not establish a clear accuracy separation. B2 improves Phoma F1 from B1's 0.8319 to 0.8906 and mites from 0.4828 to 0.5397, while Cercospora falls from 0.7867 to 0.7167. B3's accuracy is effectively tied with B1 on this test (-0.05 points; interval -0.87 to +0.80), and its macro F1 is lower. B3 trails B2 by 0.87 points (interval -1.69 to -0.11). These intervals are unadjusted and do not identify a universal winner across classes, sources and deployment conditions. Mite diagnoses remain disabled in every model's confidence policy.
-
-External imaging remains inadequate for field reliance. B2's higher rust AUROC does not translate into useful recall at its frozen threshold, and its 89 accepted scans contain only 10 correct predictions and 34 unsupported false accepts. B3 performs best on these scans, but only 28 of its 63 accepted predictions are correct, and it correctly accepts just 52 of 847 external rust positives under the app policy. B1 retains advantages over B2 on Cercospora, several source-specific results and scan rejection. B2 is useful for continued internal/scale experiments; B3's measured tradeoffs and size failure do not support replacing an app model. None of these results resolves the external-imaging requirement.
 
 B3 has 10,708,528 parameters; its 11,796,544-byte export SHA256 is `5ab0a8f6292b67440d4c53e51b6b8155a5c474c403428f7a70974d599997deb4`. Its selected checkpoint SHA256 is `a808dffa181630d47acc74788dcf38f95d0618b1e51b0dcd7f0990071d55c433`. It uses the same fine-tuning data and rules but a different ImageNet initialization, with native 288/320-pixel training/test settings reduced to the shared 224-pixel experiment. The historical B2 wrapper change detected by B3's broad file guard is preserved in the report: only the exact independently reconstructed completed-run guard/history additions are allowed; training, preprocessing and selection engines remained unchanged. Frozen artifacts and prior reports were verified unchanged throughout both evaluation and timing.
 
@@ -592,9 +545,9 @@ Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamByte
 
 The current three-part build plan, written so an agent with no context can start, is [docs/build-plan.md](docs/build-plan.md). It supersedes the earlier plans in this file.
 
-## Step 4: Future work, map disease hotspots and trends
+## Step 4: Map disease hotspots and trends
 
-This step is beyond the hackathon. The immediate advice in Steps 2 and 3 does not depend on it.
+The immediate advice in Steps 2 and 3 does not depend on this step. The farm map is the first version of it. The longer-term parts of the plan, such as plant identifiers for repeat visits and adviser corrections feeding model improvement, are still ahead.
 
 ### The plan
 
@@ -610,11 +563,36 @@ A new case at (3,3) after a case at (5,5) is a new observation. It is not proof 
 
 The future-work milestone is a working hotspot map, trend graphs, timeline and explainable review priorities, with unobserved areas, uncertain locations and differences in inspection effort kept visible. Any hackathon preview uses clearly labelled simulated observations and does not imply that longitudinal farm data already exists.
 
+### The farm map in the app
+
+The home screen has a **Farm map** button. The screen draws a schematic, north-up map from the GPS positions saved with each check. It needs no internet and no map tiles, so it works offline on any phone.
+
+| What you see | How it works |
+|---|---|
+| One circle for each group of sightings | Sightings of the same disease within 25 m of each other form one group. The group sits at the average position of its sightings. |
+| Color shows the disease | Each disease has its own color from `mobile/src/colors.json` (`disease-rust`, `disease-cercospora` and so on). Healthy checks are drawn as small hollow rings. |
+| A bigger circle means more sightings close together | The circle's area grows with the number of sightings, up to a limit, and the count is printed inside it. |
+| Tap a circle | A list opens with every sighting in that group. Each row shows the disease and time. Open a row to see the time, the location (with its GPS accuracy), the disease found, the farm section and thumbnails of the leaf photos. |
+| Filters | Disease chips (show or hide each disease) and a date range (7, 30 or 90 days, or all time). |
+| Trend chart | Sightings per week for the last 8 weeks, stacked by disease. It is labelled as what was recorded and not as the speed of spread. |
+| Scale bar and north arrow | The map is a schematic. The scale bar shows the real distance. |
+
+How the plan's cautions are handled:
+- An empty area is labelled as not checked, and not as healthy.
+- A recheck of the same tree within 30 minutes and 15 m counts once, and the screen says how many repeat checks were merged.
+- Checks with no saved location, or with no clear answer, are not drawn. The screen shows how many were left out.
+- Circle size is the number of recorded sightings, not a severity score. The classifier does not estimate severity.
+
+**Storage on cheap phones.** Each leaf photo is saved as a 320 px JPEG thumbnail of roughly 20 to 40 KB, and not at full camera size. Six photos per check come to about 150 to 250 KB, so 1,000 checks take roughly 200 MB. The full-size photo is not kept. The map itself reads a few hundred bytes per check. Checks saved before this change keep their full-size photos.
+
+Code: grouping, layout, filters and trend counts are plain functions in `shared/src/hotspots.ts` with tests in `hotspots.test.ts`. The screen and drawing code are in `mobile/src/screens/HotspotMapScreen.tsx` and `mobile/src/hotspots/`. In a development build, the empty map offers a clearly labelled preview with simulated sightings, which are never saved.
+
 ### What exists now
 
 | Piece | Where | State |
 |---|---|---|
-| Per-photo record: capture time, GPS with accuracy, farm section, model version | `mobile/src/storage/observations.ts`, `deviceLocation.ts`, `FarmSectionPicker.tsx` | Built. This is the data the map will need. |
+| Per-photo record: capture time, GPS with accuracy, farm section, model version, leaf thumbnails | `mobile/src/storage/observations.ts`, `deviceLocation.ts`, `FarmSectionPicker.tsx` | Built. This is the data the map reads. |
+| Color-coded map with filters, trend chart and tap-to-open sightings | `shared/src/hotspots.ts`, `mobile/src/hotspots/`, `HotspotMapScreen.tsx` | Built. Not yet run on a phone. |
 | Repeat-observation and rain context | `shared/src/plantVote.ts`, `rain.ts` | Built for the action card and case summary |
 | Consent, export and delete of stored observations | `mobile/src/storage/dataControls.ts`, `SettingsScreen.tsx` | Built |
 | Overhead-imagery hotspot prototype | `satellite-hotspots/` | Separate, synthetic-data prototype (below) |

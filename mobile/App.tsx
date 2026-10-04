@@ -17,6 +17,7 @@ import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
 import { ConsentScreen } from './src/screens/ConsentScreen';
 import type { DevScenario } from './src/screens/devVerdictOverride';
+import { HotspotMapScreen } from './src/screens/HotspotMapScreen';
 import { SeedCheckScreen } from './src/screens/SeedCheckScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
@@ -81,6 +82,7 @@ function AuthenticatedApp({
   const [language, setLanguage] = useState<Language>(settings.language ?? preferredLanguage);
   const [isInSettings, setIsInSettings] = useState(false);
   const [isInSeedCheck, setIsInSeedCheck] = useState(false);
+  const [isInMap, setIsInMap] = useState(false);
   const [devScenario, setDevScenario] = useState<DevScenario>('off');
   const [modelId, setModelId] = useState<ModelId>(DEFAULT_MODEL_ID);
   const { load: leafModel, config, retry } = useLeafModel(modelId);
@@ -129,6 +131,7 @@ function AuthenticatedApp({
     if (!deleted) return false;
     resetToDefaults();
     setIsInSettings(false);
+    setIsInMap(false);
     return true;
   };
 
@@ -173,6 +176,16 @@ function AuthenticatedApp({
           onDeleteAll={deleteAll}
           onBack={() => setIsInSettings(false)}
           onSignOut={onSignOut}
+        />
+      );
+    }
+    if (isInMap) {
+      return (
+        <HotspotMapScreen
+          strings={strings}
+          language={language}
+          observations={listObservations()}
+          onBack={() => setIsInMap(false)}
         />
       );
     }
@@ -222,6 +235,7 @@ function AuthenticatedApp({
         isFinishing={resultFlow.isFinishing}
         onOpenSettings={() => setIsInSettings(true)}
         onOpenSeedCheck={seedCopy ? () => setIsInSeedCheck(true) : undefined}
+        onOpenMap={() => setIsInMap(true)}
         onSwitchLanguage={switchLanguage}
       />
     );

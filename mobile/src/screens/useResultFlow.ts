@@ -94,8 +94,8 @@ export function useResultFlow({ settings, updateSettings, language, wetDays }: R
           : undefined;
         const card = buildActionCard({ kind: 'plant', verdict: check.verdict }, { language, wetDays: currentWetDays });
         if (!isCurrentFinish()) return;
-        const observation = createObservation(check, locationConsentedAtStart ? location : null);
-        if (!isCurrentFinish()) return;
+        const observation = await createObservation(check, locationConsentedAtStart ? location : null, isCurrentFinish);
+        if (!observation || !isCurrentFinish()) return;
         resultGeneration.current = operation;
         resultDataRevision.current = dataRevision;
         setResult({ observation, card, photoUris: photos.map((photo) => photo.uri) });

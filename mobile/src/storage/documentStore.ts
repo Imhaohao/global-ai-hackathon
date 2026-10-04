@@ -74,6 +74,14 @@ export function copyIntoFolder(sourceUri: string, ...segments: string[]): string
   return destination.uri;
 }
 
+export function deleteTemporaryFile(uri: string): void {
+  try {
+    new File(uri).delete();
+  } catch {
+    // A leftover temporary file is harmless and the system clears the cache folder.
+  }
+}
+
 export function deleteEverything(): boolean {
   activeAccountDataRevision += 1;
   try {
