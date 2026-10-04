@@ -73,10 +73,15 @@ async function encodeFixture(textured, format) {
 async function checkClassification(development, textured, classIndex) {
   const operations = [];
   const logs = [];
+  const released = [];
   const context = {
     resize(value) { operations.push(['resize', value]); return this; },
     crop(value) { operations.push(['crop', value]); return this; },
-    async renderAsync() { return { saveAsync: async (options) => ({ base64: await encodeFixture(textured, options.format) }) }; },
+    async renderAsync() { return {
+      saveAsync: async (options) => ({ base64: await encodeFixture(textured, options.format) }),
+      release: () => released.push('image'),
+    }; },
+    release: () => released.push('context'),
   };
   const { classifyLeaf } = loadModule('mobile/src/diagnosis/classifyLeaf.ts', {
     __DEV__: development,
@@ -88,6 +93,7 @@ async function checkClassification(development, textured, classIndex) {
   });
   const model = {
     async run(inputs) {
+      assert.deepEqual(released, ['image', 'context']);
       const input = new Float32Array(inputs[0]);
       assert.equal(input.length, 224 * 224 * 3);
       assert.ok(input.every(value => value >= 0 && value <= 255));
