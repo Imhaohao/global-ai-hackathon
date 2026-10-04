@@ -1,4 +1,4 @@
-// Prints the SHOP replies that src/scenes/shopReplies.ts quotes, straight from a Leaf Doctor checkout's shared code.
+// Prints the SHOP replies that src/story.ts quotes, straight from a Leaf Doctor checkout's shared code.
 // Usage: node scripts/shopReplies.ts <path to a checkout that has shared/src/remedyFinder.ts>
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";

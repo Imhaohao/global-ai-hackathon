@@ -5,7 +5,7 @@ import { existsSync, mkdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { FOOTAGE, RECORDINGS } from "../src/sources.ts";
+import { FOOTAGE, PHOTOS, RECORDINGS } from "../src/sources.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const publicDir = resolve(here, "../public");
@@ -29,4 +29,16 @@ for (const recording of RECORDINGS) {
   const source = recording.source.replace(/^~/, homedir());
   ffmpeg(["-i", source, "-vf", "fps=30,scale=1206:-2", "-an", "-c:v", "libx264", "-crf", "21", "-preset", "slow", "-pix_fmt", "yuv420p", resolve(publicDir, recording.file)]);
   console.log("recording", recording.file);
+}
+
+// The phone shots sit on a blurred still of the coffee farm clip.
+ffmpeg(["-ss", "3", "-i", resolve(publicDir, "video/coffee-farm.mp4"), "-frames:v", "1", "-q:v", "3", resolve(publicDir, "images/backdrop-farm.jpg")]);
+
+for (const photo of PHOTOS) {
+  const title = decodeURIComponent(photo.page.split("/wiki/")[1]);
+  const api = `https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlwidth=1400&format=json&titles=${encodeURIComponent(title)}`;
+  const info = JSON.parse(execFileSync("curl", ["-sSfL", "-A", "LeafDoctorVideo/1.0", api]).toString()) as { query: { pages: Record<string, { imageinfo: { thumburl: string }[] }> } };
+  const url = Object.values(info.query.pages)[0].imageinfo[0].thumburl;
+  execFileSync("curl", ["-sSfL", "-A", "LeafDoctorVideo/1.0", "-o", resolve(publicDir, photo.file), url]);
+  console.log("photo", photo.file);
 }

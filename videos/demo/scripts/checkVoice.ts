@@ -9,7 +9,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const apiKey = process.env.ELEVENLABS_API_KEY;
 if (!apiKey) throw new Error("Set ELEVENLABS_API_KEY");
 
-const MUST_HEAR = ["Leaf Doctor", "KEPHIS", "SMS", "SHOP", "agrovets", "Noor", "coffee-leaf", "hotspot", "extension officers"];
+const MUST_HEAR = ["Leaf Doctor", "SHOP", "Noor", "smartphone", "field officer", "neighbours", "basic phone", "hub phone", "re-leaf", "megabyte", "adviser"];
 
 async function transcribe(file: string): Promise<string> {
   const form = new FormData();
@@ -21,7 +21,7 @@ async function transcribe(file: string): Promise<string> {
 }
 
 // KEPHIS is said "KEF-iss" and agrovets "agro vets", so these phonetic spellings from the transcriber count as right.
-const SOUNDS_LIKE: Record<string, string[]> = { KEPHIS: ["kephis", "kefis", "kefiss"], agrovets: ["agrovets", "agro vets", "agro-vets"] };
+const SOUNDS_LIKE: Record<string, string[]> = { "Leaf Doctor": ["leaf doctor", "leafdoctor"], KEPHIS: ["kephis", "kefis", "kefiss"], agrovets: ["agrovets", "agro vets", "agro-vets"], neighbours: ["neighbours", "neighbors"], "re-leaf": ["re-leaf", "releaf", "relief", "re leaf"], adviser: ["adviser", "advisor"] };
 
 const normalise = (text: string) => text.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
 

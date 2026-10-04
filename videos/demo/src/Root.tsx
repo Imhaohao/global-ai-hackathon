@@ -5,5 +5,5 @@ import { DemoVideo } from "./DemoVideo";
 import { DURATION, FPS, HEIGHT, WIDTH } from "./timeline";
 
 export function Root() {
-  return <Composition id="DemoVideo" component={DemoVideo} durationInFrames={DURATION} fps={FPS} width={WIDTH} height={HEIGHT} />;
+  return <Composition id="DemoVideo" component={DemoVideo} defaultProps={{ checkOverflow: false, overflowSelfTest: false }} durationInFrames={DURATION} fps={FPS} width={WIDTH} height={HEIGHT} />;
 }

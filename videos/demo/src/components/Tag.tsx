@@ -17,6 +17,7 @@ export function Tag({ icon, children, from, to, tone = "night" }: TagProps) {
   const iconLight = tone === "rust" ? "text-rust-glow drop-shadow-[0_0_10px_var(--brand-rust)]" : "text-leaf-soft";
   return (
     <div
+      data-box="tag"
       className="flex w-fit items-center gap-4 rounded-full bg-night-raised/85 py-5 pl-7 pr-9 text-lead font-medium text-on-night"
       style={{ opacity: shown, translate: `0 ${rise * 24}px`, filter: `blur(${rise * 6}px)`, boxShadow: "0 12px 40px rgba(0,0,0,0.35)", backdropFilter: "blur(14px)" }}
     >

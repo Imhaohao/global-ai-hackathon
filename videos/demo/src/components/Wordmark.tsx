@@ -9,7 +9,7 @@ const NAME = "Leaf Doctor";
  * The Leaf Doctor wordmark. Letters fly in from scattered positions and lock together; the rust spore lands as the
  * dot that completes it.
  */
-export function Wordmark({ at, size = 220, tone = "night" }: { at: number; size?: number; tone?: "night" | "paper" }) {
+export function Wordmark({ at, size = 220, tone = "night", showSpore = true }: { at: number; size?: number; tone?: "night" | "paper"; showSpore?: boolean }) {
   const frame = useCurrentFrame();
   const ink = tone === "night" ? "text-on-night" : "text-ink";
   return (
@@ -26,9 +26,11 @@ export function Wordmark({ at, size = 220, tone = "night" }: { at: number; size?
           );
         })}
       </div>
-      <div style={{ opacity: progress(frame, at + 18, 10), scale: 0.3 + 0.7 * progress(frame, at + 18, 14, settle) }}>
-        <Spore size={size * 0.16} />
-      </div>
+      {showSpore && (
+        <div style={{ opacity: progress(frame, at + 18, 10), scale: 0.3 + 0.7 * progress(frame, at + 18, 14, settle) }}>
+          <Spore size={size * 0.16} />
+        </div>
+      )}
     </div>
   );
 }

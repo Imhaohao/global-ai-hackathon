@@ -8,8 +8,10 @@ export const HEIGHT = 1080;
 type Timing = { beat: BeatId; seconds: number; speechEnd: number; words: { text: string; start: number; end: number }[] };
 const TIMINGS = timings as Timing[];
 
-/** Frames of silence before each line. The first line waits for the orbit shot to settle. */
-const GAP_BEFORE: Record<BeatId, number> = { access: 12, phones: 9, scan: 11, sms: 10, shop: 10, seed: 12, map: 12, close: 13 };
+/** Frames of silence before each line, so each picture can finish moving before the next idea starts. */
+const GAP_BEFORE: Record<BeatId, number> = { problem: 18, advisers: 8, texts: 26, reply: 14, tiny: 20, shop: 18, seed: 22, weekend: 18, officer: 16, alert: 18, close: 22 };
+/** Frames after the last word while the grid folds into the mark and the name lands. */
+const TAIL = 92;
 
 const seconds = (value: number) => Math.round(value * FPS);
 
@@ -43,16 +45,10 @@ export const voiceEnd = (beat: BeatId) => VOICE_START[beat] + seconds(timingOf(b
 export const voiceFile = (beat: BeatId) => `audio/voice/${beat}.mp3`;
 
 export const SCENES = {
-  orbit: { from: 0, to: VOICE_START.phones - 4 },
-  chaos: { from: VOICE_START.phones - 4, to: VOICE_START.scan },
-  scan: { from: VOICE_START.scan, to: VOICE_START.sms - 4 },
-  sms: { from: VOICE_START.sms - 4, to: VOICE_START.shop - 4 },
-  shop: { from: VOICE_START.shop - 4, to: VOICE_START.seed - 4 },
-  seed: { from: VOICE_START.seed - 4, to: VOICE_START.map - 4 },
-  map: { from: VOICE_START.map - 4, to: VOICE_START.close - 6 },
-  close: { from: VOICE_START.close - 6, to: voiceEnd("close") + 10 },
-  endCard: { from: voiceEnd("close") + 10, to: voiceEnd("close") + 10 + 120 },
+  problem: { from: 0, to: VOICE_START.texts - 8 },
+  story: { from: VOICE_START.texts - 8, to: VOICE_START.close - 10 },
+  close: { from: VOICE_START.close - 10, to: voiceEnd("close") + TAIL },
 } as const;
 
 export type SceneId = keyof typeof SCENES;
-export const DURATION = SCENES.endCard.to;
+export const DURATION = SCENES.close.to;

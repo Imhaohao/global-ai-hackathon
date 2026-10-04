@@ -1,5 +1,5 @@
 import { Audio, Sequence, interpolate, staticFile } from "remotion";
-import { SCAN_SHUTTER, SFX_CUES, type SfxCue } from "./sfx";
+import { SFX_CUES, type SfxCue } from "./sfx";
 import { SCRIPT } from "./voiceover";
 import { DURATION, VOICE_START, voiceEnd, voiceFile } from "./timeline";
 
@@ -9,12 +9,12 @@ const CROSSFADE = 12;
 
 /**
  * The generated bed lifts at 18.5 s and fades from 47 s, so it is laid in three pieces cut on its own bar dips: the
- * lift lands on "Meet Leaf Doctor", a groove section repeats under the demos, and its real ending closes the video.
+ * lift lands as the basic phone appears, a groove section repeats under the story, and its real ending closes the video.
  */
 const MUSIC_PIECES = [
-  { from: 0, to: 1000, sourceFrom: 8.7 },
-  { from: 1000, to: 1450, sourceFrom: 23.5 },
-  { from: 1450, to: DURATION, sourceFrom: 46.0 },
+  { from: 0, to: 1150, sourceFrom: 7.7 },
+  { from: 1150, to: DURATION - 260, sourceFrom: 24.0 },
+  { from: DURATION - 260, to: DURATION, sourceFrom: 44.6 },
 ] as const;
 
 function musicVolume(frame: number) {
@@ -51,7 +51,7 @@ export function Soundtrack() {
           <Audio src={staticFile("audio/music.mp3")} trimBefore={Math.round(piece.sourceFrom * 30)} volume={(frame) => musicVolume(frame + piece.from) * pieceFade(frame, piece.to - piece.from, piece.from > 0)} />
         </Sequence>
       ))}
-      {[...SFX_CUES, SCAN_SHUTTER].map((cue, index) => (
+      {SFX_CUES.map((cue, index) => (
         <Effect key={index} cue={cue} />
       ))}
     </>

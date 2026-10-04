@@ -10,6 +10,8 @@
     "checkVoice": "node scripts/checkVoice.ts",
     "music": "node scripts/generateMusic.ts",
     "credits": "node scripts/writeCredits.ts",
+    "check:words": "node scripts/writeMasks.ts && node scripts/checkWords.ts",
+    "check:overflow": "node scripts/checkOverflow.ts",
     "media": "node scripts/prepareMedia.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src scripts"

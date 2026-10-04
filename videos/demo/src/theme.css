@@ -14,12 +14,14 @@
   --color-rust-glow: var(--brand-rust-glow);
   --color-rust-deep: var(--brand-rust-deep);
 
-  --font-display: var(--brand-font-display);
-  --font-body: var(--brand-font-body);
+  --font-display: var(--video-font);
+  --font-body: var(--video-font);
   --font-data: var(--brand-font-data);
 }
 
 @theme {
+  /* Alegreya replaces the brand's Archivo and Atkinson for these videos, at the user's request. */
+  --video-font: "Alegreya", Georgia, serif;
   /* The night base and its text, used where the video goes dark. */
   --color-night: #0d0f0b;
   --color-night-raised: #1a1d17;
@@ -49,22 +51,20 @@
   body {
     background: var(--color-night);
     color: var(--color-on-night);
-    font-family: var(--brand-font-body);
+    font-family: var(--video-font);
     -webkit-font-smoothing: antialiased;
   }
 }
 
 @utility display-poster {
-  font-family: var(--brand-font-display);
-  font-weight: var(--brand-weight-poster);
-  font-stretch: 70%;
+  font-family: var(--video-font);
+  font-weight: 900;
   text-wrap: balance;
 }
 
 @utility display-headline {
-  font-family: var(--brand-font-display);
-  font-weight: var(--brand-weight-display);
-  font-stretch: 84%;
+  font-family: var(--video-font);
+  font-weight: 800;
   text-wrap: balance;
 }
 

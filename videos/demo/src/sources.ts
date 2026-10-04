@@ -35,16 +35,6 @@ export const FOOTAGE: FootageSource[] = [
     seconds: 3.3,
   },
   {
-    file: "video/coffee-leaves.mp4",
-    title: "Close-Up of Green Coffee Beans on Plant",
-    author: "Mario Spencer",
-    page: "https://www.pexels.com/video/close-up-of-green-coffee-beans-on-plant-33516244/",
-    download: "https://videos.pexels.com/video-files/33516244/14254483_1920_1080_24fps.mp4",
-    licence: PEXELS_LICENCE,
-    trimStart: 0,
-    seconds: 5,
-  },
-  {
     file: "video/basic-phone.mp4",
     title: "Close-up View Of An Old Nokia Mobile Phone",
     author: "Parth Patel",
@@ -53,26 +43,6 @@ export const FOOTAGE: FootageSource[] = [
     licence: PEXELS_LICENCE,
     trimStart: 1,
     seconds: 6,
-  },
-  {
-    file: "video/coffee-rows.mp4",
-    title: "Drone Footage of a Coffee Plantation",
-    author: "Thiago Zanutim Lucas",
-    page: "https://www.pexels.com/video/drone-footage-of-a-coffee-plantation-12493599/",
-    download: "https://videos.pexels.com/video-files/12493599/12493599-hd_2048_1080_24fps.mp4",
-    licence: PEXELS_LICENCE,
-    trimStart: 0,
-    seconds: 6,
-  },
-  {
-    file: "video/field-rain.mp4",
-    title: "A Rain Pouring on a Green Field",
-    author: "Jyoti Pur",
-    page: "https://www.pexels.com/video/a-rain-pouring-on-a-green-field-5918480/",
-    download: "https://videos.pexels.com/video-files/5918480/5918480-hd_1920_1080_30fps.mp4",
-    licence: PEXELS_LICENCE,
-    trimStart: 0,
-    seconds: 4,
   },
   {
     file: "video/coffee-farm.mp4",
@@ -86,9 +56,25 @@ export const FOOTAGE: FootageSource[] = [
   },
 ];
 
-/** The team's own iPhone screen recordings of the app and the SMS bot. Paths are on the recording laptop. */
+/** The team's own iPhone screen recordings. Paths are on the recording laptop. */
 export const RECORDINGS = [
-  { file: "video/rec-scan.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-23-18_1.MP4", what: "Leaf scan to the coffee leaf rust action card, iPhone" },
-  { file: "video/rec-seed.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-33-02_1.MP4", what: "Seed packet barcode check against the demo registry, then the KEPHIS 1393 steps, iPhone" },
-  { file: "video/rec-sms.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-52-31_1.mov", what: "Real iMessage conversation with the Leaf Doctor SMS bot, iPhone" },
+  { file: "video/rec-scan.mp4", source: "~/Downloads/ScreenRecording_10-03-2026 22-23-18_1.MP4", what: "Leaf scan to the coffee leaf rust result, iPhone" },
 ] as const;
+
+/** Text copied word for word from a recording rather than shown from it. */
+export const TRANSCRIBED = {
+  source: "~/Downloads/ScreenRecording_10-03-2026 22-52-31_1.mov",
+  what: "Noor's question and the bot's brown eye spot reply on the basic phone's screen are copied from this real SMS conversation",
+} as const;
+
+export type PhotoSource = { file: string; title: string; author: string; page: string; licence: string };
+
+export const PHOTOS: PhotoSource[] = [
+  {
+    file: "images/field-officer.jpg",
+    title: "Agricultural Field Advisor ( Extension worker)",
+    author: "Davie Binali",
+    page: "https://commons.wikimedia.org/wiki/File:Agricultural_Field_Advisor_(_Extension_worker).jpg",
+    licence: "CC BY-SA 4.0",
+  },
+];

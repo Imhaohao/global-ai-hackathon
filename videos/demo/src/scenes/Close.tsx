@@ -1,54 +1,56 @@
-import { AbsoluteFill, Img, Sequence, staticFile, useCurrentFrame } from "remotion";
-import { Camera } from "../components/Camera";
-import { Footage } from "../components/Footage";
-import { Phone } from "../components/Phone";
-import { Facts, Place, Stage } from "../components/Stage";
-import { Words } from "../components/Words";
-import { PHONE_SCREEN_HEIGHT, crop } from "../lib/focus";
-import { progress } from "../lib/ease";
-import { SCENES, cue } from "../timeline";
+import { Leaf } from "@phosphor-icons/react";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
+import { FarmerGrid } from "../shared/FarmerGrid";
+import { Wordmark } from "../components/Wordmark";
+import { glide, leave, progress, settle } from "../lib/ease";
+import { SCENES, cue, voiceEnd } from "../timeline";
 
-const start = SCENES.close.from;
-const local = (abs: number) => abs - start;
-const PHONE_AT = { x: -380, y: 0 };
-const PHONE_SHOT = local(cue("close", "And")) - 4;
-/** The guardrail lines are long, so this phone sits further left than the others. */
-const LEFT = -400;
-const NOT_SURE = { x: 201, y: 205 };
-const GET_HELP = { x: 201, y: 640 };
-const SURE = local(cue("close", "sure"));
-const PERSON = local(cue("close", "person"));
+const START = SCENES.close.from;
+const RELEAF_AT = cue("close", "re-leaf");
+const LIGHT_AT = cue("close", "reach");
+export const FOLD_AT = voiceEnd("close") + 4;
+export const NAME_AT = FOLD_AT + 34;
+const GRID_SIZE = 760;
 
-/** Noor's morning on the farm, then the guardrail: when the app is not sure, it sends her to a person. */
+/** The specialist, relieved: a leaf lands on the field officer's photo as the voice says "re-leaf". */
+function Specialist() {
+  const frame = useCurrentFrame();
+  const shown = progress(frame, START, 14, settle) * (1 - progress(frame, LIGHT_AT, 12, leave));
+  const leaf = progress(frame, RELEAF_AT, 14, settle);
+  return (
+    <div className="absolute" style={{ left: 260, top: 200, width: 500, height: 680, opacity: shown, rotate: "-2deg" }}>
+      <div className="absolute inset-0 overflow-hidden rounded-[32px]" style={{ boxShadow: "0 60px 120px rgba(0,0,0,0.6), 0 0 0 10px #f2f0ea" }}>
+        <Img src={staticFile("images/field-officer.jpg")} className="size-full object-cover" style={{ objectPosition: "50% 10%" }} />
+      </div>
+      <div className="absolute -right-[50px] -top-[50px] flex size-[150px] items-center justify-center rounded-full" style={{ background: "#1f5135", opacity: leaf, scale: 0.3 + 0.7 * leaf, rotate: `${(1 - leaf) * -60}deg`, boxShadow: "0 0 50px rgba(127,211,155,0.7)" }}>
+        <Leaf size={90} weight="fill" color="#7fd39b" />
+      </div>
+    </div>
+  );
+}
+
+/** Everyone reached: an SMS wave lights all 100 farmers, then the grid folds into the Leaf Doctor mark and the name lands. */
 export function Close() {
   const frame = useCurrentFrame();
+  if (frame < START) return null;
+  const enter = progress(frame, START, 12, settle);
+  const centre = progress(frame, LIGHT_AT - 4, 22, glide);
+  const slide = progress(frame, NAME_AT - 22, 22, glide);
+  const gridX = 380 * (1 - centre) - 420 * slide;
   return (
-    <AbsoluteFill className="bg-night">
-      <Sequence durationInFrames={PHONE_SHOT + 8} layout="none">
-        <Footage src="video/coffee-farm.mp4" zoom={[1.02, 1.1]} shade={0.3} />
-        <AbsoluteFill className="items-start justify-end p-[120px]">
-          <Words text="Noor's morning walk" at={local(cue("close", "Noor's"))} className="display-poster text-poster text-on-night" stagger={4} />
-        </AbsoluteFill>
-      </Sequence>
-      <Sequence from={PHONE_SHOT} layout="none">
-        <Sequence from={-PHONE_SHOT} layout="none">
-          <AbsoluteFill style={{ opacity: progress(frame, PHONE_SHOT, 8) }}>
-            <Stage backdrop="images/backdrop-farm.jpg">
-              <Camera keys={[crop(PHONE_SHOT, NOT_SURE, 1.7, LEFT), crop(PHONE_SHOT + 18, NOT_SURE, 2.45, LEFT), crop(PERSON - 4, NOT_SURE, 2.45, LEFT), crop(PERSON + 14, GET_HELP, 2.35, LEFT)]}>
-                <Place x={PHONE_AT.x}>
-                  <Phone screenHeight={PHONE_SCREEN_HEIGHT}>
-                    <Img src={staticFile("images/app-not-sure.png")} className="absolute inset-0 size-full" />
-                  </Phone>
-                </Place>
-              </Camera>
-              <Facts left={1170} width={740}>
-                <Words text="Not sure?" at={SURE - 4} className="display-poster text-headline whitespace-nowrap text-on-night" />
-                <Words text="Ask a person." at={PERSON - 4} className="display-poster text-headline whitespace-nowrap text-on-night rust-glow" />
-              </Facts>
-            </Stage>
-          </AbsoluteFill>
-        </Sequence>
-      </Sequence>
+    <AbsoluteFill className="bg-night" style={{ opacity: enter }}>
+      <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(31,81,53,0.4) 0%, rgba(13,15,11,0) 60%)" }} />
+      <Specialist />
+      <AbsoluteFill className="items-center justify-center">
+        <div style={{ translate: `${gridX}px 0`, scale: (0.8 + 0.2 * centre) * (1 - 0.25 * slide), opacity: 0.45 + 0.55 * centre }}>
+          <FarmerGrid stage="closing" lightAt={LIGHT_AT} closeAt={FOLD_AT} size={GRID_SIZE} swapFrames={40} />
+        </div>
+      </AbsoluteFill>
+      <AbsoluteFill className="items-center justify-center">
+        <div style={{ translate: "260px 0" }}>
+          <Wordmark at={NAME_AT} size={200} showSpore={false} />
+        </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 }

@@ -1,35 +1,39 @@
 // The narration, one line per beat. Every figure here is sourced in out/DemoVideo-credits.txt.
 export const VOICE = {
-  // The user's professional clone "Me" (5axmWqaBh99l1FM1cHKM) is not fine-tuned yet and the API refuses it, so this is
-  // the user's instant clone, the agreed fallback.
-  name: "Hao Voicemail Agent (owner clone)",
-  id: "2JkFC17m1Hj4OH1BDoIK",
+  name: "Frederick Surrey - Smooth and Velvety",
+  id: "j9jfwdrw7BRfcR43Qohk",
   model: "eleven_multilingual_v2",
 } as const;
 
-export type BeatId = "access" | "phones" | "scan" | "sms" | "shop" | "seed" | "map" | "close";
+export type BeatId = "problem" | "advisers" | "texts" | "reply" | "tiny" | "shop" | "seed" | "weekend" | "officer" | "alert" | "close";
 
-export type ScriptLine = { beat: BeatId; text: string; spoken?: string; seed: number };
+/** Which part of the story a beat serves: the access problem, how a part works, or the result. */
+export type StoryRole = "problem" | "explanation" | "solution";
+
+export type ScriptLine = { beat: BeatId; role: StoryRole; text: string; spoken?: string; seed: number };
 
 export const SCRIPT: ScriptLine[] = [
-  { beat: "access", text: "In rural Kenya, a third of people live without electricity.", seed: 11 },
-  { beat: "phones", text: "Nearly four in ten rely on a basic phone, and extension officers are few.", seed: 12 },
+  { beat: "problem", role: "problem", text: "In rural Kenya, four in ten adults use a basic phone; two in three aren't online daily.", seed: 31 },
+  { beat: "advisers", role: "problem", text: "And each farm adviser must cover hundreds of farmers.", seed: 32 },
+  { beat: "texts", role: "explanation", text: "So Leaf Doctor works by text. Noor describes the spots,", seed: 33 },
+  { beat: "reply", role: "explanation", text: "and the reply names the disease and three things to do.", seed: 34 },
   {
-    beat: "scan",
-    text: "Meet Leaf Doctor. Skip the symptom chart: a model trained on twenty thousand coffee-leaf photos reads your leaf offline, then gives you steps and a day to recheck.",
-    seed: 13,
+    beat: "tiny",
+    role: "explanation",
+    text: "Replies are plain 160-character texts, answered by a hub phone even offline.",
+    spoken: "Replies are plain, one-hundred-and-sixty-character texts, answered by a hub phone even offline.",
+    seed: 35,
   },
-  { beat: "sms", text: "No smartphone? Text it. The advice comes back by SMS, follow-up questions included.", seed: 14 },
-  { beat: "shop", text: "Reply SHOP with your town to find nearby agrovets, and what to ask for.", seed: 15 },
+  { beat: "shop", role: "explanation", text: "Text SHOP for nearby farm shops.", seed: 36 },
+  { beat: "seed", role: "explanation", text: "Before planting, she texts the seed packet's code to 1393.", spoken: "Before planting, she texts the seed packet's code to thirteen ninety-three.", seed: 37 },
   {
-    beat: "seed",
-    text: "In a Kenyan study, over forty percent of maize seed packets tested were problematic. So check the KEPHIS code before you plant.",
-    seed: 16,
+    beat: "weekend",
+    role: "explanation",
+    text: "At weekends, a smartphone checks leaves offline with an 8.57-megabyte model.",
+    spoken: "At weekends, a smartphone checks leaves offline, with an eight-point-five-seven-megabyte model.",
+    seed: 38,
   },
-  {
-    beat: "map",
-    text: "Every check feeds a hotspot map. When three farms report the same disease in a week, an officer approves an alert for neighbours, and spray advice waits for a wet week.",
-    seed: 17,
-  },
-  { beat: "close", text: "It fits Noor's morning walk. And when it isn't sure, it sends her to a person.", seed: 18 },
+  { beat: "officer", role: "solution", text: "Unsure? One tap texts her field officer, or she simply calls.", seed: 39 },
+  { beat: "alert", role: "solution", text: "When three nearby farms report one disease, an officer approves an alert to neighbours.", seed: 40 },
+  { beat: "close", role: "solution", text: "With Leaf Doctor, let's re-leaf over-burdened specialists, and reach every single farmer in need.", seed: 41 },
 ];
