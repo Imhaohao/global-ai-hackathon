@@ -4,27 +4,23 @@ import { Captions, toPhrases } from "../../components/Captions";
 import { Soundtrack } from "../../components/Soundtrack";
 import { Grain, Paper } from "../../components/Surface";
 import { DEMO_CUES } from "./cues";
+import { BarriersScene } from "./scenes/BarriersScene";
 import { CloseScene } from "./scenes/CloseScene";
-import { GuardrailScene } from "./scenes/GuardrailScene";
-import { HookScene } from "./scenes/HookScene";
-import { HubScene } from "./scenes/HubScene";
-import { ProblemScene } from "./scenes/ProblemScene";
-import { ScaleScene } from "./scenes/ScaleScene";
-import { ScanScene } from "./scenes/ScanScene";
-import { TextScene } from "./scenes/TextScene";
-import { UnsureScene } from "./scenes/UnsureScene";
+import { FlipScene } from "./scenes/FlipScene";
+import { GapScene } from "./scenes/GapScene";
+import { LocalScene } from "./scenes/LocalScene";
+import { PhotoScene } from "./scenes/PhotoScene";
+import { SmallModelScene } from "./scenes/SmallModelScene";
 import { BEATS, DEMO_DURATION, sceneFrom, sceneLength, WORDS } from "./timeline";
 import type { BeatId } from "./voiceover";
 
 const SCENES: Record<BeatId, ComponentType<{ length: number }>> = {
-  hook: HookScene,
-  problem: ProblemScene,
-  text: TextScene,
-  hub: HubScene,
-  scan: ScanScene,
-  unsure: UnsureScene,
-  guardrail: GuardrailScene,
-  scale: ScaleScene,
+  gap: GapScene,
+  barriers: BarriersScene,
+  small: SmallModelScene,
+  flip: FlipScene,
+  photo: PhotoScene,
+  local: LocalScene,
   close: CloseScene,
 };
 

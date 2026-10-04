@@ -1,5 +1,5 @@
 import { CheckCircle, WifiHigh, WifiSlash, type Icon } from "@phosphor-icons/react";
-import { Sequence, useCurrentFrame } from "remotion";
+import { useCurrentFrame } from "remotion";
 import { FeaturePhone, LcdStatus } from "../../../components/FeaturePhone";
 import { FinePrint } from "../../../components/FinePrint";
 import { Handset } from "../../../components/Handset";
@@ -11,17 +11,13 @@ import { FloorShade, Paper, Vignette } from "../../../components/Surface";
 import { glide, mix, progress } from "../../../lib/ease";
 import { SOURCES } from "../credits";
 import productCopy from "../productCopy.json";
-import { wordAt } from "../timeline";
 import { HubScreen } from "../ui/HubScreen";
 
 const HUB_PHONE_IN_PHOTO = { x: 976, y: 1204 } as const;
 export const ARRIVAL_FRAMES = 30;
 
-const word = (text: string) => wordAt("hub", text);
-export const HUB_UI_FROM = 44;
-export const NOOR_REPLY_FROM = word("that") - 14;
-
-function Arrival({ length }: { length: number }) {
+/** Noor's text flies in and lands on the hub phone on the officer's desk. */
+export function Arrival({ length, labelAt }: { length: number; labelAt: number }) {
   const frame = useCurrentFrame();
   const flight = progress(frame, 0, ARRIVAL_FRAMES, glide);
   const landed = progress(frame, ARRIVAL_FRAMES, 14);
@@ -31,6 +27,10 @@ function Arrival({ length }: { length: number }) {
       <Vignette strength={0.45} />
       {flight < 1 && <Spore x={mix(380, HUB_PHONE_IN_PHOTO.x, flight)} y={mix(-80, HUB_PHONE_IN_PHOTO.y, flight)} size={mix(70, 34, flight)} />}
       {landed > 0 && <Spore x={HUB_PHONE_IN_PHOTO.x} y={HUB_PHONE_IN_PHOTO.y} size={40 + 260 * landed} opacity={1 - landed} />}
+      <div className="absolute inset-x-safe-side top-[220px]" style={{ opacity: progress(frame, labelAt, 12), translate: `0 ${(1 - progress(frame, labelAt, 12)) * 20}px` }}>
+        <Slab className="inline-flex px-7 py-5 text-lead font-bold">Hub phone at the local officer's station</Slab>
+        <FinePrint at={labelAt + 8} tone="light" className="mt-3">Picture made with AI.</FinePrint>
+      </div>
     </Punch>
   );
 }
@@ -48,9 +48,11 @@ function PathChip({ icon: Glyph, label, active }: { icon: Icon; label: string; a
   );
 }
 
-function HubUi({ local }: { local: (text: string) => number }) {
+export type HubUiMoments = { modelAt: number; replyAt: number };
+
+/** The hub app with no signal: the on-device model reads Noor's Swahili and the reply types in. */
+export function HubUi({ moments }: { moments: HubUiMoments }) {
   const frame = useCurrentFrame();
-  const offline = frame >= local("or");
   const enter = progress(frame, 0, 18);
   return (
     <Punch flash={0.4}>
@@ -58,13 +60,16 @@ function HubUi({ local }: { local: (text: string) => number }) {
         <div className="absolute inset-0 opacity-25">
           <Photo src="images/cooperative-hub.jpg" from={{ scale: 1.3 }} to={{ scale: 1.36 }} duration={200} style={{ filter: "blur(16px)", objectPosition: "75% 50%" }} />
         </div>
-        <div className="absolute inset-x-0 top-[120px] flex justify-center gap-5">
-          <PathChip icon={WifiHigh} label="Online: Claude" active={!offline} />
-          <PathChip icon={WifiSlash} label="Offline: on this phone" active={offline} />
+        <div className="absolute inset-x-0 top-[100px] flex justify-center gap-5">
+          <PathChip icon={WifiHigh} label="Online" active={false} />
+          <PathChip icon={WifiSlash} label="No signal: model on this phone" active />
         </div>
-        <div className="absolute left-1/2 top-[250px]" style={{ translate: `-50% ${(1 - enter) * 600}px` }}>
-          <Handset width={680} height={1110}>
-            <HubScreen moments={{ exchangeAt: 6, offlineAt: local("or"), modelAt: local("small") - 4, replyAt: local("small") + 2, confirmAt: local("confirm") }} />
+        <div className="absolute inset-x-safe-side top-[200px]">
+          <FinePrint at={moments.replyAt}>{SOURCES.hubModelTest.figure}. {SOURCES.hubModelTest.source}.</FinePrint>
+        </div>
+        <div className="absolute left-1/2 top-[300px]" style={{ translate: `-50% ${(1 - enter) * 600}px` }}>
+          <Handset width={680} height={1050}>
+            <HubScreen moments={{ exchangeAt: 4, offlineAt: 0, modelAt: moments.modelAt, replyAt: moments.replyAt, confirmAt: 100000 }} />
           </Handset>
         </div>
       </Paper>
@@ -95,7 +100,7 @@ function ReplyOnLcd({ frame, confirmAt }: { frame: number; confirmAt: number }) 
   );
 }
 
-function NoorReads({ confirmAt }: { confirmAt: number }) {
+export function NoorReads({ confirmAt }: { confirmAt: number }) {
   const frame = useCurrentFrame();
   const english = progress(frame, confirmAt - 4, 14);
   return (
@@ -111,28 +116,8 @@ function NoorReads({ confirmAt }: { confirmAt: number }) {
         <Slab className="flex flex-col gap-3 px-7 py-6">
           <p className="text-fineprint text-ink-muted">The same reply in the English wording</p>
           <p className="text-lead font-bold">{productCopy.englishConfirmLine}</p>
-          <FinePrint at={confirmAt + 6}>
-            {SOURCES.hubModelTest.figure}. {SOURCES.hubModelTest.source}.
-          </FinePrint>
         </Slab>
       </div>
     </Punch>
-  );
-}
-
-export function HubScene({ length }: { length: number }) {
-  const uiLocal = (text: string) => word(text) - HUB_UI_FROM;
-  return (
-    <>
-      <Sequence durationInFrames={HUB_UI_FROM} layout="none">
-        <Arrival length={HUB_UI_FROM} />
-      </Sequence>
-      <Sequence from={HUB_UI_FROM} durationInFrames={NOOR_REPLY_FROM - HUB_UI_FROM} layout="none">
-        <HubUi local={uiLocal} />
-      </Sequence>
-      <Sequence from={NOOR_REPLY_FROM} durationInFrames={length - NOOR_REPLY_FROM} layout="none">
-        <NoorReads confirmAt={word("confirm") - NOOR_REPLY_FROM} />
-      </Sequence>
-    </>
   );
 }

@@ -19,7 +19,6 @@ HEADERS = {"User-Agent": "LeafDoctorReel/0.1 (https://github.com/Imzihao; hackat
 
 PHOTOS = {
     "rust-underside": "File:Hemileia vastatrix - coffee leaf rust.jpg",
-    "rust-kiambu": "File:Coffee leaves with rust at Fairview Estate, Kiambu, KE.jpg",
     "rust-topside": "File:Hemileia vastatrix.jpg",
 }
 

@@ -8,14 +8,12 @@ const VOICE_LEAD_IN = 10;
 
 /** Breath after each beat's line, before the next one starts. */
 const PAUSE_AFTER: Record<BeatId, number> = {
-  hook: 14,
-  problem: 10,
-  text: 8,
-  hub: 10,
-  scan: 10,
-  unsure: 8,
-  guardrail: 8,
-  scale: 10,
+  gap: 30,
+  barriers: 54,
+  small: 36,
+  flip: 36,
+  photo: 30,
+  local: 30,
   close: 0,
 };
 
@@ -56,7 +54,7 @@ export const WORDS: TimedWord[] = BEATS.flatMap((entry) =>
 );
 
 /** Where each scene's Sequence starts. The opening scene starts on frame 0, before its voice line. */
-export const sceneFrom = (id: BeatId) => (id === "hook" ? 0 : beat(id).from);
+export const sceneFrom = (id: BeatId) => (id === "gap" ? 0 : beat(id).from);
 
 /** Where each scene's Sequence ends: the next scene's start, or the end of the reel. */
 export function sceneLength(id: BeatId): number {
@@ -74,4 +72,4 @@ export function wordAt(id: BeatId, text: string, occurrence = 0): number {
   return match.from - start;
 }
 
-export const END_CARD_FROM = beat("close").from + 115;
+export const END_CARD_FROM = beat("close").from + 84;

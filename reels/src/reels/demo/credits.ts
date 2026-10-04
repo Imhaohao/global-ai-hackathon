@@ -10,7 +10,7 @@ export const PHOTO_CREDITS: Credit[] = photoCredits.map((photo) => ({
   source: photo.source,
 }));
 
-/** Pictures of Noor, her daughter, the cooperative, the officer and the valley are illustrations, not documentary photos. */
+/** Pictures of Noor, her daughter, the officer's desk and the officer are illustrations, not documentary photos. */
 export const GENERATED_IMAGES = [
   "images/noor-slope.jpg",
   "images/noor-phone.jpg",
@@ -18,11 +18,10 @@ export const GENERATED_IMAGES = [
   "images/daughter-scan.jpg",
   "images/cooperative-hub.jpg",
   "images/officer.jpg",
-  "images/valley-aerial.jpg",
 ] as const;
 
 export const GENERATED_CREDIT: Credit = {
-  what: "Illustrations of Noor, her daughter, the cooperative, the officer and the valley",
+  what: "Illustrations of Noor, her daughter, the officer's desk and the officer",
   who: "Generated with OpenAI image generation through Codex for this reel; Noor and her family are fictional",
   licence: "Generated image, no third-party licence",
 };
@@ -60,6 +59,18 @@ export const SOURCES = {
     source: "World Bank, Global Findex",
     year: "2024 survey",
     url: "https://api.worldbank.org/v2/country/KEN/indicator/con1.9?format=json&source=28",
+  },
+  ruralPower: {
+    figure: "67.1% of Kenya's rural population has access to electricity",
+    source: "World Bank, World Development Indicators",
+    year: "2024",
+    url: "https://api.worldbank.org/v2/country/KEN/indicator/EG.ELC.ACCS.RU.ZS?format=json&mrnev=1",
+  },
+  leafModelSize: {
+    figure: "coffee-leaf.tflite is 8,091,596 bytes (7.72 MiB) and loads from the phone with no inference API",
+    source: "Team model, README.md",
+    year: "2026",
+    url: "README.md",
   },
   extensionTarget: {
     figure: "Target of one extension officer per 600 farmers by 2029; the ratio has not improved",
