@@ -81,7 +81,7 @@ The model read 0 of 100 Kikuyu sentences as `other`. It called 97 of them Swahil
 
 For Kikuyu the model's English scores below simply copying the Kikuyu sentence, so it understood close to nothing. In 32 of 100 Kikuyu outputs the "translation" still contains the Kikuyu letters ĩ or ũ, so the model left the sentence partly untranslated. Other outputs are fluent English that the source does not say: sentence 1 is about diabetic mice, and the model turned it into a list of body parts. Swahili is understood partly, at 41.04. That fits the earlier finding in `PROGRESS.md` that the model's Swahili translations are partly right but invent details.
 
-What it means for Leaf Doctor: Kikuyu is a measured gap. A Kikuyu text to the hub needs a rule-based check for Kikuyu words, or a default of sending unrecognised Swahili-looking text to a person, before the model's label can be trusted.
+What it means for Leaf Doctor: this is the raw model-routing result before the hub's language guard runs. Kikuyu is a measured gap in the model, so the app checks incoming text with the guard described below and sends likely Kikuyu messages to a fixed unsupported-language reply before calling the model.
 
 ## Not done
 
@@ -103,3 +103,16 @@ Measured on the separate FLORES-200 devtest split (`evals/kikuyu/results.json`, 
 | Our 24 Swahili and English farmer test messages | 0 of 24 |
 
 These are news-style sentences. Farmer texts are shorter and often drop the special letters, so the real catch rate will be lower than 71%. Measuring it needs Kikuyu-speaking farmers' messages, which we do not have.
+
+## External rust benchmark: Leaf Doctor B2 against GPT-6 Astra
+
+Both models rank the same 1,119 outside rust photos (847 Rust, 272 NoRust; one near-duplicate excluded, as in `training/reports/model_comparison_b3/comparison.json`). AUROC (area under the ROC curve) measures how well a model ranks Rust leaves above NoRust leaves, from 0.5 for a coin flip to 1.0 for perfect. It is not diagnosis accuracy: at the app's own threshold, B2 catches 4.7% of these rust photos.
+
+One scorer handles both sides: `training/benchmark_external_rust.py`. It writes every image's score to `training/reports/external_rust_benchmark/`.
+
+| Model | AUROC | Wall-clock time for 1,119 images | Status |
+|---|---|---|---|
+| Leaf Doctor B2 (`coffee-leaf-b2.tflite`, SHA-256 `ddbea876...6a01`) | 0.778 | 7.5 s (Apple M5 Pro, 4 CPU threads, includes image decoding) | Reproduced on 2026-10-04: `training/.venv/bin/python training/benchmark_external_rust.py --model b2` |
+| GPT-6 Astra | 0.776 | 58 min 39 s | Team-reported. The per-image outputs, prompt and run log are not committed yet, so this row cannot be checked |
+
+The videos say B2 took 1 min 45 s, which makes it 33 times faster. The reproduced run took 7.5 s on this machine, and the setup behind the 1 min 45 s figure is not recorded. Until the Astra outputs are committed, treat "ranks just as well" and "33 times faster" as unverified. To verify them, save Astra's scores as a CSV with columns `path,rust_score`, then run `training/.venv/bin/python training/benchmark_external_rust.py --scores astra.csv --name gpt-6-astra --seconds 3519`.

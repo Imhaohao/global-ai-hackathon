@@ -1,0 +1,11 @@
+{
+  "model": "b2",
+  "images": 1119,
+  "rust_images": 847,
+  "not_rust_images": 272,
+  "auroc": 0.778,
+  "wall_clock_seconds": 7.5,
+  "artifact_sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+  "label_file_sha256": "97c45638af5539c0c9c81c900be2fff0da6050561c7d811562d5273e6f611e02",
+  "note": "AUROC ranks Rust above NoRust; it is not diagnosis accuracy at the app's threshold."
+}
