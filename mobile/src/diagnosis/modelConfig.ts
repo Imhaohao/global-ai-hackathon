@@ -22,7 +22,7 @@ export const MODEL_NAMES: Record<ModelId, string> = {
   b2: 'EfficientNet B2',
 };
 
-export const DEFAULT_MODEL_ID: ModelId = 'b0';
+export const DEFAULT_MODEL_ID: ModelId = 'b1';
 export const MODEL_IDS: ModelId[] = ['b0', 'b1', 'b2'];
 
 export function conditionFor(config: ModelConfig, index: number): LeafCondition {

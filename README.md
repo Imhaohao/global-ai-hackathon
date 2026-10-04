@@ -4,6 +4,20 @@ Leaf Doctor is our project for the **World Bank agriculture challenge** in **Sma
 
 This is a research prototype. Dataset accuracy does not establish field accuracy, physical-phone performance remains unverified, and we have not measured a yield benefit. The project is a hackathon submission, and it does not claim a World Bank partnership or endorsement.
 
+## For judges
+
+Each row points at the strongest evidence for one judging criterion. Every number links to where it was measured.
+
+| Criterion | What to look at | Evidence |
+|---|---|---|
+| Built solution (Small AI fidelity) | A basic phone texts the cooperative's hub phone, which answers offline: Qwen3.5-2B (1.28 GB, text only) reads the Swahili, fixed rules pick the answer, and Noor confirms it. A smartphone checks leaves offline with the 7.32 MB B1 model. | Hub SMS round trip on an Android emulator, about 5 s per text ([status](#phone-channels-progress)). Leaf model sizes in the [four-model comparison](#completed-four-model-comparison). Neither has run on a physical phone yet. |
+| Development relevance | Noor's coffee yield problem from Annex B: a sick leaf and no extension officer nearby. | About one extension officer per 1,380 Kenyan farmers ([why](#what-the-project-is-for)). 38.4% of rural Kenyan adults use a basic text phone as their main phone ([Findex 2024](docs/evidence.md#global-findex-world-bank)). |
+| Data grounding | Every dataset with its source, licence, size and what it does not cover. | [Model data card](docs/data-card.md), [training sources](training/sources.json), [country evidence](docs/evidence.md). The classifier cannot see coffee berry disease, berry borer or wilt. |
+| Evidence it works | B1 is right on 93.27% of 5,868 test photos and accepted 0 of 202 unsupported photos. On 1,119 outside rust photos it ranks rust above healthy with AUROC 0.742, but at its threshold it catches only 15.82% of them. The SMS model filled 84 of 94 fields with 0 wrong final diagnoses. | [Four-model comparison](#completed-four-model-comparison), [external rust benchmark](docs/evidence.md#external-rust-benchmark-leaf-doctor-b2-against-gpt-6-astra), [language-model eval](#on-device-small-language-model-sharedsrclocalmodel). The root test suite runs 332 tests (`npm test`). |
+| Value of AI | Keyword rules alone left 10 of 13 messages "unsure". With the 2B model, 7 of those became confirmed right answers and none became wrong. A zero-shot vision model scored 42% on a comparable crop task, so we fine-tuned. | [Language-model eval](#on-device-small-language-model-sharedsrclocalmodel), [what we cut](#what-we-cut-and-why) |
+| Scalability | All channels share one set of rules in `shared/`. A new crop needs a disease list, a training set and translations, not new code paths. The app UI is offered in 97 languages, most machine-translated and unreviewed. | [Folder map](#folder-map), [Step 4](#step-4-map-disease-hotspots-and-trends) |
+| Responsible AI | The model never finalizes a diagnosis alone, "not sure" goes to a person, advice never invents a dose, and consent comes first. Kikuyu texts go to a person: the guard flagged 99.8% of Kikuyu test sentences and 0 Swahili or English ones. | [Guardrails](#guardrails-that-apply-to-every-step), [data flow](docs/data-flow.md), [Kikuyu guard](docs/evidence.md#kikuyu-guard-on-the-hub) |
+
 ## Contents
 
 1. [The project in four steps](#the-project-in-four-steps)
@@ -47,6 +61,10 @@ Because of this tool, Noor can find out what is wrong with a sick coffee leaf, a
 - A trained diagnosis app beat farmers and extension agents in the field for cassava ([Nuru, Frontiers 2020](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.590889/full)).
 
 We do not claim Leaf Doctor raises yield. None of these studies tested it. 53.7% of Kenyans own a phone (48.6% in rural areas) and 29.6 million feature phones are still on networks, which is why SMS is the main channel.
+
+### The missing farmer registry
+
+Annex B says that in many settings the binding constraint is the absence of a working farmer registry, not the absence of an algorithm. Leaf Doctor does not fix that. A farmer can only use it if someone, in practice her cooperative or an extension officer, has given her the hub's number or installed the app, so it reaches farmers no faster than those organisations already do. It also keeps no lasting list of farmers: the backend holds a number only alongside its last eight messages, and an hourly cleanup deletes conversations idle for 24 hours once deployed. The closest thing to a registry we have built is the ALERTS sign-up on the `neighbour-disease-alerts` branch, which is not merged yet. A farmer texts ALERTS and her area, and her number is stored against that area until she texts ALERTS OFF. That gives an opt-in list of phone numbers by area, which a cooperative could use as the start of a member list. It is not a registry in the brief's sense, because it records no name, farm size or crop and does not check that the number belongs to a coffee farmer. Rolling Leaf Doctor out through cooperatives that already keep member lists is the realistic route to reaching farmers at scale.
 
 ### How the pieces connect
 
@@ -185,7 +203,7 @@ The farmer or her daughter photographs a symptomatic leaf or plant. The app chec
 | Image quality checks and retake prompts (blur) | `mobile/src/diagnosis/imageQuality.ts`, `qualityGuidance.ts` |
 | On-device classification | `mobile/src/diagnosis/classifyLeaf.ts`, `useLeafModel.ts`, `modelDecision.ts` |
 | A vote across the leaves into one plant verdict. Disagreement or low confidence becomes "not sure" | `shared/src/plantVote.ts`, `mobile/src/diagnosis/diagnosePlant.ts` |
-| Choice of model: B0 (default), B1 or B2 | `mobile/src/components/ModelSelector.tsx`, `mobile/src/diagnosis/modelCatalog.ts` |
+| Choice of model: B1 (default), B0 or B2 | `mobile/src/components/ModelSelector.tsx`, `mobile/src/diagnosis/modelCatalog.ts` |
 | Saved record per observation: capture time, GPS with its accuracy, farm section and model version | `mobile/src/storage/observations.ts`, `deviceLocation.ts`, `mobile/src/screens/FarmSectionPicker.tsx` |
 
 Screenshots of this flow: [consent](docs/screens/00-consent.png), [empty capture](docs/screens/01-capture-empty.png), [three leaves agree](docs/screens/03-three-leaves-agree.png), [leaves disagree](docs/screens/06-leaves-disagree.png) and [retake prompts for unclear photos](docs/screens/09-retake-prompts-unclear.png). The demonstration is meant to include a usable image, an unclear image and an uncertain result that correctly reaches a human adviser.
@@ -309,7 +327,7 @@ Training overwrites the B1 research run; archive any research results you need b
 
 #### EfficientNet-B2 experiment
 
-B2 follows the B1 training functions in an isolated module namespace. It uses the same 20,311 training images, 5,294 validation images, seed 20261003, grouped sampling, augmentation, optimizer settings, stopping limits and validation selection safeguards. Neither existing model is retrained or replaced. The third app choice has its own model and confidence configuration, uses the shared brightness feedback, and retains B0 as the default.
+B2 follows the B1 training functions in an isolated module namespace. It uses the same 20,311 training images, 5,294 validation images, seed 20261003, grouped sampling, augmentation, optimizer settings, stopping limits and validation selection safeguards. Neither existing model is retrained or replaced. The third app choice has its own model and confidence configuration, uses the shared brightness feedback. B1 is the app default (see below).
 
 The initialization is the Apache-2.0 `timm/efficientnet_b2.ra_in1k` checkpoint at revision `3577c4a7d84723645311bb5a9e5086f1b62ec8e2`, with weights SHA256 `e9adbcce7e5d5055c571c4cafdcc7f920b6a6ec42e643c49dff1aabe1d5f53c5`. The eight-class model has **7,712,266 parameters**. Its native pretraining resolution is 256 pixels and its published test setting is 288 pixels. This experiment fine-tunes and evaluates it at the common **224-pixel app resolution**. B1 and B2 therefore share the fine-tuning recipe and data, while their pretrained initialization and pretraining recipes differ. This comparison does not measure B2 at its published 288-pixel setting or isolate architecture alone.
 
@@ -329,7 +347,7 @@ B2 training completed with classifier epoch 21 selected after early stopping at 
 
 The B2 app asset is 8,573,416 bytes with SHA256 `ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01`. Uncompressed conversion matched the checkpoint on 64 validation samples with no top-label changes and maximum probability error 0.00000244. The selected INT8 weight-storage export changed 50 of 5,294 validation top labels, reducing accuracy by 0.264 percentage points and macro F1 by 0.223 points, within the unchanged one-point limits. Maximum per-probability error was 0.5101, so later comparisons must evaluate the actual exported model rather than substitute checkpoint scores. Confidence thresholds were fitted using that export's validation predictions; mite diagnoses remain disabled because the precision/evidence requirement was not met. Fresh-process inference passed with Python outbound socket calls blocked and zero attempted connections. Physical-phone behavior remains untested.
 
-The app now offers B0, B1 and experimental B2, with B0 still selected by default. TypeScript, full mobile lint, all six model-selection tests, the brightness/model contracts and the Android JavaScript/asset bundle passed. The bundle contains all three model assets; it is not a physical-device build or test.
+The app offers B0, B1 and experimental B2. B1 is selected by default: on the four-model comparison below it wrongly accepted 0 of 202 unsupported test images (B0: 38), ranks outside rust photos better (AUROC 0.742 against B0's 0.492) and is the smallest file (7.32 MB). TypeScript, full mobile lint, all six model-selection tests, the brightness/model contracts and the Android JavaScript/asset bundle passed. The bundle contains all three model assets; it is not a physical-device build or test.
 
 The final held-out evaluation now includes B0, B1, B2 and the separately verified B3 candidate. B3 remains outside the app because its exported file exceeds the unchanged 10 MB limit.
 
@@ -395,7 +413,7 @@ Run this only after the four-model comparison completes and other CPU workloads 
 
 ##### Packaged models and evaluation evidence
 
-B0, B1 and B2 exports and configurations are in `mobile/assets/model/`. The B3 export, selected checkpoint, configuration, original training scripts and verification evidence are in `training/candidates/efficientnet-b3/`. B3 remains an offline comparison candidate above the 10 MB per-model app limit. The app retains B0 as its default and allows B1/B2 selection in the multi-leaf workflow; switching clears the current check, and saved checks record the selected calibration/artifact version.
+B0, B1 and B2 exports and configurations are in `mobile/assets/model/`. The B3 export, selected checkpoint, configuration, original training scripts and verification evidence are in `training/candidates/efficientnet-b3/`. B3 remains an offline comparison candidate above the 10 MB per-model app limit. The app uses B1 as its default and allows B0/B2 selection in the multi-leaf workflow; switching clears the current check, and saved checks record the selected calibration/artifact version.
 
 The selected B0/B1/B2 checkpoints and their available verification reports are in `training/checkpoints/`. The completed four-model comparison and timing reports are frozen in `training/reports/model_comparison_b3/`. These reports retain their original machine paths as historical evidence. The B3 training scripts also retain their original paths because their exact bytes are pinned by the run identity; the portable comparison runner loads B3 directly from `--b3-dir` without executing those historical training entry points.
 
