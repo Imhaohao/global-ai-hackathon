@@ -296,7 +296,7 @@ Local histories and audits are under `training/runs/scale_v2/` and `training/run
 
 #### Choosing between EfficientNet-B0 and EfficientNet-B1
 
-The capture screen offers B0 (the default original model) and B1 (experimental). Only the selected model is loaded, selection is disabled while a photo is being processed, and results identify the model used. Loading failures offer retry or switching models. Both use the same brightness feedback and input crop, with separate validation-calibrated disease-confidence thresholds. Both assets are bundled for offline use.
+The capture screen offers B0 (the original model), B1 (experimental) and B2 (the default). Only the selected model is loaded, selection is disabled while a photo is being processed, and results identify the model used. Loading failures offer retry or switching models. Both use the same brightness feedback and input crop, with separate validation-calibrated disease-confidence thresholds. Both assets are bundled for offline use.
 
 B1 starts from Apache-2.0 ImageNet weights `timm/efficientnet_b1.ft_in1k` at revision `1d6ddfd0ad535646fdb05bc3834913d93816152e`. It has 6,523,432 parameters and uses 224-pixel input, consistent with that checkpoint's training resolution and the existing app contract. Its classifier sees all **20,311 vetted training images**, including Peru and reviewed BRACOL crops. The same 5,294 validation images guide selection. Evaluation-only sources and unresolved datasets remain excluded. This compares the delivered models: B0 has coffee-specific pretraining and the original corpus, while B1 has ImageNet pretraining and the expanded corpus. The results cannot isolate the effect of architecture alone.
 
@@ -345,7 +345,7 @@ Both model identities, configurations and the brightness policy stayed unchanged
 
 #### EfficientNet-B2 experiment
 
-B2 follows the B1 training functions in an isolated module namespace. It uses the same 20,311 training images, 5,294 validation images, seed 20261003, grouped sampling, augmentation, optimizer settings, stopping limits and validation selection safeguards. Neither existing model is retrained or replaced. The third app choice has its own model and confidence configuration, uses the shared brightness feedback, and retains B0 as the default.
+B2 follows the B1 training functions in an isolated module namespace. It uses the same 20,311 training images, 5,294 validation images, seed 20261003, grouped sampling, augmentation, optimizer settings, stopping limits and validation selection safeguards. Neither existing model is retrained or replaced. The third app choice has its own model and confidence configuration, uses the shared brightness feedback, and is the default selection.
 
 The initialization is the Apache-2.0 `timm/efficientnet_b2.ra_in1k` checkpoint at revision `3577c4a7d84723645311bb5a9e5086f1b62ec8e2`, with weights SHA256 `e9adbcce7e5d5055c571c4cafdcc7f920b6a6ec42e643c49dff1aabe1d5f53c5`. The eight-class model has **7,712,266 parameters**. Its native pretraining resolution is 256 pixels and its published test setting is 288 pixels. This experiment fine-tunes and evaluates it at the common **224-pixel app resolution**. B1 and B2 therefore share the fine-tuning recipe and data, while their pretrained initialization and pretraining recipes differ. This comparison does not measure B2 at its published 288-pixel setting or isolate architecture alone.
 
@@ -365,7 +365,7 @@ B2 training completed with classifier epoch 21 selected after early stopping at 
 
 The B2 app asset is 8,573,416 bytes with SHA256 `ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01`. Uncompressed conversion matched the checkpoint on 64 validation samples with no top-label changes and maximum probability error 0.00000244. The selected INT8 weight-storage export changed 50 of 5,294 validation top labels, reducing accuracy by 0.264 percentage points and macro F1 by 0.223 points, within the unchanged one-point limits. Maximum per-probability error was 0.5101, so later comparisons must evaluate the actual exported model rather than substitute checkpoint scores. Confidence thresholds were fitted using that export's validation predictions; mite diagnoses remain disabled because the precision/evidence requirement was not met. Fresh-process inference passed with Python outbound socket calls blocked and zero attempted connections. Physical-phone behavior remains untested.
 
-The app now offers B0, B1 and experimental B2, with B0 still selected by default. TypeScript, full mobile lint, all six model-selection tests, the brightness/model contracts and the Android JavaScript/asset bundle passed. The bundle contains all three model assets; it is not a physical-device build or test.
+The app now offers B0, B1 and B2, with B2 selected by default. TypeScript, full mobile lint, all six model-selection tests, the brightness/model contracts and the Android JavaScript/asset bundle passed. The bundle contains all three model assets; it is not a physical-device build or test.
 
 The final held-out evaluation now includes B0, B1, B2 and the separately verified B3 candidate. B3 remains outside the app because its exported file exceeds the unchanged 10 MB limit.
 
@@ -433,7 +433,7 @@ Run this only after the four-model comparison completes and other CPU workloads 
 
 ##### Packaged models and evaluation evidence
 
-B0, B1 and B2 exports and configurations are in `mobile/assets/model/`. The B3 export, selected checkpoint, configuration, original training scripts and verification evidence are in `training/candidates/efficientnet-b3/`. B3 remains an offline comparison candidate above the 10 MB per-model app limit. The app retains B0 as its default and allows B1/B2 selection in the multi-leaf workflow; switching clears the current check, and saved checks record the selected calibration/artifact version.
+B0, B1 and B2 exports and configurations are in `mobile/assets/model/`. The B3 export, selected checkpoint, configuration, original training scripts and verification evidence are in `training/candidates/efficientnet-b3/`. B3 remains an offline comparison candidate above the 10 MB per-model app limit. The app selects B2 by default and allows B0/B1 selection in the multi-leaf workflow; switching clears the current check, and saved checks record the selected calibration/artifact version.
 
 The selected B0/B1/B2 checkpoints and their available verification reports are in `training/checkpoints/`. The completed four-model comparison and timing reports are frozen in `training/reports/model_comparison_b3/`. These reports retain their original machine paths as historical evidence. The B3 training scripts also retain their original paths because their exact bytes are pinned by the run identity; the portable comparison runner loads B3 directly from `--b3-dir` without executing those historical training entry points.
 
