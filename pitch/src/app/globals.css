@@ -1,0 +1,188 @@
+@import "tailwindcss";
+@import "../../../assets/brand/tokens.css";
+
+@theme inline {
+  --font-display: var(--font-archivo), var(--brand-font-display);
+  --font-body: var(--font-atkinson), var(--brand-font-body);
+  --font-data: var(--font-atkinson-mono), var(--brand-font-data);
+  --font-sans: var(--font-body);
+
+  --color-paper: var(--brand-paper);
+  --color-paper-raised: var(--brand-paper-raised);
+  --color-paper-sunken: var(--brand-paper-sunken);
+  --color-rule: var(--brand-rule);
+  --color-ink: var(--brand-ink);
+  --color-ink-muted: var(--brand-ink-muted);
+  --color-ink-faint: var(--brand-ink-faint);
+  --color-leaf: var(--brand-leaf);
+  --color-leaf-pressed: var(--brand-leaf-pressed);
+  --color-leaf-soft: var(--brand-leaf-soft);
+  --color-on-leaf: var(--brand-on-leaf);
+  --color-rust: var(--brand-rust);
+  --color-rust-glow: var(--brand-rust-glow);
+  --color-rust-deep: var(--brand-rust-deep);
+  --color-soil: var(--brand-soil);
+  --color-confident: var(--brand-state-confident);
+  --color-possible: var(--brand-state-possible);
+  --color-unclear: var(--brand-state-unclear);
+  --color-confident-soft: var(--brand-state-confident-soft);
+  --color-possible-soft: var(--brand-state-possible-soft);
+  --color-unclear-soft: var(--brand-state-unclear-soft);
+  --color-lcd: var(--brand-lcd);
+  --color-lcd-ink: var(--brand-lcd-ink);
+
+  --radius-sm: var(--brand-radius-sm);
+  --radius-md: var(--brand-radius-md);
+  --radius-lg: var(--brand-radius-lg);
+  --radius-phone: var(--brand-radius-phone);
+
+  --ease-drawn: var(--brand-ease-drawn);
+  --ease-ui: var(--brand-ease-ui);
+}
+
+@theme static {
+  --text-poster: min(19vw, 34vh);
+  --text-poster--line-height: 0.84;
+  --text-display: min(11vw, 19vh);
+  --text-display--line-height: 0.88;
+  --text-headline: min(4.6vw, 8.2vh);
+  --text-headline--line-height: 0.96;
+  --text-lede: min(2.5vw, 4.4vh);
+  --text-lede--line-height: 1.18;
+  --text-figure: min(7vw, 12.4vh);
+  --text-figure--line-height: 0.95;
+  --text-body: min(1.55vw, 2.75vh);
+  --text-body--line-height: 1.4;
+  --text-caption: min(1.2vw, 2.15vh);
+  --text-caption--line-height: 1.35;
+  --text-fineprint: min(0.95vw, 1.7vh);
+  --text-fineprint--line-height: 1.35;
+  --text-statement: min(3.3vw, 5.9vh);
+  --text-statement--line-height: 1.04;
+
+  --spacing-deck-gap: 3.6vw;
+  --spacing-deck-rise: 3.2vh;
+  --spacing-deck-hairline: 1.2vh;
+  --spacing-deck-panel: min(36vw, 64vh);
+  --spacing-deck-phone: min(19vw, 46vh);
+  --spacing-deck-column: min(46vw, 82vh);
+  --spacing-deck-card: min(30vw, 53vh);
+  --spacing-deck-diagram: 52vh;
+  --spacing-deck-dot: 0.35vh;
+  --spacing-deck-stagger: 13vh;
+  --spacing-deck-title: 19vh;
+  --spacing-deck-bar: 5.2vh;
+  --spacing-deck-labels: 7vh;
+  --spacing-deck-marker: 2.2vh;
+  --spacing-deck-marker-centre: 1.1vh;
+  --spacing-deck-timeline: 21vh;
+  --spacing-deck-icon: 6vh;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+@utility deck-gutter {
+  padding-inline: 4.5vw;
+  padding-block: 6.5vh;
+}
+
+@utility display-poster {
+  font-family: var(--font-display);
+  font-weight: var(--brand-weight-poster);
+  font-stretch: calc(var(--brand-display-width-poster) * 1%);
+}
+
+@utility display-headline {
+  font-family: var(--font-display);
+  font-weight: var(--brand-weight-display);
+  font-stretch: calc(var(--brand-display-width-headline) * 1%);
+  text-wrap: balance;
+}
+
+@utility lede {
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-wrap: pretty;
+}
+
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-block-end: 0.12em;
+  margin-block-end: -0.12em;
+}
+
+@utility figures-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility paper-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.17;
+}
+
+@utility vignette {
+  background: radial-gradient(ellipse at center, transparent 55%, color-mix(in srgb, var(--color-ink) 16%, transparent) 100%);
+}
+
+@utility paper-wash {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 93%, transparent) 0%, color-mix(in srgb, var(--color-paper) 84%, transparent) 42%, color-mix(in srgb, var(--color-paper) 40%, transparent) 56%, transparent 68%);
+}
+
+@utility paper-wash-low {
+  background: linear-gradient(0deg, color-mix(in srgb, var(--color-paper) 90%, transparent) 0%, color-mix(in srgb, var(--color-paper) 60%, transparent) 20%, transparent 38%);
+}
+
+@utility paper-wash-full {
+  background: color-mix(in srgb, var(--color-paper) 86%, transparent);
+}
+
+@utility rust-mark {
+  background: var(--color-rust);
+  box-shadow: 0 0 0.6em 0.1em color-mix(in srgb, var(--color-rust-glow) 70%, transparent);
+}
+
+@utility highlight-rust {
+  background-image: linear-gradient(transparent 58%, color-mix(in srgb, var(--color-rust-glow) 55%, transparent) 58%);
+}
+
+@utility surface-raised {
+  background: var(--color-paper-raised);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-ink) 8%, transparent),
+    0 12px 32px -12px color-mix(in srgb, var(--color-ink) 28%, transparent);
+}
+
+@utility not-measured-hatch {
+  background-image: repeating-linear-gradient(135deg, var(--color-paper-sunken) 0 6px, transparent 6px 12px);
+}
+
+@utility hatch-ink {
+  background-color: color-mix(in srgb, var(--color-ink-faint) 18%, transparent);
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--color-ink-faint) 55%, transparent) 0 2px, transparent 2px 8px);
+}
+
+@utility icon-em {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}

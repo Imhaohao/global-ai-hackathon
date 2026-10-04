@@ -1,0 +1,15 @@
+{
+  "note": "Every outside asset in assets/stage and the pitch deck. All Poly Haven assets are CC0 (no attribution required; credited anyway). The coffee slope, bushes, leaves, phones, cooperative and motorbike were modelled procedurally for this project by assets/stage/src/*.py.",
+  "assets": [
+    { "name": "Qwantani Sunrise (Pure Sky) HDRI", "authors": "Greg Zaal, Jarod Guest", "source": "https://polyhaven.com/a/qwantani_sunrise_puresky", "licence": "CC0", "use": "Morning light for the stage and renders" },
+    { "name": "Brown Mud Leaves 01", "authors": "Rob Tuytel", "source": "https://polyhaven.com/a/brown_mud_leaves_01", "licence": "CC0", "use": "Terrace treads, baked into terrain_color.jpg" },
+    { "name": "Cracked Red Ground", "authors": "Amal Kumar", "source": "https://polyhaven.com/a/cracked_red_ground", "licence": "CC0", "use": "Terrace risers, road and footpath, baked into terrain_color.jpg" },
+    { "name": "Aerial Grass Rock", "authors": "Rob Tuytel", "source": "https://polyhaven.com/a/aerial_grass_rock", "licence": "CC0", "use": "Valley grass, baked into terrain_color.jpg" },
+    { "name": "Corrugated Iron", "authors": "Jenelle van Heerden, Dimitrios Savva", "source": "https://polyhaven.com/a/corrugated_iron", "licence": "CC0", "use": "Cooperative store roof" },
+    { "name": "Brown Planks 05", "authors": "Rob Tuytel", "source": "https://polyhaven.com/a/brown_planks_05", "licence": "CC0", "use": "Veranda table, bench and door" },
+    { "name": "Eucalyptus Bark", "authors": "Charlotte Baglioni", "source": "https://polyhaven.com/a/eucalyptus_bark", "licence": "CC0", "use": "Shade tree trunks" },
+    { "name": "Rock Boulder Dry", "authors": "Dimitrios Savva, Rico Cilliers", "source": "https://polyhaven.com/a/rock_boulder_dry", "licence": "CC0", "use": "The stone Noor's phone rests on (darkened into stone_color.jpg)" },
+    { "name": "Archivo", "authors": "Omnibus-Type", "source": "https://fonts.google.com/specimen/Archivo", "licence": "SIL Open Font License 1.1", "use": "Display type; keypad digits" },
+    { "name": "Atkinson Hyperlegible Next and Mono", "authors": "Braille Institute of America", "source": "https://fonts.google.com/specimen/Atkinson+Hyperlegible+Next", "licence": "SIL Open Font License 1.1", "use": "Body type; phone screen text" }
+  ]
+}
