@@ -1,0 +1,102 @@
+{
+ "method": "Predictions and LayerCAM saliency on random held-out leaves, from the published B2 model on Hugging Face.\n\nDownload the model (outside the repository) first, for example into the session scratchpad:\n    https://huggingface.co/ConnorLee08/coffee-leaf-efficientnet-b2 at revision 31a46d723399aa5bb6305e5a9d1d50a74936f74c\n    files: model.safetensors, model.tflite, model-config.json\nThen run from the repository root:\n    training/.venv/bin/python -W ignore videos/technical/analysis/saliency.py <download-folder>\n\nChecks before use: the SHA256 of model.safetensors must equal the README's selected B2 checkpoint\n(eb6a5d4d...) and model.tflite must equal the app export in mobile/assets/model/model-config-b2.json\n(ddbea876...). The PyTorch model is rebuilt with timm and its parameters are counted.\n\nLeaves: for each of healthy, rust, cercospora, miner and phoma, two leaves drawn with a fixed seed from the\nwhole-leaf BRACOL photos in the held-out test split of training/manifests/scale_v3_manifest.json. No\nselection by result: whatever the model says is reported.\n\nPrediction: the app's own TFLite export (INT8 weight storage, float32 compute, calibrated softmax inside the\ngraph) on float32 RGB 0..255, short side resized to 256 (bicubic) and centre-cropped to 224. The state is the\napp rule from mobile/src/diagnosis/modelDecision.ts: at or above the class's confident threshold is\n\"confident\", at or above its possible threshold is \"possible\", otherwise \"unclear\".\n\nSaliency: LayerCAM (Jiang et al. 2021) on MBConv stage 6 (blocks.5, 7x7) of the PyTorch weights, for the\nclass the TFLite model predicted, with the top-left padding cell zeroed (see gradcam.py), upsampled bilinearly.\n\nWrites videos/technical/public/analysis/leaf-<class>-<i>.png, leaf-<class>-<i>-heat.png and saliency.json.",
+ "model_url": "https://huggingface.co/ConnorLee08/coffee-leaf-efficientnet-b2",
+ "revision": "31a46d723399aa5bb6305e5a9d1d50a74936f74c",
+ "sha256": {
+  "safetensors": "eb6a5d4daac75046befce1250bc9278d4c1d2ccfa8ccf0fe2f4302cb918e8dd8",
+  "tflite": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01"
+ },
+ "parameters": 7712266,
+ "leaves": [
+  {
+   "image": "leaf-healthy-1",
+   "path": "data/bracol/classification/dataset/leaf/206.jpg",
+   "truth": "healthy",
+   "predicted": "healthy",
+   "probability": 0.9376,
+   "state": "confident",
+   "pytorch_argmax": "healthy"
+  },
+  {
+   "image": "leaf-healthy-2",
+   "path": "data/bracol/classification/dataset/leaf/1228.jpg",
+   "truth": "healthy",
+   "predicted": "healthy",
+   "probability": 0.7219,
+   "state": "confident",
+   "pytorch_argmax": "healthy"
+  },
+  {
+   "image": "leaf-rust-1",
+   "path": "data/bracol/classification/dataset/leaf/650.jpg",
+   "truth": "rust",
+   "predicted": "rust",
+   "probability": 0.644,
+   "state": "confident",
+   "pytorch_argmax": "rust"
+  },
+  {
+   "image": "leaf-rust-2",
+   "path": "data/bracol/classification/dataset/leaf/1385.jpg",
+   "truth": "rust",
+   "predicted": "rust",
+   "probability": 0.9725,
+   "state": "confident",
+   "pytorch_argmax": "rust"
+  },
+  {
+   "image": "leaf-cercospora-1",
+   "path": "data/bracol/classification/dataset/leaf/1675.jpg",
+   "truth": "cercospora",
+   "predicted": "cercospora",
+   "probability": 0.9397,
+   "state": "confident",
+   "pytorch_argmax": "cercospora"
+  },
+  {
+   "image": "leaf-cercospora-2",
+   "path": "data/bracol/classification/dataset/leaf/1630.jpg",
+   "truth": "cercospora",
+   "predicted": "cercospora",
+   "probability": 0.9932,
+   "state": "confident",
+   "pytorch_argmax": "cercospora"
+  },
+  {
+   "image": "leaf-miner-1",
+   "path": "data/bracol/classification/dataset/leaf/80.jpg",
+   "truth": "miner",
+   "predicted": "miner",
+   "probability": 0.9907,
+   "state": "confident",
+   "pytorch_argmax": "miner"
+  },
+  {
+   "image": "leaf-miner-2",
+   "path": "data/bracol/classification/dataset/leaf/1139.jpg",
+   "truth": "miner",
+   "predicted": "miner",
+   "probability": 0.9886,
+   "state": "confident",
+   "pytorch_argmax": "miner"
+  },
+  {
+   "image": "leaf-phoma-1",
+   "path": "data/bracol/classification/dataset/leaf/556.jpg",
+   "truth": "phoma",
+   "predicted": "phoma",
+   "probability": 0.955,
+   "state": "possible",
+   "pytorch_argmax": "phoma"
+  },
+  {
+   "image": "leaf-phoma-2",
+   "path": "data/bracol/classification/dataset/leaf/543.jpg",
+   "truth": "phoma",
+   "predicted": "phoma",
+   "probability": 0.9974,
+   "state": "confident",
+   "pytorch_argmax": "phoma"
+  }
+ ]
+}

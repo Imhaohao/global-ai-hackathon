@@ -1,0 +1,94 @@
+{
+ "method": "Grad-CAM maps, real feature maps and a colour-only comparison from the B2 checkpoint.\n\nRun from the repository root after chroma.py:\n    training/.venv/bin/python -W ignore videos/technical/analysis/gradcam.py\n\nModel: training/checkpoints/efficientnet_b2/best.safetensors (the selected B2 PyTorch checkpoint,\nSHA256 eb6a5d4d...), loaded with training/b2_model.py. Preprocessing is the app contract from\ntraining/model_utils.py: bicubic resize of the short side to 256, centre crop 224, ImageNet mean/std.\nThis is the PyTorch checkpoint, not the INT8-weight TFLite export, so its scores can differ slightly.\n\nOutputs in videos/technical/public/analysis/:\n  - cam-<n>.png and cam-<n>-heat.png: the 224 crop the network sees (rendered at 640 px from the\n    original pixels) and its class-activation heat as a white mask with alpha = heat. The map is\n    LayerCAM (Jiang et al. 2021, a Grad-CAM variant that weights each activation by its own positive\n    gradient) on the output of MBConv stage 6 (blocks.5, 7x7 cells), for the predicted class.\n    Every deep layer of this checkpoint puts a strong response in the top-left corner cell whatever\n    the image (a zero-padding artifact, visible in plain Grad-CAM on conv_head too), so that one cell\n    is set to zero before normalising. The 7x7 map is upsampled bilinearly.\n  - stage-<k>.png: the mean absolute activation of each of the 7 MBConv stages for the first leaf.\n  - stem-<c>.png: eight channels of the stem convolution for the first leaf.\n  - gradcam.json: the chosen images, predictions and the B2 accuracy on exactly the validation images\n    the colour-only baseline in chroma.json was scored on.",
+ "checkpoint": "training/checkpoints/efficientnet_b2/best.safetensors",
+ "b2_val_accuracy_same_images": 0.9285,
+ "colour_only_val_accuracy": 0.6164,
+ "val_images": 2839,
+ "chosen": [
+  {
+   "n": 1,
+   "path": "data/bracol/classification/dataset/leaf/1371.jpg",
+   "source": "bracol_leaf",
+   "label": "rust",
+   "predicted": "rust",
+   "confidence": 0.9785
+  },
+  {
+   "n": 2,
+   "path": "data/bracol/classification/dataset/leaf/1383.jpg",
+   "source": "bracol_leaf",
+   "label": "rust",
+   "predicted": "rust",
+   "confidence": 0.9743
+  },
+  {
+   "n": 3,
+   "path": "data/bracol/classification/dataset/symptom/train/3_rust/1341_1219_0322_0307_0316.jpg",
+   "source": "bracol_symptom",
+   "label": "rust",
+   "predicted": "rust",
+   "confidence": 0.9944
+  },
+  {
+   "n": 4,
+   "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/1732_0728_0852_0382_0393.jpg",
+   "source": "bracol_symptom",
+   "label": "cercospora",
+   "predicted": "cercospora",
+   "confidence": 0.9992
+  },
+  {
+   "n": 5,
+   "path": "data/bracol/classification/dataset/symptom/val/2_miner/900_0911_0227_0289_0222.jpg",
+   "source": "bracol_symptom",
+   "label": "miner",
+   "predicted": "miner",
+   "confidence": 0.9887
+  },
+  {
+   "n": 6,
+   "path": "data/bracol/classification/dataset/symptom/test/4_phoma/496_1074_0530_0191_0220.jpg",
+   "source": "bracol_symptom",
+   "label": "phoma",
+   "predicted": "phoma",
+   "confidence": 0.99
+  }
+ ],
+ "stage_shapes": [
+  [
+   16,
+   112,
+   112
+  ],
+  [
+   24,
+   56,
+   56
+  ],
+  [
+   48,
+   28,
+   28
+  ],
+  [
+   88,
+   14,
+   14
+  ],
+  [
+   120,
+   14,
+   14
+  ],
+  [
+   208,
+   7,
+   7
+  ],
+  [
+   352,
+   7,
+   7
+  ]
+ ]
+}
