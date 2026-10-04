@@ -1,790 +1,845 @@
 [
   {
     "beat": "problem",
-    "seconds": 7.244626,
-    "speechEnd": 7.244626,
+    "seconds": 8.173424,
+    "speechEnd": 7.495397,
     "words": [
       {
         "text": "In",
         "start": 0,
-        "end": 0.151
+        "end": 0.116
       },
       {
         "text": "rural",
-        "start": 0.197,
-        "end": 0.418
+        "start": 0.186,
+        "end": 0.488
       },
       {
         "text": "Kenya,",
-        "start": 0.464,
-        "end": 0.859
+        "start": 0.534,
+        "end": 0.952
       },
       {
         "text": "thirty-eight",
-        "start": 0.906,
-        "end": 1.44
+        "start": 1.231,
+        "end": 1.811
       },
       {
         "text": "of",
-        "start": 1.474,
-        "end": 1.533
+        "start": 1.846,
+        "end": 1.904
       },
       {
         "text": "every",
-        "start": 1.591,
-        "end": 1.776
+        "start": 2.009,
+        "end": 2.229
       },
       {
         "text": "hundred",
-        "start": 1.823,
-        "end": 2.055
+        "start": 2.276,
+        "end": 2.496
       },
       {
         "text": "adults",
-        "start": 2.09,
-        "end": 2.392
+        "start": 2.531,
+        "end": 2.821
       },
       {
         "text": "use",
-        "start": 2.461,
-        "end": 2.624
+        "start": 2.879,
+        "end": 3.007
       },
       {
         "text": "a",
-        "start": 2.647,
-        "end": 2.682
+        "start": 3.03,
+        "end": 3.053
       },
       {
         "text": "basic",
-        "start": 2.74,
-        "end": 3.065
-      },
-      {
-        "text": "text",
-        "start": 3.111,
+        "start": 3.1,
         "end": 3.367
       },
       {
-        "text": "phone.",
-        "start": 3.39,
-        "end": 3.669
+        "text": "text",
+        "start": 3.413,
+        "end": 3.657
       },
       {
-        "text": "Sixty-six",
-        "start": 3.866,
-        "end": 4.423
+        "text": "phone,",
+        "start": 3.68,
+        "end": 4.017
+      },
+      {
+        "text": "sixty-six",
+        "start": 4.4,
+        "end": 4.946
       },
       {
         "text": "aren't",
-        "start": 4.493,
-        "end": 4.679
+        "start": 4.992,
+        "end": 5.166
       },
       {
         "text": "online",
-        "start": 4.725,
-        "end": 5.05
+        "start": 5.213,
+        "end": 5.515
       },
       {
         "text": "daily,",
-        "start": 5.085,
-        "end": 5.48
+        "start": 5.55,
+        "end": 6.026
       },
       {
         "text": "and",
-        "start": 5.561,
-        "end": 5.689
+        "start": 6.235,
+        "end": 6.351
       },
       {
-        "text": "extension",
-        "start": 5.747,
-        "end": 6.165
+        "text": "farm",
+        "start": 6.455,
+        "end": 6.664
       },
       {
-        "text": "officers",
-        "start": 6.223,
-        "end": 6.525
+        "text": "advisers",
+        "start": 6.699,
+        "end": 7.094
       },
       {
         "text": "are",
-        "start": 6.56,
-        "end": 6.653
+        "start": 7.129,
+        "end": 7.198
       },
       {
         "text": "few.",
-        "start": 6.711,
-        "end": 7.245
+        "start": 7.233,
+        "end": 8.173
       }
     ]
   },
   {
     "beat": "hub",
-    "seconds": 11.284898,
-    "speechEnd": 11.284898,
+    "seconds": 8.126984,
+    "speechEnd": 7.482608,
     "words": [
       {
         "text": "So",
         "start": 0,
-        "end": 0.232
+        "end": 0.128
       },
       {
         "text": "Noor",
-        "start": 0.325,
-        "end": 0.499
+        "start": 0.209,
+        "end": 0.395
       },
       {
-        "text": "sends",
-        "start": 0.557,
-        "end": 0.789
+        "text": "texts.",
+        "start": 0.464,
+        "end": 1.115
       },
       {
-        "text": "a",
-        "start": 0.824,
-        "end": 0.859
+        "text": "Her",
+        "start": 1.265,
+        "end": 1.382
       },
       {
-        "text": "text.",
-        "start": 0.917,
-        "end": 1.428
-      },
-      {
-        "text": "A",
-        "start": 1.741,
-        "end": 1.823
+        "text": "cooperative's",
+        "start": 1.416,
+        "end": 1.939
       },
       {
         "text": "hub",
-        "start": 1.904,
-        "end": 2.09
+        "start": 1.997,
+        "end": 2.171
       },
       {
         "text": "phone",
-        "start": 2.136,
-        "end": 2.438
-      },
-      {
-        "text": "at",
-        "start": 2.496,
-        "end": 2.647
-      },
-      {
-        "text": "her",
-        "start": 2.717,
-        "end": 2.833
-      },
-      {
-        "text": "cooperative",
-        "start": 2.902,
-        "end": 3.518
+        "start": 2.218,
+        "end": 2.496
       },
       {
         "text": "answers",
-        "start": 3.564,
-        "end": 4.005
+        "start": 2.554,
+        "end": 2.937
       },
       {
-        "text": "offline.",
-        "start": 4.087,
-        "end": 4.702
+        "text": "offline:",
+        "start": 3.042,
+        "end": 3.704
       },
       {
-        "text": "A",
-        "start": 4.934,
-        "end": 5.004
+        "text": "a",
+        "start": 4.145,
+        "end": 4.191
       },
       {
         "text": "small",
-        "start": 5.097,
-        "end": 5.41
+        "start": 4.261,
+        "end": 4.481
       },
       {
         "text": "Kwen",
-        "start": 5.468,
-        "end": 5.689
+        "start": 4.528,
+        "end": 4.725
       },
       {
         "text": "model",
-        "start": 5.747,
-        "end": 6.014
+        "start": 4.772,
+        "end": 4.992
       },
       {
-        "text": "turns",
-        "start": 6.072,
-        "end": 6.304
+        "text": "reads",
+        "start": 5.108,
+        "end": 5.306
       },
       {
         "text": "her",
-        "start": 6.339,
-        "end": 6.42
+        "start": 5.341,
+        "end": 5.422
       },
       {
-        "text": "Swahili",
-        "start": 6.478,
-        "end": 6.943
+        "text": "Swahili,",
+        "start": 5.457,
+        "end": 6.13
       },
       {
-        "text": "into",
-        "start": 7.001,
-        "end": 7.152
-      },
-      {
-        "text": "fields,",
-        "start": 7.221,
-        "end": 7.744
-      },
-      {
-        "text": "rules",
-        "start": 7.906,
-        "end": 8.197
-      },
-      {
-        "text": "match",
-        "start": 8.278,
-        "end": 8.545
-      },
-      {
-        "text": "the",
-        "start": 8.615,
-        "end": 8.684
-      },
-      {
-        "text": "disease,",
-        "start": 8.731,
-        "end": 9.183
-      },
-      {
-        "text": "and",
-        "start": 9.323,
-        "end": 9.497
-      },
-      {
-        "text": "it",
-        "start": 9.555,
-        "end": 9.625
+        "text": "then",
+        "start": 6.258,
+        "end": 6.409
       },
       {
         "text": "asks",
-        "start": 9.671,
-        "end": 10.031
+        "start": 6.478,
+        "end": 6.757
       },
       {
         "text": "her",
-        "start": 10.089,
-        "end": 10.205
+        "start": 6.792,
+        "end": 6.873
       },
       {
         "text": "to",
-        "start": 10.263,
-        "end": 10.31
+        "start": 6.92,
+        "end": 6.978
       },
       {
         "text": "confirm.",
-        "start": 10.368,
-        "end": 11.285
+        "start": 7.024,
+        "end": 8.127
+      }
+    ]
+  },
+  {
+    "beat": "tiny",
+    "seconds": 12.956735,
+    "speechEnd": 12.423401,
+    "words": [
+      {
+        "text": "It",
+        "start": 0,
+        "end": 0.139
+      },
+      {
+        "text": "works",
+        "start": 0.186,
+        "end": 0.58
+      },
+      {
+        "text": "because",
+        "start": 0.685,
+        "end": 0.929
+      },
+      {
+        "text": "it's",
+        "start": 0.952,
+        "end": 1.08
+      },
+      {
+        "text": "small.",
+        "start": 1.115,
+        "end": 1.625
+      },
+      {
+        "text": "Texts",
+        "start": 2.334,
+        "end": 2.682
+      },
+      {
+        "text": "ride",
+        "start": 2.752,
+        "end": 2.937
+      },
+      {
+        "text": "the",
+        "start": 2.961,
+        "end": 3.03
+      },
+      {
+        "text": "SMS",
+        "start": 3.077,
+        "end": 3.437
+      },
+      {
+        "text": "network,",
+        "start": 3.495,
+        "end": 4.04
+      },
+      {
+        "text": "three",
+        "start": 4.249,
+        "end": 4.47
+      },
+      {
+        "text": "messages",
+        "start": 4.505,
+        "end": 4.923
+      },
+      {
+        "text": "at",
+        "start": 5.027,
+        "end": 5.166
+      },
+      {
+        "text": "most.",
+        "start": 5.224,
+        "end": 5.712
+      },
+      {
+        "text": "The",
+        "start": 5.991,
+        "end": 6.107
+      },
+      {
+        "text": "hub's",
+        "start": 6.153,
+        "end": 6.351
+      },
+      {
+        "text": "model",
+        "start": 6.385,
+        "end": 6.618
+      },
+      {
+        "text": "is",
+        "start": 6.722,
+        "end": 6.861
+      },
+      {
+        "text": "one",
+        "start": 6.92,
+        "end": 7.059
+      },
+      {
+        "text": "point",
+        "start": 7.094,
+        "end": 7.279
+      },
+      {
+        "text": "three",
+        "start": 7.326,
+        "end": 7.558
+      },
+      {
+        "text": "gigabytes;",
+        "start": 7.605,
+        "end": 8.324
+      },
+      {
+        "text": "the",
+        "start": 8.51,
+        "end": 8.615
+      },
+      {
+        "text": "leaf",
+        "start": 8.673,
+        "end": 8.835
+      },
+      {
+        "text": "model,",
+        "start": 8.893,
+        "end": 9.253
+      },
+      {
+        "text": "eight",
+        "start": 9.532,
+        "end": 9.718
+      },
+      {
+        "text": "and",
+        "start": 9.752,
+        "end": 9.822
+      },
+      {
+        "text": "a",
+        "start": 9.857,
+        "end": 9.88
+      },
+      {
+        "text": "half",
+        "start": 9.927,
+        "end": 10.054
+      },
+      {
+        "text": "megabytes,",
+        "start": 10.124,
+        "end": 10.786
+      },
+      {
+        "text": "in",
+        "start": 10.867,
+        "end": 10.96
+      },
+      {
+        "text": "a",
+        "start": 10.995,
+        "end": 11.018
+      },
+      {
+        "text": "sixty-eight",
+        "start": 11.076,
+        "end": 11.61
+      },
+      {
+        "text": "megabyte",
+        "start": 11.714,
+        "end": 12.144
+      },
+      {
+        "text": "app.",
+        "start": 12.179,
+        "end": 12.957
       }
     ]
   },
   {
     "beat": "scan",
-    "seconds": 9.241542,
-    "speechEnd": 9.241542,
+    "seconds": 9.752381,
+    "speechEnd": 9.069206,
     "words": [
       {
         "text": "At",
         "start": 0,
-        "end": 0.197
+        "end": 0.139
       },
       {
         "text": "the",
-        "start": 0.232,
-        "end": 0.302
+        "start": 0.174,
+        "end": 0.244
       },
       {
         "text": "weekend,",
-        "start": 0.348,
-        "end": 0.72
+        "start": 0.29,
+        "end": 0.813
       },
       {
         "text": "her",
-        "start": 0.755,
-        "end": 0.859
+        "start": 0.964,
+        "end": 1.057
       },
       {
         "text": "daughter's",
-        "start": 0.917,
-        "end": 1.231
+        "start": 1.091,
+        "end": 1.428
       },
       {
         "text": "phone",
-        "start": 1.289,
-        "end": 1.556
+        "start": 1.463,
+        "end": 1.672
       },
       {
-        "text": "scans",
-        "start": 1.579,
-        "end": 1.916
-      },
-      {
-        "text": "leaves",
-        "start": 1.997,
-        "end": 2.229
-      },
-      {
-        "text": "offline,",
-        "start": 2.31,
-        "end": 2.902
-      },
-      {
-        "text": "with",
-        "start": 3.065,
-        "end": 3.239
-      },
-      {
-        "text": "a",
-        "start": 3.286,
-        "end": 3.32
-      },
-      {
-        "text": "model",
-        "start": 3.402,
-        "end": 3.715
-      },
-      {
-        "text": "fine-tuned",
-        "start": 3.808,
-        "end": 4.435
-      },
-      {
-        "text": "on",
-        "start": 4.481,
-        "end": 4.563
-      },
-      {
-        "text": "twenty",
-        "start": 4.632,
-        "end": 5.039
-      },
-      {
-        "text": "thousand",
-        "start": 5.097,
-        "end": 5.468
-      },
-      {
-        "text": "leaves,",
-        "start": 5.538,
-        "end": 5.909
-      },
-      {
-        "text": "split",
-        "start": 6.072,
-        "end": 6.409
-      },
-      {
-        "text": "by",
-        "start": 6.455,
-        "end": 6.56
-      },
-      {
-        "text": "plant",
-        "start": 6.653,
-        "end": 6.978
-      },
-      {
-        "text": "so",
-        "start": 7.059,
-        "end": 7.21
-      },
-      {
-        "text": "the",
-        "start": 7.268,
-        "end": 7.338
-      },
-      {
-        "text": "test",
-        "start": 7.384,
-        "end": 7.732
-      },
-      {
-        "text": "stays",
-        "start": 7.964,
-        "end": 8.278
-      },
-      {
-        "text": "honest.",
-        "start": 8.324,
-        "end": 9.242
-      }
-    ]
-  },
-  {
-    "beat": "biology",
-    "seconds": 7.709025,
-    "speechEnd": 7.709025,
-    "words": [
-      {
-        "text": "Rust",
-        "start": 0,
-        "end": 0.232
-      },
-      {
-        "text": "spores",
-        "start": 0.255,
-        "end": 0.592
-      },
-      {
-        "text": "are",
-        "start": 0.639,
-        "end": 0.743
-      },
-      {
-        "text": "orange,",
-        "start": 0.789,
-        "end": 1.173
-      },
-      {
-        "text": "and",
-        "start": 1.196,
-        "end": 1.3
-      },
-      {
-        "text": "dead",
-        "start": 1.416,
-        "end": 1.602
-      },
-      {
-        "text": "tissue",
-        "start": 1.649,
+        "text": "checks",
+        "start": 1.707,
         "end": 1.997
       },
       {
-        "text": "turns",
-        "start": 2.02,
-        "end": 2.252
+        "text": "leaves",
+        "start": 2.148,
+        "end": 2.438
       },
       {
-        "text": "brown.",
-        "start": 2.31,
-        "end": 2.717
+        "text": "offline.",
+        "start": 2.508,
+        "end": 3.17
       },
       {
-        "text": "Colour",
-        "start": 3.03,
-        "end": 3.355
+        "text": "Twenty",
+        "start": 3.611,
+        "end": 3.971
       },
       {
-        "text": "alone",
-        "start": 3.413,
-        "end": 3.704
+        "text": "thousand",
+        "start": 4.017,
+        "end": 4.307
       },
       {
-        "text": "scores",
-        "start": 3.75,
-        "end": 4.04
+        "text": "labelled",
+        "start": 4.354,
+        "end": 4.632
       },
       {
-        "text": "sixty-two",
-        "start": 4.075,
-        "end": 4.493
+        "text": "coffee",
+        "start": 4.679,
+        "end": 4.923
       },
       {
-        "text": "percent.",
-        "start": 4.551,
-        "end": 4.992
+        "text": "leaves",
+        "start": 4.969,
+        "end": 5.166
       },
       {
-        "text": "Add",
-        "start": 5.224,
-        "end": 5.422
+        "text": "taught",
+        "start": 5.201,
+        "end": 5.41
       },
       {
-        "text": "texture,",
-        "start": 5.457,
-        "end": 6.002
+        "text": "the",
+        "start": 5.433,
+        "end": 5.503
       },
       {
-        "text": "and",
-        "start": 6.095,
-        "end": 6.246
+        "text": "model",
+        "start": 5.538,
+        "end": 5.735
+      },
+      {
+        "text": "what",
+        "start": 5.77,
+        "end": 5.886
+      },
+      {
+        "text": "each",
+        "start": 5.944,
+        "end": 6.118
+      },
+      {
+        "text": "disease",
+        "start": 6.165,
+        "end": 6.467
+      },
+      {
+        "text": "looks",
+        "start": 6.502,
+        "end": 6.676
+      },
+      {
+        "text": "like,",
+        "start": 6.711,
+        "end": 7.059
+      },
+      {
+        "text": "so",
+        "start": 7.245,
+        "end": 7.349
       },
       {
         "text": "it",
-        "start": 6.304,
-        "end": 6.351
+        "start": 7.407,
+        "end": 7.465
       },
       {
-        "text": "scores",
-        "start": 6.385,
-        "end": 6.664
+        "text": "finds",
+        "start": 7.512,
+        "end": 7.744
       },
       {
-        "text": "ninety-three.",
-        "start": 6.722,
-        "end": 7.709
+        "text": "the",
+        "start": 7.779,
+        "end": 7.848
+      },
+      {
+        "text": "rust",
+        "start": 7.918,
+        "end": 8.231
+      },
+      {
+        "text": "and",
+        "start": 8.359,
+        "end": 8.51
+      },
+      {
+        "text": "names",
+        "start": 8.591,
+        "end": 8.847
+      },
+      {
+        "text": "it.",
+        "start": 8.905,
+        "end": 9.752
       }
     ]
   },
   {
     "beat": "race",
-    "seconds": 7.569705,
-    "speechEnd": 7.569705,
+    "seconds": 6.780227,
+    "speechEnd": 6.24229,
     "words": [
       {
         "text": "On",
         "start": 0,
-        "end": 0.209
+        "end": 0.116
       },
       {
         "text": "eleven",
-        "start": 0.267,
-        "end": 0.615
+        "start": 0.151,
+        "end": 0.441
       },
       {
         "text": "hundred",
-        "start": 0.673,
-        "end": 0.929
-      },
-      {
-        "text": "outside",
-        "start": 0.987,
-        "end": 1.324
+        "start": 0.499,
+        "end": 0.755
       },
       {
         "text": "rust",
-        "start": 1.37,
-        "end": 1.556
+        "start": 0.801,
+        "end": 0.975
       },
       {
         "text": "photos,",
-        "start": 1.591,
-        "end": 2.02
+        "start": 1.01,
+        "end": 1.614
       },
       {
-        "text": "it",
-        "start": 2.136,
-        "end": 2.252
-      },
-      {
-        "text": "finishes",
-        "start": 2.31,
-        "end": 2.74
+        "text": "it's",
+        "start": 1.858,
+        "end": 2.032
       },
       {
         "text": "thirty-three",
-        "start": 2.937,
-        "end": 3.541
+        "start": 2.09,
+        "end": 2.601
       },
       {
         "text": "times",
-        "start": 3.587,
-        "end": 3.843
+        "start": 2.635,
+        "end": 2.914
       },
       {
         "text": "faster",
-        "start": 3.889,
-        "end": 4.284
+        "start": 2.972,
+        "end": 3.286
       },
       {
         "text": "than",
-        "start": 4.377,
-        "end": 4.54
+        "start": 3.32,
+        "end": 3.437
       },
       {
         "text": "GPT-6",
-        "start": 4.598,
-        "end": 5.224
+        "start": 3.506,
+        "end": 4.156
       },
       {
         "text": "Astra,",
-        "start": 5.341,
-        "end": 5.828
+        "start": 4.238,
+        "end": 4.783
       },
       {
         "text": "and",
-        "start": 5.898,
-        "end": 6.049
+        "start": 5.062,
+        "end": 5.178
       },
       {
         "text": "ranks",
-        "start": 6.13,
-        "end": 6.374
+        "start": 5.248,
+        "end": 5.445
       },
       {
         "text": "them",
-        "start": 6.397,
-        "end": 6.513
+        "start": 5.48,
+        "end": 5.596
       },
       {
         "text": "just",
-        "start": 6.56,
-        "end": 6.711
+        "start": 5.666,
+        "end": 5.863
       },
       {
         "text": "as",
-        "start": 6.757,
-        "end": 6.827
+        "start": 5.898,
+        "end": 5.968
       },
       {
         "text": "well.",
-        "start": 6.885,
-        "end": 7.57
+        "start": 6.014,
+        "end": 6.78
       }
     ]
   },
   {
     "beat": "officer",
-    "seconds": 7.616145,
-    "speechEnd": 7.616145,
+    "seconds": 6.919546,
+    "speechEnd": 6.118549,
     "words": [
       {
         "text": "When",
         "start": 0,
-        "end": 0.186
+        "end": 0.174
       },
       {
         "text": "it's",
-        "start": 0.232,
-        "end": 0.36
+        "start": 0.209,
+        "end": 0.325
       },
       {
         "text": "unsure,",
-        "start": 0.43,
-        "end": 1.033
+        "start": 0.36,
+        "end": 0.882
       },
       {
         "text": "one",
-        "start": 1.173,
-        "end": 1.405
+        "start": 1.068,
+        "end": 1.265
       },
       {
         "text": "tap",
-        "start": 1.451,
-        "end": 1.707
+        "start": 1.3,
+        "end": 1.509
       },
       {
-        "text": "drafts",
-        "start": 1.776,
-        "end": 2.101
-      },
-      {
-        "text": "a",
-        "start": 2.148,
-        "end": 2.171
-      },
-      {
-        "text": "case",
-        "start": 2.241,
-        "end": 2.519
-      },
-      {
-        "text": "summary",
-        "start": 2.543,
-        "end": 2.856
-      },
-      {
-        "text": "text",
-        "start": 2.914,
-        "end": 3.181
-      },
-      {
-        "text": "to",
-        "start": 3.204,
-        "end": 3.262
+        "text": "texts",
+        "start": 1.567,
+        "end": 1.846
       },
       {
         "text": "her",
-        "start": 3.332,
-        "end": 3.425
+        "start": 1.869,
+        "end": 1.939
       },
       {
         "text": "field",
-        "start": 3.483,
-        "end": 3.704
+        "start": 1.997,
+        "end": 2.194
       },
       {
-        "text": "officer,",
-        "start": 3.762,
-        "end": 4.238
+        "text": "officer",
+        "start": 2.229,
+        "end": 2.496
+      },
+      {
+        "text": "a",
+        "start": 2.543,
+        "end": 2.577
+      },
+      {
+        "text": "case",
+        "start": 2.624,
+        "end": 2.844
+      },
+      {
+        "text": "summary,",
+        "start": 2.879,
+        "end": 3.297
       },
       {
         "text": "or",
-        "start": 4.377,
-        "end": 4.54
+        "start": 3.367,
+        "end": 3.483
       },
       {
         "text": "calls.",
-        "start": 4.609,
-        "end": 5.05
+        "start": 3.541,
+        "end": 4.075
       },
       {
         "text": "Officers",
-        "start": 5.166,
-        "end": 5.619
+        "start": 4.412,
+        "end": 4.748
       },
       {
         "text": "approve",
-        "start": 5.654,
-        "end": 6.026
+        "start": 4.783,
+        "end": 5.074
       },
       {
         "text": "every",
-        "start": 6.095,
-        "end": 6.397
+        "start": 5.12,
+        "end": 5.341
       },
       {
         "text": "outbreak",
-        "start": 6.455,
-        "end": 6.827
+        "start": 5.399,
+        "end": 5.735
       },
       {
         "text": "alert.",
-        "start": 6.885,
-        "end": 7.616
+        "start": 5.782,
+        "end": 6.92
       }
     ]
   },
   {
     "beat": "close",
-    "seconds": 2.739955,
-    "speechEnd": 2.3839,
+    "seconds": 5.01551,
+    "speechEnd": 4.827075,
     "words": [
       {
-        "text": "Now",
+        "text": "With",
         "start": 0,
-        "end": 0.186
-      },
-      {
-        "text": "every",
-        "start": 0.267,
-        "end": 0.476
-      },
-      {
-        "text": "farmer",
-        "start": 0.546,
-        "end": 0.801
-      },
-      {
-        "text": "can",
-        "start": 0.848,
-        "end": 0.952
-      },
-      {
-        "text": "be",
-        "start": 0.987,
-        "end": 1.068
-      },
-      {
-        "text": "reached.",
-        "start": 1.138,
-        "end": 1.521
+        "end": 0.163
       },
       {
         "text": "Leaf",
-        "start": 1.718,
-        "end": 1.927
+        "start": 0.209,
+        "end": 0.36
       },
       {
-        "text": "Doctor.",
-        "start": 1.997,
-        "end": 2.74
+        "text": "Doctor,",
+        "start": 0.418,
+        "end": 0.836
+      },
+      {
+        "text": "let's",
+        "start": 0.964,
+        "end": 1.149
+      },
+      {
+        "text": "re-leaf",
+        "start": 1.254,
+        "end": 1.672
+      },
+      {
+        "text": "over-burdened",
+        "start": 1.753,
+        "end": 2.287
+      },
+      {
+        "text": "specialists,",
+        "start": 2.322,
+        "end": 2.926
+      },
+      {
+        "text": "and",
+        "start": 3.077,
+        "end": 3.193
+      },
+      {
+        "text": "reach",
+        "start": 3.251,
+        "end": 3.425
+      },
+      {
+        "text": "every",
+        "start": 3.529,
+        "end": 3.785
+      },
+      {
+        "text": "single",
+        "start": 3.82,
+        "end": 4.075
+      },
+      {
+        "text": "farmer",
+        "start": 4.11,
+        "end": 4.377
+      },
+      {
+        "text": "in",
+        "start": 4.412,
+        "end": 4.481
+      },
+      {
+        "text": "need.",
+        "start": 4.539,
+        "end": 5.016
       }
     ]
   }

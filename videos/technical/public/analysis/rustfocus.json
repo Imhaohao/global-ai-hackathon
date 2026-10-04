@@ -1,0 +1,386 @@
+{
+ "method": "Where B2 looks on a whole rust leaf: a fused LayerCAM map, compared with the leaf's orange rust pixels.\n\nRun from the repository root with the Hugging Face B2 download (see saliency.py):\n    training/.venv/bin/python -W ignore videos/technical/analysis/rustfocus.py <download-folder>\n\nLeaves: every whole-leaf BRACOL photo labelled rust in the held-out test split of\ntraining/manifests/scale_v3_manifest.json that is on this machine.\n\nPrediction: the app's TFLite export (same preprocessing and calibrated softmax as saliency.py).\n\nMap: LayerCAM (Jiang et al. 2021) for the rust class from MBConv stages 4, 5 and 6 of the PyTorch weights\n(blocks.3 and blocks.4 at 14x14, blocks.5 at 7x7), each with its top-left padding cell zeroed, upsampled to\n640 px, normalised and averaged. Fusing layers is the LayerCAM paper's way to get a finer map than one layer.\n\nRust pixels: in the same 224-pixel crop, pixels with HSV hue 15-50 degrees, saturation above 0.45 and value\nabove 0.35, i.e. the orange of urediniospore pustules.\n\nScore: the share of the map's energy that falls on rust pixels dilated by 12 px, divided by the share of the\ncrop those pixels cover (1.0 means no better than chance). Every leaf's score is saved; the leaf shown in the\nvideo is the TFLite-correct leaf with the highest score, and is labelled as the clearest of the set.\n\nWrites videos/technical/public/analysis/focus-leaf.png, focus-heat.png, focus-rust.png and rustfocus.json.",
+ "leaves": 53,
+ "tflite_correct": 48,
+ "median_score": 1.869,
+ "chosen": {
+  "path": "data/bracol/classification/dataset/leaf/527.jpg",
+  "predicted": "rust",
+  "probability": 0.8361,
+  "state": "confident",
+  "score": 13.564
+ },
+ "all": [
+  {
+   "path": "data/bracol/classification/dataset/leaf/97.jpg",
+   "predicted": "rust",
+   "probability": 0.9873,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/123.jpg",
+   "predicted": "rust",
+   "probability": 0.991,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/130.jpg",
+   "predicted": "rust",
+   "probability": 0.9865,
+   "state": "confident",
+   "score": 3.029
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/134.jpg",
+   "predicted": "rust",
+   "probability": 0.9915,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/138.jpg",
+   "predicted": "rust",
+   "probability": 0.9887,
+   "state": "confident",
+   "score": 1.43
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/147.jpg",
+   "predicted": "rust",
+   "probability": 0.9873,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/158.jpg",
+   "predicted": "rust",
+   "probability": 0.9862,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/162.jpg",
+   "predicted": "rust",
+   "probability": 0.9699,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/163.jpg",
+   "predicted": "rust",
+   "probability": 0.9351,
+   "state": "confident",
+   "score": 10.579
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/166.jpg",
+   "predicted": "rust",
+   "probability": 0.9108,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/167.jpg",
+   "predicted": "cercospora",
+   "probability": 0.496,
+   "state": "unclear",
+   "score": 6.848
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/172.jpg",
+   "predicted": "rust",
+   "probability": 0.9779,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/527.jpg",
+   "predicted": "rust",
+   "probability": 0.8361,
+   "state": "confident",
+   "score": 13.564
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/572.jpg",
+   "predicted": "healthy",
+   "probability": 0.4833,
+   "state": "possible",
+   "score": 8.794
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/637.jpg",
+   "predicted": "rust",
+   "probability": 0.5759,
+   "state": "confident",
+   "score": 1.378
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/650.jpg",
+   "predicted": "rust",
+   "probability": 0.644,
+   "state": "confident",
+   "score": 4.041
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/665.jpg",
+   "predicted": "rust",
+   "probability": 0.8464,
+   "state": "confident",
+   "score": 5.241
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/859.jpg",
+   "predicted": "rust",
+   "probability": 0.9899,
+   "state": "confident",
+   "score": 1.004
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/882.jpg",
+   "predicted": "rust",
+   "probability": 0.9789,
+   "state": "confident",
+   "score": 1.904
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1009.jpg",
+   "predicted": "rust",
+   "probability": 0.9571,
+   "state": "confident",
+   "score": 2.057
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1094.jpg",
+   "predicted": "rust",
+   "probability": 0.4725,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1112.jpg",
+   "predicted": "rust",
+   "probability": 0.6292,
+   "state": "confident",
+   "score": 3.053
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1140.jpg",
+   "predicted": "rust",
+   "probability": 0.9935,
+   "state": "confident",
+   "score": 1.806
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1240.jpg",
+   "predicted": "cercospora",
+   "probability": 0.9476,
+   "state": "confident",
+   "score": 2.237
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1270.jpg",
+   "predicted": "rust",
+   "probability": 0.9845,
+   "state": "confident",
+   "score": 1.274
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1287.jpg",
+   "predicted": "rust",
+   "probability": 0.7786,
+   "state": "confident",
+   "score": 13.462
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1292.jpg",
+   "predicted": "rust",
+   "probability": 0.99,
+   "state": "confident",
+   "score": 0.904
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1339.jpg",
+   "predicted": "rust",
+   "probability": 0.5141,
+   "state": "confident",
+   "score": 2.438
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1341.jpg",
+   "predicted": "rust",
+   "probability": 0.9942,
+   "state": "confident",
+   "score": 1.302
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1366.jpg",
+   "predicted": "rust",
+   "probability": 0.9864,
+   "state": "confident",
+   "score": 1.939
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1368.jpg",
+   "predicted": "rust",
+   "probability": 0.8713,
+   "state": "confident",
+   "score": 1.184
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1371.jpg",
+   "predicted": "rust",
+   "probability": 0.9971,
+   "state": "confident",
+   "score": 2.816
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1373.jpg",
+   "predicted": "rust",
+   "probability": 0.985,
+   "state": "confident",
+   "score": 2.122
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1383.jpg",
+   "predicted": "rust",
+   "probability": 0.9965,
+   "state": "confident",
+   "score": 1.869
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1385.jpg",
+   "predicted": "rust",
+   "probability": 0.9725,
+   "state": "confident",
+   "score": 1.685
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1399.jpg",
+   "predicted": "rust",
+   "probability": 0.9703,
+   "state": "confident",
+   "score": 4.185
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1405.jpg",
+   "predicted": "rust",
+   "probability": 0.9933,
+   "state": "confident",
+   "score": 1.83
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1425.jpg",
+   "predicted": "rust",
+   "probability": 0.9799,
+   "state": "confident",
+   "score": 1.201
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1429.jpg",
+   "predicted": "rust",
+   "probability": 0.9738,
+   "state": "confident",
+   "score": 3.991
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1463.jpg",
+   "predicted": "rust",
+   "probability": 0.8021,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1510.jpg",
+   "predicted": "rust",
+   "probability": 0.4413,
+   "state": "confident",
+   "score": 4.585
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1513.jpg",
+   "predicted": "cercospora",
+   "probability": 0.5094,
+   "state": "unclear",
+   "score": 5.122
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1527.jpg",
+   "predicted": "rust",
+   "probability": 0.9805,
+   "state": "confident",
+   "score": 1.306
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1531.jpg",
+   "predicted": "rust",
+   "probability": 0.9868,
+   "state": "confident",
+   "score": 1.305
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1568.jpg",
+   "predicted": "rust",
+   "probability": 0.9917,
+   "state": "confident",
+   "score": 3.629
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1622.jpg",
+   "predicted": "rust",
+   "probability": 0.9295,
+   "state": "confident",
+   "score": 1.265
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1628.jpg",
+   "predicted": "rust",
+   "probability": 0.9167,
+   "state": "confident",
+   "score": 4.868
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1648.jpg",
+   "predicted": "rust",
+   "probability": 0.9504,
+   "state": "confident",
+   "score": 0.0
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1650.jpg",
+   "predicted": "rust",
+   "probability": 0.9338,
+   "state": "confident",
+   "score": 1.78
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1664.jpg",
+   "predicted": "cercospora",
+   "probability": 0.7949,
+   "state": "possible",
+   "score": 3.41
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1667.jpg",
+   "predicted": "rust",
+   "probability": 0.985,
+   "state": "confident",
+   "score": 3.537
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1688.jpg",
+   "predicted": "rust",
+   "probability": 0.9929,
+   "state": "confident",
+   "score": 1.988
+  },
+  {
+   "path": "data/bracol/classification/dataset/leaf/1712.jpg",
+   "predicted": "rust",
+   "probability": 0.9517,
+   "state": "confident",
+   "score": 3.148
+  }
+ ]
+}

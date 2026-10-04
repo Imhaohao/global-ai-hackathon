@@ -1,5 +1,5 @@
-import { CellSignalSlash, IdentificationBadge } from "@phosphor-icons/react";
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { CellSignalSlash } from "@phosphor-icons/react";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame } from "remotion";
 import { FarmerGrid } from "../components/FarmerGrid";
 import { FlipPhone } from "../components/FlipPhone";
 import { Stat } from "../components/Stat";
@@ -25,8 +25,8 @@ function OfficerFan({ at }: { at: number }) {
           return <line key={farmer} x1={officer.x} y1={officer.y} x2={officer.x + (x - officer.x) * drawn} y2={officer.y + (y - officer.y) * drawn} stroke="var(--color-live)" strokeWidth={1} opacity={0.22} />;
         })}
       </svg>
-      <div className="absolute flex size-[180px] items-center justify-center rounded-full bg-night-high text-live" style={{ left: officer.x - 90, top: officer.y - 90, boxShadow: "0 0 0 3px var(--color-live), 0 0 80px color-mix(in srgb, var(--color-live) 30%, transparent)" }}>
-        <IdentificationBadge size={96} weight="bold" />
+      <div className="absolute size-[220px] overflow-hidden rounded-full" style={{ left: officer.x - 110, top: officer.y - 110, boxShadow: "0 0 0 4px var(--color-live), 0 0 80px color-mix(in srgb, var(--color-live) 30%, transparent)" }}>
+        <Img src={staticFile("media/officer-portrait.jpg")} className="size-full object-cover" />
       </div>
     </AbsoluteFill>
   );
@@ -46,8 +46,8 @@ function MiniFlipPhone() {
 /** Problem: 100 rural Kenyan adults; 38 on a basic text phone, 66 not online daily, and one officer for many. */
 export function Problem() {
   const phonesAt = at("problem", "thirty-eight");
-  const signalAt = at("problem", "Sixty-six");
-  const officerAt = at("problem", "extension") - 4;
+  const signalAt = at("problem", "sixty-six");
+  const officerAt = at("problem", "farm") - 4;
   return (
     <AbsoluteFill className="bg-night">
       <div className="absolute" style={{ left: GRID.left, top: GRID.top }}>

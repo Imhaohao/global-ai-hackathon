@@ -14,8 +14,8 @@
   --color-lcd: var(--brand-lcd);
   --color-lcd-ink: var(--brand-lcd-ink);
 
-  --font-display: var(--brand-font-display);
-  --font-body: var(--brand-font-body);
+  --font-display: var(--font-alegreya);
+  --font-body: var(--font-alegreya);
   --font-data: var(--brand-font-data);
 
   --radius-sm: var(--brand-radius-sm);
@@ -25,6 +25,9 @@
 }
 
 @theme {
+  /* The user's chosen family for display and body text in both videos (fonts.ts loads it). */
+  --font-alegreya: "Alegreya", Georgia, serif;
+
   /* Night base: the dark side of the Earth the video opens on. */
   --color-night: #0b0d0a;
   --color-night-raised: #141812;
@@ -60,6 +63,8 @@
   --color-handset-key-edge: #15180f;
   --color-handset-slot: #0c0e09;
   --color-end-key: #e8705a;
+  --color-lcd-backlight: #d9e8b0;
+  --color-lcd-shade: #a9b98c;
   --text-key: 26px;
   --text-key--line-height: 1;
   --text-key-letters: 13px;
@@ -94,22 +99,20 @@
   body {
     background: var(--color-night);
     color: var(--color-text);
-    font-family: var(--brand-font-body);
+    font-family: var(--font-alegreya);
     -webkit-font-smoothing: antialiased;
   }
 }
 
 @utility display-poster {
-  font-family: var(--brand-font-display);
-  font-weight: var(--brand-weight-poster);
-  font-stretch: 68%;
+  font-family: var(--font-alegreya);
+  font-weight: 800;
   text-wrap: balance;
 }
 
 @utility display-headline {
-  font-family: var(--brand-font-display);
-  font-weight: var(--brand-weight-display);
-  font-stretch: 82%;
+  font-family: var(--font-alegreya);
+  font-weight: 700;
   text-wrap: balance;
 }
 

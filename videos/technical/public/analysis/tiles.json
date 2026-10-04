@@ -1,0 +1,242 @@
+[
+ {
+  "n": 0,
+  "label": "healthy",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/985.jpg"
+ },
+ {
+  "n": 1,
+  "label": "healthy",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/184.jpg"
+ },
+ {
+  "n": 2,
+  "label": "healthy",
+  "source": "rocole",
+  "path": "data/images/rocole/C6P25E1.jpg"
+ },
+ {
+  "n": 3,
+  "label": "healthy",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/1_health/649_1254_0535_0123_0117.jpg"
+ },
+ {
+  "n": 4,
+  "label": "healthy",
+  "source": "rocole",
+  "path": "data/images/rocole/C10P11E1.jpg"
+ },
+ {
+  "n": 5,
+  "label": "healthy",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/1_health/231_0641_0234_0262_0266.jpg"
+ },
+ {
+  "n": 6,
+  "label": "healthy",
+  "source": "rocole",
+  "path": "data/images/rocole/C1P1E1.jpg"
+ },
+ {
+  "n": 7,
+  "label": "healthy",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/test/1_health/1201_1548_0342_0222_0185.jpg"
+ },
+ {
+  "n": 8,
+  "label": "rust",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/3_rust/806_1223_0509_0208_0193.jpg"
+ },
+ {
+  "n": 9,
+  "label": "rust",
+  "source": "rocole",
+  "path": "data/images/rocole/C12P11H2.jpg"
+ },
+ {
+  "n": 10,
+  "label": "rust",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/3_rust/1486_0775_0596_0297_0305.jpg"
+ },
+ {
+  "n": 11,
+  "label": "rust",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/1289.jpg"
+ },
+ {
+  "n": 12,
+  "label": "rust",
+  "source": "rocole",
+  "path": "data/images/rocole/C9P22H1.jpg"
+ },
+ {
+  "n": 13,
+  "label": "rust",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/ROYA_RECORTES_57_0.jpg"
+ },
+ {
+  "n": 14,
+  "label": "rust",
+  "source": "agml",
+  "path": "data/images/agml/33497.jpg"
+ },
+ {
+  "n": 15,
+  "label": "rust",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/1239.jpg"
+ },
+ {
+  "n": 16,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/test/5_cercospora/901_0616_0641_0119_0102.jpg"
+ },
+ {
+  "n": 17,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/552_1191_0240_0128_0145.jpg"
+ },
+ {
+  "n": 18,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/1689_0693_1071_0263_0287.jpg"
+ },
+ {
+  "n": 19,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/55_0676_0268_0174_0129.jpg"
+ },
+ {
+  "n": 20,
+  "label": "cercospora",
+  "source": "agml",
+  "path": "data/images/agml/179.jpg"
+ },
+ {
+  "n": 21,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/1728_2025_0492_0258_0273.jpg"
+ },
+ {
+  "n": 22,
+  "label": "cercospora",
+  "source": "agml",
+  "path": "data/images/agml/530.jpg"
+ },
+ {
+  "n": 23,
+  "label": "cercospora",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/5_cercospora/1654_1703_0484_0274_0292.jpg"
+ },
+ {
+  "n": 24,
+  "label": "miner",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/MINADO_RECORTES_39_3.jpg"
+ },
+ {
+  "n": 25,
+  "label": "miner",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/MINEIRO_35_3.jpg"
+ },
+ {
+  "n": 26,
+  "label": "miner",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/MINEIRO_167_8.jpg"
+ },
+ {
+  "n": 27,
+  "label": "miner",
+  "source": "agml",
+  "path": "data/images/agml/43575.jpg"
+ },
+ {
+  "n": 28,
+  "label": "miner",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/70.jpg"
+ },
+ {
+  "n": 29,
+  "label": "miner",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/MINADO_RECORTES_110_2.jpg"
+ },
+ {
+  "n": 30,
+  "label": "miner",
+  "source": "coffeeleaf_rust_and_leaf_miner",
+  "path": "data/images/coffeeleaf_co/MINEIRO_163_1.jpg"
+ },
+ {
+  "n": 31,
+  "label": "miner",
+  "source": "agml",
+  "path": "data/images/agml/44591.jpg"
+ },
+ {
+  "n": 32,
+  "label": "phoma",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/574.jpg"
+ },
+ {
+  "n": 33,
+  "label": "phoma",
+  "source": "agml",
+  "path": "data/images/agml/8210.jpg"
+ },
+ {
+  "n": 34,
+  "label": "phoma",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/4_phoma/520_0879_0173_0231_0237.jpg"
+ },
+ {
+  "n": 35,
+  "label": "phoma",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/310.jpg"
+ },
+ {
+  "n": 36,
+  "label": "phoma",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/421.jpg"
+ },
+ {
+  "n": 37,
+  "label": "phoma",
+  "source": "bracol_leaf",
+  "path": "data/bracol/classification/dataset/leaf/493.jpg"
+ },
+ {
+  "n": 38,
+  "label": "phoma",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/4_phoma/407_1405_0470_0144_0182.jpg"
+ },
+ {
+  "n": 39,
+  "label": "phoma",
+  "source": "bracol_symptom",
+  "path": "data/bracol/classification/dataset/symptom/train/4_phoma/272_1431_0414_0181_0201.jpg"
+ }
+]

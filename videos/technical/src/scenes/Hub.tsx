@@ -40,7 +40,7 @@ function HubPhone({ offlineAt }: { offlineAt: number }) {
   const frame = useCurrentFrame();
   const offline = progress(frame, offlineAt, 12);
   return (
-    <div className="absolute rounded-[48px] p-[14px]" style={{ ...HUB_BOX, background: "linear-gradient(160deg, var(--color-handset-high), var(--color-handset-low))", boxShadow: "inset 0 2px 0 rgb(255 255 255 / 0.12), 0 40px 80px rgb(0 0 0 / 0.55)" }}>
+    <div data-box="hub" className="absolute rounded-[48px] p-[14px]" style={{ ...HUB_BOX, background: "linear-gradient(160deg, var(--color-handset-high), var(--color-handset-low))", boxShadow: "inset 0 2px 0 rgb(255 255 255 / 0.12), 0 40px 80px rgb(0 0 0 / 0.55)" }}>
       <div className="relative size-full overflow-hidden rounded-[34px] bg-night-raised">
         <div className="absolute left-1/2 top-[18px] size-[16px] -translate-x-1/2 rounded-full bg-black" />
         {[0, 1, 2, 3].map((row) => (
@@ -60,11 +60,11 @@ function Pipeline({ chipAt, fieldsAt, ruleAt }: { chipAt: number; fieldsAt: numb
   const card = (start: number) => ({ opacity: progress(frame, start, 12), translate: `${(1 - progress(frame, start, 12)) * 60}px 0` });
   return (
     <div className="absolute left-[700px] top-[250px] flex w-[680px] flex-col gap-8">
-      <div className="flex items-center gap-5 rounded-lg bg-night-high px-7 py-5" style={{ ...card(chipAt), boxShadow: "0 0 0 2px var(--color-live)" }}>
+      <div data-box="qwen" className="flex items-center gap-5 rounded-lg bg-night-high px-7 py-5" style={{ ...card(chipAt), boxShadow: "0 0 0 2px var(--color-live)" }}>
         <Cpu size={60} weight="bold" className="text-live" />
         <span className="whitespace-nowrap font-data text-headline text-text">{HUB.model}</span>
       </div>
-      <div className="whitespace-nowrap rounded-lg bg-black/60 px-7 py-5 font-data text-label text-live" style={card(fieldsAt)}>
+      <div data-box="json" className="whitespace-nowrap rounded-lg bg-black/60 px-7 py-5 font-data text-label text-live" style={card(fieldsAt)}>
         <p>{'"topic": "leaf_symptoms"'}</p>
         <p>{'"sprayProduct": "not_mentioned"'}</p>
       </div>
@@ -82,8 +82,8 @@ export function Hub() {
   const sendAt = Math.max(wordAt("hub", "hub") - 10, TYPED_BY + 8);
   const offlineAt = wordAt("hub", "offline");
   const chipAt = wordAt("hub", "Kwen") - 4;
-  const fieldsAt = wordAt("hub", "fields") - 6;
-  const ruleAt = wordAt("hub", "rules");
+  const fieldsAt = wordAt("hub", "reads") - 2;
+  const ruleAt = wordAt("hub", "then") - 4;
   const replyAt = wordAt("hub", "confirm") - 6;
   const keypad = onPhone(FLIP_PARTS.keypad);
   const lcd = onPhone(FLIP_PARTS.lcd);

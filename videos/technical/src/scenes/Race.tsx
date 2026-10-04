@@ -38,7 +38,7 @@ type LaneProps = { y: number; mark: ReactNode; name: string; done: number; value
 
 function Lane({ y, mark, name, done, value, lit, valueOpacity }: LaneProps) {
   return (
-    <div className="absolute inset-x-0" style={{ top: y }}>
+    <div data-box="lane" className="absolute inset-x-0 h-[100px]" style={{ top: y }}>
       <div className="absolute left-[120px] flex items-center gap-6">
         {mark}
         <span className="display-headline text-title text-text">{name}</span>
