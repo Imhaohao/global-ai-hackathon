@@ -6,6 +6,8 @@ This is a research prototype. Dataset accuracy does not establish field accuracy
 
 ## For judges
 
+Try the app in a browser at **[leafdoctor.vercel.app](https://leafdoctor.vercel.app)**; the leaf check runs on your own device, not on a server. All four leaf models (B0 to B3), their training evidence and the 1,119-image outside rust test set are published on Hugging Face at **[ConnorLee08/coffee-leaf-efficientnet-b2](https://huggingface.co/ConnorLee08/coffee-leaf-efficientnet-b2)**.
+
 Each row points at the strongest evidence for one judging criterion. Every number links to where it was measured.
 
 | Criterion | What to look at | Evidence |
@@ -14,7 +16,7 @@ Each row points at the strongest evidence for one judging criterion. Every numbe
 | Development relevance | Noor's coffee yield problem from Annex B: a sick leaf and no extension officer nearby. | About one extension officer per 1,380 Kenyan farmers ([why](#what-the-project-is-for)). 38.4% of rural Kenyan adults use a basic text phone as their main phone ([Findex 2024](docs/evidence.md#global-findex-world-bank)). |
 | Data grounding | Every dataset with its source, licence, size and what it does not cover. | [Model data card](docs/data-card.md), [training sources](training/sources.json), [country evidence](docs/evidence.md). The classifier cannot see coffee berry disease, berry borer or wilt. |
 | Evidence it works | B1 is right on 93.27% of 5,868 test photos and accepted 0 of 202 unsupported photos. On 1,119 outside rust photos it ranks rust above healthy with AUROC 0.742, but at its threshold it catches only 15.82% of them. The SMS model filled 84 of 94 fields with 0 wrong final diagnoses. | [Four-model comparison](#completed-four-model-comparison), [external rust benchmark](docs/evidence.md#external-rust-benchmark-leaf-doctor-b2-against-gpt-6-astra), [language-model eval](#on-device-small-language-model-sharedsrclocalmodel). The root test suite runs 355 tests and the hub 26 (`npm test`). |
-| Value of AI | Keyword rules alone left 10 of 13 messages "unsure". With the 2B model, 7 of those became confirmed right answers and none became wrong. A zero-shot vision model scored 42% on a comparable crop task, so we fine-tuned. | [Language-model eval](#on-device-small-language-model-sharedsrclocalmodel), [what we cut](#what-we-cut-and-why) |
+| Value of AI | Keyword rules alone left 10 of 13 messages "unsure". With the 2B model, 7 of those became confirmed right answers and none became wrong. A zero-shot vision model scored 42% on a comparable crop task, so we fine-tuned. On 1,119 outside rust photos the 8.6 MB B2 model ranks rust about as well as GPT-6 Astra (AUROC 0.778 against 0.776) and finished in 7.5 s on a laptop. | [Language-model eval](#on-device-small-language-model-sharedsrclocalmodel), [what we cut](#what-we-cut-and-why), [rust benchmark](#external-rust-benchmark). The Astra score is team-reported and cannot be checked until its outputs are committed. |
 | Scalability | All channels share one set of rules in `shared/`. A new crop needs a disease list, a training set and translations, not new code paths. The app UI is offered in 97 languages, most machine-translated and unreviewed. | [Folder map](#folder-map), [Step 4](#step-4-map-disease-hotspots-and-trends) |
 | Responsible AI | The model never finalizes a diagnosis alone, "not sure" goes to a person, advice never invents a dose, and consent comes first. Kikuyu texts go to a person: the guard flagged 99.8% of Kikuyu test sentences and 0 Swahili or English ones. | [Guardrails](#guardrails-that-apply-to-every-step), [data flow](docs/data-flow.md), [Kikuyu guard](docs/evidence.md#kikuyu-guard-on-the-hub) |
 
@@ -233,7 +235,7 @@ Not covered: coffee berry disease, coffee berry borer and coffee wilt are not cl
 
 See the [model data card](docs/data-card.md) and the [reproduced B0 evaluation](training/results/final-evaluation.json). The original checkpoint and exact split were restored from the published artifacts; all 23,552 image hashes matched. B0 was rerun with its saved thresholds and unchanged model/config hashes. These figures describe the original quality gate; the newer brightness policy and B1/B2/B3 comparisons are reported separately below.
 
-The desktop training pipeline starts from `Huyt/arabica-coffee-leaf-disease-efficientnet-b0` at revision `252d26841543befab22880876f8ca91543230aab`. It uses PyTorch/timm on CPU and exports a bundled offline TensorFlow Lite model. The existing `training/train.py` is the separate original MobileNet experiment; use the EfficientNet scripts below for this model.
+The desktop training pipeline starts from [`Huyt/arabica-coffee-leaf-disease-efficientnet-b0`](https://huggingface.co/Huyt/arabica-coffee-leaf-disease-efficientnet-b0) at revision `252d26841543befab22880876f8ca91543230aab`. It uses PyTorch/timm on CPU and exports a bundled offline TensorFlow Lite model. The existing `training/train.py` is the separate original MobileNet experiment; use the EfficientNet scripts below for this model.
 
 The current bundled model version is `deployed-v1` with **4,017,796 parameters**. `mobile/assets/model/coffee-leaf.tflite` is **8,091,596 bytes (7.72 MiB)**, with FP16 weight storage and float32 operations/input/output. Its SHA256 is `19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda`. The fresh desktop TFLite evaluation measured a median of **4.9 ms** with four CPU threads on Apple M5 Pro; this is neither an emulator nor a phone benchmark. PyTorch parity checks used the Mac GPU after CPU/MPS agreement was checked. The fresh-process verifier blocked outgoing sockets and observed zero attempts. Android/iOS device validation has not been performed.
 
@@ -410,8 +412,24 @@ training/.venv/Scripts/python.exe training/benchmark_single_image.py --b3-dir tr
 
 Run this only after the four-model comparison completes and other CPU workloads finish. The timing script requires the matching completed report and verifies frozen inputs and source code before and after measurement.
 
+##### External rust benchmark
+
+Leaf Doctor B2 and GPT-6 Astra each scored the same 1,119 outside rust photos (847 rust, 272 not rust). AUROC measures how well a model ranks rust leaves above healthy ones, from 0.5 for a coin flip to 1.0 for perfect. It is not diagnosis accuracy: at the app's own threshold, B2 calls only 4.7% of these photos rust.
+
+| Model | Size | AUROC | Time for 1,119 images | Status |
+| --- | ---: | ---: | ---: | --- |
+| Leaf Doctor B2 | 8.6 MB, runs offline | 0.778 | 7.5 s (Apple M5 Pro, 4 CPU threads) | Reproduced 2026-10-04 |
+| GPT-6 Astra | cloud model | 0.776 | 58 min 39 s | Team-reported; outputs not committed |
+
+```bash
+training/.venv/bin/python training/benchmark_external_rust.py --model b2
+```
+
+The scorer writes every image's score to `training/reports/external_rust_benchmark/`, and the test set is downloadable from the [Hugging Face repo](https://huggingface.co/ConnorLee08/coffee-leaf-efficientnet-b2/blob/main/datasets/b2-external-rust-test-set-1119-images.zip). Until Astra's per-image scores are committed, treat the Astra row as unverified; [docs/evidence.md](docs/evidence.md#external-rust-benchmark-leaf-doctor-b2-against-gpt-6-astra) gives the command that checks them.
 
 ##### Packaged models and evaluation evidence
+
+All four models, with their checkpoints, TFLite exports, calibration and verification reports, are published at [ConnorLee08/coffee-leaf-efficientnet-b2](https://huggingface.co/ConnorLee08/coffee-leaf-efficientnet-b2) (revision `31a46d7`). Its B2 `model.safetensors` and `model.tflite` are byte-identical to the checkpoint and app export described above.
 
 B0, B1 and B2 exports and configurations are in `mobile/assets/model/`. The B3 export, selected checkpoint, configuration, original training scripts and verification evidence are in `training/candidates/efficientnet-b3/`. B3 remains an offline comparison candidate above the 10 MB per-model app limit. The app uses B1 as its default and allows B0/B2 selection in the multi-leaf workflow; switching clears the current check, and saved checks record the selected calibration/artifact version.
 
@@ -520,7 +538,7 @@ Farmer phone ──SMS──► Hub phone SIM (hub/ Android app)
 
 #### On-device small language model (shared/src/localModel/)
 
-The model is swappable: callers use the `LocalModel` interface; model files and model-specific request options live in one `modelCatalog.ts` entry. Current pick: Qwen3.5-0.8B Q4_K_M + mmproj-F16 (737 MB, Apache-2.0), files in `~/.cache/leaf-doctor/models/`. The classifier still diagnoses; the small model reads labels, normalizes Swahili SMS for the matcher, and phrases rule verdicts behind a guard.
+The model is swappable: callers use the `LocalModel` interface; model files and model-specific request options live in one `modelCatalog.ts` entry. Current pick: Qwen3.5-2B Q4_K_M ([`unsloth/Qwen3.5-2B-GGUF`](https://huggingface.co/unsloth/Qwen3.5-2B-GGUF), Apache-2.0), files in `~/.cache/leaf-doctor/models/`. The classifier still diagnoses; the small model reads labels, normalizes Swahili SMS for the matcher, and phrases rule verdicts behind a guard.
 
 | Step | Owner model | Status |
 |---|---|---|
@@ -635,6 +653,8 @@ Coffee-leaf disease is not the only future direction. Other crops can be added l
 
 ## Pitch and demo materials
 
+- The live web demo is at [leafdoctor.vercel.app](https://leafdoctor.vercel.app). Rebuild it with `cd mobile && npm run export:web`.
+- `videos/demo/` and `videos/technical/` are the two submission videos, made with Remotion. The technical video's sources for every number are in `videos/technical/scripts/writeCredits.ts`.
 - `pitch/` is the Leaf Doctor pitch deck, a Next.js app with a 3D coffee-slope stage. Run it with `cd pitch && npm install && npm run dev`, then open `http://localhost:3417`.
 - `assets/` holds the brand fonts and color tokens and the Blender and glTF model of the coffee slope, with the scripts to rebuild it, pre-rendered images and textures.
 - `reels/` holds the 60-second vertical demo video, made with Remotion.
