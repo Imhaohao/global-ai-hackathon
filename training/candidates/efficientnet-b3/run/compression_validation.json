@@ -1,0 +1,18 @@
+[
+  {
+    "variant": "int8_weights",
+    "bytes": 11796544,
+    "parity": {
+      "n": 5294,
+      "maximum_probability_error": 0.20813310146331787,
+      "mean_absolute_probability_error": 0.002160013187676668,
+      "top1_disagreements": 23,
+      "accuracy_drop": -0.0003777861730260845,
+      "macro_f1_drop": 0.0014281985859748714,
+      "eligible": true,
+      "policy": "Validation only: <=1 percentage point accuracy and macro F1 loss relative to selected checkpoint"
+    },
+    "under_10_decimal_MB": false,
+    "deployment_eligible": false
+  }
+]

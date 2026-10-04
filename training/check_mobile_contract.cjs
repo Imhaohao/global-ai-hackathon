@@ -17,7 +17,7 @@ function loadModule(file, overrides = {}) {
   const module = { exports: {} };
   vm.runInNewContext(built.outputFiles[0].text, {
     module, exports: module.exports, require, Float32Array, Uint8Array, ArrayBuffer,
-    console, performance, atob, __DEV__: false, ...overrides,
+    console, performance, atob, TextEncoder, TextDecoder, __DEV__: false, ...overrides,
   });
   return module.exports;
 }
@@ -56,12 +56,16 @@ function checkDecisions(pickMostLikely, passesQuality) {
   for (const value of [0, 255]) assert.equal(passesQuality(new Float32Array(224 * 224 * 3).fill(value)), false);
 }
 
-function encodeFixture(textured) {
+async function encodeFixture(textured, format) {
   const data = Buffer.alloc(224 * 224 * 4);
   for (let pixel = 0; pixel < 224 * 224; pixel++) {
     const light = textured ? ((Math.floor(pixel / 224) + pixel % 224) % 2 ? 220 : 60) : 0;
     data.fill(light, pixel * 4, pixel * 4 + 3);
     data[pixel * 4 + 3] = 255;
+  }
+  if (format === 'png') {
+    const { encode } = await import('../mobile/node_modules/fast-png/lib/index.js');
+    return Buffer.from(encode({ data, width: 224, height: 224, channels: 4 })).toString('base64');
   }
   return jpeg.encode({ data, width: 224, height: 224 }, 100).data.toString('base64');
 }
@@ -72,14 +76,14 @@ async function checkClassification(development, textured, classIndex) {
   const context = {
     resize(value) { operations.push(['resize', value]); return this; },
     crop(value) { operations.push(['crop', value]); return this; },
-    async renderAsync() { return { saveAsync: async () => ({ base64: encodeFixture(textured) }) }; },
+    async renderAsync() { return { saveAsync: async (options) => ({ base64: await encodeFixture(textured, options.format) }) }; },
   };
   const { classifyLeaf } = loadModule('mobile/src/diagnosis/classifyLeaf.ts', {
     __DEV__: development,
     performance: { now: (() => { let time = 0; return () => (time += 12.5); })() },
     console: { log: value => logs.push(value) },
     require: name => name === 'expo-image-manipulator'
-      ? { ImageManipulator: { manipulate: () => context }, SaveFormat: { JPEG: 'jpeg' } }
+      ? { ImageManipulator: { manipulate: () => context }, SaveFormat: { JPEG: 'jpeg', PNG: 'png' } }
       : require(name === 'jpeg-js' ? '../mobile/node_modules/jpeg-js' : name),
   });
   const model = {
@@ -95,7 +99,10 @@ async function checkClassification(development, textured, classIndex) {
   const result = await classifyLeaf(model, { uri: 'fixture.jpg', width: 400, height: 200 });
   assert.equal(result.qualityPassed, textured);
   assert.equal(result.confidence, textured && ![5, 7].includes(classIndex) ? 'confident' : 'unclear');
-  assert.deepEqual(Object.keys(result).sort(), ['condition', 'confidence', 'probability', 'qualityPassed']);
+  assert.equal(result.qualityIssue, textured ? undefined : 'too_dark');
+  const keys = ['condition', 'confidence', 'probability', 'qualityPassed'];
+  if (!textured) keys.push('qualityIssue');
+  assert.deepEqual(Object.keys(result).sort(), keys.sort());
   assert.deepEqual(JSON.parse(JSON.stringify(operations)), [['resize', { width: 512, height: 256 }], ['crop', { originX: 144, originY: 16, width: 224, height: 224 }]]);
   assert.deepEqual(logs, development ? [`[leaf-model] inference_ms=12.5 quality=${textured}`] : []);
 }
@@ -109,6 +116,7 @@ async function main() {
   await checkClassification(false, true, 4);
   await checkClassification(true, true, 5);
   await checkClassification(true, true, 7);
+  require('./check_brightness.cjs');
   console.log('Mobile contract passed: artifact hash, labels, preprocessing, gates, qualityPassed and development-only inference timing.');
 }
 

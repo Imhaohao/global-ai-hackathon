@@ -1,6 +1,7 @@
 import { DISEASES, type DiseaseKey } from '../../../shared/src/index.ts';
 import { DISEASES_SW, type DiseaseText } from '../../../shared/src/diseases.sw.ts';
 import type { Severity } from '../diagnosis/conditions';
+import type { ModelId } from '../diagnosis/modelConfig';
 
 export type Language = 'en' | 'sw';
 
@@ -16,6 +17,12 @@ type BaseStrings = {
   notSure: string;
   unclearTitle: string;
   unclearBody: string;
+  tooDarkTitle: string;
+  tooDarkBody: string;
+  tooBrightTitle: string;
+  tooBrightBody: string;
+  blurredTitle: string;
+  blurredBody: string;
   whatYouSee: string;
   whatToDo: string;
   readAloud: string;
@@ -25,6 +32,11 @@ type BaseStrings = {
   cameraBlocked: string;
   openSettings: string;
   modelFailed: string;
+  chooseModel: string;
+  modelDescriptions: Record<ModelId, string>;
+  modelLoading: string;
+  retryModel: string;
+  modelUsed: string;
   photoFailed: string;
   severity: Record<Severity, string>;
   diseases: Record<DiseaseKey, DiseaseText>;
@@ -42,6 +54,12 @@ const english: BaseStrings = {
   notSure: 'Not fully sure. Take one more photo to check.',
   unclearTitle: 'Leaf not clear',
   unclearBody: 'Take another photo of one leaf, in good light, from closer.',
+  tooDarkTitle: 'The photo is too dark',
+  tooDarkBody: 'Increase the light on the leaf. Move to brighter, even light and take another photo.',
+  tooBrightTitle: 'The photo is too bright',
+  tooBrightBody: 'Reduce the light on the leaf. Move into shade or turn off the flash and take another photo.',
+  blurredTitle: 'The photo is blurry',
+  blurredBody: 'Hold the phone still and focus on one leaf before taking another photo.',
   whatYouSee: 'What you can see',
   whatToDo: 'What to do',
   readAloud: 'Read aloud',
@@ -50,7 +68,12 @@ const english: BaseStrings = {
   tryAgain: 'Take another photo',
   cameraBlocked: 'The camera is turned off for Leaf Doctor. Open Settings and allow Camera.',
   openSettings: 'Open Settings',
-  modelFailed: 'Leaf Doctor could not start. Close the app and open it again.',
+  modelFailed: 'This model could not load. Try again or choose another model.',
+  chooseModel: 'Choose a leaf model',
+  modelDescriptions: { b0: 'Original model', b1: 'Experimental model', b2: 'Experimental model' },
+  modelLoading: 'Loading the selected model…',
+  retryModel: 'Try loading again',
+  modelUsed: 'Model used:',
   photoFailed: 'Unable to read that photo. Take a new one and try again.',
   severity: {
     healthy: 'Healthy',
@@ -72,6 +95,12 @@ const swahili: BaseStrings = {
   notSure: 'Hakuna uhakika kamili. Piga picha nyingine kuhakikisha.',
   unclearTitle: 'Jani halionekani vizuri',
   unclearBody: 'Piga picha nyingine ya jani moja, kwenye mwanga mzuri, ukiwa karibu zaidi.',
+  tooDarkTitle: 'Picha ina giza sana',
+  tooDarkBody: 'Ongeza mwanga kwenye jani. Nenda penye mwanga zaidi unaoangaza jani sawasawa, kisha piga picha nyingine.',
+  tooBrightTitle: 'Picha ina mwanga mwingi sana',
+  tooBrightBody: 'Punguza mwanga kwenye jani. Nenda kivulini au zima flashi ya kamera, kisha piga picha nyingine.',
+  blurredTitle: 'Picha haiko wazi',
+  blurredBody: 'Shikilia simu bila kuitikisa na hakikisha kamera imelenga jani moja kabla ya kupiga picha nyingine.',
   whatYouSee: 'Unachoweza kuona',
   whatToDo: 'Cha kufanya',
   readAloud: 'Sikiliza',
@@ -80,7 +109,12 @@ const swahili: BaseStrings = {
   tryAgain: 'Piga picha nyingine',
   cameraBlocked: 'Kamera imezimwa kwa Leaf Doctor. Fungua Mipangilio na uruhusu Kamera.',
   openSettings: 'Fungua Mipangilio',
-  modelFailed: 'Leaf Doctor imeshindwa kuanza. Funga programu kisha uifungue tena.',
+  modelFailed: 'Mfumo huu haujapakiwa. Jaribu tena au chagua mfumo mwingine.',
+  chooseModel: 'Chagua mfumo wa kukagua jani',
+  modelDescriptions: { b0: 'Mfumo wa awali', b1: 'Mfumo wa majaribio', b2: 'Mfumo wa majaribio' },
+  modelLoading: 'Inapakia mfumo uliochagua…',
+  retryModel: 'Jaribu kupakia tena',
+  modelUsed: 'Mfumo uliotumika:',
   photoFailed: 'Imeshindwa kusoma picha hiyo. Piga picha mpya ujaribu tena.',
   severity: {
     healthy: 'Mzima',

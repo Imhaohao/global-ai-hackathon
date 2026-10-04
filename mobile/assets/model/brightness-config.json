@@ -1,0 +1,46 @@
+{
+  "version": "brightness-v1",
+  "metric": "alpha_weighted_integer_rgb_luminance",
+  "minimum_mean_luminance": 40.334103954081634,
+  "maximum_mean_luminance": 199.99709024234693,
+  "maximum_highlight_fraction": 0.09255420918367346,
+  "highlight_luminance": 250,
+  "bright_rule": "mean_above_maximum_and_highlight_fraction_above_maximum",
+  "preprocessing": {
+    "input_size": 224,
+    "resize_short_side": 256,
+    "crop": "center; resized dimensions floor; offsets rounded half up",
+    "reference_interpolation": "Pillow bicubic",
+    "alpha": "weight pixels by alpha; fully transparent pixels contribute zero",
+    "opaque_images": "all pixels have equal weight; no inferred leaf mask",
+    "grayscale": "floor((19595R+38470G+7471B+32768)/65536)"
+  },
+  "selection": {
+    "split": "train",
+    "labels": "all supported labels; unsupported excluded",
+    "quantiles": {
+      "lower_mean": 0.005,
+      "upper_mean": 0.995,
+      "upper_clip": 0.995
+    },
+    "weighting": "equal source, then equal group within source, then equal parent within group, then equal image within parent",
+    "rule": "dark if mean below lower bound; bright only if BOTH mean and highlight fraction exceed upper bounds; equality passes",
+    "validation_used_for_selection": false,
+    "external_used_for_selection": false
+  },
+  "provenance": {
+    "manifest_sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+    "calibration_script_sha256": "b56ae305f927896c51f81532dd6f5e112ed9ca1cc86e24106c6cb3ebad4458c1",
+    "training_images": 13085,
+    "training_sources": {
+      "agml": 1278,
+      "bracol_leaf": 964,
+      "bracol_symptom": 1462,
+      "coffeeleaf_own_field": 5448,
+      "coffeeleaf_rust_and_leaf_miner": 2861,
+      "rocole": 1072
+    },
+    "training_groups": 2531,
+    "all_training_image_hashes_verified": true
+  }
+}

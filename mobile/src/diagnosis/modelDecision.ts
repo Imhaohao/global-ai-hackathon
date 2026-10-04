@@ -1,18 +1,18 @@
-import { MODEL_CLASS_ORDER } from './conditions';
 import modelConfig from '../../assets/model/model-config.json';
 import type { Confidence, Diagnosis } from './classifyLeaf';
+import { conditionFor, type ModelConfig } from './modelConfig';
 
-const MODEL_INPUT_SIZE = 224;
+export { passesQuality } from './imageQuality';
 
-function confidenceFor(probability: number, index: number): Confidence {
-  if (index >= MODEL_CLASS_ORDER.length) return 'unclear';
-  if (probability >= modelConfig.calibration.confident_thresholds[index]) return 'confident';
-  if (probability >= modelConfig.calibration.class_thresholds[index]) return 'possible';
+function confidenceFor(probability: number, index: number, config: ModelConfig): Confidence {
+  if (index >= config.app_condition_keys.length) return 'unclear';
+  if (probability >= config.calibration.confident_thresholds[index]) return 'confident';
+  if (probability >= config.calibration.class_thresholds[index]) return 'possible';
   return 'unclear';
 }
 
-export function pickMostLikely(probabilities: Float32Array): Omit<Diagnosis, 'qualityPassed'> {
-  if (probabilities.length !== modelConfig.labels.length || !probabilities.every(value => Number.isFinite(value) && value >= 0 && value <= 1)) {
+export function pickMostLikely(probabilities: Float32Array, config: ModelConfig = modelConfig): Omit<Diagnosis, 'qualityPassed'> {
+  if (probabilities.length !== config.labels.length || !probabilities.every(value => Number.isFinite(value) && value >= 0 && value <= 1)) {
     throw new Error('The leaf model returned invalid probabilities');
   }
   let bestIndex = 0;
@@ -21,33 +21,8 @@ export function pickMostLikely(probabilities: Float32Array): Omit<Diagnosis, 'qu
   });
   const probability = probabilities[bestIndex];
   return {
-    condition: MODEL_CLASS_ORDER[bestIndex] ?? 'healthy',
+    condition: conditionFor(config, bestIndex),
     probability,
-    confidence: confidenceFor(probability, bestIndex),
+    confidence: confidenceFor(probability, bestIndex, config),
   };
-}
-
-export function passesQuality(rgb: Float32Array): boolean {
-  const size = MODEL_INPUT_SIZE;
-  const gray = new Float32Array(size * size);
-  let light = 0;
-  for (let pixel = 0; pixel < gray.length; pixel++) {
-    const offset = pixel * 3;
-    gray[pixel] = Math.floor((19595 * rgb[offset] + 38470 * rgb[offset + 1] + 7471 * rgb[offset + 2] + 32768) / 65536);
-    light += gray[pixel];
-  }
-  let sum = 0;
-  let squares = 0;
-  for (let row = 1; row < size - 1; row++) {
-    for (let column = 1; column < size - 1; column++) {
-      const i = row * size + column;
-      const edge = 4 * gray[i] - gray[i - size] - gray[i + size] - gray[i - 1] - gray[i + 1];
-      sum += edge;
-      squares += edge * edge;
-    }
-  }
-  const count = (size - 2) ** 2;
-  const variance = squares / count - (sum / count) ** 2;
-  const limits = modelConfig.calibration.quality;
-  return variance >= limits.minimum_edge_variance && light / gray.length >= limits.minimum_mean_luminance;
 }

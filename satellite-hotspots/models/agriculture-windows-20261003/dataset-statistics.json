@@ -1,0 +1,74 @@
+{
+  "train": {
+    "tiles": 4096,
+    "valid_pixels": 233217476,
+    "class_positive_pixels": {
+      "drydown": 12805432,
+      "nutrient_deficiency": 11393464,
+      "water": 5112462,
+      "weed_cluster": 7814419,
+      "double_plant": 2034530,
+      "endrow": 2139673,
+      "planter_skip": 1013183,
+      "waterway": 2887055
+    },
+    "class_positive_tiles": {
+      "drydown": 640,
+      "nutrient_deficiency": 685,
+      "water": 364,
+      "weed_cluster": 696,
+      "double_plant": 535,
+      "endrow": 316,
+      "planter_skip": 534,
+      "waterway": 475
+    }
+  },
+  "val": {
+    "tiles": 192,
+    "valid_pixels": 10880389,
+    "class_positive_pixels": {
+      "drydown": 434465,
+      "nutrient_deficiency": 507707,
+      "water": 394038,
+      "weed_cluster": 203937,
+      "double_plant": 146677,
+      "endrow": 83439,
+      "planter_skip": 33568,
+      "waterway": 96317
+    },
+    "class_positive_tiles": {
+      "drydown": 22,
+      "nutrient_deficiency": 31,
+      "water": 30,
+      "weed_cluster": 31,
+      "double_plant": 30,
+      "endrow": 13,
+      "planter_skip": 27,
+      "waterway": 17
+    }
+  },
+  "test": {
+    "tiles": 256,
+    "valid_pixels": 14703999,
+    "class_positive_pixels": {
+      "drydown": 650002,
+      "nutrient_deficiency": 693867,
+      "water": 367237,
+      "weed_cluster": 658109,
+      "double_plant": 165431,
+      "endrow": 174393,
+      "planter_skip": 92269,
+      "waterway": 73091
+    },
+    "class_positive_tiles": {
+      "drydown": 31,
+      "nutrient_deficiency": 45,
+      "water": 23,
+      "weed_cluster": 49,
+      "double_plant": 37,
+      "endrow": 23,
+      "planter_skip": 37,
+      "waterway": 19
+    }
+  }
+}

@@ -14,12 +14,15 @@ import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } 
 
 import type { LeafReading, PlantCheck, PlantVerdict } from '../../../shared/src/contract.ts';
 import { Button } from '../components/Button';
+import { ModelSelector } from '../components/ModelSelector';
 import { LeafSlots } from '../components/LeafSlots';
 import { PillButton } from '../components/PillButton';
 import { Body, Muted, Title } from '../components/Typography';
 import { Viewfinder } from '../components/Viewfinder';
 import type { LeafPhoto } from '../diagnosis/classifyLeaf';
 import { MAX_LEAVES_PER_PLANT } from '../diagnosis/diagnosePlant';
+import type { ModelId } from '../diagnosis/modelConfig';
+import { getQualityGuidance } from '../diagnosis/qualityGuidance';
 import type { PhotoSource } from '../diagnosis/pickLeafPhoto';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
@@ -34,6 +37,10 @@ type CaptureScreenProps = {
   isChecking: boolean;
   problem?: CaptureProblem;
   canCheck: boolean;
+  modelId: ModelId;
+  modelLoading: boolean;
+  onSelectModel: (modelId: ModelId) => void;
+  onRetryModel: () => void;
   onTakeLeaf: (source: PhotoSource, replaceIndex?: number) => void;
   onFinish: () => void;
   onOpenSettings: () => void;
@@ -94,7 +101,9 @@ type ProblemLeafRowProps = {
 };
 
 function ProblemLeafRow({ strings, photo, reading, onRetake }: ProblemLeafRowProps) {
-  const reason = leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
+  const reason = reading.qualityIssue
+    ? getQualityGuidance(strings, reading.qualityIssue).body
+    : leafProblemOf(reading) === 'tooDark' ? strings.leafTooDark : strings.leafNotClear;
   return (
     <View className="flex-row items-center gap-4 rounded-control bg-surface p-3 shadow-sm">
       <Image
@@ -250,8 +259,18 @@ export function CaptureScreen(props: CaptureScreenProps) {
           accessibilityLabel={fillTemplate(strings.leavesTaken, { count: photos.length, max: MAX_LEAVES_PER_PLANT })}
         />
         {photos.length === 0 && <FirstLeafGuide strings={strings} onOpenSeedCheck={onOpenSeedCheck} />}
+        <ModelSelector
+          modelId={props.modelId}
+          strings={strings}
+          disabled={props.isChecking}
+          loading={props.modelLoading}
+          onSelect={props.onSelectModel}
+        />
         <CaptureStatus {...props} />
         {problem && <ProblemNotice strings={strings} problem={problem} />}
+        {problem === 'modelFailed' && (
+          <Button label={strings.retryModel} icon={ArrowCounterClockwise} variant="secondary" onPress={props.onRetryModel} />
+        )}
       </ScrollView>
       <CaptureActions {...props} />
     </View>

@@ -1,0 +1,29 @@
+# Frozen evidence is verified by byte-level SHA-256 on every platform.
+* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+training/*.py -text whitespace=cr-at-eol
+training/candidates/** -text whitespace=cr-at-eol
+training/checkpoints/** -text whitespace=cr-at-eol
+training/manifests/** -text whitespace=cr-at-eol
+training/reports/** -text whitespace=cr-at-eol
+training/pretrained/** -text whitespace=cr-at-eol
+mobile/assets/model/** -text whitespace=cr-at-eol
+*.safetensors binary
+*.tflite binary
+*.npz binary
+training/calibrate_rejection.py text eol=crlf
+training/download_co.py text eol=crlf
+training/download_extra.py text eol=crlf
+training/download_field.py text eol=crlf
+training/download_scans.py text eol=crlf
+training/download_sources.py text eol=crlf
+training/evaluate_additional.py text eol=crlf
+training/evaluate_photos.py text eol=crlf
+training/export_mobile.py text eol=crlf
+training/final_evaluation.py text eol=crlf
+training/finetune.py text eol=crlf
+training/improve_generalization.py text eol=crlf
+training/infer.py text eol=crlf
+training/model_utils.py text eol=crlf
+training/prepare_data.py text eol=crlf
+training/train.py text eol=crlf
+training/verify_offline.py text eol=crlf

@@ -1,0 +1,29 @@
+test_all_clouded_date_is_insufficient (test_pipeline.PipelineTests.test_all_clouded_date_is_insufficient) ... ok
+test_archive_adapter_is_explicit_placeholder (test_pipeline.PipelineTests.test_archive_adapter_is_explicit_placeholder) ... ok
+test_baseline_only_is_insufficient (test_pipeline.PipelineTests.test_baseline_only_is_insufficient) ... ok
+test_cli_invalid_input_has_nonzero_exit (test_pipeline.PipelineTests.test_cli_invalid_input_has_nonzero_exit) ... ok
+test_clouded_decline_does_not_form_zone (test_pipeline.PipelineTests.test_clouded_decline_does_not_form_zone) ... ok
+test_config_and_empty_mask_fail (test_pipeline.PipelineTests.test_config_and_empty_mask_fail) ... ok
+test_coverage_uses_coffee_mask (test_pipeline.PipelineTests.test_coverage_uses_coffee_mask) ... ok
+test_decline_zones_rank_by_mean_drop (test_pipeline.PipelineTests.test_decline_zones_rank_by_mean_drop) ... ok
+test_four_neighbour_grouping_does_not_bridge_unknown (test_pipeline.PipelineTests.test_four_neighbour_grouping_does_not_bridge_unknown) ... ok
+test_full_cli_demo_and_local_round_trip (test_pipeline.PipelineTests.test_full_cli_demo_and_local_round_trip) ... ok
+test_grid_mismatch_fails_actionably (test_pipeline.PipelineTests.test_grid_mismatch_fails_actionably) ... ok
+test_html_escapes_labels_and_remains_self_contained (test_pipeline.PipelineTests.test_html_escapes_labels_and_remains_self_contained) ... ok
+test_invalid_arrays_and_dates_fail (test_pipeline.PipelineTests.test_invalid_arrays_and_dates_fail) ... ok
+test_json_import_rejects_nonstandard_numbers (test_pipeline.PipelineTests.test_json_import_rejects_nonstandard_numbers) ... ok
+test_mask_and_denominator_rules (test_pipeline.PipelineTests.test_mask_and_denominator_rules) ... ok
+test_missing_baseline_never_becomes_normal (test_pipeline.PipelineTests.test_missing_baseline_never_becomes_normal) ... ok
+test_missing_grid_metadata_is_rejected (test_pipeline.PipelineTests.test_missing_grid_metadata_is_rejected) ... ok
+test_no_data_and_zero_denominator_stay_unknown (test_pipeline.PipelineTests.test_no_data_and_zero_denominator_stay_unknown) ... ok
+test_no_future_dates_used_for_counts (test_pipeline.PipelineTests.test_no_future_dates_used_for_counts) ... ok
+test_pansharpened_resolution_rejected (test_pipeline.PipelineTests.test_pansharpened_resolution_rejected) ... ok
+test_real_data_requires_preparation_notes (test_pipeline.PipelineTests.test_real_data_requires_preparation_notes) ... ok
+test_small_change_is_not_labelled_stable (test_pipeline.PipelineTests.test_small_change_is_not_labelled_stable) ... ok
+test_stable_cells_have_no_threshold_drop (test_pipeline.PipelineTests.test_stable_cells_have_no_threshold_drop) ... ok
+test_svg_has_synthetic_caption_and_valid_zone_geometry (test_pipeline.PipelineTests.test_svg_has_synthetic_caption_and_valid_zone_geometry) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.517s
+
+OK

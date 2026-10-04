@@ -1,0 +1,10 @@
+{
+  "architecture": "efficientnet_b2",
+  "seed": 20261003,
+  "input_size": 224,
+  "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+  "pretrained_sha256": "e9adbcce7e5d5055c571c4cafdcc7f920b6a6ec42e643c49dff1aabe1d5f53c5",
+  "engine_sha256": "122db475235747bc6c962aaad9c8f11cf10d156a5ff8620a6f77af557b6c0987",
+  "dataset_code_sha256": "ace2c2cf2dc4dae7cce073fe1e4ef42c0bf1e14c18950228bdba94089de3b3cb",
+  "wrapper_sha256": "c9ede75ea24d55d93538459078f284ae5272ed8d4b9ec95fc58c043a77dd90f2"
+}

@@ -1,0 +1,4 @@
+-r requirements-ml.txt
+matplotlib>=3.10
+rasterio>=1.4
+pyproj>=3.7

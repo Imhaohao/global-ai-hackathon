@@ -1,0 +1,27 @@
+{
+  "checkpoint_sha256": "020fc708cbac41cf5a58d9cc3c3cf161156f34c8290411aa72e3bb574f9895d7",
+  "reference_checkpoint_sha256": "15405397497cc1e4b13c19afb368308222070c28ba5a65b7fbefc98c730ef0bd",
+  "thresholds": {
+    "drydown": 0.71875,
+    "nutrient_deficiency": 0.8125,
+    "water": 0.625,
+    "weed_cluster": 0.78125,
+    "double_plant": 0.46875,
+    "endrow": 0.78125,
+    "planter_skip": 0.875,
+    "waterway": 0.875
+  },
+  "reference_thresholds": {
+    "drydown": 0.875,
+    "nutrient_deficiency": 0.53125,
+    "water": 0.375,
+    "weed_cluster": 0.875,
+    "double_plant": 0.4375,
+    "endrow": 0.40625,
+    "planter_skip": 0.5625,
+    "waterway": 0.65625
+  },
+  "sample_manifest_sha256": "8f9f6985d9591a37758d487d52d8b4d532409a83b5bc559c68199eb149e7a717",
+  "test_fields": 256,
+  "frozen_before_test_labels_loaded": true
+}

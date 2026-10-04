@@ -1,0 +1,76 @@
+{
+  "quality": {
+    "minimum_edge_variance": 1.520114853217684,
+    "minimum_mean_luminance": 45.59410861968994,
+    "selection": "validation-only severe Gaussianblur challenge balancedaccuracy subject to >=90% clear acceptance"
+  },
+  "validation_n": 5294,
+  "class_thresholds": [
+    0.835,
+    0.4,
+    0.5,
+    0.635,
+    0.4,
+    1.01,
+    0.4
+  ],
+  "confident_thresholds": [
+    0.9700000000000001,
+    0.6000000000000001,
+    0.825,
+    0.8700000000000001,
+    0.4,
+    1.01,
+    0.4
+  ],
+  "class_threshold_evidence": [
+    {
+      "label": "cercospora",
+      "enabled": true,
+      "accept_threshold": 0.835,
+      "val_true_support": 216
+    },
+    {
+      "label": "healthy",
+      "enabled": true,
+      "accept_threshold": 0.4,
+      "val_true_support": 265
+    },
+    {
+      "label": "miner",
+      "enabled": true,
+      "accept_threshold": 0.5,
+      "val_true_support": 964
+    },
+    {
+      "label": "phoma",
+      "enabled": true,
+      "accept_threshold": 0.635,
+      "val_true_support": 575
+    },
+    {
+      "label": "rust",
+      "enabled": true,
+      "accept_threshold": 0.4,
+      "val_true_support": 2101
+    },
+    {
+      "label": "red_spider_mite",
+      "enabled": false,
+      "accept_threshold": 1.01,
+      "val_true_support": 25
+    },
+    {
+      "label": "weevil_damage",
+      "enabled": true,
+      "accept_threshold": 0.4,
+      "val_true_support": 924
+    }
+  ],
+  "runtime": "LiteRT CPU int8 per-channel weight storage / float32 computation",
+  "artifact_sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+  "brightness_config_sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+  "version": "b1-deployed-v1",
+  "temperature": 0.7291812046428157,
+  "selection": "Validation-only compressed runtime, current shared brightness policy; >=15 accepted and >=90%/95% precision per class"
+}

@@ -159,6 +159,74 @@
       ],
       "status": "excluded fromimage training",
       "reason": "No pairedphoto diagnosislabels"
+    },
+    {
+      "id": "peru_saposoa",
+      "url": "https://data.mendeley.com/datasets/mfpxg4y65r/2",
+      "license": "CC BY 4.0",
+      "status": "scale_candidate_only",
+      "notes": "Publisher1500; actual1499 images, one corrupt rust file excluded.1498 admitted:1105train168val225test. Expert visual labels per publisher, not laboratory verified here. Ojo_Gallo/Mycena citricolor mapped unsupported. Capture-time groups and confirmed near-duplicate closure; no known matches to old set. Not part of the published aa836a0 model."
+    },
+    {
+      "id": "bracol_expert_reviewed",
+      "url": "https://www.kaggle.com/datasets/jonatanfragoso/bracol-for-yolov8-detection",
+      "paper": "https://www.mdpi.com/2076-3417/15/9/5040",
+      "license": "CC BY 4.0",
+      "status": "scale_candidate_only",
+      "notes": "1744 original photographs in reviewed release; source states no augmentation. New expert annotations on existing BRACOL photos, not independent plants.7364 eligible single-condition crops inherit existing parent/group/split:5087train1205val1072test. Exclude113 unknown parents,272 empty annotation images,15 tiny targets and104 mixed-condition overlaps.117 extra training crops labelled Cercospora. Not part of published aa836a0 model."
+    },
+    {
+      "id": "uganda_k36wnd6knb",
+      "url": "https://data.mendeley.com/datasets/k36wnd6knb/1",
+      "license": "CC BY 4.0",
+      "status": "excluded",
+      "notes": "Publisher3312 augmented images; actual3322;102 corrupt,3220decodable.214 transformed matches to old corpus confirmed, original augmentation parents unavailable. Entire source quarantined; no rows used for training/evaluation. Class folders only; no equivalent expert confirmation stated."
+    },
+    {
+      "id": "xinzhai_21442135",
+      "url": "https://zenodo.org/records/21442135",
+      "paper": "https://www.mdpi.com/2076-3417/16/18/9199",
+      "license": "CC BY 4.0",
+      "status": "downloaded_not_used",
+      "archive_md5": "31403d6afd8c6c8e762159117a322912",
+      "notes": "Publisher1021; actual1020 images and1020 nonempty label files. Author classes brown spot, Leaf rust, anthracnose, Affected by leaf miner, healthy. No mite class in this archive; paper8class total includes Roboflow. All annotation IDs/bounds valid and headers verify. Whole source withheld pending explicit brown-spot taxonomy and overlap audit. No independent biological verification."
+    },
+    {
+      "id": "hf_brainer_fp66",
+      "url": "https://huggingface.co/datasets/brainer-fp66/coffee-leaf-diseases",
+      "status": "excluded",
+      "notes": "Original provenance/license insufficiently specified; academic use wording not an explicit source reuse license."
+    },
+    {
+      "id": "hf_coffee_disease_yemen",
+      "url": "https://huggingface.co/datasets/Omarrs11/Coffee-Disease-Yemen",
+      "status": "unavailable",
+      "notes": "Repository contained only .gitattributes when inspected; no images."
+    },
+    {
+      "id": "hf_coffee_cocoa",
+      "url": "https://huggingface.co/datasets/Laksh619/Coffee-Cocoa-Diseases",
+      "status": "excluded",
+      "notes": "Mixed coffee/cocoa material; source/card/license not verified."
+    },
+    {
+      "id": "zenodo_synthetic_coffee",
+      "url": "https://zenodo.org/records/11107683",
+      "status": "excluded",
+      "notes": "Gemini_Generated filenames; synthetic images are not new verified disease ground truth."
+    },
+    {
+      "id": "zenodo_coffee_survey",
+      "url": "https://zenodo.org/records/8275090",
+      "status": "excluded",
+      "notes": "432-row41-variable survey data rather than labeled leaf images."
+    },
+    {
+      "id": "barakobama",
+      "url": "https://universe.roboflow.com/barakobama/barakobama-coffee-leaf-disease",
+      "license": "CC BY 4.0",
+      "status": "not_used",
+      "notes": "Potential mites source; originals, augmentation lineage and downloadable artifact not verified. Do not count platform image totals as independent leaves."
     }
   ],
   "actual_image_counts": [
@@ -600,5 +668,7 @@
       "split": "val",
       "n": 91
     }
-  ]
+  ],
+  "scale_candidate_manifest": "data/scale_v3_manifest.json",
+  "published_model_commit": "aa836a0fffdc9c58065d557923211a6d2ecbf865"
 }

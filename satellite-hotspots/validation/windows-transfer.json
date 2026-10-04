@@ -1,0 +1,630 @@
+{
+  "dataset": "WeedsGalore official test partition",
+  "test_images": 26,
+  "source": "https://github.com/GFZ/weedsgalore",
+  "training_use": false,
+  "thresholds_frozen_from_agriculture_validation": {
+    "original": 0.875,
+    "updated": 0.78125
+  },
+  "scaling": "uint16 PNG /65535; R,G,B,NIR; author reference PNG scaling",
+  "label_mapping": "WeedsGalore labels >1 versus Agriculture-Vision weed_cluster model output",
+  "interpretation": "Exploratory transfer only: different sensor, scale and label semantics. Not a matched-task benchmark or coffee validation.",
+  "metrics": {
+    "original": {
+      "iou": 0.1842279492901106,
+      "precision": 0.21788249548071933,
+      "recall": 0.5439429164420919,
+      "true_positive_pixels": 270468,
+      "false_positive_pixels": 970880,
+      "false_negative_pixels": 226768
+    },
+    "updated": {
+      "iou": 0.13646463133143225,
+      "precision": 0.27014758812056383,
+      "recall": 0.21615892654594598,
+      "true_positive_pixels": 107482,
+      "false_positive_pixels": 290382,
+      "false_negative_pixels": 389754
+    }
+  },
+  "images": [
+    {
+      "id": "2023-06-15_0735",
+      "positive_pixels": 170227,
+      "models": {
+        "original": {
+          "iou": 0.4543882967536783,
+          "precision": 0.6153815480666257,
+          "recall": 0.6346173051278586,
+          "true_positive_pixels": 108029,
+          "false_positive_pixels": 67519,
+          "false_negative_pixels": 62198
+        },
+        "updated": {
+          "iou": 0.05035401683670625,
+          "precision": 0.49694635488308114,
+          "recall": 0.05305856297767099,
+          "true_positive_pixels": 9032,
+          "false_positive_pixels": 9143,
+          "false_negative_pixels": 161195
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0736",
+      "positive_pixels": 33528,
+      "models": {
+        "original": {
+          "iou": 0.19287868731253624,
+          "precision": 0.21167889942094198,
+          "recall": 0.6847112860892388,
+          "true_positive_pixels": 22957,
+          "false_positive_pixels": 85495,
+          "false_negative_pixels": 10571
+        },
+        "updated": {
+          "iou": 0.2577873605462178,
+          "precision": 0.3630132259919494,
+          "recall": 0.47071104748270104,
+          "true_positive_pixels": 15782,
+          "false_positive_pixels": 27693,
+          "false_negative_pixels": 17746
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0720",
+      "positive_pixels": 4782,
+      "models": {
+        "original": {
+          "iou": 0.004585120544298181,
+          "precision": 0.00596383224317045,
+          "recall": 0.01944792973651192,
+          "true_positive_pixels": 93,
+          "false_positive_pixels": 15501,
+          "false_negative_pixels": 4689
+        },
+        "updated": {
+          "iou": 0.06352058341700575,
+          "precision": 0.07834191487974972,
+          "recall": 0.25135926390631536,
+          "true_positive_pixels": 1202,
+          "false_positive_pixels": 14141,
+          "false_negative_pixels": 3580
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0750",
+      "positive_pixels": 2210,
+      "models": {
+        "original": {
+          "iou": 0.006435610377421733,
+          "precision": 0.0074982425993907675,
+          "recall": 0.04343891402714932,
+          "true_positive_pixels": 96,
+          "false_positive_pixels": 12707,
+          "false_negative_pixels": 2114
+        },
+        "updated": {
+          "iou": 0.008522480215670928,
+          "precision": 0.010439970171513796,
+          "recall": 0.044343891402714934,
+          "true_positive_pixels": 98,
+          "false_positive_pixels": 9289,
+          "false_negative_pixels": 2112
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0770",
+      "positive_pixels": 33446,
+      "models": {
+        "original": {
+          "iou": 0.10118914504069151,
+          "precision": 0.13040046110665598,
+          "recall": 0.3111582849967111,
+          "true_positive_pixels": 10407,
+          "false_positive_pixels": 69401,
+          "false_negative_pixels": 23039
+        },
+        "updated": {
+          "iou": 0.03958774317105131,
+          "precision": 0.20117812780125496,
+          "recall": 0.046971237218202476,
+          "true_positive_pixels": 1571,
+          "false_positive_pixels": 6238,
+          "false_negative_pixels": 31875
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0750",
+      "positive_pixels": 6737,
+      "models": {
+        "original": {
+          "iou": 0.009682625067240451,
+          "precision": 0.01595116187475384,
+          "recall": 0.02404631141457622,
+          "true_positive_pixels": 162,
+          "false_positive_pixels": 9994,
+          "false_negative_pixels": 6575
+        },
+        "updated": {
+          "iou": 0.0525396594382186,
+          "precision": 0.07239788755932883,
+          "recall": 0.16075404482707437,
+          "true_positive_pixels": 1083,
+          "false_positive_pixels": 13876,
+          "false_negative_pixels": 5654
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0786",
+      "positive_pixels": 2263,
+      "models": {
+        "original": {
+          "iou": 0.007711783698404218,
+          "precision": 0.008073929961089495,
+          "recall": 0.14670790985417587,
+          "true_positive_pixels": 332,
+          "false_positive_pixels": 40788,
+          "false_negative_pixels": 1931
+        },
+        "updated": {
+          "iou": 0.009882146255764584,
+          "precision": 0.011705540622561345,
+          "recall": 0.05965532479010163,
+          "true_positive_pixels": 135,
+          "false_positive_pixels": 11398,
+          "false_negative_pixels": 2128
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0670",
+      "positive_pixels": 35788,
+      "models": {
+        "original": {
+          "iou": 0.18081519516517472,
+          "precision": 0.21133807080717631,
+          "recall": 0.5559405387280653,
+          "true_positive_pixels": 19896,
+          "false_positive_pixels": 74247,
+          "false_negative_pixels": 15892
+        },
+        "updated": {
+          "iou": 0.26080512526295657,
+          "precision": 0.6435059572962133,
+          "recall": 0.3048507879736224,
+          "true_positive_pixels": 10910,
+          "false_positive_pixels": 6044,
+          "false_negative_pixels": 24878
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0649",
+      "positive_pixels": 9996,
+      "models": {
+        "original": {
+          "iou": 0.03977864734075806,
+          "precision": 0.04921085044828278,
+          "recall": 0.1718687474989996,
+          "true_positive_pixels": 1718,
+          "false_positive_pixels": 33193,
+          "false_negative_pixels": 8278
+        },
+        "updated": {
+          "iou": 0.021168817318971953,
+          "precision": 0.043364281813216825,
+          "recall": 0.03971588635454182,
+          "true_positive_pixels": 397,
+          "false_positive_pixels": 8758,
+          "false_negative_pixels": 9599
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0685",
+      "positive_pixels": 2292,
+      "models": {
+        "original": {
+          "iou": 0.004851491971607746,
+          "precision": 0.004984776605537067,
+          "recall": 0.15357766143106458,
+          "true_positive_pixels": 352,
+          "false_positive_pixels": 70263,
+          "false_negative_pixels": 1940
+        },
+        "updated": {
+          "iou": 0.007884113037283305,
+          "precision": 0.0087696127634846,
+          "recall": 0.07242582897033159,
+          "true_positive_pixels": 166,
+          "false_positive_pixels": 18763,
+          "false_negative_pixels": 2126
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0667",
+      "positive_pixels": 41231,
+      "models": {
+        "original": {
+          "iou": 0.1991750484904533,
+          "precision": 0.23113158269623438,
+          "recall": 0.5902597560088283,
+          "true_positive_pixels": 24337,
+          "false_positive_pixels": 80958,
+          "false_negative_pixels": 16894
+        },
+        "updated": {
+          "iou": 0.11186113789778207,
+          "precision": 0.4899568237281772,
+          "recall": 0.12660376900875556,
+          "true_positive_pixels": 5220,
+          "false_positive_pixels": 5434,
+          "false_negative_pixels": 36011
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0652",
+      "positive_pixels": 4560,
+      "models": {
+        "original": {
+          "iou": 0.02270764541529083,
+          "precision": 0.028705368610326226,
+          "recall": 0.09802631578947368,
+          "true_positive_pixels": 447,
+          "false_positive_pixels": 15125,
+          "false_negative_pixels": 4113
+        },
+        "updated": {
+          "iou": 0.02143977688687467,
+          "precision": 0.028341013824884794,
+          "recall": 0.08092105263157895,
+          "true_positive_pixels": 369,
+          "false_positive_pixels": 12651,
+          "false_negative_pixels": 4191
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0681",
+      "positive_pixels": 1645,
+      "models": {
+        "original": {
+          "iou": 0.004488330341113106,
+          "precision": 0.006329113924050633,
+          "recall": 0.015197568389057751,
+          "true_positive_pixels": 25,
+          "false_positive_pixels": 3925,
+          "false_negative_pixels": 1620
+        },
+        "updated": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 2094,
+          "false_negative_pixels": 1645
+        }
+      }
+    },
+    {
+      "id": "2023-06-15_0169",
+      "positive_pixels": 81044,
+      "models": {
+        "original": {
+          "iou": 0.3265443264099276,
+          "precision": 0.3741762437356023,
+          "recall": 0.7195103894180939,
+          "true_positive_pixels": 58312,
+          "false_positive_pixels": 97529,
+          "false_negative_pixels": 22732
+        },
+        "updated": {
+          "iou": 0.3433742204458533,
+          "precision": 0.5321381372562107,
+          "recall": 0.49186861457973446,
+          "true_positive_pixels": 39863,
+          "false_positive_pixels": 35048,
+          "false_negative_pixels": 41181
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0176",
+      "positive_pixels": 18905,
+      "models": {
+        "original": {
+          "iou": 0.11130863878294223,
+          "precision": 0.12263770180436848,
+          "recall": 0.5464691880454906,
+          "true_positive_pixels": 10331,
+          "false_positive_pixels": 73909,
+          "false_negative_pixels": 8574
+        },
+        "updated": {
+          "iou": 0.17384295371814873,
+          "precision": 0.2547921192027743,
+          "recall": 0.35366305210261834,
+          "true_positive_pixels": 6686,
+          "false_positive_pixels": 19555,
+          "false_negative_pixels": 12219
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0099",
+      "positive_pixels": 3478,
+      "models": {
+        "original": {
+          "iou": 0.026395939086294416,
+          "precision": 0.04162960327343889,
+          "recall": 0.06728004600345026,
+          "true_positive_pixels": 234,
+          "false_positive_pixels": 5387,
+          "false_negative_pixels": 3244
+        },
+        "updated": {
+          "iou": 0.05458160130128321,
+          "precision": 0.1281289775137887,
+          "recall": 0.08683151236342726,
+          "true_positive_pixels": 302,
+          "false_positive_pixels": 2055,
+          "false_negative_pixels": 3176
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0170",
+      "positive_pixels": 345,
+      "models": {
+        "original": {
+          "iou": 0.0027991602519244225,
+          "precision": 0.0031733439111463705,
+          "recall": 0.02318840579710145,
+          "true_positive_pixels": 8,
+          "false_positive_pixels": 2513,
+          "false_negative_pixels": 337
+        },
+        "updated": {
+          "iou": 0.0032772869763465374,
+          "precision": 0.0034348864994026285,
+          "recall": 0.06666666666666667,
+          "true_positive_pixels": 23,
+          "false_positive_pixels": 6673,
+          "false_negative_pixels": 322
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0161",
+      "positive_pixels": 16117,
+      "models": {
+        "original": {
+          "iou": 0.05861639752366602,
+          "precision": 0.07376339653751031,
+          "recall": 0.22206365948997953,
+          "true_positive_pixels": 3579,
+          "false_positive_pixels": 44941,
+          "false_negative_pixels": 12538
+        },
+        "updated": {
+          "iou": 0.1504980359147026,
+          "precision": 0.25716169243677334,
+          "recall": 0.2662406154991624,
+          "true_positive_pixels": 4291,
+          "false_positive_pixels": 12395,
+          "false_negative_pixels": 11826
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0044",
+      "positive_pixels": 2653,
+      "models": {
+        "original": {
+          "iou": 0.004121680770353078,
+          "precision": 0.004542530953529507,
+          "recall": 0.042593290614398795,
+          "true_positive_pixels": 113,
+          "false_positive_pixels": 24763,
+          "false_negative_pixels": 2540
+        },
+        "updated": {
+          "iou": 0.03098992095688177,
+          "precision": 0.03368334924314741,
+          "recall": 0.2793064455333585,
+          "true_positive_pixels": 741,
+          "false_positive_pixels": 21258,
+          "false_negative_pixels": 1912
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0114",
+      "positive_pixels": 684,
+      "models": {
+        "original": {
+          "iou": 0.0010483870967741935,
+          "precision": 0.0010769613122359374,
+          "recall": 0.038011695906432746,
+          "true_positive_pixels": 26,
+          "false_positive_pixels": 24116,
+          "false_negative_pixels": 658
+        },
+        "updated": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 5654,
+          "false_negative_pixels": 684
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0231",
+      "positive_pixels": 10592,
+      "models": {
+        "original": {
+          "iou": 0.04432945235015093,
+          "precision": 0.054328295106225555,
+          "recall": 0.19410876132930513,
+          "true_positive_pixels": 2056,
+          "false_positive_pixels": 35788,
+          "false_negative_pixels": 8536
+        },
+        "updated": {
+          "iou": 0.20239099859353024,
+          "precision": 0.4423608976329542,
+          "recall": 0.271714501510574,
+          "true_positive_pixels": 2878,
+          "false_positive_pixels": 3628,
+          "false_negative_pixels": 7714
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0114",
+      "positive_pixels": 2164,
+      "models": {
+        "original": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 3053,
+          "false_negative_pixels": 2164
+        },
+        "updated": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 1991,
+          "false_negative_pixels": 2164
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0183",
+      "positive_pixels": 204,
+      "models": {
+        "original": {
+          "iou": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 4998,
+          "false_negative_pixels": 204
+        },
+        "updated": {
+          "iou": 0.0036231884057971015,
+          "precision": 0.003679592414378715,
+          "recall": 0.19117647058823528,
+          "true_positive_pixels": 39,
+          "false_positive_pixels": 10560,
+          "false_negative_pixels": 165
+        }
+      }
+    },
+    {
+      "id": "2023-06-06_0166",
+      "positive_pixels": 9672,
+      "models": {
+        "original": {
+          "iou": 0.08958609515392547,
+          "precision": 0.09458786936236392,
+          "recall": 0.6288254755996692,
+          "true_positive_pixels": 6082,
+          "false_positive_pixels": 58218,
+          "false_negative_pixels": 3590
+        },
+        "updated": {
+          "iou": 0.25599448782728523,
+          "precision": 0.31537547394035426,
+          "recall": 0.5761993382961125,
+          "true_positive_pixels": 5573,
+          "false_positive_pixels": 12098,
+          "false_negative_pixels": 4099
+        }
+      }
+    },
+    {
+      "id": "2023-05-30_0039",
+      "positive_pixels": 2166,
+      "models": {
+        "original": {
+          "iou": 0.04680737376436014,
+          "precision": 0.05027259684361549,
+          "recall": 0.40443213296398894,
+          "true_positive_pixels": 876,
+          "false_positive_pixels": 16549,
+          "false_negative_pixels": 1290
+        },
+        "updated": {
+          "iou": 0.12166318120310002,
+          "precision": 0.14226121979286535,
+          "recall": 0.4566020313942752,
+          "true_positive_pixels": 989,
+          "false_positive_pixels": 5963,
+          "false_negative_pixels": 1177
+        }
+      }
+    },
+    {
+      "id": "2023-05-25_0109",
+      "positive_pixels": 507,
+      "models": {
+        "original": {
+          "iou": 0.0,
+          "precision": null,
+          "recall": 0.0,
+          "true_positive_pixels": 0,
+          "false_positive_pixels": 0,
+          "false_negative_pixels": 507
+        },
+        "updated": {
+          "iou": 0.015549534691954294,
+          "precision": 0.01626817845698792,
+          "recall": 0.2603550295857988,
+          "true_positive_pixels": 132,
+          "false_positive_pixels": 7982,
+          "false_negative_pixels": 375
+        }
+      }
+    }
+  ],
+  "checkpoints_sha256": {
+    "original": "15405397497cc1e4b13c19afb368308222070c28ba5a65b7fbefc98c730ef0bd",
+    "updated": "020fc708cbac41cf5a58d9cc3c3cf161156f34c8290411aa72e3bb574f9895d7"
+  },
+  "input_verification": {
+    "image_shapes": [
+      [
+        600,
+        600
+      ]
+    ],
+    "observed_label_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "test_split_sha256": "2a51f9d01cd44c51c745b22191f6059128a9728aae88909becdddace27d91ee5",
+  "agriculture_test_freeze_sha256": "e98e09dd28d15ac605c81216b89b78a790eac0afd0c84d47d382e04f608d0a21",
+  "license": "CC BY 4.0",
+  "target_domain_validated": false,
+  "authors_loader": "https://github.com/GFZ/weedsgalore/blob/main/src/datasets/weedsgalore/weedsgalore.py"
+}

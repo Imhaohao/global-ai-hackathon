@@ -10,6 +10,7 @@ export interface LeafReading {
   probability: number;
   confidence: LeafConfidence;
   qualityPassed: boolean;
+  qualityIssue?: "too_dark" | "too_bright" | "blurred" | "no_visible_pixels";
 }
 
 export type PlantVerdict =

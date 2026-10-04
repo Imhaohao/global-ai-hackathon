@@ -1,0 +1,11 @@
+{
+  "repository": "timm/efficientnet_b1.ft_in1k",
+  "revision": "1d6ddfd0ad535646fdb05bc3834913d93816152e",
+  "license": "apache-2.0",
+  "pretraining": "ImageNet-1k; no coffee disease head reused",
+  "source": "https://huggingface.co/timm/efficientnet_b1.ft_in1k/tree/1d6ddfd0ad535646fdb05bc3834913d93816152e",
+  "sha256": {
+    "config.json": "4bcc5bdacffb1bb9264fff246bf8e167f9e4318fb8d2ad2d178ee32b92f9d2f6",
+    "model.safetensors": "2eb860ed42ef594b3ae479669e306927bb4d4018e246e38f512b6b25b1734f6e"
+  }
+}

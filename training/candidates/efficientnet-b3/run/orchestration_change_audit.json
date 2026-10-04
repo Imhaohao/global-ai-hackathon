@@ -1,0 +1,10 @@
+{
+  "original_hash": "c9ede75ea24d55d93538459078f284ae5272ed8d4b9ec95fc58c043a77dd90f2",
+  "current_hash": "ee5eb50f53c45ffe4815865b349e1b57a80c48daa7ef3292f684510459c5047c",
+  "reconstructed_hashes": [
+    "c9ede75ea24d55d93538459078f284ae5272ed8d4b9ec95fc58c043a77dd90f2",
+    "dddb567383a1125d32a5d44ec306e687f26ed1838ad79a896e3ccce67f4066e2"
+  ],
+  "matches_original": true,
+  "change": "Adds completed-run reuse checks and repeats the existing backbone history assignment. Active B3 loaded the earlier wrapper; training, selection and preprocessing engines are unchanged."
+}

@@ -1,0 +1,84 @@
+{
+  "checked": 25605,
+  "split_counts": {
+    "train": 20311,
+    "val": 5294
+  },
+  "source_counts": {
+    "train": {
+      "agml": 1278,
+      "bracol_leaf": 964,
+      "bracol_symptom": 1462,
+      "rocole": 1072,
+      "beans": 1034,
+      "coffeeleaf_own_field": 5448,
+      "coffeeleaf_rust_and_leaf_miner": 2861,
+      "peru": 1105,
+      "bracol_expert": 5087
+    },
+    "val": {
+      "agml": 1021,
+      "bracol_leaf": 207,
+      "bracol_symptom": 324,
+      "rocole": 228,
+      "beans": 133,
+      "coffeeleaf_own_field": 1380,
+      "coffeeleaf_rust_and_leaf_miner": 628,
+      "peru": 168,
+      "bracol_expert": 1205
+    }
+  },
+  "mismatches": [],
+  "selected_checkpoint_validation_cache_check": {
+    "n": 96,
+    "max_absolute_logit_difference": 0.0,
+    "top1_differences": 0
+  },
+  "checkpoint_sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+  "manifest_sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+  "selected_validation": {
+    "accuracy": 0.9267094824329429,
+    "macro_f1": 0.8615664456105612,
+    "source_macro_f1": 0.9017653922436808,
+    "per_source": {
+      "agml": 0.8887864280170918,
+      "beans": 1.0,
+      "bracol_expert": 0.7231324639753671,
+      "bracol_leaf": 0.8659949680092123,
+      "bracol_symptom": 0.9302071804384393,
+      "coffeeleaf_own_field": 0.9684062518858246,
+      "coffeeleaf_rust_and_leaf_miner": 0.9685388753030435,
+      "peru": 0.998158379373849,
+      "rocole": 0.7726639831902989
+    },
+    "weak_macro_f1": 0.7746784636545936,
+    "old_class_f1": {
+      "cercospora": 0.8256880733944955,
+      "healthy": 0.9427917620137299,
+      "miner": 0.9387096774193548,
+      "phoma": 0.831918505942275,
+      "rust": 0.9493722154718509,
+      "red_spider_mite": 0.5555555555555556,
+      "weevil_damage": 0.9672846237731734,
+      "unsupported": 0.9779411764705882
+    },
+    "old_native_accuracy": 0.9267347657625925,
+    "far_macro_f1": 0.8730342200198373,
+    "context_macro_f1": 0.8476201301214613,
+    "selection_score": 0.8823169881520838,
+    "stage": "partial_backbone",
+    "epoch": 6,
+    "training_loss": 0.5678141356618316,
+    "training_examples": 6469,
+    "seconds": 237.83124050009064,
+    "eligible": true
+  },
+  "additional_validation_only_guard_audit": {
+    "old_macro_f1_loss_at_most_1pp": true,
+    "old_native_accuracy_loss_at_most_1pp": true,
+    "each_weak_class_loss_at_most_1pp": true,
+    "source_f1_gain_at_least_1pp": true,
+    "far_f1_gain_at_least_1_5pp": true
+  },
+  "guard_audit_note": "Additional broader B0-style guards audited after selection; no test data, checkpoint reselection, or further training used for this audit."
+}

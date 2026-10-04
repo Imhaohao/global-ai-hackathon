@@ -3,7 +3,10 @@ import jpeg from 'jpeg-js';
 import type { TfliteModel } from 'react-native-fast-tflite';
 
 import type { LeafCondition } from './conditions';
-import { passesQuality, pickMostLikely } from './modelDecision';
+import { qualityIssueFor, type QualityIssue } from './imageQuality';
+import type { ModelConfig } from './modelConfig';
+import { pickMostLikely } from './modelDecision';
+import { base64ToBytes, decodeExposurePng, rgbaToRgbFloatTensor } from './photoPixels';
 import modelConfig from '../../assets/model/model-config.json';
 
 const MODEL_INPUT_SIZE = 224;
@@ -17,10 +20,11 @@ export type Diagnosis = {
   probability: number;
   confidence: Confidence;
   qualityPassed: boolean;
+  qualityIssue?: QualityIssue;
 };
 
-async function cropAndResizeToJpegBase64(photo: LeafPhoto): Promise<string> {
-  const shortSide = Math.floor(MODEL_INPUT_SIZE / modelConfig.crop_pct);
+async function preparePhoto(photo: LeafPhoto, config: ModelConfig) {
+  const shortSide = Math.floor(MODEL_INPUT_SIZE / config.crop_pct);
   const scale = shortSide / Math.min(photo.width, photo.height);
   const width = Math.floor(photo.width * scale);
   const height = Math.floor(photo.height * scale);
@@ -34,37 +38,26 @@ async function cropAndResizeToJpegBase64(photo: LeafPhoto): Promise<string> {
     });
   const image = await context.renderAsync();
   const saved = await image.saveAsync({ format: SaveFormat.JPEG, compress: 1, base64: true });
-  if (!saved.base64) throw new Error('Image manipulator returned no base64 data');
-  return saved.base64;
-}
-
-function base64ToBytes(base64: string): Uint8Array {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index);
-  return bytes;
-}
-
-function rgbaToRgbFloatTensor(rgba: Uint8Array): Float32Array {
-  const pixelCount = MODEL_INPUT_SIZE * MODEL_INPUT_SIZE;
-  const tensor = new Float32Array(pixelCount * 3);
-  for (let pixel = 0; pixel < pixelCount; pixel++) {
-    tensor[pixel * 3] = rgba[pixel * 4];
-    tensor[pixel * 3 + 1] = rgba[pixel * 4 + 1];
-    tensor[pixel * 3 + 2] = rgba[pixel * 4 + 2];
-  }
-  return tensor;
-}
-
-export async function classifyLeaf(model: TfliteModel, photo: LeafPhoto): Promise<Diagnosis> {
-  const jpegBase64 = await cropAndResizeToJpegBase64(photo);
-  const decoded = jpeg.decode(base64ToBytes(jpegBase64), { useTArray: true, formatAsRGBA: true });
+  const exposureImage = await image.saveAsync({ format: SaveFormat.PNG, base64: true });
+  if (!saved.base64 || !exposureImage.base64) throw new Error('Image manipulator returned no base64 data');
+  const decoded = jpeg.decode(base64ToBytes(saved.base64), { useTArray: true, formatAsRGBA: true });
   const input = rgbaToRgbFloatTensor(decoded.data);
-  const qualityPassed = passesQuality(input);
+  const exposure = decodeExposurePng(base64ToBytes(exposureImage.base64));
+  return { input, qualityIssue: qualityIssueFor(input, exposure, config.calibration.quality.minimum_edge_variance) };
+}
+
+export async function classifyLeaf(model: TfliteModel, photo: LeafPhoto, config: ModelConfig = modelConfig): Promise<Diagnosis> {
+  const { input, qualityIssue } = await preparePhoto(photo, config);
+  const qualityPassed = qualityIssue === undefined;
   const started = performance.now();
   const [output] = await model.run([input.buffer as ArrayBuffer]);
   const inferenceMs = performance.now() - started;
-  if (__DEV__) console.log(`[leaf-model] inference_ms=${inferenceMs.toFixed(1)} quality=${qualityPassed}`);
-  const diagnosis = pickMostLikely(new Float32Array(output));
-  return { ...diagnosis, qualityPassed, confidence: qualityPassed ? diagnosis.confidence : 'unclear' };
+  if (typeof __DEV__ !== 'undefined' && __DEV__) console.log(`[leaf-model] inference_ms=${inferenceMs.toFixed(1)} quality=${qualityPassed}`);
+  const diagnosis = pickMostLikely(new Float32Array(output), config);
+  return {
+    ...diagnosis,
+    qualityPassed,
+    confidence: qualityPassed ? diagnosis.confidence : 'unclear',
+    ...(qualityIssue ? { qualityIssue } : {}),
+  };
 }

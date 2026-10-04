@@ -7,9 +7,10 @@ import { DecisionHeader } from '../components/DecisionHeader';
 import { Disclosure } from '../components/Disclosure';
 import { LeafSlots } from '../components/LeafSlots';
 import { PillButton } from '../components/PillButton';
-import { Body, SectionHeading } from '../components/Typography';
+import { Body, Muted, SectionHeading } from '../components/Typography';
 import { useKeyboardHeight } from '../components/useKeyboardHeight';
 import { useReadAloud } from '../components/useReadAloud';
+import { MODEL_NAMES, type ModelId } from '../diagnosis/modelConfig';
 import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
 import { FarmSectionPicker } from './FarmSectionPicker';
@@ -21,6 +22,7 @@ type ActionCardScreenProps = {
   strings: Strings;
   language: AppLanguage;
   card: ActionCard;
+  modelId: ModelId;
   observation: Observation;
   photoUris: string[];
   farmSections: string[];
@@ -100,6 +102,7 @@ export function ActionCardScreen(props: ActionCardScreenProps) {
     >
       <DecisionHeader decision={card.decision} urgency={card.urgency} headline={card.headline} />
       <ReadAloudButton strings={strings} card={card} />
+      <Muted>{strings.modelUsed} {MODEL_NAMES[props.modelId]}</Muted>
       {card.doNow.length > 0 && (
         <View className="gap-4">
           <SectionHeading>{strings.whatToDo}</SectionHeading>

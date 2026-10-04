@@ -1,0 +1,76 @@
+{
+  "artifact_sha256": "ddbea87650b839dabb376f32d7e210ccc21a105024de23b3c0abf25fbbe86a01",
+  "checkpoint_sha256": "eb6a5d4daac75046befce1250bc9278d4c1d2ccfa8ccf0fe2f4302cb918e8dd8",
+  "parameter_count": 7712266,
+  "bytes": 8573416,
+  "compression_candidates": [
+    {
+      "variant": "int8_weights",
+      "quantized_weight_tensors": 115,
+      "bytes": 8573416,
+      "parity": {
+        "n": 5294,
+        "maximum_probability_error": 0.5101252794265747,
+        "mean_absolute_probability_error": 0.004115395247936249,
+        "top1_disagreements": 50,
+        "accuracy_drop": 0.0026445032111823696,
+        "macro_f1_drop": 0.002234176734316251,
+        "eligible": true,
+        "policy": "Validation only: <=1 percentage point accuracy and macro F1 loss relative to selected checkpoint"
+      }
+    }
+  ],
+  "test_or_external_used_for_selection": false,
+  "phone_device_tested": false,
+  "incumbents_unchanged": {
+    "mobile/assets/model/coffee-leaf.tflite": {
+      "sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+      "bytes": 8091596
+    },
+    "mobile/assets/model/model-config.json": {
+      "sha256": "bf29b082d6f40f1519a3a307f971fc52f83e91fef67e3b8049cf74e01ab62368",
+      "bytes": 2567
+    },
+    "mobile/assets/model/coffee-leaf-b1.tflite": {
+      "sha256": "28c5d1cf1ac3f268d66f9c9f50f35e0a4602dced07f55e07b17f4c6cdae18c75",
+      "bytes": 7324120
+    },
+    "mobile/assets/model/model-config-b1.json": {
+      "sha256": "06f6dfa8539db4a9fd82dcfaa371c37c8ba5efdeb61b9a11e79d81e1ffb0b4f7",
+      "bytes": 2952
+    },
+    "mobile/assets/model/brightness-config.json": {
+      "sha256": "cd2c58f04fa705204593009b940ad5aff2329742a348c83330eacb106788660e",
+      "bytes": 1893
+    },
+    "training/runs/efficientnet/best.safetensors": {
+      "sha256": "f83c93baaa20a2d106860ecca337543e063c1ed8b7781fd0f793790992986d8d",
+      "bytes": 16272336
+    },
+    "training/runs/efficientnet/calibration.json": {
+      "sha256": "c608d6c82f6663bead65e4457d1c4977a024737903d5811c12ca3a6e85ccd520",
+      "bytes": 1874
+    },
+    "training/runs/efficientnet_b1/best.safetensors": {
+      "sha256": "a5ac6495802d4b03e1f0365327d41b8919b13c9c212a8cc8f26bf1c43f72a3d1",
+      "bytes": 26388856
+    },
+    "training/runs/efficientnet_b1/calibration.json": {
+      "sha256": "bf96788ffb02d033430d0910e95d5678385ddbd74087913486c4e1705021936e",
+      "bytes": 1960
+    },
+    "training/data/manifest.json": {
+      "sha256": "17531809594632bdaa1a7d005b2690041f94acf302e84fd5a1125e7e51494ba7",
+      "bytes": 9207106
+    },
+    "training/data/scale_v3_manifest.json": {
+      "sha256": "e27dd7fc6483ad16064ccf4ebf1204ef1d8ad2c8881c5b6960641d3cbbc852f5",
+      "bytes": 18916720
+    },
+    "training/runs/model_comparison/comparison.json": {
+      "sha256": "7b099fe988b3aff3cd0e3d69a9ac73fe2658b4a07014b64b6d27ba60e8851466",
+      "bytes": 547850
+    }
+  },
+  "export_recipe_sha256": "9f8a23239c0449ddef79760e7d1703879aceaca35cce7d6da8649f2bae3c5391"
+}

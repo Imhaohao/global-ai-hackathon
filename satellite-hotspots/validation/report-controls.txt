@@ -1,0 +1,4 @@
+PASS: actual report script in isolated DOM stub.
+Checked date slider, previous/next, date labels, disabled ends, rank highlights,
+cell details, missing-baseline wording, keyboard selection and self-contained markup.
+No browser rendering or real browser interaction was performed.

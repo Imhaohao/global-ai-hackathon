@@ -1,0 +1,27 @@
+{
+  "artifact_sha256": "19b4f9747604dcff2cc43f44e3056f5c4fd827e3b0556e6632e1acbd1ce6ccda",
+  "fresh_process": true,
+  "outbound_sockets_blocked": true,
+  "attempted_connections": 0,
+  "checkpoint_prediction": 2,
+  "mobile_prediction": 2,
+  "runtime_operations": [
+    "ADD",
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "DEQUANTIZE",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "MEAN",
+    "MUL",
+    "PAD",
+    "RESHAPE",
+    "SOFTMAX",
+    "SUB",
+    "TRANSPOSE"
+  ],
+  "input_dtype": "<class 'numpy.float32'>",
+  "custom_ops_present": false,
+  "app_load": "Bundled require(./assets/model/coffee-leaf.tflite); CPU delegate list []",
+  "phone_device_tested": false
+}
