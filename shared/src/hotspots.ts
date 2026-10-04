@@ -5,7 +5,7 @@ import type { DiseaseKey } from "./types.ts";
 export const HOTSPOT_LINK_METERS = 25;
 export const REPEAT_CHECK_MINUTES = 30;
 export const REPEAT_CHECK_METERS = 15;
-export const MINIMUM_MAP_SPAN_METERS = 60;
+export const MINIMUM_MAP_SPAN_METERS = 120;
 
 const METERS_PER_DEGREE_LATITUDE = 111_320;
 const MILLISECONDS_PER_MINUTE = 60_000;
@@ -47,6 +47,7 @@ export interface PlacedHotspot {
 export interface MapLayout {
   placed: PlacedHotspot[];
   metersPerPixel: number;
+  center: { latitude: number; longitude: number } | null;
 }
 
 export type DateRange = "week" | "month" | "season" | "all";
@@ -207,7 +208,7 @@ export function markerRadius(sightingCount: number): number {
 }
 
 export function layoutHotspots(hotspots: Hotspot[], width: number, height: number, padding: number): MapLayout {
-  if (hotspots.length === 0) return { placed: [], metersPerPixel: 1 };
+  if (hotspots.length === 0) return { placed: [], metersPerPixel: 1, center: null };
   const frame = meterFrame(hotspots);
   const points = hotspots.map((hotspot) => toMeters(hotspot, frame));
   const xs = points.map((point) => point.x);
@@ -222,7 +223,11 @@ export function layoutHotspots(hotspots: Hotspot[], width: number, height: numbe
     x: width / 2 + (points[index].x - centerX) * pixelsPerMeter,
     y: height / 2 - (points[index].y - centerY) * pixelsPerMeter,
   }));
-  return { placed, metersPerPixel: 1 / pixelsPerMeter };
+  const center = {
+    latitude: frame.originLatitude + centerY / METERS_PER_DEGREE_LATITUDE,
+    longitude: frame.originLongitude + centerX / frame.metersPerDegreeLongitude,
+  };
+  return { placed, metersPerPixel: 1 / pixelsPerMeter, center };
 }
 
 const DAYS_BY_RANGE: Record<DateRange, number | null> = { week: 7, month: 30, season: 90, all: null };

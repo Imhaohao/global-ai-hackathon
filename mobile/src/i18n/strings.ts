@@ -300,10 +300,6 @@ const NEW_LINES = {
     'Each check that finds a disease and saved a location appears here as a circle.',
     'Kila ukaguzi unaopata ugonjwa na kuhifadhi eneo huonekana hapa kama duara.',
   ),
-  mapBiggerCircle: draftLine(
-    'A bigger circle means more sightings close together.',
-    'Duara kubwa zaidi linamaanisha matukio mengi karibu na kila moja.',
-  ),
   mapNotChecked: draftLine(
     'An empty area means it was not checked. It does not mean the crop is healthy.',
     'Eneo tupu linamaanisha halikukaguliwa. Haimaanishi mazao ni mazima.',
@@ -331,7 +327,6 @@ const NEW_LINES = {
   rangeMonth: draftLine('30 days', 'Siku 30'),
   rangeSeason: draftLine('90 days', 'Siku 90'),
   rangeAll: draftLine('All time', 'Wakati wote'),
-  filterDiseases: draftLine('Diseases shown', 'Magonjwa yanayoonyeshwa'),
   trendTitle: draftLine('Sightings each week', 'Matukio kila wiki'),
   trendNote: draftLine(
     'These are checks that found a disease. They show what was recorded, not how fast it is spreading.',
@@ -350,7 +345,6 @@ const NEW_LINES = {
   sightingPhotoMissing: draftLine('Photo not available', 'Picha haipatikani'),
   sightingShowDetails: draftLine('Show details for {disease}, {time}', 'Onyesha maelezo ya {disease}, {time}'),
   mapSimulatedBanner: draftLine('Simulated sightings for a preview. They are not your data.', 'Matukio ya kubuni ya onyesho. Si data yako.'),
-  mapPreviewSimulated: draftLine('Preview with simulated sightings (development only)', 'Onyesho la matukio ya kubuni (maendeleo tu)'),
   mapStopPreview: draftLine('Stop the preview', 'Acha onyesho'),
   devVerdictTitle: draftLine('Test answer (development only)', 'Jibu la majaribio (maendeleo tu)'),
   changeLanguage: draftLine('Change language', 'Badilisha lugha'),
@@ -367,6 +361,14 @@ const NEW_LINES = {
   ),
   languageSelected: draftLine('Selected', 'Imechaguliwa'),
   translationUnchecked: draftLine(
+  mapPeriod: draftLine('Time period', 'Kipindi'),
+  mapShowExample: draftLine('Show an example farm', 'Onyesha shamba la mfano'),
+  mapShowSatellite: draftLine('Show satellite photo', 'Onyesha picha ya setilaiti'),
+  mapHideSatellite: draftLine('Hide satellite photo', 'Ficha picha ya setilaiti'),
+  mapSatelliteNote: draftLine(
+    'This downloads map pictures of your farm area from Esri over the internet.',
+    'Hii hupakua picha za ramani za eneo la shamba lako kutoka Esri kupitia mtandao.',
+  ),
     'A computer translated this advice and no person has checked it yet. If a step is unclear, ask your field officer.',
     'Kompyuta ilitafsiri ushauri huu na hakuna mtu aliyeukagua bado. Hatua ikiwa haieleweki, muulize afisa wako wa shamba.',
   ),

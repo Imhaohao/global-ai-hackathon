@@ -135,8 +135,18 @@ test("a single hotspot is drawn in the middle of the box", () => {
   assert.equal(layout.placed[0].y, 100);
 });
 
-test("an empty map has no placed hotspots", () => {
-  assert.deepEqual(layoutHotspots([], 300, 200, 20).placed, []);
+test("the layout center is the geographic point drawn in the middle of the box", () => {
+  const hotspots = groupIntoHotspots([sighting("south", "rust", 0), sighting("north", "phoma", 300)]);
+  const { center } = layoutHotspots(hotspots, 300, 200, 20);
+  assert.ok(center !== null);
+  assert.ok(Math.abs(center.latitude - metersNorth(150)) < 1e-9);
+  assert.ok(Math.abs(center.longitude - FARM_LONGITUDE) < 1e-9);
+});
+
+test("an empty map has no placed hotspots and no center", () => {
+  const layout = layoutHotspots([], 300, 200, 20);
+  assert.deepEqual(layout.placed, []);
+  assert.equal(layout.center, null);
 });
 
 test("filters keep only the chosen diseases inside the date range", () => {

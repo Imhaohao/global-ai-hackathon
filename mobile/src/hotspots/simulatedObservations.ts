@@ -1,8 +1,8 @@
 import type { Observation, PlantVerdict } from '../../../shared/src/contract.ts';
 import type { DiseaseKey } from '../../../shared/src/index.ts';
 
-const FARM_LATITUDE = -0.4167;
-const FARM_LONGITUDE = 36.95;
+const FARM_LATITUDE = -1.0312;
+const FARM_LONGITUDE = 37.0312;
 const METERS_PER_DEGREE = 111_320;
 const MILLISECONDS_PER_DAY = 86_400_000;
 

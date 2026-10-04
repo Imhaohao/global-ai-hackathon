@@ -70,10 +70,9 @@ function SightingRow({ sighting, strings, language }: { sighting: Sighting; stri
         onPress={() => setIsOpen(!isOpen)}
         className="min-h-16 flex-row items-center gap-3 rounded-control px-4 py-3 active:bg-hairline"
       >
-        <ColorDot condition={sighting.condition} />
         <View className="flex-1">
-          <Text className="text-lg font-semibold text-ink">{disease}</Text>
-          <Muted>{time}</Muted>
+          <Text className="text-lg font-semibold text-ink">{time}</Text>
+          {sighting.farmSection && <Muted>{sighting.farmSection}</Muted>}
         </View>
         <CaretIcon size={22} weight="bold" color={colors['ink-muted']} />
       </Pressable>

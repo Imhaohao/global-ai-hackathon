@@ -1,13 +1,16 @@
-import { Check } from 'phosphor-react-native';
+import { EyeSlash } from 'phosphor-react-native';
 import { Pressable, Text, View } from 'react-native';
 
-import { DISEASE_KEYS, type DiseaseKey } from '../../../shared/src/index.ts';
-import type { Strings } from '../i18n/strings';
+import type { DiseaseKey } from '../../../shared/src/index.ts';
+import { CONTROL_FOCUS_STYLE, useControlFocus } from '../components/useControlFocus';
+import { fillTemplate, type Strings } from '../i18n/strings';
 import { colors } from '../theme';
 import { DISEASE_COLORS } from './diseaseColors';
+import type { DiseaseCount } from './useHotspotView';
 
 type DiseaseFilterProps = {
   strings: Strings;
+  counts: DiseaseCount[];
   selected: ReadonlySet<DiseaseKey>;
   onToggle: (condition: DiseaseKey) => void;
 };
@@ -20,50 +23,61 @@ export function ColorDot({ condition, size = 16 }: { condition: DiseaseKey; size
         width: size,
         height: size,
         borderRadius: size / 2,
-        backgroundColor: isHealthy ? 'transparent' : DISEASE_COLORS[condition],
-        borderWidth: isHealthy ? 2 : 0,
-        borderColor: DISEASE_COLORS[condition],
+        backgroundColor: isHealthy ? colors.surface : DISEASE_COLORS[condition],
+        borderWidth: isHealthy ? 3 : 0,
+        borderColor: colors.healthy,
       }}
     />
   );
 }
 
-function DiseaseChip({
+function DiseaseToggle({
   strings,
   condition,
-  isSelected,
+  count,
+  isShown,
   onToggle,
 }: {
   strings: Strings;
   condition: DiseaseKey;
-  isSelected: boolean;
+  count: number;
+  isShown: boolean;
   onToggle: (condition: DiseaseKey) => void;
 }) {
-  const container = isSelected ? 'bg-botanical shadow-md' : 'bg-surface shadow-sm';
-  const textColor = isSelected ? 'text-ink' : 'text-ink-muted';
+  const focus = useControlFocus();
+  const container = isShown ? 'bg-surface shadow-sm active:bg-hairline' : 'bg-hairline active:bg-paper';
+  const label = isShown ? 'text-ink' : 'text-ink-muted line-through';
+  const name = strings.diseases[condition].name;
   return (
     <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ selected: isSelected }}
+      accessibilityRole="checkbox"
+      accessibilityLabel={`${name}, ${fillTemplate(strings.hotspotSightings, { count })}`}
+      accessibilityState={{ checked: isShown }}
       onPress={() => onToggle(condition)}
-      className={`min-h-12 flex-row items-center gap-2 rounded-full px-4 py-2 active:bg-hairline ${container}`}
+      onFocus={focus.onFocus}
+      onBlur={focus.onBlur}
+      style={focus.isFocused ? CONTROL_FOCUS_STYLE : undefined}
+      className={`min-h-11 max-w-full flex-row items-center gap-2 rounded-full py-2 pl-3 pr-4 ${container}`}
     >
-      <ColorDot condition={condition} />
-      <Text className={`text-base font-medium ${textColor}`}>{strings.diseases[condition].name}</Text>
-      {isSelected && <Check size={18} weight="bold" color={colors.accent} />}
+      {isShown ? <ColorDot condition={condition} /> : <EyeSlash size={16} weight="bold" color={colors['ink-muted']} />}
+      <Text className={`shrink text-base font-medium ${label}`}>{name}</Text>
+      <Text className="text-base font-semibold text-ink-muted" style={{ fontVariant: ['tabular-nums'] }}>
+        {count}
+      </Text>
     </Pressable>
   );
 }
 
-export function DiseaseFilter({ strings, selected, onToggle }: DiseaseFilterProps) {
+export function DiseaseFilter({ strings, counts, selected, onToggle }: DiseaseFilterProps) {
   return (
     <View className="flex-row flex-wrap gap-2">
-      {DISEASE_KEYS.map((condition) => (
-        <DiseaseChip
+      {counts.map(({ condition, count }) => (
+        <DiseaseToggle
           key={condition}
           strings={strings}
           condition={condition}
-          isSelected={selected.has(condition)}
+          count={count}
+          isShown={selected.has(condition)}
           onToggle={onToggle}
         />
       ))}

@@ -9,27 +9,41 @@ import {
   sinceFor,
   weeklyTrend,
   type DateRange,
+  type Sighting,
 } from '../../../shared/src/hotspots.ts';
 import { DISEASE_KEYS, type DiseaseKey } from '../../../shared/src/index.ts';
-import { MAP_HEIGHT, MAP_PADDING } from './HotspotMap';
+import { MAP_PADDING } from './HotspotMap';
 
 const TREND_WEEKS = 8;
 
-export function useHotspotView(observations: Observation[], mapWidth: number) {
+export type DiseaseCount = { condition: DiseaseKey; count: number };
+
+function countsByDisease(sightings: Sighting[]): DiseaseCount[] {
+  return DISEASE_KEYS.map((condition) => ({
+    condition,
+    count: sightings.filter((sighting) => sighting.condition === condition).length,
+  }))
+    .filter((entry) => entry.count > 0)
+    .sort((first, second) => second.count - first.count);
+}
+
+export function useHotspotView(observations: Observation[], mapSize: { width: number; height: number }) {
   const [range, setRange] = useState<DateRange>('season');
   const [conditions, setConditions] = useState<ReadonlySet<DiseaseKey>>(new Set(DISEASE_KEYS));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const now = useMemo(() => new Date(), []);
   const summary = useMemo(() => sightingsFromObservations(observations), [observations]);
 
-  const visible = useMemo(
-    () => filterSightings(summary.sightings, { conditions, since: sinceFor(range, now) }),
-    [summary.sightings, conditions, range, now],
+  const inRange = useMemo(
+    () => filterSightings(summary.sightings, { conditions: new Set(DISEASE_KEYS), since: sinceFor(range, now) }),
+    [summary.sightings, range, now],
   );
+  const diseaseCounts = useMemo(() => countsByDisease(inRange), [inRange]);
+  const visible = useMemo(() => inRange.filter((sighting) => conditions.has(sighting.condition)), [inRange, conditions]);
   const hotspots = useMemo(() => groupIntoHotspots(visible), [visible]);
   const layout = useMemo(
-    () => layoutHotspots(hotspots, mapWidth, MAP_HEIGHT, MAP_PADDING),
-    [hotspots, mapWidth],
+    () => layoutHotspots(hotspots, mapSize.width, mapSize.height, MAP_PADDING),
+    [hotspots, mapSize.width, mapSize.height],
   );
   const trendWeeks = useMemo(
     () => weeklyTrend(filterSightings(summary.sightings, { conditions, since: null }), now, TREND_WEEKS),
@@ -50,12 +64,14 @@ export function useHotspotView(observations: Observation[], mapWidth: number) {
     summary,
     range,
     setRange,
+    sightingsInRange: inRange.length,
+    diseaseCounts,
     conditions,
     toggleCondition,
     hotspots,
     layout,
     trendWeeks,
     selected,
-    select: (hotspotId: string | null) => setSelectedId(hotspotId),
+    toggleSelected: (hotspotId: string) => setSelectedId((current) => (current === hotspotId ? null : hotspotId)),
   };
 }
