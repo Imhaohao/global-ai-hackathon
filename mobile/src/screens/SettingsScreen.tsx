@@ -1,4 +1,4 @@
-import { ArrowLeft, Database, DownloadSimple, MapPin, Plant, SignOut, Trash, UserCircle, Wrench, X } from 'phosphor-react-native';
+import { ArrowLeft, Database, DownloadSimple, MapPin, Plant, SignOut, Translate, Trash, UserCircle, Wrench, X } from 'phosphor-react-native';
 import { useRef, useState } from 'react';
 import { Alert, ScrollView, Switch, Text, View } from 'react-native';
 
@@ -29,6 +29,7 @@ type SettingsScreenProps = {
   onDeleteAll: () => boolean;
   onBack: () => void;
   onSignOut: () => Promise<void>;
+  onChangeLanguage: () => void;
 };
 
 function LocationSwitch({
@@ -220,6 +221,7 @@ export function SettingsScreen(props: SettingsScreenProps) {
           <SignOutControl strings={strings} onSignOut={props.onSignOut} />
         </View>
       </Disclosure>
+      <Button label={strings.changeLanguage} icon={Translate} variant="secondary" onPress={props.onChangeLanguage} />
       <Disclosure title={strings.farmSettings} icon={Plant}>
         <LocationSwitch strings={strings} enabled={locationAllowed(settings)} onToggle={props.onToggleLocation} />
         <OfficerNumberField

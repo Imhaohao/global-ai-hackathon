@@ -15,5 +15,8 @@ export * from "./languageGuard.ts";
 export * from "./backendUrl.ts";
 export * from "./hubToken.ts";
 export * from "./seedCheck.ts";
+export * from "./seedCheckCopy.ts";
+export * from "./languages.ts";
+export * from "./adviceText.ts";
 export * from "./advicePolicy.ts";
 export * from "./hotspots.ts";

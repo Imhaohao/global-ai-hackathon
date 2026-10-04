@@ -65,3 +65,18 @@ Hub notes: the 2B model needs about 4 GB of phone RAM; below `recommendedRamByte
 ## Build plan
 
 The current three-part build plan, written so an agent with no context can start, is [docs/build-plan.md](docs/build-plan.md). It supersedes the earlier plans in this file.
+
+## 100 languages (app + phone line), started 2026-10-03
+
+Decisions: app shows machine translations everywhere with a "not checked" note on advice; SMS keeps only reviewed lines. 91 Eleven v4 Turbo languages + 9 coffee-region text-only languages (rw, rn, om, ti, luo, mg, tet, ht, qu).
+
+| Step | Owner model | Status |
+|---|---|---|
+| `shared/src/languages.ts` catalog, country map, suggestions | Opus (inline) | done |
+| `shared/src/adviceText.ts` per-language advice text, app vs SMS channel | Opus (inline) | done, tests updated |
+| `scripts/translations/` export, validate (placeholders, numbers, brand names), import | Opus (inline) | done, 4 tests |
+| Translate 98 languages | Sonnet subagents x10 | done: 95 imported; kam, ff, luo refused (translators would not guess advice), so the picker hides them |
+| Language picker (onboarding, login, capture, settings) + offline GPS country | Opus (inline) | done, typecheck/lint clean |
+| Import translations | Opus (inline) | done, 320 tests incl. one per imported language |
+| ElevenLabs language presets | Opus (inline, REST) | done: 79 presets + en = 80. The agent API rejects lg, wo, ff, kam, ceb, lo, zu, am, ckb, ln, sn as presets, so those are text-only |
+| Simulator build check | Opus (inline) | done: picker, GPS suggestions (Kenya), Swahili and Amharic verified on iPhone 17 Pro simulator |

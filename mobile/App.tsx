@@ -1,11 +1,11 @@
 import './global.css';
 
-import { getLocales } from 'expo-localization';
 import { ActivityIndicator, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { isLanguageCode } from '../shared/src/languages.ts';
 import { seedCheckContact, seedCheckCopy } from '../shared/src/seedCheck.ts';
 import { createDemoAuth } from './src/auth/demoAuthApi';
 import type { AuthSession } from './src/auth/session';
@@ -13,11 +13,13 @@ import { useAuthSession } from './src/auth/useAuthSession';
 import { DEFAULT_MODEL_ID, type ModelId } from './src/diagnosis/modelConfig';
 import { useLeafModel } from './src/diagnosis/useLeafModel';
 import { STRINGS, type Language } from './src/i18n/strings';
+import { firstGuessLanguage } from './src/i18n/useLanguageSuggestions';
 import { ActionCardScreen } from './src/screens/ActionCardScreen';
 import { CaptureScreen, type CaptureProblem } from './src/screens/CaptureScreen';
 import { ConsentScreen } from './src/screens/ConsentScreen';
 import type { DevScenario } from './src/screens/devVerdictOverride';
 import { HotspotMapScreen } from './src/screens/HotspotMapScreen';
+import { LanguagePickerScreen } from './src/screens/LanguagePickerScreen';
 import { SeedCheckScreen } from './src/screens/SeedCheckScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
@@ -26,6 +28,7 @@ import { useResultFlow } from './src/screens/useResultFlow';
 import { locationAllowed, type ConsentChoice } from './src/storage/appSettings';
 import { deleteAllData, exportAllData } from './src/storage/dataControls';
 import { askForLocationPermission } from './src/storage/deviceLocation';
+import { loadLanguagePreference, saveLanguagePreference } from './src/storage/languagePreference';
 import { listObservations } from './src/storage/observations';
 import { useAppSettings } from './src/storage/useAppSettings';
 import { useWetDays } from './src/storage/useWetDays';
@@ -34,13 +37,18 @@ import { colors } from './src/theme';
 const DEMO_AUTH = createDemoAuth();
 const AUTH_API = DEMO_AUTH.api;
 
-function deviceLanguage(): Language {
-  return getLocales()[0]?.languageCode === 'sw' ? 'sw' : 'en';
-}
-
 export default function App() {
   const auth = useAuthSession(AUTH_API);
-  const [loginLanguage, setLoginLanguage] = useState<Language>(deviceLanguage());
+  const [savedLanguage, setSavedLanguage] = useState<Language | null>(loadLanguagePreference);
+  const [firstGuess] = useState<Language>(firstGuessLanguage);
+  const [isPickingLanguage, setIsPickingLanguage] = useState(false);
+  const loginLanguage = savedLanguage ?? firstGuess;
+
+  const chooseLanguage = (language: Language) => {
+    saveLanguagePreference(language);
+    setSavedLanguage(language);
+    setIsPickingLanguage(false);
+  };
 
   return (
     <SafeAreaProvider>
@@ -50,11 +58,18 @@ export default function App() {
           <View className="flex-1 items-center justify-center">
             <ActivityIndicator color={colors.accent} />
           </View>
+        ) : auth.state.status === 'signedOut' && (savedLanguage === null || isPickingLanguage) ? (
+          <LanguagePickerScreen
+            strings={STRINGS[loginLanguage]}
+            selected={loginLanguage}
+            onChoose={chooseLanguage}
+            onBack={savedLanguage === null ? undefined : () => setIsPickingLanguage(false)}
+          />
         ) : auth.state.status === 'signedOut' ? (
           <LoginScreen
             api={AUTH_API}
             language={loginLanguage}
-            onSwitchLanguage={() => setLoginLanguage((current) => (current === 'en' ? 'sw' : 'en'))}
+            onSwitchLanguage={() => setIsPickingLanguage(true)}
             onAuthenticated={auth.acceptSession}
             signInWithoutCode={DEMO_AUTH.signInWithoutCode}
           />
@@ -63,6 +78,8 @@ export default function App() {
             key={auth.state.session.accountId}
             session={auth.state.session}
             preferredLanguage={loginLanguage}
+            needsLanguageChoice={savedLanguage === null}
+            onChooseLanguage={chooseLanguage}
             onSignOut={auth.signOut}
           />
         )}
@@ -74,14 +91,19 @@ export default function App() {
 function AuthenticatedApp({
   session,
   preferredLanguage,
+  needsLanguageChoice,
+  onChooseLanguage,
   onSignOut,
 }: {
   session: AuthSession;
   preferredLanguage: Language;
+  needsLanguageChoice: boolean;
+  onChooseLanguage: (language: Language) => void;
   onSignOut: () => Promise<void>;
 }) {
   const { settings, update: updateSettings, resetToDefaults } = useAppSettings();
-  const [language, setLanguage] = useState<Language>(settings.language ?? preferredLanguage);
+  const [language, setLanguage] = useState<Language>(isLanguageCode(settings.language) ? settings.language : preferredLanguage);
+  const [isPickingLanguage, setIsPickingLanguage] = useState(false);
   const [isInSettings, setIsInSettings] = useState(false);
   const [isInSeedCheck, setIsInSeedCheck] = useState(false);
   const [isInMap, setIsInMap] = useState(false);
@@ -95,10 +117,13 @@ function AuthenticatedApp({
   const seedContact = seedCheckContact();
   const seedCopy = seedCheckCopy(language, seedContact);
 
-  const switchLanguage = () => {
-    const next = language === 'en' ? 'sw' : 'en';
+  const switchLanguage = () => setIsPickingLanguage(true);
+
+  const chooseLanguage = (next: Language) => {
     setLanguage(next);
     updateSettings({ language: next });
+    onChooseLanguage(next);
+    setIsPickingLanguage(false);
   };
 
   const chooseConsent = async (choice: Exclude<ConsentChoice, 'pending'>) => {
@@ -177,6 +202,7 @@ function AuthenticatedApp({
           onExport={() => exportAllData(settings)}
           onDeleteAll={deleteAll}
           onBack={() => setIsInSettings(false)}
+          onChangeLanguage={switchLanguage}
           onSignOut={onSignOut}
         />
       );
@@ -243,5 +269,15 @@ function AuthenticatedApp({
     );
   };
 
+  if (isPickingLanguage || needsLanguageChoice) {
+    return (
+      <LanguagePickerScreen
+        strings={strings}
+        selected={language}
+        onChoose={chooseLanguage}
+        onBack={needsLanguageChoice ? undefined : () => setIsPickingLanguage(false)}
+      />
+    );
+  }
   return renderScreen();
 }

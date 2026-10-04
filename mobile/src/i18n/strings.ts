@@ -1,13 +1,13 @@
-import { DISEASES, type DiseaseKey } from '../../../shared/src/index.ts';
-import { DISEASES_SW, type DiseaseText } from '../../../shared/src/diseases.sw.ts';
+import { adviceTextFor } from '../../../shared/src/adviceText.ts';
+import { DEFAULT_LANGUAGE, LANGUAGES, languageInfo, type LanguageCode } from '../../../shared/src/languages.ts';
+import type { DiseaseKey, DiseaseText } from '../../../shared/src/types.ts';
 import type { Severity } from '../diagnosis/conditions';
 import type { ModelId } from '../diagnosis/modelConfig';
+import { UI_TRANSLATIONS } from './locales/index.ts';
 
-export type Language = 'en' | 'sw';
+export type Language = LanguageCode;
 
 type BaseStrings = {
-  speechLanguage: string;
-  switchLanguage: string;
   homeTitle: string;
   photoTip: string;
   takePhoto: string;
@@ -35,12 +35,9 @@ type BaseStrings = {
   modelUsed: string;
   photoFailed: string;
   severity: Record<Severity, string>;
-  diseases: Record<DiseaseKey, DiseaseText>;
 };
 
 const english: BaseStrings = {
-  speechLanguage: 'en',
-  switchLanguage: 'Badili kwa Kiswahili',
   homeTitle: 'Check a coffee leaf',
   photoTip: 'Hold one leaf flat in good light, close enough to fill the screen.',
   takePhoto: 'Take photo',
@@ -72,12 +69,9 @@ const english: BaseStrings = {
     watch: 'Needs care',
     sick: 'Act soon',
   },
-  diseases: DISEASES,
 };
 
 const swahili: BaseStrings = {
-  speechLanguage: 'sw',
-  switchLanguage: 'Switch to English',
   homeTitle: 'Kagua jani la kahawa',
   photoTip: 'Shika jani moja wazi kwenye mwanga mzuri, karibu hadi lijaze skrini.',
   takePhoto: 'Piga picha',
@@ -109,7 +103,6 @@ const swahili: BaseStrings = {
     watch: 'Inahitaji uangalizi',
     sick: 'Chukua hatua sasa',
   },
-  diseases: DISEASES_SW,
 };
 
 
@@ -334,26 +327,103 @@ const NEW_LINES = {
   mapPreviewSimulated: draftLine('Preview with simulated sightings (development only)', 'Onyesho la matukio ya kubuni (maendeleo tu)'),
   mapStopPreview: draftLine('Stop the preview', 'Acha onyesho'),
   devVerdictTitle: draftLine('Test answer (development only)', 'Jibu la majaribio (maendeleo tu)'),
+  changeLanguage: draftLine('Change language', 'Badilisha lugha'),
+  languageTitle: draftLine('Choose your language', 'Chagua lugha yako'),
+  languageSuggested: draftLine('Suggested for you', 'Inapendekezwa kwako'),
+  languageAll: draftLine('All languages', 'Lugha zote'),
+  languageSearch: draftLine('Search languages', 'Tafuta lugha'),
+  languageNoMatch: draftLine('No language matches "{query}".', 'Hakuna lugha inayolingana na "{query}".'),
+  languageUseLocation: draftLine('Suggest languages for where I am', 'Pendekeza lugha za mahali nilipo'),
+  languageFindingLocation: draftLine('Finding where you are…', 'Inatafuta mahali ulipo…'),
+  languageLocationFailed: draftLine(
+    'Could not find where you are. Choose from the list.',
+    'Imeshindwa kujua mahali ulipo. Chagua kwenye orodha.',
+  ),
+  languageSelected: draftLine('Selected', 'Imechaguliwa'),
+  translationUnchecked: draftLine(
+    'A computer translated this advice and no person has checked it yet. If a step is unclear, ask your field officer.',
+    'Kompyuta ilitafsiri ushauri huu na hakuna mtu aliyeukagua bado. Hatua ikiwa haieleweki, muulize afisa wako wa shamba.',
+  ),
 };
 
 export type LineKey = keyof typeof NEW_LINES;
 
-export type Strings = BaseStrings & Record<LineKey, string>;
+/** Everything a translator translates. Nested records keep their keys. */
+export type UiText = BaseStrings & Record<LineKey, string>;
 
-function lineText(line: Line, language: Language): string {
-  return language === 'sw' && line.reviewed ? line.sw : line.en;
+/** A translation may leave lines out; those fall back to English. */
+export type UiTranslation = {
+  [Key in keyof UiText]?: UiText[Key] extends string ? string : Partial<UiText[Key]>;
+};
+
+export type Strings = UiText & {
+  language: Language;
+  /** BCP 47 tag for the phone's text-to-speech voice and for dates. */
+  speechLanguage: string;
+  switchLanguage: string;
+  diseases: Record<DiseaseKey, DiseaseText>;
+  /** False while the advice in this language is a translation no native speaker has checked. */
+  adviceChecked: boolean;
+};
+
+function linesIn(language: 'en' | 'sw'): Record<LineKey, string> {
+  const entries = Object.entries(NEW_LINES).map(([key, line]) => [key, line[language]]);
+  return Object.fromEntries(entries) as Record<LineKey, string>;
 }
 
-function resolveLines(language: Language): Record<LineKey, string> {
-  const entries = Object.entries(NEW_LINES).map(([key, line]) => [key, lineText(line, language)]);
-  return Object.fromEntries(entries) as Record<LineKey, string>;
+export const ENGLISH_UI_TEXT: UiText = { ...english, ...linesIn('en') };
+
+const SWAHILI_UI_TEXT: UiTranslation = { ...swahili, ...linesIn('sw') };
+
+function translationFor(language: Language): UiTranslation | undefined {
+  if (language === 'sw') return SWAHILI_UI_TEXT;
+  return UI_TRANSLATIONS[language]?.();
+}
+
+function mergeUiText(translation: UiTranslation = {}): UiText {
+  const merged: Record<string, unknown> = { ...ENGLISH_UI_TEXT };
+  for (const [key, english] of Object.entries(ENGLISH_UI_TEXT)) {
+    const translated = translation[key as keyof UiText];
+    if (!translated) continue;
+    merged[key] = typeof english === 'string' ? translated : { ...english, ...(translated as object) };
+  }
+  return merged as UiText;
+}
+
+function buildStrings(language: Language): Strings {
+  const ui = language === DEFAULT_LANGUAGE ? ENGLISH_UI_TEXT : mergeUiText(translationFor(language));
+  const advice = adviceTextFor(language);
+  return {
+    ...ui,
+    language,
+    speechLanguage: languageInfo(language).locale,
+    switchLanguage: ui.changeLanguage,
+    diseases: advice.diseases,
+    adviceChecked: advice.reviewed,
+  };
+}
+
+const cache = new Map<Language, Strings>();
+
+export function stringsFor(language: Language): Strings {
+  const cached = cache.get(language);
+  if (cached) return cached;
+  const strings = buildStrings(language);
+  cache.set(language, strings);
+  return strings;
 }
 
 export function fillTemplate(template: string, values: Record<string, string | number>): string {
   return Object.entries(values).reduce((text, [key, value]) => text.replaceAll(`{${key}}`, String(value)), template);
 }
 
-export const STRINGS: Record<Language, Strings> = {
-  en: { ...english, ...resolveLines('en') },
-  sw: { ...swahili, ...resolveLines('sw') },
-};
+/** Languages the app can show: English, Swahili and every language with a translation file. */
+export const APP_LANGUAGES: Language[] = LANGUAGES.map(({ code }) => code).filter(
+  (code) => code === DEFAULT_LANGUAGE || code === 'sw' || UI_TRANSLATIONS[code] !== undefined,
+);
+
+/** Built on first use, so only the languages someone opens are ever assembled. */
+export const STRINGS = Object.defineProperties(
+  {},
+  Object.fromEntries(LANGUAGES.map(({ code }) => [code, { enumerable: true, get: () => stringsFor(code) }])),
+) as Record<Language, Strings>;

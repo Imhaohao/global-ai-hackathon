@@ -1,12 +1,12 @@
 import type { AppLanguage } from '../../../shared/src/contract.ts';
 import type { Sighting } from '../../../shared/src/hotspots.ts';
 import { fillTemplate, type Strings } from '../i18n/strings';
-import { LOCALE_BY_LANGUAGE } from '../screens/recheckDate';
+import { localeFor } from '../screens/recheckDate';
 
 const COORDINATE_DECIMALS = 5;
 
 export function formatSightingTime(capturedAt: string, language: AppLanguage): string {
-  return new Date(capturedAt).toLocaleString(LOCALE_BY_LANGUAGE[language], {
+  return new Date(capturedAt).toLocaleString(localeFor(language), {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -16,7 +16,7 @@ export function formatSightingTime(capturedAt: string, language: AppLanguage): s
 }
 
 export function formatWeekStart(weekStart: string, language: AppLanguage): string {
-  return new Date(weekStart).toLocaleDateString(LOCALE_BY_LANGUAGE[language], { day: 'numeric', month: 'short' });
+  return new Date(weekStart).toLocaleDateString(localeFor(language), { day: 'numeric', month: 'short' });
 }
 
 export function formatSightingPlace(sighting: Sighting, strings: Strings): string {

@@ -1,6 +1,7 @@
+import type { LanguageCode } from "./languages.ts";
 import type { DiseaseKey, Urgency } from "./types.ts";
 
-export type AppLanguage = "en" | "sw";
+export type AppLanguage = LanguageCode;
 
 export type LeafConfidence = "confident" | "possible" | "unclear";
 
